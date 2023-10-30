@@ -1,13 +1,20 @@
 import "~/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { headers } from "next/headers";
+import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "next-themes";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import Header from "~/app/_components/header";
+import Footer from "~/app/_components/footer";
+import BackToTop from "./_components/back-to-top";
+import { Providers } from "./providers";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -23,8 +30,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+      <body className={`${dmSans.variable} font-sans antialiased`}>
+        <Providers>
+          <Toaster position="bottom-center" />
+          <div className={`bg-gray-100 dark:bg-gray-900`}>
+            <Header />
+            <TRPCReactProvider headers={headers()}>
+              {children}
+            </TRPCReactProvider>
+            <Footer />
+            <BackToTop />
+          </div>
+        </Providers>
       </body>
     </html>
   );

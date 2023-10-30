@@ -1,40 +1,91 @@
 import { relations, sql } from "drizzle-orm";
 import {
-  bigint,
   index,
   int,
-  mysqlTableCreator,
+  mysqlTable,
   primaryKey,
   text,
   timestamp,
   varchar,
+  serial,
+  date,
+  boolean,
+  mysqlEnum,
 } from "drizzle-orm/mysql-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const mysqlTable = mysqlTableCreator((name) => `portfolio_${name}`);
+export const experiences = mysqlTable("experiences", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  organization: text("organization"),
+  description: text("description"),
+  website: text("website"),
+  startDate: date("startDate").notNull(),
+  endDate: date("endDate"),
+  onGoing: boolean("onGoing").default(false),
+  logoUrl: text("logoUrl"),
+  published: boolean("published").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
 
-export const posts = mysqlTable(
-  "post",
-  {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-    name: varchar("name", { length: 256 }),
-    createdById: varchar("createdById", { length: 255 }).notNull(),
-    createdAt: timestamp("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updatedAt").onUpdateNow(),
-  },
-  (example) => ({
-    createdByIdIdx: index("createdById_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
-  })
-);
+export type Experience = typeof experiences.$inferSelect;
+
+export const links = mysqlTable("links", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  url: text("url").notNull(),
+  icon: text("icon"),
+  published: boolean("published").default(false),
+  projectId: int("projectId"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const linksRelations = relations(links, ({ one }) => ({
+  project: one(projects, {
+    fields: [links.projectId],
+    references: [projects.id],
+  }),
+}));
+
+export type Link = typeof links.$inferSelect;
+
+export const projects = mysqlTable("projects", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  shortDescription: text("shortDescription"),
+  description: text("description"),
+  status: mysqlEnum("status", [
+    "unknown",
+    "open",
+    "scheduled",
+    "in_development",
+    "canceled",
+    "completed",
+  ]).default("unknown"),
+  published: boolean("published").default(false),
+  thumbnailUrl: text("thumbnailUrl"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const projectsRelations = relations(projects, ({ many }) => ({
+  links: many(links),
+  tags: many(tags),
+}));
+
+export type Project = typeof projects.$inferSelect;
+
+export const tags = mysqlTable("tags", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  published: boolean("published").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const tagsRelations = relations(tags, ({ many }) => ({
+  projects: many(projects),
+}));
+
+export type Tag = typeof tags.$inferSelect;
 
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
@@ -71,7 +122,7 @@ export const accounts = mysqlTable(
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
     userIdIdx: index("userId_idx").on(account.userId),
-  })
+  }),
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -89,7 +140,7 @@ export const sessions = mysqlTable(
   },
   (session) => ({
     userIdIdx: index("userId_idx").on(session.userId),
-  })
+  }),
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -105,5 +156,5 @@ export const verificationTokens = mysqlTable(
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
-  })
+  }),
 );

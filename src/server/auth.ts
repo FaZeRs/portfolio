@@ -8,7 +8,8 @@ import DiscordProvider from "next-auth/providers/discord";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
-import { mysqlTable } from "~/server/db/schema";
+import { mysqlTable } from "drizzle-orm/mysql-core";
+// import { mysqlTable } from "~/server/db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

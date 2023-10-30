@@ -3,12 +3,17 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   content: ["./src/**/*.tsx"],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["var(--font-dm-sans)", ...fontFamily.sans],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 } satisfies Config;
