@@ -1,8 +1,8 @@
 "use client";
 
-import React, { ButtonHTMLAttributes, FC } from "react";
 import Link from "next/link";
 import type { Route } from "next";
+import type { ButtonHTMLAttributes, FC, ReactNode } from "react";
 
 export interface ButtonProps {
   className?: string;
@@ -15,9 +15,8 @@ export interface ButtonProps {
   disabled?: boolean;
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   href?: Route;
-  targetBlank?: boolean;
   onClick?: () => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -29,10 +28,9 @@ const Button: FC<ButtonProps> = ({
   disabled = false,
   href,
   children,
-  targetBlank,
   type,
   loading,
-  onClick = () => {},
+  onClick,
 }) => {
   const CLASSES = `${fontSize} ${sizeClass} ${translate} ${className} ${radius}`;
 
@@ -64,7 +62,7 @@ const Button: FC<ButtonProps> = ({
   if (!!href) {
     return (
       <Link href={href} className={`${CLASSES} `} onClick={onClick}>
-        {children || `This is Link`}
+        {children ?? `This is Link`}
       </Link>
     );
   }
@@ -77,7 +75,7 @@ const Button: FC<ButtonProps> = ({
       type={type}
     >
       {loading && _renderLoading()}
-      {children || `This is Button`}
+      {children ?? `This is Button`}
     </button>
   );
 };

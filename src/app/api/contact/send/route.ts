@@ -5,8 +5,14 @@ import { env } from "~/env.mjs";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
+type ContactMessage = {
+  name: string;
+  email: string;
+  message: string;
+};
+
 export async function POST(request: Request) {
-  const { name, email, message } = await request.json();
+  const { name, email, message } = (await request.json()) as ContactMessage;
   try {
     const data = await resend.emails.send({
       from: email,

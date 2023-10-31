@@ -4,7 +4,7 @@ import Image from "next/image";
 import Head from "~/app/_components/head";
 import { Spinner } from "~/app/_components/spinner";
 import { api } from "~/trpc/react";
-import { RouterOutputs } from "~/trpc/shared";
+import type { RouterOutputs } from "~/trpc/shared";
 
 type Project = RouterOutputs["project"]["list"][number];
 
@@ -64,7 +64,7 @@ export default function Page() {
           Check out my Portfolio
         </h2>
         <h3 className="pt-6 text-center text-xl font-medium text-black dark:text-slate-200 sm:text-2xl lg:text-3xl">
-          Here's what I have done with the past
+          Here&apos;s what I have done with the past
         </h3>
 
         <List />

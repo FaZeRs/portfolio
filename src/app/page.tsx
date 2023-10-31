@@ -3,7 +3,7 @@ import Head from "~/app/_components/head";
 import Hero from "~/app/_components/hero";
 import Services from "~/app/_components/services";
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <Head title="Home" />

@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import React, { type InputHTMLAttributes } from "react";
 import { get } from "react-hook-form";
 
@@ -15,14 +16,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       sizeClass = "px-4 py-3",
       fontClass = "font-body sm:text-sm sm:leading-6 ",
       rounded = "rounded-md",
-      children,
       type = "text",
       errors,
+      name,
       ...args
     },
     ref,
   ) => {
-    const hasError = args.name ? get(errors, args.name) : false;
+    const hasError = errors && name ? !!get(errors, name) : false;
     const inputErrorClasses =
       "bg-red-50 ring-red-200 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-red-50";
     const inputClasses =
@@ -36,12 +37,17 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={`block w-full border-0 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset ${
             hasError ? inputErrorClasses : inputClasses
           } ${rounded} ${fontClass} ${sizeClass} ${className}`}
+          aria-invalid={hasError ? "true" : "false"}
           {...args}
         />
-        {hasError && (
-          <p className="mt-2 text-sm text-red-600">
-            {errors[args.name].message}
-          </p>
+        {hasError && name && (
+          <ErrorMessage
+            errors={errors}
+            name={name}
+            render={({ message }) => (
+              <p className="mt-2 text-sm text-red-600">{message}</p>
+            )}
+          />
         )}
       </>
     );

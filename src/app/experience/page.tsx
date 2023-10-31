@@ -5,7 +5,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import Head from "~/app/_components/head";
 import { Spinner } from "~/app/_components/spinner";
 import { api } from "~/trpc/react";
-import { RouterOutputs } from "~/trpc/shared";
+import type { RouterOutputs } from "~/trpc/shared";
 import { formatDate } from "~/utils/format-date";
 
 type Experience = RouterOutputs["experience"]["list"][number];
@@ -15,21 +15,26 @@ interface ItemProps {
 }
 
 const Item = ({ item }: ItemProps) => {
-  const endDate = item.onGoing ? "Present" : formatDate(item.endDate);
+  let endDate = "Present";
+  if (item.onGoing === false && item.endDate !== null) {
+    endDate = formatDate(item.endDate);
+  }
   return (
     <>
       <div className="mt-8 flex flex-col text-center md:flex-row md:text-left">
         <div className="md:w-2/5">
           <div className="flex justify-center md:justify-start">
             <span className="shrink-0">
-              <Image
-                src={item.logoUrl}
-                className="h-12 max-w-full"
-                alt={item.title}
-                loading="lazy"
-                width={120}
-                height={48}
-              />
+              {item.logoUrl && (
+                <Image
+                  src={item.logoUrl}
+                  className="h-12 max-w-full"
+                  alt={item.title}
+                  loading="lazy"
+                  width={120}
+                  height={48}
+                />
+              )}
             </span>
             <div className="relative ml-3 hidden w-full md:block">
               <span className="absolute inset-x-0 top-[35%] h-0.5 -translate-y-1/2 transform bg-gray-300 dark:bg-gray-700" />

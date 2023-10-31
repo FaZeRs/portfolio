@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import React, { type TextareaHTMLAttributes } from "react";
 import { get } from "react-hook-form";
 
@@ -19,11 +20,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       children,
       rows = 10,
       errors,
+      name,
       ...args
     },
     ref,
   ) => {
-    const hasError = args.name ? get(errors, args.name) : false;
+    const hasError = errors && name ? !!get(errors, name) : false;
     const inputErrorClasses =
       "bg-red-50 ring-red-200 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-red-50";
     const inputClasses =
@@ -37,14 +39,19 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             hasError ? inputErrorClasses : inputClasses
           } ${rounded} ${fontClass} ${sizeClass} ${className}`}
           rows={rows}
+          aria-invalid={hasError ? "true" : "false"}
           {...args}
         >
           {children}
         </textarea>
-        {hasError && (
-          <p className="mt-2 text-sm text-red-600">
-            {errors[args.name].message}
-          </p>
+        {hasError && name && (
+          <ErrorMessage
+            errors={errors}
+            name={name}
+            render={({ message }) => (
+              <p className="mt-2 text-sm text-red-600">{message}</p>
+            )}
+          />
         )}
       </>
     );

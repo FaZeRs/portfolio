@@ -3,7 +3,6 @@ import "~/styles/globals.css";
 import { DM_Sans } from "next/font/google";
 import { headers } from "next/headers";
 import { Toaster } from "react-hot-toast";
-import { ThemeProvider } from "next-themes";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import Header from "~/app/_components/header";
