@@ -1,12 +1,15 @@
+import { Metadata } from "next";
 import { env } from "~/env.mjs";
-import Head from "~/app/_components/head";
 import ContactForm from "~/app/_components/contact-form";
+
+export const metadata: Metadata = {
+  title: "Contact",
+};
 
 export default function Page() {
   const contactEmail = env.NEXT_PUBLIC_CONTACT_EMAIL;
   return (
     <>
-      <Head title="Contact" />
       <div className="container mx-auto px-8 py-16 md:py-20">
         <h2
           className="
