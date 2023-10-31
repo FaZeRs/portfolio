@@ -1,11 +1,11 @@
+"use client";
+
 import {
   Body,
   Container,
   Head,
   Heading,
   Html,
-  Img,
-  Link,
   Preview,
   Text,
 } from "@react-email/components";
