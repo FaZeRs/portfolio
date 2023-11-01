@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import ExperiencesList from "~/app/_components/experiences-list";
 
 export const metadata: Metadata = {

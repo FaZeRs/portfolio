@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { env } from "~/env.mjs";
 import ContactForm from "~/app/_components/contact-form";
 

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import ProjectsList from "~/app/_components/projects-list";
 
 export const metadata: Metadata = {
