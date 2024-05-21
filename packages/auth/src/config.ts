@@ -5,6 +5,8 @@ import Github from "next-auth/providers/github";
 import { db } from "@acme/db/client";
 import { Account, Session, User } from "@acme/db/schema";
 
+import { env } from "../env";
+
 declare module "next-auth" {
   interface Session {
     user: {
@@ -31,6 +33,10 @@ export const authConfig = {
           id: opts.user.id,
         },
       };
+    },
+    signIn({ user }) {
+      const whitelist = env.ADMIN_EMAIL_LIST?.split(",");
+      return whitelist?.includes(user.email ?? "") ?? false;
     },
   },
 } satisfies NextAuthConfig;
