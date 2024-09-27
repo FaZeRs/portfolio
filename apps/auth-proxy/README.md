@@ -6,8 +6,8 @@ This is a simple proxy server that enables OAuth authentication for preview envi
 
 Deploy it somewhere (Vercel is a one-click, zero-config option) and set the following environment variables:
 
-- `AUTH_DISCORD_ID` - The Discord OAuth client ID
-- `AUTH_DISCORD_SECRET` - The Discord OAuth client secret
+- `AUTH_GITHUB_ID` - The Github OAuth client ID
+- `AUTH_GITHUB_SECRET` - The Github OAuth client secret
 - `AUTH_REDIRECT_PROXY_URL` - The URL of this proxy server (e.g. )
 - `AUTH_SECRET` - Your secret
 
