@@ -76,7 +76,9 @@ export default function RootLayout(
           disableTransitionOnChange
         >
           <Header />
-          <TRPCReactProvider>{props.children}</TRPCReactProvider>
+          <main className="container flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
+            <TRPCReactProvider>{props.children}</TRPCReactProvider>
+          </main>
           <Toaster />
         </ThemeProvider>
       </body>
