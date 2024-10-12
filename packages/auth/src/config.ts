@@ -3,7 +3,6 @@ import type {
   NextAuthConfig,
   Session as NextAuthSession,
 } from "next-auth";
-import { skipCSRFCheck } from "@auth/core";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import GitHubProvider from "next-auth/providers/github";
 
