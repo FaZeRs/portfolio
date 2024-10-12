@@ -63,7 +63,11 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
           <CommandGroup heading="General">
             <CommandItem
               onSelect={() =>
-                window.open("https://github.com/fazers/portfolio", "_ blank")
+                window.open(
+                  "https://github.com/fazers/portfolio",
+                  "_ blank",
+                  "noopener,noreferrer",
+                )
               }
             >
               <Code className="mr-2 h-4 w-4" />
