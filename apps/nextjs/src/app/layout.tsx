@@ -57,7 +57,9 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout(
+  props: Readonly<{ children: React.ReactNode }>,
+) {
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body

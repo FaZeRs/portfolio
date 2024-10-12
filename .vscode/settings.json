@@ -3,5 +3,9 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "sonarlint.connectedMode.project": {
+    "connectionId": "fazers-1",
+    "projectKey": "FaZeRs_portfolio"
+  }
 }

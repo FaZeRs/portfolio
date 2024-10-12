@@ -19,7 +19,7 @@ import {
 
 import { navbarLinks } from "~/config/navbar";
 
-export default function CommandMenu({ ...props }: DialogProps) {
+export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
