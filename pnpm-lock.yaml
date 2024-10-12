@@ -111,6 +111,9 @@ importers:
       react-dom:
         specifier: catalog:react18
         version: 18.3.1(react@18.3.1)
+      simple-icons:
+        specifier: ^13.13.0
+        version: 13.13.0
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -3651,6 +3654,10 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  simple-icons@13.13.0:
+    resolution: {integrity: sha512-lHit5FeMG4Uga9M81Hf6UKugVTC9xnuSYM+AqZ4UMIoaRnkraq2T1RvvgRGk2T1CjONim3NfwzLx26hbDhvZlg==}
+    engines: {node: '>=0.12.18'}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -7289,6 +7296,8 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
+
+  simple-icons@13.13.0: {}
 
   slash@3.0.0: {}
 

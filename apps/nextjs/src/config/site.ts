@@ -1,4 +1,6 @@
-import type { SiteConfig } from "~/types";
+import { siGithub, siLinkedin, siX } from "simple-icons";
+
+import type { SiteConfig, Social } from "~/types";
 
 export const siteConfig: SiteConfig = {
   name: "naurislinde",
@@ -16,3 +18,24 @@ export const siteConfig: SiteConfig = {
     url: "https://naurislinde.dev",
   },
 };
+
+export const socialConfig: Social[] = [
+  {
+    name: "Twitter",
+    url: "https://twitter.com/naurislinde",
+    username: "naurislinde",
+    icon: siX,
+  },
+  {
+    name: "Github",
+    url: "https://github.com/fazers",
+    username: "fazers",
+    icon: siGithub,
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/naurislinde/",
+    username: "naurislinde",
+    icon: siLinkedin,
+  },
+];

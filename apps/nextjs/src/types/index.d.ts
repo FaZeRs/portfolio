@@ -1,3 +1,5 @@
+import type { SimpleIcon } from "simple-icons";
+
 export interface SiteConfig {
   name: string;
   handle: string;
@@ -25,4 +27,11 @@ export interface NavItem {
 
 export interface ContentNavItem extends NavItem {
   href: string;
+}
+
+export interface Social {
+  name: string;
+  url: string;
+  username?: string;
+  icon: SimpleIcon;
 }

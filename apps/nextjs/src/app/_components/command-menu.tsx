@@ -18,6 +18,8 @@ import {
 } from "@acme/ui/command";
 
 import { navbarLinks } from "~/config/navbar";
+import { socialConfig } from "~/config/site";
+import Icon from "./icon";
 
 export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const router = useRouter();
@@ -79,6 +81,17 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
                 />
               ),
             )}
+          </CommandGroup>
+
+          <CommandSeparator />
+
+          <CommandGroup heading="Social">
+            {socialConfig.map((social) => (
+              <CommandItem key={social.name}>
+                <Icon icon={social.icon} className="mr-2 h-4 w-4" />
+                {social.name}
+              </CommandItem>
+            ))}
           </CommandGroup>
 
           <CommandSeparator />
