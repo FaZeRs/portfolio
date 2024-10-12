@@ -3,7 +3,7 @@
 import type { DialogProps } from "@radix-ui/react-dialog";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CommandIcon, File, Laptop, Moon, Sun } from "lucide-react";
+import { Code, CommandIcon, File, Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@acme/ui/button";
@@ -59,6 +59,20 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
+
+          <CommandGroup heading="General">
+            <CommandItem
+              onSelect={() =>
+                window.open("https://github.com/fazers/portfolio", "_ blank")
+              }
+            >
+              <Code className="mr-2 h-4 w-4" />
+              Source code
+            </CommandItem>
+          </CommandGroup>
+
+          <CommandSeparator />
+
           <CommandGroup heading="Links">
             {navbarLinks.map((link) =>
               link.content ? (
