@@ -1,6 +1,6 @@
 "use client";
 
-import type { DialogProps } from "@radix-ui/react-alert-dialog";
+import type { DialogProps } from "@radix-ui/react-dialog";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CommandIcon, File, Laptop, Moon, Sun } from "lucide-react";
