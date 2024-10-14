@@ -1,7 +1,9 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import type { Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
+import { skillsData } from "~/constants/skills-data";
 import SectionHeading from "./section-heading";
 
 const fadeInAnimationVariants: Variants = {
@@ -17,25 +19,6 @@ const fadeInAnimationVariants: Variants = {
     },
   }),
 };
-
-const skillsData = [
-  "C++",
-  "Qt",
-  "QML",
-  "CMake",
-  "HTML",
-  "CSS",
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "Git",
-  "Tailwind",
-  "PHP",
-  "Laravel",
-  "Docker",
-];
 
 const SkillSection = () => {
   return (
