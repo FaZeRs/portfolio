@@ -4,7 +4,7 @@ export const experiencesData = [
     name: "Sem.lv",
     description:
       "Web development company based in Riga, Latvia. Worked for 2 years as PHP developer specializing in Laravel framework.",
-    logo: "/images/work//sem.png",
+    logo: "/images/work/sem.png",
     startDate: "2016/08/01",
     endDate: "2019/01/25",
     url: "https://sem.lv",
