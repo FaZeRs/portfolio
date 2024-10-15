@@ -69,7 +69,9 @@
     "AUTH_GITHUB_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
-    "PORT"
+    "PORT",
+    "RESEND_API_KEY",
+    "RESEND_FROM_EMAIL"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",
