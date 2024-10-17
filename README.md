@@ -17,7 +17,7 @@ git clone git@github.com:FaZeRs/portfolio.git
 .vscode
   └─ Recommended extensions and settings for VSCode users
 apps
-  └─ next.js
+  └─ web
       ├─ Next.js 14
       ├─ React 18
       ├─ Tailwind CSS
@@ -29,8 +29,12 @@ packages
   |   └─ Authentication using next-auth.
   ├─ db
   |   └─ Typesafe db calls using Drizzle & Supabase
-  └─ ui
-      └─ Start of a UI package for the webapp using shadcn-ui
+  ├─ transactional
+  |   └─ Email, SMS, and other transactional services
+  ├─ ui
+  |   └─ Start of a UI package for the webapp using shadcn-ui
+  └─ validators
+      └─ Shared validators using zod
 tooling
   ├─ eslint
   |   └─ shared, fine-grained, eslint presets
@@ -73,7 +77,7 @@ pnpm db:push
 
 Let's deploy the Next.js application to [Vercel](https://vercel.com). If you've never deployed a Turborepo app there, don't worry, the steps are quite straightforward. You can also read the [official Turborepo guide](https://vercel.com/docs/concepts/monorepos/turborepo) on deploying to Vercel.
 
-1. Create a new project on Vercel, select the `apps/nextjs` folder as the root directory. Vercel's zero-config system should handle all configurations for you.
+1. Create a new project on Vercel, select the `apps/web` folder as the root directory. Vercel's zero-config system should handle all configurations for you.
 
 2. Add your `DATABASE_URL` environment variable.
 
