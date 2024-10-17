@@ -16,10 +16,10 @@ import {
   CommandList,
   CommandSeparator,
 } from "@acme/ui/command";
+import Icon from "@acme/ui/icon";
 
 import { navbarLinks } from "~/config/navbar";
 import { socialConfig } from "~/config/site";
-import Icon from "./icon";
 
 export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const router = useRouter();
