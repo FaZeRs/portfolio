@@ -17,7 +17,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
   return (
     <Link
-      href={`/project/${slug}`}
+      href={`/projects/${slug}`}
       className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4 dark:bg-white/10"
     >
       {isFeature && (

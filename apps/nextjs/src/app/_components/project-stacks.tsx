@@ -1,3 +1,4 @@
+import Icon from "@acme/ui/icon";
 import {
   Tooltip,
   TooltipContent,
@@ -7,7 +8,6 @@ import {
 
 import type { ProjectStack } from "~/types/project";
 import { STACKS } from "~/constants/stack";
-import Icon from "./icon";
 
 interface StackProps {
   projectStack: ProjectStack[];
