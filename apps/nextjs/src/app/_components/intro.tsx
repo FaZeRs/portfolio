@@ -8,6 +8,8 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@acme/ui";
 import { buttonVariants } from "@acme/ui/button";
 
+import { AVATAR_URL } from "~/constants/author-data";
+
 const Intro = () => {
   return (
     <section className="-mt-10 flex min-h-[calc(100vh-80px)] scroll-mt-[100rem] flex-col justify-center space-y-4 text-center sm:mb-0">
@@ -22,7 +24,7 @@ const Intro = () => {
             }}
           >
             <Image
-              src="https://avatars.githubusercontent.com/fazers"
+              src={AVATAR_URL}
               alt="Nauris Linde"
               width="320"
               height="320"
