@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import ProjectContent from "~/app/_components/project-content";
@@ -16,9 +17,28 @@ export function generateStaticParams() {
   }));
 }
 
+export function generateMetadata({
+  params,
+}: Readonly<ProjectPageProps>): Metadata {
+  const project = projectsData.find((project) => project.slug === params.slug);
+
+  if (!project) {
+    notFound();
+  }
+
+  return {
+    title: `${project.title}`,
+    description: `${project.title}`,
+    openGraph: {
+      title: `${project.title}`,
+      description: `${project.title}`,
+      images: project.imageUrl ? [project.imageUrl] : [],
+    },
+  };
+}
+
 export default function ProjectPage({ params }: Readonly<ProjectPageProps>) {
-  const slug = params.slug;
-  const project = projectsData.find((project) => project.slug === slug);
+  const project = projectsData.find((project) => project.slug === params.slug);
   if (!project) return notFound();
 
   return (
