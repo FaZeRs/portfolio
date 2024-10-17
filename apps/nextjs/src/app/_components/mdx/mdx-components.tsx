@@ -18,7 +18,7 @@ import { BlurImage } from "../blur-image";
 
 export const components = {
   h1: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <h1
       className={cn(
         "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
@@ -26,10 +26,10 @@ export const components = {
       )}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   h2: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <h2
       className={cn(
         "mt-10 scroll-m-28 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
@@ -37,10 +37,10 @@ export const components = {
       )}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   h3: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <h3
       className={cn(
         "mt-8 scroll-m-28 text-2xl font-semibold tracking-tight",
@@ -48,10 +48,10 @@ export const components = {
       )}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   h4: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <h4
       className={cn(
         "mt-8 scroll-m-28 text-xl font-semibold tracking-tight",
@@ -59,10 +59,10 @@ export const components = {
       )}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   h5: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <h5
       className={cn(
         "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
@@ -70,10 +70,10 @@ export const components = {
       )}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   h6: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <h6
       className={cn(
         "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
@@ -81,16 +81,16 @@ export const components = {
       )}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   a: ({ className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <a
       className={cn("font-medium underline underline-offset-4", className)}
       target={props.href?.startsWith("http") ? "_blank" : undefined}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   p: ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
     <p
@@ -175,7 +175,7 @@ export const components = {
     />
   ),
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
-    // BEGIN-NOSCAN
+    // @sonar-ignore
     <h3
       className={cn(
         "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
@@ -183,7 +183,7 @@ export const components = {
       )}
       {...props}
     />
-    // END-NOSCAN
+    // @end
   ),
   Image: (props: React.ComponentPropsWithoutRef<typeof BlurImage>) => {
     const { caption, alt, ...rest } = props;
