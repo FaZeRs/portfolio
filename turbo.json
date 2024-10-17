@@ -71,8 +71,7 @@
     "AUTH_SECRET",
     "PORT",
     "RESEND_API_KEY",
-    "RESEND_FROM_EMAIL",
-    "NEXT_PUBLIC_BASE_URL"
+    "RESEND_FROM_EMAIL"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",
