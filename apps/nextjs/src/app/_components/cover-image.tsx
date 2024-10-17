@@ -19,7 +19,7 @@ export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
           height={1080}
           placeholder="blur"
           blurDataURL={src}
-          className="rounded-8 animate-reveal aspect-[16/9] rounded-xl object-cover"
+          className="rounded-8 animate-reveal aspect-[16/9] rounded-xl object-cover shadow-xl saturate-0 filter"
           priority
         />
 
