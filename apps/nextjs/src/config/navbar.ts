@@ -6,10 +6,6 @@ export const navbarLinks: NavItem[] = [
     href: "/about",
   },
   {
-    title: "Blog",
-    href: "/blog",
-  },
-  {
     title: "Projects",
     href: "/projects",
   },
