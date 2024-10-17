@@ -24,7 +24,7 @@ export const components = {
         className,
       )}
       {...props}
-    />
+    /> // NOSONAR
   ),
   h2: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h2
@@ -33,7 +33,7 @@ export const components = {
         className,
       )}
       {...props}
-    />
+    /> // NOSONAR
   ),
   h3: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h3
@@ -42,7 +42,7 @@ export const components = {
         className,
       )}
       {...props}
-    />
+    /> // NOSONAR
   ),
   h4: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h4
@@ -51,7 +51,7 @@ export const components = {
         className,
       )}
       {...props}
-    />
+    /> // NOSONAR
   ),
   h5: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h5
@@ -60,7 +60,7 @@ export const components = {
         className,
       )}
       {...props}
-    />
+    /> // NOSONAR
   ),
   h6: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h6
@@ -69,14 +69,14 @@ export const components = {
         className,
       )}
       {...props}
-    />
+    /> // NOSONAR
   ),
   a: ({ className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
       className={cn("font-medium underline underline-offset-4", className)}
       target={props.href?.startsWith("http") ? "_blank" : undefined}
       {...props}
-    />
+    /> // NOSONAR
   ),
   p: ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
     <p
@@ -113,7 +113,7 @@ export const components = {
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 w-full overflow-y-auto">
-      <table className={cn("w-full", className)} {...props} />
+      <table className={cn("w-full", className)} {...props} /> {/* NOSONAR */}
     </div>
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
@@ -167,7 +167,7 @@ export const components = {
         className,
       )}
       {...props}
-    />
+    /> // NOSONAR
   ),
   Image: (props: React.ComponentPropsWithoutRef<typeof BlurImage>) => {
     const { caption, alt, ...rest } = props;

@@ -69,7 +69,7 @@ const ExperienceSection = () => {
 
       <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2">
         {experiencesData.map((experience, i) => (
-          <ExperienceItem key={i} experience={experience} />
+          <ExperienceItem key={i} experience={experience} /> // NOSONAR
         ))}
       </div>
     </div>

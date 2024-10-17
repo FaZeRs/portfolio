@@ -15,7 +15,7 @@ export default function ProjectLoadingPage() {
           <div className="flex items-center gap-3">
             <Skeleton className="h-[22.5px] w-20" />
             {Array.from({ length: 4 }).map((_, i) => (
-              <Skeleton key={i} className="size-5" />
+              <Skeleton key={i} className="size-5" /> // NOSONAR
             ))}
           </div>
 

@@ -14,7 +14,7 @@ type BlurImageProps = HTMLAttributes<HTMLDivElement> &
 
 export const BlurImage = forwardRef<HTMLDivElement, BlurImageProps>(
   ({ src, alt, className, lazy = true, ...rest }, ref) => {
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     return (
       <div
@@ -31,7 +31,7 @@ export const BlurImage = forwardRef<HTMLDivElement, BlurImageProps>(
           loading={lazy ? "lazy" : undefined}
           priority={!lazy}
           quality={100}
-          onLoad={() => setLoading(false)}
+          onLoad={() => setIsLoading(false)}
           {...rest}
         />
       </div>

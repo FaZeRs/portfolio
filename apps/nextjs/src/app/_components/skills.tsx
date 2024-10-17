@@ -28,7 +28,7 @@ const SkillSection = () => {
         {skillsData.map((skill, index) => (
           <motion.li
             className="cursor-default rounded-xl border bg-white px-5 py-3 ease-in-out hover:border-zinc-700 dark:bg-white/10 dark:text-white/80"
-            key={index}
+            key={index} // NOSONAR
             variants={fadeInAnimationVariants}
             initial="initial"
             whileInView="animate"

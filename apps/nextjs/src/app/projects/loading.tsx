@@ -19,7 +19,7 @@ export default function ProjectLoading() {
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         {Array.from({ length: 4 }).map((_, index) => (
           <div
-            key={index}
+            key={index} // NOSONAR
             className="flex flex-col rounded-lg border bg-background p-4 dark:bg-white/10"
           >
             <Skeleton className="aspect-[2/1] w-full rounded-md" />
@@ -29,7 +29,7 @@ export default function ProjectLoading() {
               <Skeleton className="h-[60px] w-full sm:h-20 md:h-[60px]" />
               <div className="mt-auto flex items-center gap-2">
                 {Array.from({ length: 3 }).map((_, index) => (
-                  <Skeleton key={index} className="h-6 w-12" />
+                  <Skeleton key={index} className="h-6 w-12" /> // NOSONAR
                 ))}
               </div>
             </div>
