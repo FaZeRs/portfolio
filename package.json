@@ -21,11 +21,15 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
-    "ui-add": "turbo run ui-add"
+    "ui-add": "turbo run ui-add",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:*",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "@turbo/gen": "^2.3.0",
+    "husky": "^9.1.7",
     "prettier": "catalog:",
     "turbo": "^2.3.0",
     "typescript": "catalog:"
