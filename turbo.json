@@ -3,18 +3,11 @@
   "ui": "tui",
   "tasks": {
     "topo": {
-      "dependsOn": [
-        "^topo"
-      ]
+      "dependsOn": ["^topo"]
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        ".cache/tsbuildinfo.json",
-        "dist/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": [".cache/tsbuildinfo.json", "dist/**"]
     },
     "dev": {
       "dependsOn": ["^dev"],
@@ -22,28 +15,16 @@
       "persistent": false
     },
     "format": {
-      "outputs": [
-        ".cache/.prettiercache"
-      ],
+      "outputs": [".cache/.prettiercache"],
       "outputLogs": "new-only"
     },
     "lint": {
-      "dependsOn": [
-        "^topo",
-        "^build"
-      ],
-      "outputs": [
-        ".cache/.eslintcache"
-      ]
+      "dependsOn": ["^topo", "^build"],
+      "outputs": [".cache/.eslintcache"]
     },
     "typecheck": {
-      "dependsOn": [
-        "^topo",
-        "^build"
-      ],
-      "outputs": [
-        ".cache/tsbuildinfo.json"
-      ]
+      "dependsOn": ["^topo", "^build"],
+      "outputs": [".cache/tsbuildinfo.json"]
     },
     "clean": {
       "cache": false
@@ -80,6 +61,7 @@
     "VERCEL",
     "VERCEL_ENV",
     "VERCEL_URL",
-    "npm_lifecycle_event"
+    "npm_lifecycle_event",
+    "NEXT_RUNTIME"
   ]
 }

@@ -10,6 +10,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
+    NEXT_RUNTIME: z.enum(["nodejs", "edge"]).default("nodejs"),
   },
   /**
    * Specify your server-side environment variables schema here.
@@ -31,6 +32,7 @@ export const env = createEnv({
    */
   experimental__runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    NEXT_RUNTIME: process.env.NEXT_RUNTIME,
   },
   skipValidation:
     !!process.env.CI || process.env.npm_lifecycle_event === "lint",
