@@ -39,8 +39,8 @@
     "@radix-ui/react-tooltip": "^1.1.4",
     "class-variance-authority": "^0.7.1",
     "cmdk": "1.0.0",
-    "lucide-react": "^0.453.0",
-    "next-themes": "^0.3.0",
+    "lucide-react": "^0.468.0",
+    "next-themes": "^0.4.4",
     "react-hook-form": "^7.54.0",
     "react-medium-image-zoom": "^5.2.12",
     "react-use": "^17.6.0",
@@ -53,15 +53,15 @@
     "@acme/prettier-config": "workspace:*",
     "@acme/tailwind-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
-    "@types/react": "catalog:react18",
+    "@types/react": "catalog:react19",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "react": "catalog:react18",
+    "react": "catalog:react19",
     "typescript": "catalog:",
     "zod": "catalog:"
   },
   "peerDependencies": {
-    "react": "catalog:react18",
+    "react": "catalog:react19",
     "zod": "catalog:"
   },
   "prettier": "@acme/prettier-config"
