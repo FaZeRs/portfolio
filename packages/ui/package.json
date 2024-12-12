@@ -4,23 +4,38 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/src/index.d.ts",
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "types": "./dist/src/*.d.ts",
-      "default": [
-        "./src/*.ts",
-        "./src/*.tsx"
-      ]
-    }
+    ".": "./src/index.ts",
+    "./button": "./src/button.tsx",
+    "./callout": "./src/callout.tsx",
+    "./code-block-header": "./src/code-block-header.tsx",
+    "./code-block": "./src/code-block.tsx",
+    "./code-playground": "./src/code-playground.tsx",
+    "./collapsible": "./src/collapsible.tsx",
+    "./command": "./src/command.tsx",
+    "./component-preview": "./src/component-preview.tsx",
+    "./copy-button": "./src/copy-button.tsx",
+    "./dialog": "./src/dialog.tsx",
+    "./dropdown-menu": "./src/dropdown-menu.tsx",
+    "./files": "./src/files.tsx",
+    "./folder-tree": "./src/folder-tree.tsx",
+    "./form": "./src/form.tsx",
+    "./grid-container": "./src/grid-container.tsx",
+    "./icon": "./src/icon.tsx",
+    "./image-zoom": "./src/image-zoom.tsx",
+    "./input": "./src/input.tsx",
+    "./label": "./src/label.tsx",
+    "./loading-skeleton": "./src/loading-skeleton.tsx",
+    "./navigation-menu": "./src/navigation-menu.tsx",
+    "./skeleton": "./src/skeleton.tsx",
+    "./textarea": "./src/textarea.tsx",
+    "./theme": "./src/theme.tsx",
+    "./toast": "./src/toast.tsx",
+    "./tooltip": "./src/tooltip.tsx",
+    "./youtube": "./src/youtube.tsx"
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",

@@ -13,5 +13,6 @@
     "utils": "@acme/ui",
     "components": "src/",
     "ui": "src/"
-  }
+  },
+  "iconLibrary": "lucide"
 }

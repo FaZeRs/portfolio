@@ -6,9 +6,9 @@ import { projectsData } from "~/constants/projects-data";
 import PageHeading from "../../_components/page-heading";
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export function generateStaticParams() {
@@ -17,10 +17,11 @@ export function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
-}: Readonly<ProjectPageProps>): Metadata {
-  const project = projectsData.find((project) => project.slug === params.slug);
+}: Readonly<ProjectPageProps>): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projectsData.find((project) => project.slug === slug);
 
   if (!project) {
     notFound();
@@ -37,8 +38,11 @@ export function generateMetadata({
   };
 }
 
-export default function ProjectPage({ params }: Readonly<ProjectPageProps>) {
-  const project = projectsData.find((project) => project.slug === params.slug);
+export default async function ProjectPage({
+  params,
+}: Readonly<ProjectPageProps>) {
+  const { slug } = await params;
+  const project = projectsData.find((project) => project.slug === slug);
   if (!project) return notFound();
 
   return (

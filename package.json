@@ -2,7 +2,7 @@
   "name": "naurislinde-portfolio",
   "private": true,
   "engines": {
-    "node": ">=20.16.0",
+    "node": ">=22.11.0",
     "pnpm": ">=9.6.0"
   },
   "packageManager": "pnpm@9.15.0",
