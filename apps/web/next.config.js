@@ -7,12 +7,6 @@ await createJiti(fileURLToPath(import.meta.url)).import("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: true,
-
-  experimental: {
-    instrumentationHook: true,
-  },
-
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@acme/api",

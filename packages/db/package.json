@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "@vercel/postgres": "^0.10.0",
-    "drizzle-orm": "^0.35.3",
-    "drizzle-zod": "^0.5.1",
+    "drizzle-orm": "^0.38.0",
+    "drizzle-zod": "^0.6.0",
     "zod": "catalog:"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "@acme/prettier-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
     "dotenv-cli": "^7.4.4",
-    "drizzle-kit": "^0.26.2",
+    "drizzle-kit": "^0.30.0",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"

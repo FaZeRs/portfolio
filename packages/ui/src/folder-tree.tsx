@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import cx from "clsx";
 import { FileCode, Folder } from "lucide-react";
 
@@ -38,7 +38,7 @@ const Inner = ({ data, level }: InnerProps) => {
     <>
       {data.map((node) => {
         return (
-          <React.Fragment key={node.name}>
+          <Fragment key={node.name}>
             <div
               className={cx(
                 "flex items-center space-x-2 border-l-4 border-l-transparent pr-4 before:ml-2 before:mr-4 before:inline-block before:w-4 before:text-right before:[content:counter(line)] before:[counter-increment:line]",
@@ -76,7 +76,7 @@ const Inner = ({ data, level }: InnerProps) => {
             </div>
 
             {node.children && <Inner data={node.children} level={level + 1} />}
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </>
