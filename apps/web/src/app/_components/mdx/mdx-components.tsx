@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
-import { useMDXComponent } from "next-contentlayer/hooks";
+import { useMDXComponent } from "next-contentlayer2/hooks";
 
 import { cn } from "@acme/ui";
 import { Callout } from "@acme/ui/callout";
