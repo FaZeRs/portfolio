@@ -44,7 +44,7 @@ export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
 
             <div className="flex items-center gap-1">
               <Info size={16} />
-              <span className="text-sm">29 years old</span>
+              <span className="text-sm">30 years old</span>
             </div>
           </div>
         </div>
