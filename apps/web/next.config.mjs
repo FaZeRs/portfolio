@@ -7,6 +7,8 @@ await createJiti(fileURLToPath(import.meta.url)).import("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
+  reactStrictMode: true,
+
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@acme/api",
@@ -15,6 +17,7 @@ const config = {
     "@acme/ui",
     "@acme/validators",
     "@acme/transactional",
+    "next-mdx-remote",
   ],
 
   /** We already do linting and typechecking as separate tasks in CI */
@@ -26,6 +29,10 @@ const config = {
       { hostname: "avatars.githubusercontent.com" },
       { hostname: "images.unsplash.com" },
     ],
+  },
+
+  env: {
+    NEXT_TELEMETRY_DISABLED: "1",
   },
 };
 

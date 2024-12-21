@@ -5,7 +5,7 @@ import { siGithub } from "simple-icons";
 import Icon from "@acme/ui/icon";
 
 import type { Project } from "~/types/project";
-import ReactMarkdownComponent from "./mdx/react-markdown";
+import { CustomMDX } from "./mdx/mdx";
 import ProjectLink from "./project-link";
 import ProjectStacks from "./project-stacks";
 
@@ -68,7 +68,7 @@ export default function ProjectContent({
 
       {content && (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
-          <ReactMarkdownComponent>{content}</ReactMarkdownComponent>
+          <CustomMDX source={content} />
         </div>
       )}
     </div>

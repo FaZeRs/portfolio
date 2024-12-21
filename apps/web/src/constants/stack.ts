@@ -5,6 +5,7 @@ import {
   siCplusplus,
   siCss3,
   siDocker,
+  siDrizzle,
   siExpress,
   siHtml5,
   siJavascript,
@@ -19,6 +20,8 @@ import {
   siQt,
   siReact,
   siTailwindcss,
+  siTrpc,
+  siTurborepo,
   siTypescript,
   siVite,
   siVuedotjs,
@@ -30,7 +33,7 @@ export type Stack = Record<string, SimpleIcon>;
 export const STACKS: Stack = {
   PHP: siPhp,
   JavaScript: siJavascript,
-  Typescript: siTypescript,
+  TypeScript: siTypescript,
   "Next.js": siNextdotjs,
   "React.js": siReact,
   TailwindCSS: siTailwindcss,
@@ -51,4 +54,7 @@ export const STACKS: Stack = {
   Docker: siDocker,
   Python: siPython,
   NestJS: siNestjs,
+  Turborepo: siTurborepo,
+  Trpc: siTrpc,
+  Drizzle: siDrizzle,
 };

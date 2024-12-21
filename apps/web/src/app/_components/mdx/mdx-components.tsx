@@ -1,5 +1,4 @@
 import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
-import { useMDXComponent } from "next-contentlayer2/hooks";
 
 import { cn } from "@acme/ui";
 import { Callout } from "@acme/ui/callout";
@@ -208,18 +207,3 @@ export const components = {
   Folder,
   File,
 };
-
-interface MdxProps {
-  code: string;
-}
-
-const Mdx = ({ code }: MdxProps) => {
-  const Component = useMDXComponent(code);
-  return (
-    <div>
-      <Component components={components} />
-    </div>
-  );
-};
-
-export default Mdx;
