@@ -329,4 +329,49 @@ This project is licensed under the MIT License
       },
     ],
   },
+  {
+    id: 4,
+    title: "Baltic Probiotics",
+    slug: "baltic-probiotics",
+    description: "Baltic Probiotics is a company that sells probiotics",
+    content: `# Baltic Probiotics
+
+Baltic Probiotics is a e-commerce website for a company that sells probiotics. Website frontend is built with Nuxt.js and backend is built with Laravel. 
+
+## Tech Stack
+
+- **Nuxt.js** - Vue.js framework
+- **Vue.js** - JavaScript framework
+- **Bootstrap** - CSS framework
+- **PHP** - Server-side scripting language
+- **Docker** - Containerization platform
+
+## Links
+
+- [Demo](https://balticprobiotics.lv)
+    `,
+    isFeature: false,
+    demoUrl: "https://balticprobiotics.lv",
+    imageUrl: "/images/projects/baltic-probiotics.png",
+    stack: [
+      {
+        name: "Nuxt.js",
+      },
+      {
+        name: "Vue.js",
+      },
+      {
+        name: "Bootstrap",
+      },
+      {
+        name: "PHP",
+      },
+      {
+        name: "Laravel",
+      },
+      {
+        name: "Docker",
+      },
+    ],
+  },
 ];
