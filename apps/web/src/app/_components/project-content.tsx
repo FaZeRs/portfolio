@@ -16,8 +16,7 @@ interface ProjectContentProps {
 export default function ProjectContent({
   project,
 }: Readonly<ProjectContentProps>) {
-  const { projectStack, githubUrl, demoUrl, imageUrl, title, content } =
-    project;
+  const { stack, githubUrl, demoUrl, imageUrl, title, content } = project;
 
   const projectLinks = [
     {
@@ -39,7 +38,7 @@ export default function ProjectContent({
             Tech Stack :
           </span>
 
-          <ProjectStacks projectStack={projectStack} />
+          <ProjectStacks projectStack={stack} />
         </div>
 
         <div className="flex items-center gap-4">

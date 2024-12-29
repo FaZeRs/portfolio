@@ -14,6 +14,7 @@ import {
   siNextdotjs,
   siNodedotjs,
   siNuxtdotjs,
+  siOllama,
   siPhp,
   siPrisma,
   siPython,
@@ -57,4 +58,5 @@ export const STACKS: Stack = {
   Turborepo: siTurborepo,
   Trpc: siTrpc,
   Drizzle: siDrizzle,
+  Ollama: siOllama,
 };

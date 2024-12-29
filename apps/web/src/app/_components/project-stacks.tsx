@@ -6,18 +6,18 @@ import {
   TooltipTrigger,
 } from "@acme/ui/tooltip";
 
-import type { ProjectStack } from "~/types/project";
+import type { Stack } from "~/types/project";
 import { STACKS } from "~/constants/stack";
 
 interface StackProps {
-  projectStack: ProjectStack[];
+  projectStack: Stack[];
 }
 
 export default function ProjectStacks({ projectStack }: Readonly<StackProps>) {
   return (
     <div className="flex items-center gap-3">
-      {projectStack.map(({ stack }) => (
-        <TooltipProvider key={stack.id} delayDuration={200}>
+      {projectStack.map((stack) => (
+        <TooltipProvider key={stack.name} delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
               {STACKS[stack.name] && (

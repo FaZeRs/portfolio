@@ -12,8 +12,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { title, description, slug, imageUrl, isFeature, projectStack } =
-    project;
+  const { title, description, slug, imageUrl, isFeature, stack } = project;
 
   return (
     <Link
@@ -50,7 +49,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           {description}
         </p>
 
-        <ProjectStacks projectStack={projectStack} />
+        <ProjectStacks projectStack={stack} />
       </div>
     </Link>
   );

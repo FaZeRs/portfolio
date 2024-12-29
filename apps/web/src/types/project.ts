@@ -1,11 +1,5 @@
 export interface Stack {
-  id: number;
   name: string;
-}
-
-export interface ProjectStack {
-  id: number;
-  stack: Stack;
 }
 
 export interface Project {
@@ -18,5 +12,5 @@ export interface Project {
   isFeature: boolean;
   githubUrl: string;
   demoUrl: string;
-  projectStack: ProjectStack[];
+  stack: Stack[];
 }
