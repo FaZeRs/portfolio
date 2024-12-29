@@ -17,6 +17,11 @@ export default function ProjectContent({
   project,
 }: Readonly<ProjectContentProps>) {
   const { stack, githubUrl, demoUrl, imageUrl, title, content } = project;
+  const thumbnailUrl =
+    imageUrl ??
+    `https://placehold.co/1000x600/darkgray/white/png?text=${encodeURIComponent(
+      title,
+    )}`;
 
   const projectLinks = [
     {
@@ -58,7 +63,7 @@ export default function ProjectContent({
 
       <div className="relative aspect-[16/9] overflow-hidden">
         <Image
-          src={imageUrl}
+          src={thumbnailUrl}
           alt={title}
           fill
           className="scale-100 rounded-lg border object-cover blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"

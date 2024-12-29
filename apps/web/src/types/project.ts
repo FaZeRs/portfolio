@@ -8,9 +8,9 @@ export interface Project {
   description: string;
   content: string;
   slug: string;
-  imageUrl: string;
-  isFeature: boolean;
-  githubUrl: string;
-  demoUrl: string;
+  imageUrl?: string;
+  isFeature?: boolean;
+  githubUrl?: string;
+  demoUrl?: string;
   stack: Stack[];
 }

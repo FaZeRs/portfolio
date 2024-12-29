@@ -13,7 +13,11 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const { title, description, slug, imageUrl, isFeature, stack } = project;
-
+  const thumbnailUrl =
+    imageUrl ??
+    `https://placehold.co/600x400/darkgray/white/png?text=${encodeURIComponent(
+      title,
+    )}`;
   return (
     <Link
       href={`/projects/${slug}`}
@@ -28,7 +32,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <div className="relative aspect-[2/1] w-full overflow-hidden rounded-md border">
         <Image
-          src={imageUrl}
+          src={thumbnailUrl}
           alt={description}
           width={1200}
           height={630}

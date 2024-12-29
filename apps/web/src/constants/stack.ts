@@ -20,6 +20,7 @@ import {
   siPython,
   siQt,
   siReact,
+  siRust,
   siTailwindcss,
   siTrpc,
   siTurborepo,
@@ -59,4 +60,5 @@ export const STACKS: Stack = {
   Trpc: siTrpc,
   Drizzle: siDrizzle,
   Ollama: siOllama,
+  Rust: siRust,
 };

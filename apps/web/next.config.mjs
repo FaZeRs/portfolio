@@ -28,6 +28,7 @@ const config = {
     remotePatterns: [
       { hostname: "avatars.githubusercontent.com" },
       { hostname: "images.unsplash.com" },
+      { hostname: "placehold.co" },
     ],
   },
 
