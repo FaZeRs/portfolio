@@ -374,4 +374,49 @@ Baltic Probiotics is a e-commerce website for a company that sells probiotics. W
       },
     ],
   },
+  {
+    id: 5,
+    title: "Pūķarags",
+    slug: "pukarags",
+    description: "Pūķarags is a recreational complex",
+    content: `# Pūķarags
+
+Pūķarags is an online reservation website for a company that rents out recreational facilities. Website frontend is built with Nuxt.js and backend is built with Laravel. 
+
+## Tech Stack
+
+- **Nuxt.js** - Vue.js framework
+- **Vue.js** - JavaScript framework
+- **Bootstrap** - CSS framework
+- **PHP** - Server-side scripting language
+- **Docker** - Containerization platform
+
+## Links
+
+- [Demo](https://pukarags.lv)
+    `,
+    isFeature: false,
+    demoUrl: "https://pukarags.lv",
+    imageUrl: "/images/projects/pukarags.png",
+    stack: [
+      {
+        name: "Nuxt.js",
+      },
+      {
+        name: "Vue.js",
+      },
+      {
+        name: "Bootstrap",
+      },
+      {
+        name: "PHP",
+      },
+      {
+        name: "Laravel",
+      },
+      {
+        name: "Docker",
+      },
+    ],
+  },
 ];
