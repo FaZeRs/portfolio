@@ -231,4 +231,102 @@ This project is licensed under the MIT License. See the LICENSE file for details
       },
     ],
   },
+  {
+    id: 3,
+    title: "cppup",
+    slug: "cppup",
+    description: "CLI tool for creating C++ projects",
+    content: `# cppup - Modern C++ Project Generator
+
+## Project Overview
+cppup is a powerful and interactive command-line tool written in Rust that streamlines the creation of modern C++ projects. It helps developers quickly scaffold new C++ projects with industry best practices and customizable configurations.
+
+## Key Features
+
+### 🎯 Interactive Project Setup
+- Smart CLI interface with guided prompts
+- Configurable project structure for both executables and libraries
+- Customizable project metadata and settings
+
+### 🏗️ Build System Integration
+- Support for CMake and Make build systems
+- Automated build configuration generation
+- Cross-platform compatibility
+
+### 📦 Package Management
+- Integration with popular package managers:
+  - Conan
+  - Vcpkg
+- Automated dependency management setup
+
+### ✅ Testing Framework Support
+- Multiple testing frameworks:
+  - Google Test
+  - Catch2
+  - Doctest
+  - Boost.Test
+- Automated test infrastructure setup
+
+### 🔍 Code Quality Tools
+- Integration with industry-standard tools:
+  - clang-format for code formatting
+  - clang-tidy for static analysis
+  - cppcheck for additional static analysis
+
+### 📝 Project Structure
+Generated projects follow a clean, organized structure:
+
+<Files>
+  <Folder name="my-project" defaultOpen>
+    <File name="src (Source files)" />
+    <File name="include (Header files)" />
+    <File name="tests (Test files if enabled)" />
+    <File name="examples (Example code for libraries)" />
+    <File name="assets (Project assets)" />
+    <File name="build (Build output)" />
+  </Folder>
+</Files>
+
+
+## Technical Implementation
+- Written in Rust for performance and reliability
+- Uses Handlebars templating for file generation
+- Implements robust error handling and validation
+- Provides both interactive and non-interactive modes
+
+## Usage Example
+\`\`\`bash
+cppup --name my-project \\
+      --description "My awesome C++ project" \\
+      --project-type executable \\
+      --build-system cmake \\
+      --cpp-standard 17 \\
+      --package-manager conan \\
+      --test-framework doctest \\
+      --license MIT
+\`\`\`
+
+## Technologies Used
+- **Language**: Rust
+- **Dependencies**: 
+  - Handlebars for templating
+  - Clap for CLI argument parsing
+  - Inquire for interactive prompts
+  - Anyhow for error handling
+
+## License
+This project is licensed under the MIT License
+
+## Links
+- [GitHub Repository](https://github.com/fazers/cppup)
+- [Issue Tracker](https://github.com/fazers/cppup/issues)
+    `,
+    isFeature: false,
+    githubUrl: "https://github.com/fazers/cppup",
+    stack: [
+      {
+        name: "Rust",
+      },
+    ],
+  },
 ];
