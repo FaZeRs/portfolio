@@ -31,15 +31,15 @@
   },
   "dependencies": {
     "@vercel/postgres": "^0.10.0",
-    "drizzle-orm": "^0.38.2",
-    "drizzle-zod": "^0.6.0",
+    "drizzle-orm": "^0.38.3",
+    "drizzle-zod": "^0.6.1",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:*",
     "@acme/prettier-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
-    "dotenv-cli": "^7.4.4",
+    "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.30.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
