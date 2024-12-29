@@ -1,6 +1,7 @@
-export const projectsData = [
+import type { Project } from "~/types/project";
+
+export const projectsData: Project[] = [
   {
-    id: 1,
     title: "Portfolio",
     slug: "portfolio",
     description:
@@ -115,7 +116,6 @@ The website is deployed on Vercel with:
     ],
   },
   {
-    id: 2,
     title: "LLM Chat",
     slug: "llm-chat",
     description: "A chat application built with C++, Qt 6 and Ollama",
@@ -232,7 +232,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
     ],
   },
   {
-    id: 3,
     title: "cppup",
     slug: "cppup",
     description: "CLI tool for creating C++ projects",
@@ -330,7 +329,6 @@ This project is licensed under the MIT License
     ],
   },
   {
-    id: 4,
     title: "Baltic Probiotics",
     slug: "baltic-probiotics",
     description: "Baltic Probiotics is a company that sells probiotics",
@@ -375,7 +373,6 @@ Baltic Probiotics is a e-commerce website for a company that sells probiotics. W
     ],
   },
   {
-    id: 5,
     title: "Pūķarags",
     slug: "pukarags",
     description: "Pūķarags is a recreational complex",
