@@ -7,6 +7,8 @@ import { ContactEmail } from "@acme/transactional/emails/contact";
 import { siteConfig } from "~/config/site";
 import { env } from "~/env";
 
+export const runtime = "edge";
+
 const resend = new Resend(env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {

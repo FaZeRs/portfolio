@@ -12,7 +12,7 @@ import { siteConfig } from "~/config/site";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Header } from "./_components/header";
 
-import "~/app/globals.css";
+import "~/styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
