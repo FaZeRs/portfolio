@@ -87,7 +87,7 @@ The website is deployed on Vercel with:
 - Edge functions
 - Analytics and Speed Insights
 - Sentry error tracking`,
-    imageUrl: "/images/projects/portfolio.png",
+    imageUrl: "/images/projects/portfolio.avif",
     isFeature: true,
     githubUrl: "https://github.com/fazers/portfolio",
     demoUrl: "https://naurislinde.dev",
@@ -213,7 +213,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - [Documentation](https://fazers.github.io/llm-chat/)
 - [Bug Tracker](https://github.com/FaZeRs/llm-chat/issues)
 `,
-    imageUrl: "/images/projects/llm-chat.png",
+    imageUrl: "/images/projects/llm-chat.avif",
     isFeature: false,
     githubUrl: "https://github.com/fazers/llm-chat",
     stack: [
@@ -460,7 +460,7 @@ Baltic Probiotics is a e-commerce website for a company that sells probiotics. W
     `,
     isFeature: false,
     demoUrl: "https://balticprobiotics.lv",
-    imageUrl: "/images/projects/baltic-probiotics.png",
+    imageUrl: "/images/projects/baltic-probiotics.avif",
     stack: [
       {
         name: "Nuxt.js",
@@ -504,7 +504,7 @@ Pūķarags is an online reservation website for a company that rents out recreat
     `,
     isFeature: false,
     demoUrl: "https://pukarags.lv",
-    imageUrl: "/images/projects/pukarags.png",
+    imageUrl: "/images/projects/pukarags.avif",
     stack: [
       {
         name: "Nuxt.js",
