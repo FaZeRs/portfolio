@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
@@ -25,6 +25,8 @@ interface MainNavbarProps {
 
 const NavBar = ({ children }: MainNavbarProps) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
+  const { location } = useRouterState();
+  const segment = location.pathname.split("/")[1];
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
@@ -54,7 +56,9 @@ const NavBar = ({ children }: MainNavbarProps) => {
                   target={link.href?.startsWith("http") ? "_blank" : "_self"}
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    // link.href?.startsWith(`/${segment}`) && "bg-accent font-semibold",
+                    segment &&
+                      link.href?.startsWith(`/${segment}`) &&
+                      "bg-accent font-semibold",
                     link.disabled && "cursor-not-allowed opacity-80",
                   )}
                   asChild
