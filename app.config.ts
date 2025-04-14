@@ -1,10 +1,15 @@
+import { wrapVinxiConfigWithSentry } from "@sentry/tanstackstart-react";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "@tanstack/react-start/config";
 import unfonts from "unplugin-fonts/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
+const config = defineConfig({
   vite: {
+    build: {
+      sourcemap: true,
+    },
     plugins: [
       tsConfigPaths({
         projects: ["./tsconfig.json"],
@@ -14,6 +19,12 @@ export default defineConfig({
         google: {
           families: ["Geist", "Geist Mono"],
         },
+      }),
+      sentryVitePlugin({
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        telemetry: false,
       }),
     ],
     ssr: {
@@ -51,4 +62,13 @@ export default defineConfig({
     // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
     // preset: "netlify",
   },
+});
+
+export default wrapVinxiConfigWithSentry(config, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // Only print logs for uploading source maps in CI
+  // Set to `true` to suppress logs
+  silent: !process.env.CI,
 });
