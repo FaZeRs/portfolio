@@ -44,6 +44,10 @@ export default defineConfig({
   },
 
   server: {
+    prerender: {
+      routes: ["/"],
+      crawlLinks: true,
+    },
     // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
     // preset: "netlify",
   },
