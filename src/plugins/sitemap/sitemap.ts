@@ -1,4 +1,3 @@
-// import { projectsData } from "~/lib/constants/projects-data";
 import { type FileRouteTypes } from "~/routeTree.gen";
 import { projectsData } from "../../lib/constants/projects-data";
 import { type Sitemap } from "./types";
@@ -9,18 +8,9 @@ export const sitemap: Sitemap<TRoutes> = {
   siteUrl: "https://naurislinde.dev",
   defaultPriority: 0.5,
   routes: {
-    "/": {
-      priority: 1,
-      changeFrequency: "daily",
-    },
-    "/about": {
-      priority: 1,
-      changeFrequency: "daily",
-    },
-    "/projects": {
-      priority: 1,
-      changeFrequency: "daily",
-    },
+    "/": { priority: 1, changeFrequency: "daily" },
+    "/about": { priority: 1, changeFrequency: "daily" },
+    "/projects": { priority: 1, changeFrequency: "daily" },
     "/projects/$projectId": async () => {
       const projects = projectsData;
 

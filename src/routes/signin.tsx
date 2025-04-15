@@ -49,7 +49,12 @@ interface SignInButtonProps extends ComponentProps<typeof Button> {
   label: string;
 }
 
-function SignInButton({ provider, label, className, ...props }: SignInButtonProps) {
+function SignInButton({
+  provider,
+  label,
+  className,
+  ...props
+}: Readonly<SignInButtonProps>) {
   return (
     <Button
       onClick={() =>

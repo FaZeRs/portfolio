@@ -32,10 +32,9 @@ export type CommonSitemapFields = {
  * or a function returning that object (sync or async). The function
  * receives the route string (e.g. "/home").
  */
-type StaticRouteEntry = CommonSitemapFields;
 export type StaticRouteValue<R extends string> =
-  | StaticRouteEntry
-  | ((route: R) => StaticRouteEntry | Promise<StaticRouteEntry>);
+  | CommonSitemapFields
+  | ((route: R) => CommonSitemapFields | Promise<CommonSitemapFields>);
 
 /**
  * A "dynamic" route has $params => it's either an array of objects

@@ -41,8 +41,8 @@ async function generateSitemap<T extends string>(sitemap: Sitemap<T>) {
         entry.lastModified instanceof Date
           ? entry.lastModified.toISOString()
           : entry.lastModified,
-      changefreq: entry.changeFrequency || defaultChangeFreq,
-      priority: entry.priority || defaultPriority,
+      changefreq: entry.changeFrequency ?? defaultChangeFreq,
+      priority: entry.priority ?? defaultPriority,
     };
   };
 

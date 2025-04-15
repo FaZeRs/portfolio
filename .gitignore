@@ -20,3 +20,4 @@ dist
 
 .cursor
 /public/sitemap.xml
+.sonarlint
