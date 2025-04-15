@@ -25,7 +25,7 @@ interface CalloutProps {
   variant?: "default" | "warning" | "danger";
 }
 
-export function Callout({
+export default function Callout({
   children,
   variant = "default",
   ...props

@@ -1,7 +1,5 @@
 import { Info, LocateIcon } from "lucide-react";
 
-import { AVATAR_URL } from "~/lib/constants/author-data";
-
 interface CoverImageProps {
   src: string;
   alt: string;
@@ -25,7 +23,7 @@ export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
               alt="Avatar"
               height={933}
               width={933}
-              src={AVATAR_URL}
+              src="/images/avatar.avif"
               className="!m-0 h-full rounded-full bg-gradient-to-tl from-purple-700/60 to-rose-400/60 object-cover p-[3px] shadow-lg ring-[5px] ring-purple-500/10"
             />
           </div>

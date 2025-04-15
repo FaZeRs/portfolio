@@ -1,19 +1,9 @@
-import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
+import { lazy, type AnchorHTMLAttributes, type HTMLAttributes } from "react";
 
-import { Callout } from "~/lib/components/ui/callout";
 import CodeBlock from "~/lib/components/ui/code-block";
 import CodeBlockHeader from "~/lib/components/ui/code-block-header";
-import CodePlayground from "~/lib/components/ui/code-playground";
-import ComponentPreview from "~/lib/components/ui/component-preview";
 import { File, Files, Folder } from "~/lib/components/ui/files";
-import FolderTree from "~/lib/components/ui/folder-tree";
-import GridContainer from "~/lib/components/ui/grid-container";
-import ImageZoom from "~/lib/components/ui/image-zoom";
-import LoadingSkeleton from "~/lib/components/ui/loading-skeleton";
-import Youtube from "~/lib/components/ui/youtube";
 import { cn } from "~/lib/utils";
-
-import { BlurImage } from "../blur-image";
 
 export const components = {
   h1: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
@@ -155,25 +145,14 @@ export const components = {
     />
     // @end
   ),
-  Image: (props: React.ComponentPropsWithoutRef<typeof BlurImage>) => {
-    const { caption, alt, ...rest } = props;
-
-    return (
-      <>
-        <ImageZoom>
-          <BlurImage className="mt-6 rounded-lg border" alt={alt} {...rest} />
-        </ImageZoom>
-        {caption && <figcaption className="mt-4 text-center">{alt}</figcaption>}
-      </>
-    );
-  },
-  Callout,
-  GridContainer,
-  LoadingSkeleton,
-  ComponentPreview,
-  FolderTree,
-  CodePlayground,
-  Youtube,
+  Image: lazy(() => import("~/lib/components/zoom-image")),
+  Callout: lazy(() => import("~/lib/components/ui/callout")),
+  GridContainer: lazy(() => import("~/lib/components/ui/grid-container")),
+  LoadingSkeleton: lazy(() => import("~/lib/components/ui/loading-skeleton")),
+  ComponentPreview: lazy(() => import("~/lib/components/ui/component-preview")),
+  FolderTree: lazy(() => import("~/lib/components/ui/folder-tree")),
+  CodePlayground: lazy(() => import("~/lib/components/ui/code-playground")),
+  Youtube: lazy(() => import("~/lib/components/ui/youtube")),
   files: Files,
   folder: Folder,
   file: File,

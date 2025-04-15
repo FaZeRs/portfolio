@@ -1,12 +1,15 @@
 import { Share } from "lucide-react";
+import { lazy, Suspense } from "react";
 import { siGithub } from "simple-icons";
 
 import Icon from "~/lib/components/ui/icon";
 
 import type { Project } from "~/types/project";
-import { CustomMDX } from "./mdx/mdx";
+
 import ProjectLink from "./project-link";
 import ProjectStacks from "./project-stacks";
+
+const CustomMDX = lazy(() => import("./mdx/mdx"));
 
 interface ProjectContentProps {
   project: Project;
@@ -66,7 +69,9 @@ export default function ProjectContent({ project }: Readonly<ProjectContentProps
 
       {content && (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
-          <CustomMDX source={content} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <CustomMDX source={content} />
+          </Suspense>
         </div>
       )}
     </div>

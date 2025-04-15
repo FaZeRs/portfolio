@@ -10,6 +10,17 @@ const config = defineConfig({
   vite: {
     build: {
       sourcemap: true,
+      minify: "terser",
+      target: "esnext",
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+      assetsInlineLimit: 4096,
+      cssCodeSplit: true,
+      chunkSizeWarningLimit: 1000,
     },
     plugins: [
       tsConfigPaths({

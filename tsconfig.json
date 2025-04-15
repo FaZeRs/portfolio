@@ -18,6 +18,7 @@
       "~/*": ["./src/*"]
     },
     "noEmit": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "allowImportingTsExtensions": true
   }
 }

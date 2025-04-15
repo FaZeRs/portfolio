@@ -5,8 +5,6 @@ import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "~/lib/components/ui/button";
 import { cn } from "~/lib/utils";
 
-import { AVATAR_URL } from "~/lib/constants/author-data";
-
 const Intro = () => {
   return (
     <section className="-mt-10 flex min-h-[calc(100vh-80px)] scroll-mt-[100rem] flex-col justify-center space-y-4 text-center sm:mb-0">
@@ -21,7 +19,7 @@ const Intro = () => {
             }}
           >
             <img
-              src={AVATAR_URL}
+              src="/images/avatar.avif"
               alt="Nauris Linde"
               width="320"
               height="320"

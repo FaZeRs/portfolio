@@ -10,7 +10,7 @@ import { components } from "./mdx-components";
 
 import "~/lib/styles/mdx.css";
 
-export function CustomMDX({ source }: Readonly<{ source: string }>) {
+export default function CustomMDX({ source }: Readonly<{ source: string }>) {
   const options = {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
