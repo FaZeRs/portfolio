@@ -21,12 +21,6 @@ const config = defineConfig({
           families: ["Geist", "Geist Mono"],
         },
       }),
-      sentryVitePlugin({
-        org: process.env.SENTRY_ORG,
-        project: process.env.SENTRY_PROJECT,
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        telemetry: false,
-      }),
       generateSitemap(sitemap),
     ],
     ssr: {
@@ -63,6 +57,21 @@ const config = defineConfig({
     },
     // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
     // preset: "netlify",
+  },
+
+  routers: {
+    client: {
+      vite: {
+        plugins: [
+          sentryVitePlugin({
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+            org: process.env.SENTRY_ORG,
+            project: process.env.SENTRY_PROJECT,
+            telemetry: false,
+          }),
+        ],
+      },
+    },
   },
 });
 
