@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
+import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
@@ -19,6 +20,7 @@ import { Toaster } from "~/lib/components/ui/sonner";
 import { ThemeProvider } from "~/lib/components/ui/theme";
 import { auth } from "~/lib/server/auth";
 import appCss from "~/lib/styles/app.css?url";
+import { AppRouter } from "~/trpc/router";
 
 import "unfonts.css";
 
@@ -31,6 +33,7 @@ const getUser = createServerFn({ method: "GET" }).handler(async () => {
 
 export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
   queryClient: QueryClient;
+  trpc: TRPCOptionsProxy<AppRouter>;
   user: Awaited<ReturnType<typeof getUser>>;
 }>()({
   beforeLoad: async ({ context }) => {
