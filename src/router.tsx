@@ -1,10 +1,26 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
+import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import superjson from "superjson";
 
 import { DefaultCatchBoundary } from "~/lib/components/default-catch-boundary";
 import { NotFound } from "~/lib/components/not-found";
+
+import { createServerFn } from "@tanstack/react-start";
+import { getWebRequest } from "@tanstack/react-start/server";
+import { createTRPCClient, httpBatchStreamLink, loggerLink } from "@trpc/client";
+import { getUrl } from "~/lib/utils";
+import { TRPCProvider } from "~/trpc/react";
+import { AppRouter } from "~/trpc/router";
 import { routeTree } from "./routeTree.gen";
+
+const getRequestHeaders = createServerFn({ method: "GET" }).handler(async () => {
+  const request = getWebRequest()!;
+  const headers = new Headers(request.headers);
+
+  return Object.fromEntries(headers);
+});
 
 export function createRouter() {
   const queryClient = new QueryClient({
@@ -13,24 +29,52 @@ export function createRouter() {
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60, // 1 minute
       },
+      dehydrate: { serializeData: superjson.serialize },
+      hydrate: { deserializeData: superjson.deserialize },
     },
   });
 
-  return routerWithQueryClient(
-    createTanStackRouter({
-      routeTree,
-      context: { queryClient, user: null },
-      defaultPreload: "intent",
-      // react-query will handle data fetching & caching
-      // https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#passing-all-loader-events-to-an-external-cache
-      defaultPreloadStaleTime: 0,
-      defaultErrorComponent: DefaultCatchBoundary,
-      defaultNotFoundComponent: NotFound,
-      scrollRestoration: true,
-      defaultStructuralSharing: true,
-    }),
+  const trpcClient = createTRPCClient<AppRouter>({
+    links: [
+      loggerLink({
+        enabled: (op) =>
+          process.env.NODE_ENV === "development" ||
+          (op.direction === "down" && op.result instanceof Error),
+      }),
+      httpBatchStreamLink({
+        transformer: superjson,
+        url: getUrl(),
+        async headers() {
+          return await getRequestHeaders();
+        },
+      }),
+    ],
+  });
+
+  const trpc = createTRPCOptionsProxy<AppRouter>({
+    client: trpcClient,
     queryClient,
-  );
+  });
+
+  const router = createTanStackRouter({
+    context: { queryClient, trpc, user: null },
+    routeTree,
+    defaultPreload: "intent",
+    defaultPreloadStaleTime: 0,
+    defaultErrorComponent: DefaultCatchBoundary,
+    defaultNotFoundComponent: NotFound,
+    scrollRestoration: true,
+    defaultStructuralSharing: true,
+    Wrap: (props) => {
+      return (
+        <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
+          {props.children}
+        </TRPCProvider>
+      );
+    },
+  });
+
+  return routerWithQueryClient(router, queryClient);
 }
 
 declare module "@tanstack/react-router" {
