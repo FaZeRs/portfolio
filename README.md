@@ -1,84 +1,68 @@
-# Portfolio
+# [Portfolio](https://github.com/fazers/portfolio)
 
-## Installation
+My personal portfolio website
 
-```bash
-git clone git@github.com:FaZeRs/portfolio.git
-```
+- [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler)
+- TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest)
+- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL
+- [Better Auth](https://www.better-auth.com/)
 
-## About
+## Getting Started
 
-### Folder structure:
+1. [Use this template](https://github.com/new?template_name=tanstarter&template_owner=dotnize) or clone this repository.
 
-```text
-.github
-  └─ workflows
-        └─ CI with pnpm cache setup
-.vscode
-  └─ Recommended extensions and settings for VSCode users
-apps
-  └─ web
-      ├─ Next.js 14
-      ├─ React 18
-      ├─ Tailwind CSS
-      └─ E2E Typesafe API Server & Client
-packages
-  ├─ api
-  |   └─ tRPC v11 router definition
-  ├─ auth
-  |   └─ Authentication using next-auth.
-  ├─ db
-  |   └─ Typesafe db calls using Drizzle & Supabase
-  ├─ transactional
-  |   └─ Email, SMS, and other transactional services
-  ├─ ui
-  |   └─ Start of a UI package for the webapp using shadcn-ui
-  └─ validators
-      └─ Shared validators using zod
-tooling
-  ├─ eslint
-  |   └─ shared, fine-grained, eslint presets
-  ├─ prettier
-  |   └─ shared prettier configuration
-  ├─ tailwind
-  |   └─ shared tailwind configuration
-  └─ typescript
-      └─ shared tsconfig you can extend from
-```
+2. Install dependencies:
 
-> In this template, we use `@acme` as a placeholder for package names. As a user, you might want to replace it with your own organization or project name. You can use find-and-replace to change all the instances of `@acme` to something like `@my-company` or `@project-name`.
+   ```bash
+   bun install # npm install
+   ```
 
-## Quick Start
+3. Create a `.env` file based on [`.env.example`](./.env.example).
 
-> **Note**
-> The [db](./packages/db) package is preconfigured to use Supabase and is **edge-bound** with the [Vercel Postgres](https://github.com/vercel/storage/tree/main/packages/postgres) driver. If you're using something else, make the necessary modifications to the [schema](./packages/db/src/schema) as well as the [client](./packages/db/src/index.ts) and the [drizzle config](./packages/db/drizzle.config.ts). If you want to switch to non-edge database driver, remove `export const runtime = "edge";` [from all pages and api routes](https://github.com/t3-oss/create-t3-turbo/issues/634#issuecomment-1730240214).
+4. Push the schema to your database with drizzle-kit:
 
-To get it running, follow the steps below:
+   ```bash
+   bun db push # npm run db push
+   ```
 
-### 1. Setup dependencies
+   https://orm.drizzle.team/docs/migrations
 
-```bash
-# Install dependencies
-pnpm i
+5. Run the development server:
 
-# Configure environment variables
-# There is an `.env.example` in the root directory you can use for reference
-cp .env.example .env
+   ```bash
+   bun dev # npm run dev
+   ```
 
-# Push the Drizzle schema to the database
-pnpm db:push
-```
+   The development server should be now running at [http://localhost:3000](http://localhost:3000).
 
-## Deployment
+## Issue watchlist
 
-### Next.js
+- [React Compiler docs](https://react.dev/learn/react-compiler), [Working Group](https://github.com/reactwg/react-compiler/discussions) - React Compiler is still in beta. You can disable it in [app.config.ts](./app.config.ts#L15) if you prefer.
+- https://github.com/TanStack/router/discussions/2863 - TanStack Start is currently in beta and may still undergo major changes.
+- https://github.com/shadcn-ui/ui/discussions/6714 - We're using the `canary` version of shadcn/ui for Tailwind v4 support.
 
-#### Deploy to Vercel
+## Auth
 
-Let's deploy the Next.js application to [Vercel](https://vercel.com). If you've never deployed a Turborepo app there, don't worry, the steps are quite straightforward. You can also read the [official Turborepo guide](https://vercel.com/docs/concepts/monorepos/turborepo) on deploying to Vercel.
+Better Auth is currently configured for OAuth with GitHub, Google, and Discord, but can be easily modified to use other providers.
 
-1. Create a new project on Vercel, select the `apps/web` folder as the root directory. Vercel's zero-config system should handle all configurations for you.
+If you want to use email/password authentication or change providers, update the [auth config](./src/lib/server/auth.ts#L36) and [signin page](./src/routes/signin.tsx) with your own UI. You can use [shadcn/ui login blocks](https://ui.shadcn.com/blocks/login) or [@daveyplate/better-auth-ui](https://better-auth-ui.com/) as a starting point.
 
-2. Add your `DATABASE_URL` environment variable.
+## Goodies
 
-3. Done! Your app should successfully deploy.
+#### Scripts
+
+These scripts in [package.json](./package.json#L5) use **pnpm** by default, but you can modify them to use your preferred package manager.
+
+- **`auth:generate`** - Regenerate the [auth db schema](./src/lib/server/schema/auth.schema.ts) if you've made changes to your Better Auth [config](./src/lib/server/auth.ts).
+- **`db`** - Run drizzle-kit commands. (e.g. `pnpm db generate` to generate a migration)
+- **`ui`** - The shadcn/ui CLI. (e.g. `pnpm ui add button` to add the button component)
+- **`format`** and **`lint`** - Run Prettier and ESLint.
+
+#### Utilities
+
+- [`auth-guard.ts`](./src/lib/middleware/auth-guard.ts) - Sample middleware for forcing authentication on server functions. ([see #5](https://github.com/dotnize/tanstarter/issues/5))
+
+## Building for production
+
+Read the [hosting docs](https://tanstack.com/start/latest/docs/framework/react/hosting) for information on how to deploy your TanStack Start app.
