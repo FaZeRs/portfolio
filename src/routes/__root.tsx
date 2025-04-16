@@ -20,7 +20,7 @@ import { Toaster } from "~/lib/components/ui/sonner";
 import { ThemeProvider } from "~/lib/components/ui/theme";
 import { auth } from "~/lib/server/auth";
 import appCss from "~/lib/styles/app.css?url";
-import type { AppRouter } from "../../trpc-server.handler";
+import { AppRouter } from "~/trpc/router";
 
 import "unfonts.css";
 
