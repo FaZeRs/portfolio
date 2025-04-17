@@ -4,7 +4,7 @@ import CoverImage from "~/lib/components/cover-image";
 import Icon from "~/lib/components/ui/icon";
 import { siteConfig, socialConfig } from "~/lib/config/site";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/_defaultLayout/about")({
   component: RouteComponent,
 });
 

@@ -10,3 +10,10 @@ export const navbarLinks: NavItem[] = [
     href: "/projects",
   },
 ];
+
+export const dashboardNavbarLinks: NavItem[] = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+  },
+];
