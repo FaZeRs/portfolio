@@ -3,7 +3,7 @@ import PageHeading from "~/lib/components/page-heading";
 import ProjectContent from "~/lib/components/project-content";
 import { projectsData } from "~/lib/constants/projects-data";
 
-export const Route = createFileRoute("/projects/$projectId")({
+export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
   loader: ({ params: { projectId } }) =>
     projectsData.find((project) => project.slug === projectId),
   component: RouteComponent,

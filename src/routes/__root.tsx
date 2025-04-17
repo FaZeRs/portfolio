@@ -16,7 +16,6 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { Header } from "~/lib/components/header";
 import { Toaster } from "~/lib/components/ui/sonner";
 import { ThemeProvider } from "~/lib/components/ui/theme";
 import { auth } from "~/lib/server/auth";
@@ -86,10 +85,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="container mx-auto flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
-            {children}
-          </main>
+          {children}
           <Toaster />
         </ThemeProvider>
 

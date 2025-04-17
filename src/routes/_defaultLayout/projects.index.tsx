@@ -3,7 +3,7 @@ import PageHeading from "~/lib/components/page-heading";
 import Projects from "~/lib/components/projects";
 import { projectsData } from "~/lib/constants/projects-data";
 
-export const Route = createFileRoute("/projects/")({
+export const Route = createFileRoute("/_defaultLayout/projects/")({
   component: RouteComponent,
 });
 

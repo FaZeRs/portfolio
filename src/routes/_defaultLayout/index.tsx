@@ -5,7 +5,7 @@ import ExperienceSection from "~/lib/components/experience";
 import Intro from "~/lib/components/intro";
 import SkillSection from "~/lib/components/skills";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_defaultLayout/")({
   component: Home,
   loader: ({ context }) => {
     return { user: context.user };

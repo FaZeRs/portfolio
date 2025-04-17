@@ -9,7 +9,7 @@ import { cn } from "~/lib/utils";
 
 const REDIRECT_URL = "/dashboard";
 
-export const Route = createFileRoute("/signin")({
+export const Route = createFileRoute("/_defaultLayout/signin")({
   component: AuthPage,
   beforeLoad: async ({ context }) => {
     if (context.user) {

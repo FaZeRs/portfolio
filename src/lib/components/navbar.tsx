@@ -1,6 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
-import type { ReactNode } from "react";
 import { useState } from "react";
 
 import {
@@ -16,14 +15,15 @@ import { ThemeToggle } from "~/lib/components/ui/theme";
 import { cn } from "~/lib/utils";
 
 import { navbarLinks } from "~/lib/config/navbar";
+import { NavItem } from "~/types";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";
 
 interface MainNavbarProps {
-  children?: ReactNode;
+  links: NavItem[];
 }
 
-const NavBar = ({ children }: MainNavbarProps) => {
+const NavBar = ({ links }: MainNavbarProps) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const { location } = useRouterState();
   const segment = location.pathname.split("/")[1];
@@ -32,7 +32,7 @@ const NavBar = ({ children }: MainNavbarProps) => {
     <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
       <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
-          {navbarLinks.map((link) => (
+          {links.map((link) => (
             <NavigationMenuItem key={link.title.trim()}>
               {link.content ? (
                 <>
@@ -85,7 +85,7 @@ const NavBar = ({ children }: MainNavbarProps) => {
         {showMobileMenu ? <X /> : <Menu />}
       </button>
 
-      {showMobileMenu && <MobileNav items={navbarLinks}>{children}</MobileNav>}
+      {showMobileMenu && <MobileNav items={navbarLinks} />}
     </div>
   );
 };
