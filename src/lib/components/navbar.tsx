@@ -23,7 +23,7 @@ interface MainNavbarProps {
   links: NavItem[];
 }
 
-const NavBar = ({ links }: MainNavbarProps) => {
+const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const { location } = useRouterState();
   const segment = location.pathname.split("/")[1];
