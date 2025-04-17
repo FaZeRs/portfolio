@@ -5,6 +5,7 @@ import {
   HeadContent,
   Outlet,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
@@ -70,6 +71,8 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { readonly children: React.ReactNode }) {
+  const router = useRouterState();
+
   return (
     // suppress since we're updating the "dark" class in a custom script below
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
@@ -92,7 +95,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
 
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <TanStackRouterDevtools position="bottom-right" />
-        <SpeedInsights />
+        <SpeedInsights route={router.location.pathname} />
         <Analytics />
 
         <Scripts />
