@@ -8,6 +8,10 @@ export const Route = createFileRoute("/dashboard")({
       throw redirect({ to: "/signin" });
     }
 
+    if (context.user.role !== "admin") {
+      throw redirect({ to: "/" });
+    }
+
     // `context.queryClient` is also available in our loaders
     // https://tanstack.com/start/latest/docs/framework/react/examples/start-basic-react-query
     // https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading

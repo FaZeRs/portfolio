@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { admin } from "better-auth/plugins";
 import { reactStartCookies } from "better-auth/react-start";
 
 import { db } from "./db";
@@ -11,7 +12,7 @@ export const auth = betterAuth({
   }),
 
   // https://www.better-auth.com/docs/integrations/tanstack#usage-tips
-  plugins: [reactStartCookies()],
+  plugins: [reactStartCookies(), admin()],
 
   // https://www.better-auth.com/docs/concepts/session-management#session-caching
   session: {
