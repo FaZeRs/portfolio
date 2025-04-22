@@ -13,6 +13,7 @@ import { createTRPCClient, httpBatchStreamLink, loggerLink } from "@trpc/client"
 import { getUrl } from "~/lib/utils";
 import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";
+import { env } from "./env";
 import { routeTree } from "./routeTree.gen";
 
 const getRequestHeaders = createServerFn({ method: "GET" }).handler(async () => {
@@ -38,7 +39,7 @@ export function createRouter() {
     links: [
       loggerLink({
         enabled: (op) =>
-          process.env.NODE_ENV === "development" ||
+          env.NODE_ENV === "development" ||
           (op.direction === "down" && op.result instanceof Error),
       }),
       httpBatchStreamLink({
