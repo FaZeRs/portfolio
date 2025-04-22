@@ -27,7 +27,6 @@ export function AvatarDropdown() {
   const router = useRouter();
   const initials = getInitials(session?.user?.name ?? "");
 
-  console.log(session);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
