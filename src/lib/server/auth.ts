@@ -3,10 +3,12 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin } from "better-auth/plugins";
 import { reactStartCookies } from "better-auth/react-start";
 
+import env from "@/env";
+import { getBaseUrl } from "~/lib/utils";
 import { db } from "./db";
 
 export const auth = betterAuth({
-  baseURL: process.env.VITE_BASE_URL,
+  baseURL: getBaseUrl(),
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
@@ -25,16 +27,8 @@ export const auth = betterAuth({
   // https://www.better-auth.com/docs/concepts/oauth
   socialProviders: {
     github: {
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    },
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
-    discord: {
-      clientId: process.env.DISCORD_CLIENT_ID!,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      clientId: env.GITHUB_CLIENT_ID!,
+      clientSecret: env.GITHUB_CLIENT_SECRET!,
     },
   },
 

@@ -1,15 +1,16 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import type { ComponentProps } from "react";
-import type { SimpleIcon } from "simple-icons";
-import { siGithub } from "simple-icons";
+import { siGithub, type SimpleIcon } from "simple-icons";
 import authClient from "~/lib/auth-client";
+import Logo from "~/lib/components/logo";
 import { Button } from "~/lib/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "~/lib/components/ui/card";
 import Icon from "~/lib/components/ui/icon";
 import { cn } from "~/lib/utils";
 
 const REDIRECT_URL = "/dashboard";
 
-export const Route = createFileRoute("/_defaultLayout/signin")({
+export const Route = createFileRoute("/_authLayout/signin")({
   component: AuthPage,
   beforeLoad: async ({ context }) => {
     if (context.user) {
@@ -22,16 +23,22 @@ export const Route = createFileRoute("/_defaultLayout/signin")({
 
 function AuthPage() {
   return (
-    <div className="flex min-h-[calc(100vh-200px)] items-center justify-center">
-      <div className="flex w-full max-w-md flex-col items-center gap-8 rounded-xl border bg-card p-10 shadow-sm">
-        <h1 className="text-2xl font-semibold">Sign in</h1>
-        <div className="flex w-full flex-col gap-3">
-          <SignInButton
-            provider="github"
-            label="GitHub"
-            icon={siGithub}
-            className="bg-neutral-800 hover:bg-neutral-800/90"
-          />
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+      <div className="flex w-full max-w-sm flex-col gap-6">
+        <Logo className="self-center" />
+        <div className="flex flex-col gap-6">
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="text-xl">Welcome back</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6">
+                <div className="flex flex-col gap-4">
+                  <SignInButton provider="github" label="GitHub" icon={siGithub} />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
@@ -60,6 +67,7 @@ function SignInButton({
         })
       }
       type="button"
+      variant="outline"
       size="lg"
       className={cn(
         "flex w-full items-center justify-center gap-2 text-white hover:text-white",

@@ -9,7 +9,7 @@ import { createRouter } from "./router";
 const router = createRouter();
 
 Sentry.init({
-  dsn: import.meta.env.SENTRY_DSN,
+  dsn: process.env.SENTRY_DSN,
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.browserProfilingIntegration(),
