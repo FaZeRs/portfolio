@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import type { ComponentProps } from "react";
 import { siGithub, type SimpleIcon } from "simple-icons";
 import authClient from "~/lib/auth-client";
@@ -25,9 +25,7 @@ function AuthPage() {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <Link to="/" className="flex items-center gap-2 self-center font-medium">
-          <Logo />
-        </Link>
+        <Logo className="self-center" />
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader className="text-center">
