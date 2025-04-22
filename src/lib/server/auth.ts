@@ -4,10 +4,11 @@ import { admin } from "better-auth/plugins";
 import { reactStartCookies } from "better-auth/react-start";
 
 import { env } from "~/env";
+import { getBaseUrl } from "~/lib/utils";
 import { db } from "./db";
 
 export const auth = betterAuth({
-  baseURL: env.VITE_BASE_URL,
+  baseURL: getBaseUrl(),
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
