@@ -16,6 +16,8 @@ import { cn } from "~/lib/utils";
 
 import { navbarLinks } from "~/lib/config/navbar";
 import { NavItem } from "~/types";
+import authClient from "../auth-client";
+import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";
 
@@ -27,6 +29,7 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const { location } = useRouterState();
   const segment = location.pathname.split("/")[1];
+  const { data: session } = authClient.useSession();
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
@@ -72,6 +75,7 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
       </NavigationMenu>
 
       <div className="hidden items-center gap-4 lg:flex">
+        {session && <AvatarDropdown />}
         <div className="flex-1 sm:grow-0">
           <SearchCommand />
         </div>
