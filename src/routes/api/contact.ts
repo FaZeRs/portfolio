@@ -1,9 +1,8 @@
 import { createAPIFileRoute } from "@tanstack/react-start/api";
 import { Resend } from "resend";
-import { env } from "~/env";
 import { siteConfig } from "~/lib/config/site";
 
-const resend = new Resend(env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const APIRoute = createAPIFileRoute("/api/contact")({
   POST: async ({ request }) => {
@@ -16,7 +15,7 @@ export const APIRoute = createAPIFileRoute("/api/contact")({
 
     try {
       const { data, error } = await resend.emails.send({
-        from: env.RESEND_FROM_EMAIL as string,
+        from: process.env.RESEND_FROM_EMAIL as string,
         replyTo: email,
         to: [siteConfig.links.mail],
         subject: "Contact Message",

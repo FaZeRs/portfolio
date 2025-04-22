@@ -7,7 +7,7 @@ import { createStartHandler, defaultStreamHandler } from "@tanstack/react-start/
 import { createRouter } from "./router";
 
 Sentry.init({
-  dsn: import.meta.env.SENTRY_DSN,
+  dsn: process.env.SENTRY_DSN,
   integrations: [nodeProfilingIntegration()],
   tracesSampleRate: 1.0,
   profileSessionSampleRate: 1.0,
