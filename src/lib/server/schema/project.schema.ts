@@ -1,6 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const Stack = pgTable("stack", (t) => ({
@@ -64,6 +64,24 @@ export const CreateProjectSchema = createInsertSchema(Project, {
     .string()
     .max(255)
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  description: z.string().max(255).optional(),
+  content: z.string().optional(),
+  imageUrl: z.string().url().max(255).optional().or(z.literal("")),
+  githubUrl: z.string().url().max(255).optional().or(z.literal("")),
+  demoUrl: z.string().url().max(255).optional().or(z.literal("")),
+}).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const UpdateProjectSchema = createUpdateSchema(Project, {
+  title: z.string().max(255).optional(),
+  slug: z
+    .string()
+    .max(255)
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+    .optional(),
   description: z.string().max(255).optional(),
   content: z.string().optional(),
   imageUrl: z.string().url().max(255).optional().or(z.literal("")),

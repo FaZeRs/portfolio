@@ -8,7 +8,7 @@ import { buttonVariants } from "~/lib/components/ui/button";
 import { cn } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/_dashboardLayout/dashboard/projects")({
+export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/")({
   component: Projects,
   loader: ({ context }) => {
     return { user: context.user };

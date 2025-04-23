@@ -4,7 +4,7 @@ import { ProjectsForm } from "~/lib/components/projects/form";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/projects/$projectId/edit",
+  "/_dashboardLayout/dashboard/projects/$projecttId/edit",
 )({
   component: ProjectsEditPage,
   loader: ({ context }) => {
@@ -15,36 +15,6 @@ export const Route = createFileRoute(
 function ProjectsEditPage() {
   const trpc = useTRPC();
   const projectQuery = useQuery(trpc.project.byId.queryOptions({ id }));
-
-  // const queryClient = useQueryClient();
-
-  // const form = useForm({
-  //   schema: UpdateProjectSchema,
-  //   defaultValues: {
-  //     title: project.title,
-  //     slug: project.slug,
-  //     description: project.description ?? "",
-  //     content: project.content ?? "",
-  //     image: undefined,
-  //     githubUrl: project.githubUrl ?? "",
-  //     demoUrl: project.demoUrl ?? "",
-  //   },
-  // });
-
-  // const updateProject = useMutation(
-  // trpc.project.update.mutationOptions({
-  //   onSuccess: async () => {
-  //     await queryClient.invalidateQueries(trpc.project.pathFilter());
-  //   },
-  //   onError: (err) => {
-  //     toast.error(
-  //       err.data?.code === "UNAUTHORIZED"
-  //         ? "You must be logged in to edit this project"
-  //         : "Failed to edit project",
-  //     );
-  //   },
-  // }),
-  // );
 
   if (projectQuery.isLoading) {
     return <div>Loading...</div>;

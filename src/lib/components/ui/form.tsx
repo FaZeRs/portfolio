@@ -3,6 +3,7 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { cn } from "~/lib/utils";
 import { Button } from "./button";
 import { Input } from "./input";
+import { Label } from "./label";
 import { Textarea } from "./textarea";
 
 const { fieldContext, formContext, useFieldContext } = createFormHookContexts();
@@ -35,6 +36,7 @@ const { useAppForm } = createFormHook({
   },
   formComponents: {
     Button,
+    Label,
   },
   fieldContext,
   formContext,
