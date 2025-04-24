@@ -28,7 +28,9 @@ interface MainNavbarProps {
 const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const { location } = useRouterState();
-  const segment = location.pathname.split("/")[1];
+  const pathSegments = location.pathname.split("/").filter(Boolean);
+  const lastSegment =
+    pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : "";
   const { data: session } = authClient.useSession();
 
   return (
@@ -59,8 +61,8 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
                   target={link.href?.startsWith("http") ? "_blank" : "_self"}
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    segment &&
-                      link.href?.startsWith(`/${segment}`) &&
+                    lastSegment &&
+                      link.href?.endsWith(`/${lastSegment}`) &&
                       "bg-accent font-semibold",
                     link.disabled && "cursor-not-allowed opacity-80",
                   )}

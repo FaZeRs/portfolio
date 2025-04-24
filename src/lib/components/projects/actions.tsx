@@ -1,4 +1,5 @@
 import { useRouter } from "@tanstack/react-router";
+import { Row } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -9,7 +10,12 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
-export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
+interface DataTableRowActionsProps<TData> {
+  row: Row<TData>;
+  id: string;
+}
+
+export function Actions<TData>({ id }: DataTableRowActionsProps<TData>) {
   const router = useRouter();
 
   return (
@@ -24,7 +30,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem>View</DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => router.navigate({ to: `/projects/edit/${row.original.id}` })}
+          onClick={() => router.navigate({ to: `/dashboard/projects/${id}/edit` })}
         >
           Edit
         </DropdownMenuItem>

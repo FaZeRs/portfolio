@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Header } from "~/lib/components/header";
 import { dashboardNavbarLinks } from "~/lib/config/navbar";
 

@@ -69,13 +69,20 @@ export const CreateProjectSchema = createInsertSchema(Project, {
   imageUrl: z.string().url().max(255).optional().or(z.literal("")),
   githubUrl: z.string().url().max(255).optional().or(z.literal("")),
   demoUrl: z.string().url().max(255).optional().or(z.literal("")),
-}).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
+})
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+  })
+  .and(
+    z.object({
+      thumbnail: z.string().optional(),
+    }),
+  );
 
 export const UpdateProjectSchema = createUpdateSchema(Project, {
+  id: z.string(),
   title: z.string().max(255).optional(),
   slug: z
     .string()
@@ -87,8 +94,13 @@ export const UpdateProjectSchema = createUpdateSchema(Project, {
   imageUrl: z.string().url().max(255).optional().or(z.literal("")),
   githubUrl: z.string().url().max(255).optional().or(z.literal("")),
   demoUrl: z.string().url().max(255).optional().or(z.literal("")),
-}).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
+})
+  .omit({
+    createdAt: true,
+    updatedAt: true,
+  })
+  .and(
+    z.object({
+      thumbnail: z.string().optional(),
+    }),
+  );

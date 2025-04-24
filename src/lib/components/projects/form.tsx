@@ -1,35 +1,72 @@
 import { formOptions } from "@tanstack/react-form";
+import { useState } from "react";
 import { z } from "zod";
 
-import { CreateProjectSchema } from "~/lib/server/schema";
+import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/schema";
 import { generateSlug } from "~/lib/utils";
 import CustomMDX from "../mdx/mdx";
 import { FormMessage, useAppForm } from "../ui/form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-export function ProjectsForm() {
+type ProjectFormData =
+  | z.infer<typeof CreateProjectSchema>
+  | z.infer<typeof UpdateProjectSchema>;
+
+export function ProjectsForm<T extends ProjectFormData>({
+  project,
+  handleSubmit,
+  isSubmitting = false,
+}: {
+  project?: typeof Project.$inferSelect;
+  handleSubmit: (data: T) => void;
+  isSubmitting?: boolean;
+}) {
+  console.log("project", project);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+
   const formOpts = formOptions({
     defaultValues: {
-      title: "",
-      slug: "",
-      description: "",
-      content: "",
-      imageUrl: "",
-      githubUrl: "",
-      demoUrl: "",
-    } as z.infer<typeof CreateProjectSchema>,
+      id: project?.id ?? "",
+      title: project?.title ?? "",
+      slug: project?.slug ?? "",
+      description: project?.description ?? "",
+      content: project?.content ?? "",
+      imageUrl: project?.imageUrl ?? "",
+      githubUrl: project?.githubUrl ?? "",
+      demoUrl: project?.demoUrl ?? "",
+      thumbnail: "",
+    },
   });
 
   const form = useAppForm({
     ...formOpts,
-    validators: {
-      onChange: CreateProjectSchema,
-    },
-    onSubmit: async ({ formApi, value }) => {
-      console.log(value);
+    onSubmit: ({ formApi, value }) => {
+      handleSubmit(value as T);
       formApi.reset();
+      setUploadedImage(null);
     },
   });
+
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: {
+      handleChange: (value: string) => void;
+    },
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      const base64Data = base64String.split(",")[1];
+
+      field.handleChange("");
+      form.setFieldValue("thumbnail", base64Data);
+      setUploadedImage(base64String);
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <form
@@ -146,11 +183,28 @@ export function ProjectsForm() {
               id={field.name}
               name={field.name}
               type="file"
-              placeholder="Select file"
-              value={field.state.value}
+              accept="image/*"
               onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
+              onChange={(e) => handleFileChange(e, field)}
             />
+            {uploadedImage && (
+              <div className="mt-2">
+                <img
+                  src={uploadedImage}
+                  alt="Project preview"
+                  className="max-h-32 rounded-md"
+                />
+              </div>
+            )}
+            {!uploadedImage && project?.imageUrl && (
+              <div className="mt-2">
+                <img
+                  src={project.imageUrl}
+                  alt="Current project image"
+                  className="max-h-32 rounded-md"
+                />
+              </div>
+            )}
             <FormMessage />
           </div>
         )}
@@ -190,12 +244,14 @@ export function ProjectsForm() {
         )}
       </form.AppField>
 
-      <form.Subscribe
-        selector={(formState) => [formState.canSubmit, formState.isSubmitting]}
-      >
-        {([canSubmit, isSubmitting]) => (
-          <form.Button type="submit" variant="default" disabled={!canSubmit}>
-            {isSubmitting ? "Submitting..." : "Submit"}
+      <form.Subscribe selector={(formState) => [formState.canSubmit]}>
+        {([canSubmit, isPending]) => (
+          <form.Button
+            type="submit"
+            variant="default"
+            disabled={!canSubmit || isPending || isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : isPending ? "Processing..." : "Submit"}
           </form.Button>
         )}
       </form.Subscribe>

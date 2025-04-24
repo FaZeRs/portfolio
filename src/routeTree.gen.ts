@@ -22,7 +22,7 @@ import { Route as DashboardLayoutDashboardIndexImport } from './routes/_dashboar
 import { Route as DefaultLayoutProjectsProjectIdImport } from './routes/_defaultLayout/projects.$projectId'
 import { Route as DashboardLayoutDashboardProjectsIndexImport } from './routes/_dashboardLayout/dashboard/projects/index'
 import { Route as DashboardLayoutDashboardProjectsCreateImport } from './routes/_dashboardLayout/dashboard/projects/create'
-import { Route as DashboardLayoutDashboardProjectsProjecttIdEditImport } from './routes/_dashboardLayout/dashboard/projects/$projecttId.edit'
+import { Route as DashboardLayoutDashboardProjectsProjectIdEditImport } from './routes/_dashboardLayout/dashboard/projects/$projectId.edit'
 
 // Create/Update Routes
 
@@ -95,10 +95,10 @@ const DashboardLayoutDashboardProjectsCreateRoute =
     getParentRoute: () => DashboardLayoutRoute,
   } as any)
 
-const DashboardLayoutDashboardProjectsProjecttIdEditRoute =
-  DashboardLayoutDashboardProjectsProjecttIdEditImport.update({
-    id: '/dashboard/projects/$projecttId/edit',
-    path: '/dashboard/projects/$projecttId/edit',
+const DashboardLayoutDashboardProjectsProjectIdEditRoute =
+  DashboardLayoutDashboardProjectsProjectIdEditImport.update({
+    id: '/dashboard/projects/$projectId/edit',
+    path: '/dashboard/projects/$projectId/edit',
     getParentRoute: () => DashboardLayoutRoute,
   } as any)
 
@@ -183,11 +183,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutDashboardProjectsIndexImport
       parentRoute: typeof DashboardLayoutImport
     }
-    '/_dashboardLayout/dashboard/projects/$projecttId/edit': {
-      id: '/_dashboardLayout/dashboard/projects/$projecttId/edit'
-      path: '/dashboard/projects/$projecttId/edit'
-      fullPath: '/dashboard/projects/$projecttId/edit'
-      preLoaderRoute: typeof DashboardLayoutDashboardProjectsProjecttIdEditImport
+    '/_dashboardLayout/dashboard/projects/$projectId/edit': {
+      id: '/_dashboardLayout/dashboard/projects/$projectId/edit'
+      path: '/dashboard/projects/$projectId/edit'
+      fullPath: '/dashboard/projects/$projectId/edit'
+      preLoaderRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditImport
       parentRoute: typeof DashboardLayoutImport
     }
   }
@@ -211,7 +211,7 @@ interface DashboardLayoutRouteChildren {
   DashboardLayoutDashboardIndexRoute: typeof DashboardLayoutDashboardIndexRoute
   DashboardLayoutDashboardProjectsCreateRoute: typeof DashboardLayoutDashboardProjectsCreateRoute
   DashboardLayoutDashboardProjectsIndexRoute: typeof DashboardLayoutDashboardProjectsIndexRoute
-  DashboardLayoutDashboardProjectsProjecttIdEditRoute: typeof DashboardLayoutDashboardProjectsProjecttIdEditRoute
+  DashboardLayoutDashboardProjectsProjectIdEditRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
 const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
@@ -220,8 +220,8 @@ const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
     DashboardLayoutDashboardProjectsCreateRoute,
   DashboardLayoutDashboardProjectsIndexRoute:
     DashboardLayoutDashboardProjectsIndexRoute,
-  DashboardLayoutDashboardProjectsProjecttIdEditRoute:
-    DashboardLayoutDashboardProjectsProjecttIdEditRoute,
+  DashboardLayoutDashboardProjectsProjectIdEditRoute:
+    DashboardLayoutDashboardProjectsProjectIdEditRoute,
 }
 
 const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
@@ -256,7 +256,7 @@ export interface FileRoutesByFullPath {
   '/projects': typeof DefaultLayoutProjectsIndexRoute
   '/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
   '/dashboard/projects': typeof DashboardLayoutDashboardProjectsIndexRoute
-  '/dashboard/projects/$projecttId/edit': typeof DashboardLayoutDashboardProjectsProjecttIdEditRoute
+  '/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
 export interface FileRoutesByTo {
@@ -269,7 +269,7 @@ export interface FileRoutesByTo {
   '/projects': typeof DefaultLayoutProjectsIndexRoute
   '/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
   '/dashboard/projects': typeof DashboardLayoutDashboardProjectsIndexRoute
-  '/dashboard/projects/$projecttId/edit': typeof DashboardLayoutDashboardProjectsProjecttIdEditRoute
+  '/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
 export interface FileRoutesById {
@@ -285,7 +285,7 @@ export interface FileRoutesById {
   '/_defaultLayout/projects/': typeof DefaultLayoutProjectsIndexRoute
   '/_dashboardLayout/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
   '/_dashboardLayout/dashboard/projects/': typeof DashboardLayoutDashboardProjectsIndexRoute
-  '/_dashboardLayout/dashboard/projects/$projecttId/edit': typeof DashboardLayoutDashboardProjectsProjecttIdEditRoute
+  '/_dashboardLayout/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
 export interface FileRouteTypes {
@@ -300,7 +300,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/dashboard/projects/create'
     | '/dashboard/projects'
-    | '/dashboard/projects/$projecttId/edit'
+    | '/dashboard/projects/$projectId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
@@ -312,7 +312,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/dashboard/projects/create'
     | '/dashboard/projects'
-    | '/dashboard/projects/$projecttId/edit'
+    | '/dashboard/projects/$projectId/edit'
   id:
     | '__root__'
     | '/_authLayout'
@@ -326,7 +326,7 @@ export interface FileRouteTypes {
     | '/_defaultLayout/projects/'
     | '/_dashboardLayout/dashboard/projects/create'
     | '/_dashboardLayout/dashboard/projects/'
-    | '/_dashboardLayout/dashboard/projects/$projecttId/edit'
+    | '/_dashboardLayout/dashboard/projects/$projectId/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -369,7 +369,7 @@ export const routeTree = rootRoute
         "/_dashboardLayout/dashboard/",
         "/_dashboardLayout/dashboard/projects/create",
         "/_dashboardLayout/dashboard/projects/",
-        "/_dashboardLayout/dashboard/projects/$projecttId/edit"
+        "/_dashboardLayout/dashboard/projects/$projectId/edit"
       ]
     },
     "/_defaultLayout": {
@@ -413,8 +413,8 @@ export const routeTree = rootRoute
       "filePath": "_dashboardLayout/dashboard/projects/index.tsx",
       "parent": "/_dashboardLayout"
     },
-    "/_dashboardLayout/dashboard/projects/$projecttId/edit": {
-      "filePath": "_dashboardLayout/dashboard/projects/$projecttId.edit.tsx",
+    "/_dashboardLayout/dashboard/projects/$projectId/edit": {
+      "filePath": "_dashboardLayout/dashboard/projects/$projectId.edit.tsx",
       "parent": "/_dashboardLayout"
     }
   }

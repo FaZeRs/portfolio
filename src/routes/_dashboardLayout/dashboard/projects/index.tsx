@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 
@@ -6,19 +5,17 @@ import { DataTable } from "~/lib/components/data-table/data-table";
 import { columns } from "~/lib/components/projects/columns";
 import { buttonVariants } from "~/lib/components/ui/button";
 import { cn } from "~/lib/utils";
-import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/")({
   component: Projects,
-  loader: ({ context }) => {
-    return { user: context.user };
+  loader: async ({ context: { trpc, queryClient } }) => {
+    const projects = await queryClient.fetchQuery(trpc.project.all.queryOptions());
+    return { projects };
   },
 });
 
 function Projects() {
-  const queryClient = useQueryClient();
-  const trpc = useTRPC();
-  const projects = queryClient.fetchQuery(trpc.project.all.queryOptions());
+  const { projects } = Route.useLoaderData();
 
   return (
     <>

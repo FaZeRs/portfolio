@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Project } from "~/types/project";
+import { Project } from "~/lib/server/schema";
 import { DataTableColumnHeader } from "../data-table/data-table-column-header";
-import { DataTableRowActions } from "../data-table/data-table-row-actions";
 import { Checkbox } from "../ui/checkbox";
+import { Actions } from "./actions";
 
-export const columns: ColumnDef<Project>[] = [
+export const columns: ColumnDef<typeof Project.$inferSelect>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -37,6 +37,6 @@ export const columns: ColumnDef<Project>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <Actions row={row} id={row.original.id} />,
   },
 ];
