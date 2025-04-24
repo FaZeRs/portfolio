@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 
@@ -5,17 +6,20 @@ import { DataTable } from "~/lib/components/data-table/data-table";
 import { columns } from "~/lib/components/projects/columns";
 import { buttonVariants } from "~/lib/components/ui/button";
 import { cn } from "~/lib/utils";
+import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/")({
   component: Projects,
-  loader: async ({ context: { trpc, queryClient } }) => {
-    const projects = await queryClient.fetchQuery(trpc.project.all.queryOptions());
-    return { projects };
-  },
+  loader: async ({ context: { trpc, queryClient } }) =>
+    await queryClient.prefetchQuery(trpc.project.all.queryOptions()),
+  head: () => ({
+    meta: [{ title: "Projects" }],
+  }),
 });
 
 function Projects() {
-  const { projects } = Route.useLoaderData();
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.project.all.queryOptions());
 
   return (
     <>
@@ -33,7 +37,7 @@ function Projects() {
           </Link>
         </div>
       </div>
-      <DataTable columns={columns} data={projects} />
+      <DataTable columns={columns} data={data} />
     </>
   );
 }

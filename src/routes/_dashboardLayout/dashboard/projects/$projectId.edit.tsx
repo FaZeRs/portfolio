@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, ErrorComponent, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
+import { NotFound } from "~/lib/components/not-found";
 import { ProjectsForm } from "~/lib/components/projects/form";
 import { UpdateProjectSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
@@ -10,25 +11,39 @@ export const Route = createFileRoute(
   "/_dashboardLayout/dashboard/projects/$projectId/edit",
 )({
   component: ProjectsEditPage,
-  loader: async ({ context: { trpc, queryClient }, params }) => {
-    const project = await queryClient.fetchQuery(
-      trpc.project.byId.queryOptions({ id: params.projectId }),
+  loader: async ({ params: { projectId }, context: { trpc, queryClient } }) => {
+    const data = await queryClient.ensureQueryData(
+      trpc.project.byId.queryOptions({ id: projectId }),
     );
-    return { project };
+
+    return { title: data?.title };
+  },
+  head: ({ loaderData }) => ({
+    meta: [{ title: loaderData.title }],
+  }),
+  errorComponent: ({ error }) => <ErrorComponent error={error} />,
+  notFoundComponent: () => {
+    return <NotFound>Project not found</NotFound>;
   },
 });
 
 function ProjectsEditPage() {
-  const { project } = Route.useLoaderData();
+  const { projectId } = Route.useParams();
+  const trpc = useTRPC();
+
+  const project = useSuspenseQuery(trpc.project.byId.queryOptions({ id: projectId }));
 
   const router = useRouter();
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
+  const projectAllQueryKey = trpc.project.all.queryKey();
 
   const updateProjectMutation = useMutation({
     ...trpc.project.update.mutationOptions(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [projectAllQueryKey[0]],
+        refetchType: "all",
+      });
       toast.success("Project updated successfully");
       router.navigate({ to: "/dashboard/projects" });
     },
@@ -37,16 +52,17 @@ function ProjectsEditPage() {
       toast.error("Failed to update project");
     },
   });
+
   const handleFormSubmit = (data: z.infer<typeof UpdateProjectSchema>) => {
     updateProjectMutation.mutate({
       ...data,
-      id: project?.id ?? "",
+      id: project.data?.id ?? "",
     });
   };
 
   return (
     <ProjectsForm<z.infer<typeof UpdateProjectSchema>>
-      project={project}
+      project={project.data}
       handleSubmit={handleFormSubmit}
       isSubmitting={updateProjectMutation.isPending}
     />

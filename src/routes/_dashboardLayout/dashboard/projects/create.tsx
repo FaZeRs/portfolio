@@ -8,17 +8,24 @@ import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/create")({
   component: ProjectsCreatePage,
+  head: () => ({
+    meta: [{ title: "Create Project" }],
+  }),
 });
 
 function ProjectsCreatePage() {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
+  const projectAllQueryKey = trpc.project.all.queryKey();
 
   const createProjectMutation = useMutation({
     ...trpc.project.create.mutationOptions(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [projectAllQueryKey[0]],
+        refetchType: "all",
+      });
       toast.success("Project created successfully");
       router.navigate({ to: "/dashboard/projects" });
     },

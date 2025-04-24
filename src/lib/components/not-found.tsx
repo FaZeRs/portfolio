@@ -1,4 +1,8 @@
-export function NotFound() {
+export function NotFound(
+  props: Readonly<{
+    children?: React.ReactNode;
+  }>,
+) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center">
       <img
@@ -11,7 +15,7 @@ export function NotFound() {
         Error 404!
       </h1>
       <p className="max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
-        Oop! This page does not exist.
+        {props.children || <p>The page you are looking for does not exist.</p>}
       </p>
     </div>
   );
