@@ -37,6 +37,8 @@ export const columns: ColumnDef<typeof Project.$inferSelect>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <Actions row={row} id={row.original.id} />,
+    cell: ({ row }) => (
+      <Actions row={row} id={row.original.id} slug={row.original.slug} />
+    ),
   },
 ];
