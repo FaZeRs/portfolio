@@ -11,7 +11,6 @@ export const Route = createFileRoute(
 )({
   component: ProjectsEditPage,
   loader: async ({ context: { trpc, queryClient }, params }) => {
-    console.log(params.projectId);
     const project = await queryClient.fetchQuery(
       trpc.project.byId.queryOptions({ id: params.projectId }),
     );

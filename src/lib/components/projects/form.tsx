@@ -21,7 +21,6 @@ export function ProjectsForm<T extends ProjectFormData>({
   handleSubmit: (data: T) => void;
   isSubmitting?: boolean;
 }) {
-  console.log("project", project);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   const formOpts = formOptions({
