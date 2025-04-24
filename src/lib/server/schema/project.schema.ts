@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -25,7 +25,7 @@ export const Project = pgTable("project", (t) => ({
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t
     .timestamp({ mode: "date", withTimezone: true })
-    .$onUpdateFn(() => sql`now()`),
+    .$onUpdate(() => new Date()),
 }));
 
 export const ProjectRelations = relations(Project, ({ many }) => ({
