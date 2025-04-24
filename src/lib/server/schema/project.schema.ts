@@ -19,7 +19,7 @@ export const Project = pgTable("project", (t) => ({
   description: t.varchar({ length: 255 }),
   content: t.text(),
   imageUrl: t.varchar({ length: 255 }),
-  isFeature: t.boolean().notNull().default(false),
+  isFeatured: t.boolean().notNull().default(false),
   githubUrl: t.varchar({ length: 255 }),
   demoUrl: t.varchar({ length: 255 }),
   createdAt: t.timestamp().defaultNow().notNull(),
@@ -69,6 +69,7 @@ export const CreateProjectSchema = createInsertSchema(Project, {
   imageUrl: z.string().url().max(255).optional().or(z.literal("")),
   githubUrl: z.string().url().max(255).optional().or(z.literal("")),
   demoUrl: z.string().url().max(255).optional().or(z.literal("")),
+  isFeatured: z.boolean().optional(),
 })
   .omit({
     id: true,
@@ -94,6 +95,7 @@ export const UpdateProjectSchema = createUpdateSchema(Project, {
   imageUrl: z.string().url().max(255).optional().or(z.literal("")),
   githubUrl: z.string().url().max(255).optional().or(z.literal("")),
   demoUrl: z.string().url().max(255).optional().or(z.literal("")),
+  isFeatured: z.boolean().optional(),
 })
   .omit({
     createdAt: true,

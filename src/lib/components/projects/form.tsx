@@ -34,6 +34,7 @@ export function ProjectsForm<T extends ProjectFormData>({
       githubUrl: project?.githubUrl ?? "",
       demoUrl: project?.demoUrl ?? "",
       thumbnail: "",
+      isFeatured: project?.isFeatured ?? false,
     },
   });
 
@@ -237,6 +238,22 @@ export function ProjectsForm<T extends ProjectFormData>({
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
+            />
+            <FormMessage />
+          </div>
+        )}
+      </form.AppField>
+
+      <form.AppField name="isFeatured">
+        {(field) => (
+          <div className="space-y-2">
+            <form.Label htmlFor={field.name}>Featured</form.Label>
+            <field.Checkbox
+              id={field.name}
+              name={field.name}
+              checked={field.state.value}
+              onBlur={field.handleBlur}
+              onCheckedChange={(checked: boolean) => field.handleChange(checked)}
             />
             <FormMessage />
           </div>

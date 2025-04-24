@@ -36,6 +36,11 @@ export const columns: ColumnDef<typeof Project.$inferSelect>[] = [
     header: "Description",
   },
   {
+    accessorKey: "isFeatured",
+    header: "Featured",
+    cell: ({ row }) => <Checkbox checked={row.original.isFeatured} />,
+  },
+  {
     id: "actions",
     cell: ({ row }) => (
       <Actions row={row} id={row.original.id} slug={row.original.slug} />
