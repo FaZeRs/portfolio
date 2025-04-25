@@ -3,10 +3,13 @@ import { Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { FormMessage, useAppForm } from "~/lib/components/ui/form";
+import { useAppForm } from "~/lib/components/ui/form";
 import { siteConfig } from "~/lib/config/site";
 import { contactSchema } from "~/lib/validators";
 import SectionHeading from "./section-heading";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -75,55 +78,61 @@ const Contact = () => {
       </p>
 
       <div className="mx-auto mt-8 max-w-xl">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            form.handleSubmit();
-          }}
-          className="flex w-full flex-col gap-4"
-        >
-          <form.AppField name="email">
-            {(field) => (
-              <>
-                <field.Input
-                  type="email"
-                  placeholder="Your email"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="email"
-                />
-                <FormMessage />
-              </>
-            )}
-          </form.AppField>
+        <form.AppForm>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              form.handleSubmit();
+            }}
+            className="flex w-full flex-col gap-4"
+          >
+            <form.AppField name="email">
+              {(field) => (
+                <field.FormItem>
+                  <field.FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Your email"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      autoComplete="email"
+                    />
+                  </field.FormControl>
+                  <field.FormMessage />
+                </field.FormItem>
+              )}
+            </form.AppField>
 
-          <form.AppField name="message">
-            {(field) => (
-              <>
-                <field.Textarea
-                  placeholder="Type your message here."
-                  className="h-32"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-                <FormMessage />
-              </>
-            )}
-          </form.AppField>
-          <form.AppForm>
-            <form.Button
-              type="submit"
-              variant="default"
-              disabled={isLoading}
-              className="group"
-            >
-              <Send className="mr-2 h-4 w-4" /> Submit
-            </form.Button>
-          </form.AppForm>
-        </form>
+            <form.AppField name="message">
+              {(field) => (
+                <field.FormItem>
+                  <field.FormControl>
+                    <Textarea
+                      placeholder="Type your message here."
+                      className="h-32"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  </field.FormControl>
+                  <field.FormMessage />
+                </field.FormItem>
+              )}
+            </form.AppField>
+            <form.AppForm>
+              <Button
+                type="submit"
+                variant="default"
+                disabled={isLoading}
+                className="group"
+              >
+                <Send className="mr-2 h-4 w-4" /> Submit
+              </Button>
+            </form.AppForm>
+          </form>
+        </form.AppForm>
       </div>
     </motion.section>
   );
