@@ -4,7 +4,7 @@ import { DataTableColumnHeader } from "../data-table/data-table-column-header";
 import { Checkbox } from "../ui/checkbox";
 import { Actions } from "./actions";
 
-export const columns: ColumnDef<typeof Project.$inferSelect>[] = [
+export const projectColumns: ColumnDef<typeof Project.$inferSelect>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -30,10 +30,12 @@ export const columns: ColumnDef<typeof Project.$inferSelect>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Title" />,
+    filterFn: "includesString",
   },
   {
     accessorKey: "description",
     header: "Description",
+    filterFn: "includesString",
   },
   {
     accessorKey: "isFeatured",

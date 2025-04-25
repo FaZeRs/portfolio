@@ -10,7 +10,6 @@ export const projectRouter = {
   all: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.Project.findMany({
       orderBy: desc(Project.id),
-      limit: 10,
     });
   }),
 

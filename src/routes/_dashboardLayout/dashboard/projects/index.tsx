@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 
 import { DataTable } from "~/lib/components/data-table/data-table";
-import { columns } from "~/lib/components/projects/columns";
+import { projectColumns } from "~/lib/components/projects/columns";
 import { buttonVariants } from "~/lib/components/ui/button";
 import { cn } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
@@ -37,7 +37,7 @@ function Projects() {
           </Link>
         </div>
       </div>
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={projectColumns} data={data} />
     </>
   );
 }
