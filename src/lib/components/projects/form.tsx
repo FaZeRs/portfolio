@@ -2,13 +2,16 @@ import { formOptions } from "@tanstack/react-form";
 import { useState } from "react";
 import { z } from "zod";
 
+import { STACKS } from "~/lib/constants/stack";
 import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/schema";
 import { generateSlug } from "~/lib/utils";
 import CustomMDX from "../mdx/mdx";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { useAppForm } from "../ui/form";
+import Icon from "../ui/icon";
 import { Input } from "../ui/input";
+import { MultiSelect } from "../ui/multi-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
 
@@ -20,11 +23,11 @@ export function ProjectsForm<T extends ProjectFormData>({
   project,
   handleSubmit,
   isSubmitting = false,
-}: {
+}: Readonly<{
   project?: typeof Project.$inferSelect;
   handleSubmit: (data: T) => void;
   isSubmitting?: boolean;
-}) {
+}>) {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   const formOpts = formOptions({
@@ -39,6 +42,8 @@ export function ProjectsForm<T extends ProjectFormData>({
       demoUrl: project?.demoUrl ?? "",
       thumbnail: "",
       isFeatured: project?.isFeatured ?? false,
+      isDraft: project?.isDraft ?? false,
+      stacks: project?.stacks ?? [],
     },
   });
 
@@ -263,10 +268,49 @@ export function ProjectsForm<T extends ProjectFormData>({
           )}
         </form.AppField>
 
+        <form.AppField name="stacks">
+          {(field) => (
+            <field.FormItem>
+              <field.FormLabel>Stacks</field.FormLabel>
+              <field.FormControl>
+                <MultiSelect
+                  options={Object.entries(STACKS).map(([key, value]) => ({
+                    label: key,
+                    value: key,
+                    icon: <Icon icon={value} className="h-4 w-4" />,
+                  }))}
+                  onValueChange={(value) => field.handleChange(value)}
+                  defaultValue={field.state.value}
+                  placeholder="Select technology stacks"
+                />
+              </field.FormControl>
+              <field.FormMessage />
+            </field.FormItem>
+          )}
+        </form.AppField>
+
         <form.AppField name="isFeatured">
           {(field) => (
             <field.FormItem>
               <field.FormLabel>Featured</field.FormLabel>
+              <field.FormControl>
+                <Checkbox
+                  id={field.name}
+                  name={field.name}
+                  checked={field.state.value}
+                  onBlur={field.handleBlur}
+                  onCheckedChange={(checked: boolean) => field.handleChange(checked)}
+                />
+              </field.FormControl>
+              <field.FormMessage />
+            </field.FormItem>
+          )}
+        </form.AppField>
+
+        <form.AppField name="isDraft">
+          {(field) => (
+            <field.FormItem>
+              <field.FormLabel>Draft</field.FormLabel>
               <field.FormControl>
                 <Checkbox
                   id={field.name}
