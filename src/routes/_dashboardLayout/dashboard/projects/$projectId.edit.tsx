@@ -19,7 +19,7 @@ export const Route = createFileRoute(
     return { title: data?.title };
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: loaderData.title }],
+    meta: [{ title: `Edit Project: ${loaderData.title}` }],
   }),
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {
@@ -61,11 +61,21 @@ function ProjectsEditPage() {
   };
 
   return (
-    <ProjectsForm<z.infer<typeof UpdateProjectSchema>>
-      project={project.data}
-      handleSubmit={handleFormSubmit}
-      isSubmitting={updateProjectMutation.isPending}
-      schema={UpdateProjectSchema}
-    />
+    <>
+      <div className="mb-2 flex flex-wrap items-center justify-between space-y-2">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">Edit Project</h2>
+          <p className="text-muted-foreground">Update your project details below.</p>
+        </div>
+      </div>
+      <div className="py-4">
+        <ProjectsForm<z.infer<typeof UpdateProjectSchema>>
+          project={project.data}
+          handleSubmit={handleFormSubmit}
+          isSubmitting={updateProjectMutation.isPending}
+          schema={UpdateProjectSchema}
+        />
+      </div>
+    </>
   );
 }

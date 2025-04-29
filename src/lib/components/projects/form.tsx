@@ -15,9 +15,23 @@ import { MultiSelect } from "../ui/multi-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const VALID_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "image/avif",
+];
+
 type ProjectFormData =
   | z.infer<typeof CreateProjectSchema>
   | z.infer<typeof UpdateProjectSchema>;
+
+interface FormField {
+  handleChange: (value: string) => void;
+  setErrorMap: (errorMap: ValidationErrorMap) => void;
+}
 
 interface ProjectsFormProps<T extends ProjectFormData> {
   project?: typeof Project.$inferSelect;
@@ -60,24 +74,11 @@ export function ProjectsForm<T extends ProjectFormData>({
     },
   });
 
-  const handleFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: {
-      handleChange: (value: string) => void;
-      setErrorMap: (errorMap: ValidationErrorMap) => void;
-    },
-  ) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: FormField) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const validImageTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/gif",
-      "image/webp",
-      "image/avif",
-    ];
-    if (!validImageTypes.includes(file.type)) {
+    if (!VALID_IMAGE_TYPES.includes(file.type)) {
       field.setErrorMap({
         onChange: [
           {
@@ -88,8 +89,7 @@ export function ProjectsForm<T extends ProjectFormData>({
       return;
     }
 
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    if (file.size > maxSize) {
+    if (file.size > MAX_IMAGE_SIZE) {
       field.setErrorMap({
         onChange: [
           {
@@ -146,6 +146,7 @@ export function ProjectsForm<T extends ProjectFormData>({
           form.handleSubmit();
         }}
         className="space-y-8"
+        aria-label="Project form"
       >
         <form.AppField
           name="title"
@@ -168,12 +169,14 @@ export function ProjectsForm<T extends ProjectFormData>({
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  aria-required="true"
                 />
               </field.FormControl>
               <field.FormMessage />
             </field.FormItem>
           )}
         </form.AppField>
+
         <form.AppField name="slug">
           {(field) => (
             <field.FormItem>
@@ -187,12 +190,18 @@ export function ProjectsForm<T extends ProjectFormData>({
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  aria-required="true"
+                  aria-describedby="slug-desc"
                 />
               </field.FormControl>
+              <p id="slug-desc" className="text-xs text-muted-foreground">
+                Used in the URL: /projects/your-slug
+              </p>
               <field.FormMessage />
             </field.FormItem>
           )}
         </form.AppField>
+
         <form.AppField name="description">
           {(field) => (
             <field.FormItem>
@@ -211,6 +220,7 @@ export function ProjectsForm<T extends ProjectFormData>({
             </field.FormItem>
           )}
         </form.AppField>
+
         <form.AppField name="content">
           {(field) => (
             <field.FormItem>
@@ -254,6 +264,7 @@ Details about how you implemented the project."
             </field.FormItem>
           )}
         </form.AppField>
+
         <form.AppField name="thumbnail">
           {(field) => (
             <field.FormItem>
@@ -265,7 +276,7 @@ Details about how you implemented the project."
                       id={field.name}
                       name={field.name}
                       type="file"
-                      accept="image/jpeg,image/png,image/gif,image/webp,image/avif"
+                      accept={VALID_IMAGE_TYPES.join(",")}
                       onBlur={field.handleBlur}
                       onChange={(e) => handleFileChange(e, field)}
                       className="cursor-pointer"
@@ -289,6 +300,7 @@ Details about how you implemented the project."
                         variant="destructive"
                         size="sm"
                         onClick={handleRemoveImage}
+                        aria-label="Remove image"
                       >
                         Remove Image
                       </Button>
@@ -300,6 +312,7 @@ Details about how you implemented the project."
             </field.FormItem>
           )}
         </form.AppField>
+
         <div className="grid gap-8 md:grid-cols-2">
           <form.AppField name="githubUrl">
             {(field) => (
@@ -320,6 +333,7 @@ Details about how you implemented the project."
               </field.FormItem>
             )}
           </form.AppField>
+
           <form.AppField name="demoUrl">
             {(field) => (
               <field.FormItem>
