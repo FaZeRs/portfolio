@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { ValidationErrorMap } from "@tanstack/react-form";
 import { z } from "zod";
 import { STACKS } from "~/lib/constants/stack";
 import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/schema";
@@ -18,19 +19,21 @@ type ProjectFormData =
   | z.infer<typeof CreateProjectSchema>
   | z.infer<typeof UpdateProjectSchema>;
 
+interface ProjectsFormProps<T extends ProjectFormData> {
+  project?: typeof Project.$inferSelect;
+  handleSubmit: (data: T) => void;
+  isSubmitting?: boolean;
+  schema: z.ZodSchema<T>;
+}
+
 export function ProjectsForm<T extends ProjectFormData>({
   project,
   handleSubmit,
   isSubmitting = false,
   schema,
-}: Readonly<{
-  project?: typeof Project.$inferSelect;
-  handleSubmit: (data: T) => void;
-  isSubmitting?: boolean;
-  schema: z.ZodSchema<T>;
-}>) {
+}: Readonly<ProjectsFormProps<T>>) {
   const [uploadedImage, setUploadedImage] = useState<string | null>(
-    project?.imageUrl ? project.imageUrl : null,
+    project?.imageUrl ?? null,
   );
 
   const form = useAppForm({
@@ -61,21 +64,72 @@ export function ProjectsForm<T extends ProjectFormData>({
     e: React.ChangeEvent<HTMLInputElement>,
     field: {
       handleChange: (value: string) => void;
+      setErrorMap: (errorMap: ValidationErrorMap) => void;
     },
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      const base64Data = base64String.split(",")[1];
+    const validImageTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+      "image/avif",
+    ];
+    if (!validImageTypes.includes(file.type)) {
+      field.setErrorMap({
+        onChange: [
+          {
+            message: "Please upload a valid image (JPEG, PNG, GIF, WebP, AVIF)",
+          },
+        ],
+      });
+      return;
+    }
 
-      field.handleChange("");
-      form.setFieldValue("thumbnail", base64Data);
-      setUploadedImage(base64String);
-    };
-    reader.readAsDataURL(file);
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      field.setErrorMap({
+        onChange: [
+          {
+            message: "Image size must be less than 5MB",
+          },
+        ],
+      });
+      return;
+    }
+
+    try {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const base64Data = base64String.split(",")[1];
+
+        field.handleChange("");
+        form.setFieldValue("thumbnail", base64Data);
+        setUploadedImage(base64String);
+      };
+      reader.onerror = () => {
+        field.setErrorMap({
+          onChange: [
+            {
+              message: "Error reading file",
+            },
+          ],
+        });
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error("Error processing image:", error);
+      field.setErrorMap({
+        onChange: [
+          {
+            message: "Failed to process image",
+          },
+        ],
+      });
+    }
   };
 
   const handleRemoveImage = () => {
@@ -172,13 +226,13 @@ export function ProjectsForm<T extends ProjectFormData>({
                       id={field.name}
                       name={field.name}
                       placeholder="# Project Details
-                                     ## Overview
-                                     A brief overview of your project.
-                                     ## Features
-                                     - Feature 1
-                                     - Feature 2
-                                     ## Implementation
-                                     Details about how you implemented the project."
+## Overview
+A brief overview of your project.
+## Features
+- Feature 1
+- Feature 2
+## Implementation
+Details about how you implemented the project."
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
@@ -188,7 +242,7 @@ export function ProjectsForm<T extends ProjectFormData>({
                   <field.FormMessage />
                 </TabsContent>
                 <TabsContent value="preview" className="mt-0">
-                  <div className="min-h-[300px] rounded-md border border-input p-4">
+                  <div className="min-h-[300px] rounded-md border border-input p-4 overflow-y-auto">
                     {field.state.value ? (
                       <CustomMDX source={field.state.value} />
                     ) : (
@@ -206,21 +260,30 @@ export function ProjectsForm<T extends ProjectFormData>({
               <field.FormLabel>Image</field.FormLabel>
               <field.FormControl>
                 <div className="space-y-2">
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type="file"
-                    accept="image/*"
-                    onBlur={field.handleBlur}
-                    onChange={(e) => handleFileChange(e, field)}
-                  />
+                  <div className="flex flex-col gap-2">
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      type="file"
+                      accept="image/jpeg,image/png,image/gif,image/webp,image/avif"
+                      onBlur={field.handleBlur}
+                      onChange={(e) => handleFileChange(e, field)}
+                      className="cursor-pointer"
+                      aria-describedby="file-input-help"
+                    />
+                    <p id="file-input-help" className="text-xs text-muted-foreground">
+                      Accepted formats: JPEG, PNG, GIF, WebP, AVIF. Max size: 5MB
+                    </p>
+                  </div>
                   {uploadedImage && (
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                      <img
-                        src={uploadedImage}
-                        alt="Project preview"
-                        className="max-h-32 w-auto rounded-md object-cover"
-                      />
+                      <div className="relative h-32 w-full max-w-md overflow-hidden rounded-md border border-input">
+                        <img
+                          src={uploadedImage}
+                          alt="Project preview"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
                       <Button
                         type="button"
                         variant="destructive"
@@ -246,8 +309,8 @@ export function ProjectsForm<T extends ProjectFormData>({
                   <Input
                     id={field.name}
                     name={field.name}
-                    type="text"
-                    placeholder="https://github.com/example"
+                    type="url"
+                    placeholder="https://github.com/username/project"
                     value={field.state.value ?? ""}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -265,7 +328,7 @@ export function ProjectsForm<T extends ProjectFormData>({
                   <Input
                     id={field.name}
                     name={field.name}
-                    type="text"
+                    type="url"
                     placeholder="https://example.com"
                     value={field.state.value ?? ""}
                     onBlur={field.handleBlur}
