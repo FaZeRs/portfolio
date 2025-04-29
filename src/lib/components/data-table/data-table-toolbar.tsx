@@ -15,25 +15,27 @@ export function DataTableToolbar({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <Input
-          placeholder="Filter projects..."
-          value={globalFilter ?? ""}
-          onChange={(event) => {
-            console.log("event", event.target.value);
-            setGlobalFilter(String(event.target.value));
-          }}
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
-        {globalFilter && (
-          <Button
-            variant="ghost"
-            onClick={() => setGlobalFilter("")}
-            className="h-8 px-2 lg:px-3"
-          >
-            Reset
-            <X />
-          </Button>
-        )}
+        <div className="relative w-full max-w-[250px]">
+          <Input
+            placeholder="Filter projects..."
+            value={globalFilter ?? ""}
+            onChange={(event) => {
+              setGlobalFilter(String(event.target.value));
+            }}
+            className="h-8 w-full pr-8"
+            aria-label="Filter projects"
+          />
+          {globalFilter && (
+            <Button
+              variant="ghost"
+              onClick={() => setGlobalFilter("")}
+              className="absolute right-0 top-0 h-8 px-2"
+              aria-label="Clear filter"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

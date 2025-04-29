@@ -13,7 +13,10 @@ export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/")({
   loader: async ({ context: { trpc, queryClient } }) =>
     await queryClient.prefetchQuery(trpc.project.all.queryOptions()),
   head: () => ({
-    meta: [{ title: "Projects" }],
+    meta: [
+      { title: "Projects | Dashboard" },
+      { name: "description", content: "Manage your portfolio projects" },
+    ],
   }),
 });
 
@@ -32,8 +35,9 @@ function Projects() {
           <Link
             to="/dashboard/projects/create"
             className={cn(buttonVariants({ variant: "default" }), "group")}
+            aria-label="Add new project"
           >
-            <span>Add Project</span> <Plus size={18} />
+            <span>Add Project</span> <Plus size={18} aria-hidden="true" />
           </Link>
         </div>
       </div>
