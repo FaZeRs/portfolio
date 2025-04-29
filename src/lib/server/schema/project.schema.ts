@@ -20,21 +20,23 @@ export const Project = pgTable("project", (t) => ({
     .$onUpdate(() => new Date()),
 }));
 
-export const CreateProjectSchema = createInsertSchema(Project, {
-  title: z.string().max(255),
+const BaseProjectSchema = {
+  title: z.string().min(1, "Title is required").max(255),
   slug: z
     .string()
+    .min(1, "Slug is required")
     .max(255)
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-  description: z.string().max(255).optional(),
-  content: z.string().optional(),
-  imageUrl: z.string().url().max(255).optional().or(z.literal("")),
-  githubUrl: z.string().url().max(255).optional().or(z.literal("")),
-  demoUrl: z.string().url().max(255).optional().or(z.literal("")),
-  stacks: z.array(z.string()).optional(),
-  isFeatured: z.boolean().optional(),
-  isDraft: z.boolean().optional(),
-})
+  description: z.string().max(255),
+  content: z.string(),
+  githubUrl: z.string().max(255).url().optional().or(z.literal("")),
+  demoUrl: z.string().max(255).url().optional().or(z.literal("")),
+  stacks: z.array(z.string()),
+  isFeatured: z.boolean(),
+  isDraft: z.boolean(),
+};
+
+export const CreateProjectSchema = createInsertSchema(Project, BaseProjectSchema)
   .omit({
     id: true,
     createdAt: true,
@@ -42,26 +44,13 @@ export const CreateProjectSchema = createInsertSchema(Project, {
   })
   .and(
     z.object({
-      thumbnail: z.string().optional(),
+      thumbnail: z.string(),
     }),
   );
 
 export const UpdateProjectSchema = createUpdateSchema(Project, {
+  ...BaseProjectSchema,
   id: z.string(),
-  title: z.string().max(255).optional(),
-  slug: z
-    .string()
-    .max(255)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-    .optional(),
-  description: z.string().max(255).optional(),
-  content: z.string().optional(),
-  imageUrl: z.string().url().max(255).optional().or(z.literal("")),
-  githubUrl: z.string().url().max(255).optional().or(z.literal("")),
-  demoUrl: z.string().url().max(255).optional().or(z.literal("")),
-  stacks: z.array(z.string()).optional(),
-  isFeatured: z.boolean().optional(),
-  isDraft: z.boolean().optional(),
 })
   .omit({
     createdAt: true,
@@ -69,6 +58,6 @@ export const UpdateProjectSchema = createUpdateSchema(Project, {
   })
   .and(
     z.object({
-      thumbnail: z.string().optional(),
+      thumbnail: z.string(),
     }),
   );

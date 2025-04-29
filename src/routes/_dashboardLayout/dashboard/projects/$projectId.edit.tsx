@@ -65,6 +65,7 @@ function ProjectsEditPage() {
       project={project.data}
       handleSubmit={handleFormSubmit}
       isSubmitting={updateProjectMutation.isPending}
+      schema={UpdateProjectSchema}
     />
   );
 }

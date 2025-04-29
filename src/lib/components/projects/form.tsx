@@ -1,7 +1,6 @@
-import { formOptions } from "@tanstack/react-form";
 import { useState } from "react";
-import { z } from "zod";
 
+import { z } from "zod";
 import { STACKS } from "~/lib/constants/stack";
 import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/schema";
 import { generateSlug } from "~/lib/utils";
@@ -23,36 +22,38 @@ export function ProjectsForm<T extends ProjectFormData>({
   project,
   handleSubmit,
   isSubmitting = false,
+  schema,
 }: Readonly<{
   project?: typeof Project.$inferSelect;
   handleSubmit: (data: T) => void;
   isSubmitting?: boolean;
+  schema: z.ZodSchema<T>;
 }>) {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(
+    project?.imageUrl ? project.imageUrl : null,
+  );
 
-  const formOpts = formOptions({
+  const form = useAppForm({
     defaultValues: {
-      id: project?.id ?? "",
       title: project?.title ?? "",
       slug: project?.slug ?? "",
       description: project?.description ?? "",
       content: project?.content ?? "",
-      imageUrl: project?.imageUrl ?? "",
+      thumbnail: "",
       githubUrl: project?.githubUrl ?? "",
       demoUrl: project?.demoUrl ?? "",
-      thumbnail: "",
       isFeatured: project?.isFeatured ?? false,
       isDraft: project?.isDraft ?? false,
       stacks: project?.stacks ?? [],
     },
-  });
-
-  const form = useAppForm({
-    ...formOpts,
     onSubmit: ({ formApi, value }) => {
       handleSubmit(value as T);
       formApi.reset();
       setUploadedImage(null);
+    },
+    validators: {
+      // @ts-expect-error - TODO: fix this
+      onChange: schema,
     },
   });
 
@@ -75,6 +76,11 @@ export function ProjectsForm<T extends ProjectFormData>({
       setUploadedImage(base64String);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setUploadedImage(null);
+    form.setFieldValue("thumbnail", "");
   };
 
   return (
@@ -176,6 +182,7 @@ export function ProjectsForm<T extends ProjectFormData>({
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
+                      className="min-h-[300px]"
                     />
                   </field.FormControl>
                   <field.FormMessage />
@@ -193,80 +200,83 @@ export function ProjectsForm<T extends ProjectFormData>({
             </field.FormItem>
           )}
         </form.AppField>
-        <form.AppField name="imageUrl">
+        <form.AppField name="thumbnail">
           {(field) => (
             <field.FormItem>
               <field.FormLabel>Image</field.FormLabel>
               <field.FormControl>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  type="file"
-                  accept="image/*"
-                  onBlur={field.handleBlur}
-                  onChange={(e) => handleFileChange(e, field)}
-                />
-              </field.FormControl>
-              {uploadedImage && (
-                <div className="mt-2">
-                  <img
-                    src={uploadedImage}
-                    alt="Project preview"
-                    className="max-h-32 rounded-md"
+                <div className="space-y-2">
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type="file"
+                    accept="image/*"
+                    onBlur={field.handleBlur}
+                    onChange={(e) => handleFileChange(e, field)}
                   />
+                  {uploadedImage && (
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                      <img
+                        src={uploadedImage}
+                        alt="Project preview"
+                        className="max-h-32 w-auto rounded-md object-cover"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        onClick={handleRemoveImage}
+                      >
+                        Remove Image
+                      </Button>
+                    </div>
+                  )}
                 </div>
-              )}
-              {!uploadedImage && project?.imageUrl && (
-                <div className="mt-2">
-                  <img
-                    src={project.imageUrl}
-                    alt="Current project image"
-                    className="max-h-32 rounded-md"
+              </field.FormControl>
+              <field.FormMessage />
+            </field.FormItem>
+          )}
+        </form.AppField>
+        <div className="grid gap-8 md:grid-cols-2">
+          <form.AppField name="githubUrl">
+            {(field) => (
+              <field.FormItem>
+                <field.FormLabel>GitHub URL</field.FormLabel>
+                <field.FormControl>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type="text"
+                    placeholder="https://github.com/example"
+                    value={field.state.value ?? ""}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
                   />
-                </div>
-              )}
-              <field.FormMessage />
-            </field.FormItem>
-          )}
-        </form.AppField>
-        <form.AppField name="githubUrl">
-          {(field) => (
-            <field.FormItem>
-              <field.FormLabel>GitHub URL</field.FormLabel>
-              <field.FormControl>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  type="text"
-                  placeholder="https://github.com/example"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </field.FormControl>
-              <field.FormMessage />
-            </field.FormItem>
-          )}
-        </form.AppField>
-        <form.AppField name="demoUrl">
-          {(field) => (
-            <field.FormItem>
-              <field.FormLabel>Demo URL</field.FormLabel>
-              <field.FormControl>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  type="text"
-                  placeholder="https://example.com"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </field.FormControl>
-              <field.FormMessage />
-            </field.FormItem>
-          )}
-        </form.AppField>
+                </field.FormControl>
+                <field.FormMessage />
+              </field.FormItem>
+            )}
+          </form.AppField>
+          <form.AppField name="demoUrl">
+            {(field) => (
+              <field.FormItem>
+                <field.FormLabel>Demo URL</field.FormLabel>
+                <field.FormControl>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type="text"
+                    placeholder="https://example.com"
+                    value={field.state.value ?? ""}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                </field.FormControl>
+                <field.FormMessage />
+              </field.FormItem>
+            )}
+          </form.AppField>
+        </div>
 
         <form.AppField name="stacks">
           {(field) => (
@@ -289,48 +299,61 @@ export function ProjectsForm<T extends ProjectFormData>({
           )}
         </form.AppField>
 
-        <form.AppField name="isFeatured">
-          {(field) => (
-            <field.FormItem>
-              <field.FormLabel>Featured</field.FormLabel>
-              <field.FormControl>
-                <Checkbox
-                  id={field.name}
-                  name={field.name}
-                  checked={field.state.value}
-                  onBlur={field.handleBlur}
-                  onCheckedChange={(checked: boolean) => field.handleChange(checked)}
-                />
-              </field.FormControl>
-              <field.FormMessage />
-            </field.FormItem>
-          )}
-        </form.AppField>
+        <div className="grid gap-8 md:grid-cols-2">
+          <form.AppField name="isFeatured">
+            {(field) => (
+              <field.FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <field.FormControl>
+                  <Checkbox
+                    id={field.name}
+                    name={field.name}
+                    checked={field.state.value}
+                    onBlur={field.handleBlur}
+                    onCheckedChange={(checked: boolean) => field.handleChange(checked)}
+                  />
+                </field.FormControl>
+                <div className="space-y-1 leading-none">
+                  <field.FormLabel>Featured Project</field.FormLabel>
+                  <p className="text-sm text-muted-foreground">
+                    Display this project in featured section
+                  </p>
+                </div>
+              </field.FormItem>
+            )}
+          </form.AppField>
 
-        <form.AppField name="isDraft">
-          {(field) => (
-            <field.FormItem>
-              <field.FormLabel>Draft</field.FormLabel>
-              <field.FormControl>
-                <Checkbox
-                  id={field.name}
-                  name={field.name}
-                  checked={field.state.value}
-                  onBlur={field.handleBlur}
-                  onCheckedChange={(checked: boolean) => field.handleChange(checked)}
-                />
-              </field.FormControl>
-              <field.FormMessage />
-            </field.FormItem>
-          )}
-        </form.AppField>
+          <form.AppField name="isDraft">
+            {(field) => (
+              <field.FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <field.FormControl>
+                  <Checkbox
+                    id={field.name}
+                    name={field.name}
+                    checked={field.state.value}
+                    onBlur={field.handleBlur}
+                    onCheckedChange={(checked: boolean) => field.handleChange(checked)}
+                  />
+                </field.FormControl>
+                <div className="space-y-1 leading-none">
+                  <field.FormLabel>Save as Draft</field.FormLabel>
+                  <p className="text-sm text-muted-foreground">
+                    This project won't be visible to visitors
+                  </p>
+                </div>
+              </field.FormItem>
+            )}
+          </form.AppField>
+        </div>
 
-        <form.Subscribe selector={(formState) => [formState.canSubmit]}>
+        <form.Subscribe
+          selector={(formState) => [formState.canSubmit, formState.isSubmitting]}
+        >
           {([canSubmit, isPending]) => (
             <Button
               type="submit"
               variant="default"
               disabled={!canSubmit || isPending || isSubmitting}
+              className="w-full md:w-auto"
             >
               {isSubmitting ? "Submitting..." : isPending ? "Processing..." : "Submit"}
             </Button>
