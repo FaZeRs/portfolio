@@ -62,7 +62,7 @@ export function createRouter() {
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
     defaultErrorComponent: DefaultCatchBoundary,
-    defaultNotFoundComponent: NotFound,
+    defaultNotFoundComponent: () => <NotFound />,
     scrollRestoration: true,
     defaultStructuralSharing: true,
     Wrap: (props) => {

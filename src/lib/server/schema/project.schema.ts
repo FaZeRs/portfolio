@@ -59,7 +59,7 @@ export const stacksToProjectsRelations = relations(stacksToProjects, ({ one }) =
   }),
 }));
 
-const ProjectBaseSchema = {
+export const ProjectBaseSchema = z.object({
   title: z
     .string()
     .min(1, "Title is required")
@@ -72,25 +72,27 @@ const ProjectBaseSchema = {
       /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
       "Slug must contain only lowercase letters, numbers, and hyphens",
     ),
-  description: z.string().max(255, "Description cannot exceed 255 characters"),
-  content: z.string(),
-  imageUrl: z.string().url("Please enter a valid image URL").max(255).or(z.literal("")),
+  description: z
+    .string()
+    .max(255, "Description cannot exceed 255 characters")
+    .or(z.literal("")),
+  content: z.string().or(z.literal("")),
+  thumbnail: z.string().describe("File upload for project thumbnail"),
   githubUrl: z.string().url("Please enter a valid GitHub URL").max(255).or(z.literal("")),
   demoUrl: z.string().url("Please enter a valid demo URL").max(255).or(z.literal("")),
-  isFeatured: z.boolean(),
-  isDraft: z.boolean(),
-};
+  isFeatured: z.boolean().or(z.literal(false)),
+  isDraft: z.boolean().or(z.literal(false)),
+});
 
 export const CreateProjectSchema = createInsertSchema(Project, {
-  title: ProjectBaseSchema.title,
-  slug: ProjectBaseSchema.slug,
-  description: ProjectBaseSchema.description,
-  content: ProjectBaseSchema.content,
-  imageUrl: ProjectBaseSchema.imageUrl,
-  githubUrl: ProjectBaseSchema.githubUrl,
-  demoUrl: ProjectBaseSchema.demoUrl,
-  isFeatured: ProjectBaseSchema.isFeatured,
-  isDraft: ProjectBaseSchema.isDraft,
+  title: ProjectBaseSchema.shape.title,
+  slug: ProjectBaseSchema.shape.slug,
+  description: ProjectBaseSchema.shape.description,
+  content: ProjectBaseSchema.shape.content,
+  githubUrl: ProjectBaseSchema.shape.githubUrl,
+  demoUrl: ProjectBaseSchema.shape.demoUrl,
+  isFeatured: ProjectBaseSchema.shape.isFeatured,
+  isDraft: ProjectBaseSchema.shape.isDraft,
 })
   .omit({
     id: true,
@@ -104,16 +106,15 @@ export const CreateProjectSchema = createInsertSchema(Project, {
   );
 
 export const UpdateProjectSchema = createUpdateSchema(Project, {
-  id: z.string(),
-  title: ProjectBaseSchema.title,
-  slug: ProjectBaseSchema.slug,
-  description: ProjectBaseSchema.description,
-  content: ProjectBaseSchema.content,
-  imageUrl: ProjectBaseSchema.imageUrl,
-  githubUrl: ProjectBaseSchema.githubUrl,
-  demoUrl: ProjectBaseSchema.demoUrl,
-  isFeatured: ProjectBaseSchema.isFeatured,
-  isDraft: ProjectBaseSchema.isDraft,
+  id: z.string().uuid(),
+  title: ProjectBaseSchema.shape.title,
+  slug: ProjectBaseSchema.shape.slug,
+  description: ProjectBaseSchema.shape.description,
+  content: ProjectBaseSchema.shape.content,
+  githubUrl: ProjectBaseSchema.shape.githubUrl,
+  demoUrl: ProjectBaseSchema.shape.demoUrl,
+  isFeatured: ProjectBaseSchema.shape.isFeatured,
+  isDraft: ProjectBaseSchema.shape.isDraft,
 })
   .omit({
     createdAt: true,

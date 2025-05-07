@@ -4,7 +4,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { NotFound } from "~/lib/components/not-found";
 import { ProjectsForm } from "~/lib/components/projects/form";
-import { UpdateProjectSchema } from "~/lib/server/schema";
+import { useAppForm } from "~/lib/components/ui/form";
+import { ProjectBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
@@ -35,15 +36,11 @@ function ProjectsEditPage() {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  const projectAllQueryKey = trpc.project.all.queryKey();
 
   const updateProjectMutation = useMutation({
     ...trpc.project.update.mutationOptions(),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [projectAllQueryKey[0]],
-        refetchType: "all",
-      });
+      await queryClient.invalidateQueries(trpc.project.pathFilter());
       toast.success("Project updated successfully");
       router.navigate({ to: "/dashboard/projects" });
     },
@@ -53,19 +50,56 @@ function ProjectsEditPage() {
     },
   });
 
-  const handleFormSubmit = (data: z.infer<typeof UpdateProjectSchema>) => {
+  const handleFormSubmit = (data: z.infer<typeof ProjectBaseSchema>) => {
     updateProjectMutation.mutate({
       ...data,
       id: project.data?.id ?? "",
     });
   };
 
+  const form = useAppForm({
+    defaultValues: {
+      title: project.data?.title ?? "",
+      slug: project.data?.slug ?? "",
+      description: project.data?.description ?? "",
+      content: project.data?.content ?? "",
+      githubUrl: project.data?.githubUrl ?? "",
+      demoUrl: project.data?.demoUrl ?? "",
+      thumbnail: "",
+      isFeatured: project.data?.isFeatured ?? false,
+      isDraft: project.data?.isDraft ?? false,
+    },
+    validators: {
+      onChange: ProjectBaseSchema,
+    },
+    onSubmit: ({ formApi, value }) => {
+      handleFormSubmit(value);
+      formApi.reset();
+    },
+  });
+
   return (
-    <ProjectsForm<z.infer<typeof UpdateProjectSchema>>
-      project={project.data}
-      handleSubmit={handleFormSubmit}
-      isSubmitting={updateProjectMutation.isPending}
-      schema={UpdateProjectSchema}
-    />
+    <>
+      <div className="mb-2 flex flex-wrap items-center justify-between space-y-2">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">Edit Project</h2>
+          <p className="text-muted-foreground">Edit a project here.</p>
+        </div>
+      </div>
+      <div className="py-4">
+        <form.AppForm>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              form.handleSubmit();
+            }}
+            className="space-y-8"
+          >
+            <ProjectsForm form={form} project={project.data} />
+          </form>
+        </form.AppForm>
+      </div>
+    </>
   );
 }

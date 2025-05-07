@@ -30,7 +30,7 @@ interface DataTableRowActionsProps<TData> {
   slug: string;
 }
 
-export function Actions<TData>({ id, slug }: DataTableRowActionsProps<TData>) {
+export function Actions<TData>({ id, slug }: Readonly<DataTableRowActionsProps<TData>>) {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -38,8 +38,8 @@ export function Actions<TData>({ id, slug }: DataTableRowActionsProps<TData>) {
 
   const deleteMutation = useMutation({
     ...trpc.project.delete.mutationOptions(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(trpc.project.pathFilter());
       toast.success("Project deleted successfully");
     },
     onError: (error) => {

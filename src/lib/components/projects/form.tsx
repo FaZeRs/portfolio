@@ -1,87 +1,61 @@
-import { useState } from "react";
-import { z } from "zod";
-
-import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/schema";
+import { formOptions } from "@tanstack/react-form";
+import React, { useState } from "react";
+import { Project } from "~/lib/server/schema";
 import { generateSlug } from "~/lib/utils";
 import CustomMDX from "../mdx/mdx";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
-import { useAppForm } from "../ui/form";
+import { withForm } from "../ui/form";
 import { Input } from "../ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
 
-type ProjectFormData =
-  | z.infer<typeof CreateProjectSchema>
-  | z.infer<typeof UpdateProjectSchema>;
+export const projectFormOpts = formOptions({
+  defaultValues: {
+    title: "",
+    slug: "",
+    description: "",
+    content: "",
+    githubUrl: "",
+    demoUrl: "",
+    thumbnail: "",
+    isFeatured: false,
+    isDraft: false,
+  },
+});
 
-export function ProjectsForm<T extends ProjectFormData>({
-  project,
-  handleSubmit,
-  isSubmitting = false,
-  schema,
-}: Readonly<{
-  project?: typeof Project.$inferSelect;
-  handleSubmit: (data: T) => void;
-  isSubmitting?: boolean;
-  schema: z.ZodSchema<T>;
-}>) {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+export const ProjectsForm = withForm({
+  ...projectFormOpts,
+  props: {
+    project: undefined as typeof Project.$inferSelect | undefined,
+  },
+  render: function Render({ form, project }) {
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  const form = useAppForm({
-    defaultValues: {
-      title: project?.title ?? "",
-      slug: project?.slug ?? "",
-      description: project?.description ?? "",
-      content: project?.content ?? "",
-      imageUrl: project?.imageUrl ?? "",
-      githubUrl: project?.githubUrl ?? "",
-      demoUrl: project?.demoUrl ?? "",
-      thumbnail: "",
-      isFeatured: project?.isFeatured ?? false,
-      isDraft: project?.isDraft ?? false,
-    },
-    validators: {
-      onChange: schema,
-    },
-    onSubmit: ({ formApi, value }) => {
-      handleSubmit(value as T);
-      formApi.reset();
-      setUploadedImage(null);
-    },
-  });
+    const handleFileChange = async (
+      e: React.ChangeEvent<HTMLInputElement>,
+      field: {
+        handleChange: (value: string) => void;
+      },
+    ) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-  const handleFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: {
-      handleChange: (value: string) => void;
-    },
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const base64Data = base64String.split(",")[1];
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      const base64Data = base64String.split(",")[1];
+        field.handleChange("");
+        form.setFieldValue("thumbnail", base64Data);
 
-      field.handleChange("");
-      form.setFieldValue("thumbnail", base64Data);
-      setUploadedImage(base64String);
+        setPreviewImage(base64String);
+      };
+      reader.readAsDataURL(file);
     };
-    reader.readAsDataURL(file);
-  };
 
-  return (
-    <form.AppForm>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          form.handleSubmit();
-        }}
-        className="space-y-8"
-      >
+    return (
+      <>
         <form.AppField
           name="title"
           listeners={{
@@ -161,13 +135,13 @@ export function ProjectsForm<T extends ProjectFormData>({
                       id={field.name}
                       name={field.name}
                       placeholder="# Project Details
-                                     ## Overview
-                                     A brief overview of your project.
-                                     ## Features
-                                     - Feature 1
-                                     - Feature 2
-                                     ## Implementation
-                                     Details about how you implemented the project."
+## Overview
+A brief overview of your project.
+## Features
+- Feature 1
+- Feature 2
+## Implementation
+Details about how you implemented the project."
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
@@ -188,7 +162,7 @@ export function ProjectsForm<T extends ProjectFormData>({
             </field.FormItem>
           )}
         </form.AppField>
-        <form.AppField name="imageUrl">
+        <form.AppField name="thumbnail">
           {(field) => (
             <field.FormItem>
               <field.FormLabel>Image</field.FormLabel>
@@ -202,16 +176,16 @@ export function ProjectsForm<T extends ProjectFormData>({
                   onChange={(e) => handleFileChange(e, field)}
                 />
               </field.FormControl>
-              {uploadedImage && (
+              {previewImage && (
                 <div className="mt-2">
                   <img
-                    src={uploadedImage}
+                    src={previewImage}
                     alt="Project preview"
                     className="max-h-32 rounded-md"
                   />
                 </div>
               )}
-              {!uploadedImage && project?.imageUrl && (
+              {!previewImage && project?.imageUrl && (
                 <div className="mt-2">
                   <img
                     src={project.imageUrl}
@@ -299,8 +273,10 @@ export function ProjectsForm<T extends ProjectFormData>({
           )}
         </form.AppField>
 
-        <form.Subscribe selector={(formState) => [formState.canSubmit]}>
-          {([canSubmit, isPending]) => (
+        <form.Subscribe
+          selector={(formState) => [formState.canSubmit, formState.isSubmitting]}
+        >
+          {([canSubmit, isPending, isSubmitting]) => (
             <Button
               type="submit"
               variant="default"
@@ -310,7 +286,7 @@ export function ProjectsForm<T extends ProjectFormData>({
             </Button>
           )}
         </form.Subscribe>
-      </form>
-    </form.AppForm>
-  );
-}
+      </>
+    );
+  },
+});

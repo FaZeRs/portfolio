@@ -3,7 +3,8 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import { ProjectsForm } from "~/lib/components/projects/form";
-import { CreateProjectSchema } from "~/lib/server/schema";
+import { useAppForm } from "~/lib/components/ui/form";
+import { ProjectBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/create")({
@@ -17,15 +18,11 @@ function ProjectsCreatePage() {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  const projectAllQueryKey = trpc.project.all.queryKey();
 
   const createProjectMutation = useMutation({
     ...trpc.project.create.mutationOptions(),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [projectAllQueryKey[0]],
-        refetchType: "all",
-      });
+      await queryClient.invalidateQueries(trpc.project.pathFilter());
       toast.success("Project created successfully");
       router.navigate({ to: "/dashboard/projects" });
     },
@@ -35,9 +32,30 @@ function ProjectsCreatePage() {
     },
   });
 
-  const handleFormSubmit = (data: z.infer<typeof CreateProjectSchema>) => {
+  const handleFormSubmit = (data: z.infer<typeof ProjectBaseSchema>) => {
     createProjectMutation.mutate(data);
   };
+
+  const form = useAppForm({
+    defaultValues: {
+      title: "",
+      slug: "",
+      description: "",
+      content: "",
+      githubUrl: "",
+      demoUrl: "",
+      thumbnail: "",
+      isFeatured: false,
+      isDraft: false,
+    },
+    validators: {
+      onChange: ProjectBaseSchema,
+    },
+    onSubmit: ({ formApi, value }) => {
+      handleFormSubmit(value);
+      formApi.reset();
+    },
+  });
 
   return (
     <>
@@ -48,11 +66,18 @@ function ProjectsCreatePage() {
         </div>
       </div>
       <div className="py-4">
-        <ProjectsForm<z.infer<typeof CreateProjectSchema>>
-          handleSubmit={handleFormSubmit}
-          isSubmitting={createProjectMutation.isPending}
-          schema={CreateProjectSchema}
-        />
+        <form.AppForm>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              form.handleSubmit();
+            }}
+            className="space-y-8"
+          >
+            <ProjectsForm form={form} project={undefined} />
+          </form>
+        </form.AppForm>
       </div>
     </>
   );

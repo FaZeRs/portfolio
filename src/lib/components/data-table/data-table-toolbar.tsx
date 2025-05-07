@@ -19,7 +19,6 @@ export function DataTableToolbar({
           placeholder="Filter projects..."
           value={globalFilter ?? ""}
           onChange={(event) => {
-            console.log("event", event.target.value);
             setGlobalFilter(String(event.target.value));
           }}
           className="h-8 w-[150px] lg:w-[250px]"
