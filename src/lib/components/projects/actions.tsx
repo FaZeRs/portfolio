@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { Row } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Loader2, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "~/trpc/react";
@@ -24,13 +23,13 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>;
+interface DataTableRowActionsProps {
   id: string;
   slug: string;
+  title: string;
 }
 
-export function Actions<TData>({ id, slug }: Readonly<DataTableRowActionsProps<TData>>) {
+export function Actions({ id, slug, title }: Readonly<DataTableRowActionsProps>) {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -40,11 +39,13 @@ export function Actions<TData>({ id, slug }: Readonly<DataTableRowActionsProps<T
     ...trpc.project.delete.mutationOptions(),
     onSuccess: async () => {
       await queryClient.invalidateQueries(trpc.project.pathFilter());
-      toast.success("Project deleted successfully");
+      toast.success(`Project "${title}" deleted successfully`);
     },
     onError: (error) => {
-      console.error("Error deleting project:", error);
-      toast.error("Failed to delete project");
+      console.error(`Error deleting project "${title}":`, error);
+      toast.error(
+        error instanceof Error ? error.message : `Failed to delete project "${title}"`,
+      );
     },
   });
 
@@ -57,22 +58,33 @@ export function Actions<TData>({ id, slug }: Readonly<DataTableRowActionsProps<T
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+          <Button
+            variant="ghost"
+            className="h-8 w-8 p-0"
+            aria-label={`Actions for ${title}`}
+          >
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => router.navigate({ to: `/projects/${slug}` })}>
+          <DropdownMenuItem
+            onClick={() => router.navigate({ to: `/projects/${slug}` })}
+            disabled={deleteMutation.isPending}
+          >
             View
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => router.navigate({ to: `/dashboard/projects/${id}/edit` })}
+            disabled={deleteMutation.isPending}
           >
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setShowDeleteDialog(true)}>
+          <DropdownMenuItem
+            onClick={() => setShowDeleteDialog(true)}
+            disabled={deleteMutation.isPending}
+            className="text-destructive focus:text-destructive"
+          >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -83,12 +95,22 @@ export function Actions<TData>({ id, slug }: Readonly<DataTableRowActionsProps<T
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the project.
+              This action cannot be undone. This will permanently delete the project "
+              {title}".
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+            <AlertDialogCancel disabled={deleteMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={deleteMutation.isPending}
+              className="gap-2"
+            >
+              {deleteMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

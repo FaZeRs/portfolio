@@ -4,7 +4,10 @@ import { DataTableColumnHeader } from "../data-table/data-table-column-header";
 import { Checkbox } from "../ui/checkbox";
 import { Actions } from "./actions";
 
-export const projectColumns: ColumnDef<typeof Project.$inferSelect>[] = [
+// Define the Project type explicitly for better type safety
+type ProjectType = typeof Project.$inferSelect;
+
+export const projectColumns: ColumnDef<ProjectType>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -14,14 +17,14 @@ export const projectColumns: ColumnDef<typeof Project.$inferSelect>[] = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label="Select all projects"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label={`Select ${row.original.title}`}
       />
     ),
     enableSorting: false,
@@ -34,23 +37,35 @@ export const projectColumns: ColumnDef<typeof Project.$inferSelect>[] = [
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
     filterFn: "includesString",
   },
   {
     accessorKey: "isFeatured",
-    header: "Featured",
-    cell: ({ row }) => <Checkbox checked={row.original.isFeatured} />,
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Featured" />,
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.original.isFeatured}
+        aria-label={`${row.original.title} is featured: ${row.original.isFeatured ? "Yes" : "No"}`}
+        disabled
+      />
+    ),
   },
   {
     accessorKey: "isDraft",
-    header: "Draft",
-    cell: ({ row }) => <Checkbox checked={row.original.isDraft} />,
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Draft" />,
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.original.isDraft}
+        aria-label={`${row.original.title} is draft: ${row.original.isDraft ? "Yes" : "No"}`}
+        disabled
+      />
+    ),
   },
   {
     id: "actions",
     cell: ({ row }) => (
-      <Actions row={row} id={row.original.id} slug={row.original.slug} />
+      <Actions id={row.original.id} slug={row.original.slug} title={row.original.title} />
     ),
   },
 ];

@@ -20,7 +20,7 @@ export const Route = createFileRoute(
     return { title: data?.title };
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: loaderData.title }],
+    meta: [{ title: `Edit Project: ${loaderData.title} | Dashboard` }],
   }),
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {
@@ -68,6 +68,7 @@ function ProjectsEditPage() {
       thumbnail: "",
       isFeatured: project.data?.isFeatured ?? false,
       isDraft: project.data?.isDraft ?? false,
+      stacks: project.data?.stacks ?? [],
     },
     validators: {
       onChange: ProjectBaseSchema,

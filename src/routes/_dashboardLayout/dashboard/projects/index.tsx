@@ -16,7 +16,10 @@ export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/")({
   loader: async ({ context: { trpc, queryClient } }) =>
     await queryClient.prefetchQuery(trpc.project.all.queryOptions()),
   head: () => ({
-    meta: [{ title: "Projects" }],
+    meta: [
+      { title: "Projects | Dashboard" },
+      { name: "description", content: "Manage your portfolio projects" },
+    ],
   }),
 });
 

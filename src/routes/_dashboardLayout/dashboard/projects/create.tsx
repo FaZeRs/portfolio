@@ -10,7 +10,7 @@ import { useTRPC } from "~/trpc/react";
 export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/create")({
   component: ProjectsCreatePage,
   head: () => ({
-    meta: [{ title: "Create Project" }],
+    meta: [{ title: "Create Project | Dashboard" }],
   }),
 });
 
@@ -47,6 +47,7 @@ function ProjectsCreatePage() {
       thumbnail: "",
       isFeatured: false,
       isDraft: false,
+      stacks: [] as string[],
     },
     validators: {
       onChange: ProjectBaseSchema,
