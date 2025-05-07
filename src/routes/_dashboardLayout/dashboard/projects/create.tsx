@@ -51,6 +51,7 @@ function ProjectsCreatePage() {
         <ProjectsForm<z.infer<typeof CreateProjectSchema>>
           handleSubmit={handleFormSubmit}
           isSubmitting={createProjectMutation.isPending}
+          schema={CreateProjectSchema}
         />
       </div>
     </>

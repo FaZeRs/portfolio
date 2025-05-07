@@ -22,6 +22,7 @@ export const Project = pgTable("project", (t) => ({
   isFeatured: t.boolean().notNull().default(false),
   githubUrl: t.varchar({ length: 255 }),
   demoUrl: t.varchar({ length: 255 }),
+  isDraft: t.boolean().notNull().default(false),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t
     .timestamp({ mode: "date", withTimezone: true })
@@ -58,18 +59,38 @@ export const stacksToProjectsRelations = relations(stacksToProjects, ({ one }) =
   }),
 }));
 
-export const CreateProjectSchema = createInsertSchema(Project, {
-  title: z.string().max(255),
+const ProjectBaseSchema = {
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .max(255, "Title cannot exceed 255 characters"),
   slug: z
     .string()
-    .max(255)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-  description: z.string().max(255).optional(),
-  content: z.string().optional(),
-  imageUrl: z.string().url().max(255).optional().or(z.literal("")),
-  githubUrl: z.string().url().max(255).optional().or(z.literal("")),
-  demoUrl: z.string().url().max(255).optional().or(z.literal("")),
-  isFeatured: z.boolean().optional(),
+    .min(1, "Slug is required")
+    .max(255, "Slug cannot exceed 255 characters")
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      "Slug must contain only lowercase letters, numbers, and hyphens",
+    ),
+  description: z.string().max(255, "Description cannot exceed 255 characters"),
+  content: z.string(),
+  imageUrl: z.string().url("Please enter a valid image URL").max(255).or(z.literal("")),
+  githubUrl: z.string().url("Please enter a valid GitHub URL").max(255).or(z.literal("")),
+  demoUrl: z.string().url("Please enter a valid demo URL").max(255).or(z.literal("")),
+  isFeatured: z.boolean(),
+  isDraft: z.boolean(),
+};
+
+export const CreateProjectSchema = createInsertSchema(Project, {
+  title: ProjectBaseSchema.title,
+  slug: ProjectBaseSchema.slug,
+  description: ProjectBaseSchema.description,
+  content: ProjectBaseSchema.content,
+  imageUrl: ProjectBaseSchema.imageUrl,
+  githubUrl: ProjectBaseSchema.githubUrl,
+  demoUrl: ProjectBaseSchema.demoUrl,
+  isFeatured: ProjectBaseSchema.isFeatured,
+  isDraft: ProjectBaseSchema.isDraft,
 })
   .omit({
     id: true,
@@ -78,24 +99,21 @@ export const CreateProjectSchema = createInsertSchema(Project, {
   })
   .and(
     z.object({
-      thumbnail: z.string().optional(),
+      thumbnail: z.string().describe("File upload for project thumbnail"),
     }),
   );
 
 export const UpdateProjectSchema = createUpdateSchema(Project, {
   id: z.string(),
-  title: z.string().max(255).optional(),
-  slug: z
-    .string()
-    .max(255)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-    .optional(),
-  description: z.string().max(255).optional(),
-  content: z.string().optional(),
-  imageUrl: z.string().url().max(255).optional().or(z.literal("")),
-  githubUrl: z.string().url().max(255).optional().or(z.literal("")),
-  demoUrl: z.string().url().max(255).optional().or(z.literal("")),
-  isFeatured: z.boolean().optional(),
+  title: ProjectBaseSchema.title,
+  slug: ProjectBaseSchema.slug,
+  description: ProjectBaseSchema.description,
+  content: ProjectBaseSchema.content,
+  imageUrl: ProjectBaseSchema.imageUrl,
+  githubUrl: ProjectBaseSchema.githubUrl,
+  demoUrl: ProjectBaseSchema.demoUrl,
+  isFeatured: ProjectBaseSchema.isFeatured,
+  isDraft: ProjectBaseSchema.isDraft,
 })
   .omit({
     createdAt: true,
@@ -103,6 +121,6 @@ export const UpdateProjectSchema = createUpdateSchema(Project, {
   })
   .and(
     z.object({
-      thumbnail: z.string().optional(),
+      thumbnail: z.string().describe("File upload for project thumbnail"),
     }),
   );

@@ -1,4 +1,3 @@
-import { formOptions } from "@tanstack/react-form";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -20,16 +19,17 @@ export function ProjectsForm<T extends ProjectFormData>({
   project,
   handleSubmit,
   isSubmitting = false,
-}: {
+  schema,
+}: Readonly<{
   project?: typeof Project.$inferSelect;
   handleSubmit: (data: T) => void;
   isSubmitting?: boolean;
-}) {
+  schema: z.ZodSchema<T>;
+}>) {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
-  const formOpts = formOptions({
+  const form = useAppForm({
     defaultValues: {
-      id: project?.id ?? "",
       title: project?.title ?? "",
       slug: project?.slug ?? "",
       description: project?.description ?? "",
@@ -39,11 +39,11 @@ export function ProjectsForm<T extends ProjectFormData>({
       demoUrl: project?.demoUrl ?? "",
       thumbnail: "",
       isFeatured: project?.isFeatured ?? false,
+      isDraft: project?.isDraft ?? false,
     },
-  });
-
-  const form = useAppForm({
-    ...formOpts,
+    validators: {
+      onChange: schema,
+    },
     onSubmit: ({ formApi, value }) => {
       handleSubmit(value as T);
       formApi.reset();
@@ -267,6 +267,24 @@ export function ProjectsForm<T extends ProjectFormData>({
           {(field) => (
             <field.FormItem>
               <field.FormLabel>Featured</field.FormLabel>
+              <field.FormControl>
+                <Checkbox
+                  id={field.name}
+                  name={field.name}
+                  checked={field.state.value}
+                  onBlur={field.handleBlur}
+                  onCheckedChange={(checked: boolean) => field.handleChange(checked)}
+                />
+              </field.FormControl>
+              <field.FormMessage />
+            </field.FormItem>
+          )}
+        </form.AppField>
+
+        <form.AppField name="isDraft">
+          {(field) => (
+            <field.FormItem>
+              <field.FormLabel>Draft</field.FormLabel>
               <field.FormControl>
                 <Checkbox
                   id={field.name}
