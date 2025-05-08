@@ -4,7 +4,6 @@ import { DataTableColumnHeader } from "../data-table/data-table-column-header";
 import { Checkbox } from "../ui/checkbox";
 import { Actions } from "./actions";
 
-// Define the Project type explicitly for better type safety
 type ProjectType = typeof Project.$inferSelect;
 
 export const projectColumns: ColumnDef<ProjectType>[] = [
@@ -25,6 +24,7 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label={`Select ${row.original.title}`}
+        disabled={!row.getCanSelect()}
       />
     ),
     enableSorting: false,

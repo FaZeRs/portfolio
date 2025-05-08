@@ -1,3 +1,5 @@
+"use no memo";
+
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import type {
   ColumnDef,
@@ -60,6 +62,7 @@ export function DataTable<TData, TValue>({
   const tableColumns = useMemo(() => columns, [columns]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -78,12 +81,14 @@ export function DataTable<TData, TValue>({
       globalFilter,
       pagination,
       columnFilters,
+      rowSelection,
     },
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: "fuzzy",
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     onColumnFiltersChange: setColumnFilters,
+    onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
