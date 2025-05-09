@@ -1,5 +1,5 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
-import { Header } from "~/lib/components/header";
+import { Header } from "~/components/header";
 import { navbarLinks } from "~/lib/config/navbar";
 
 export const Route = createFileRoute("/_defaultLayout")({

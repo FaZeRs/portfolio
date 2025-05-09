@@ -16,8 +16,8 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { Toaster } from "~/lib/components/ui/sonner";
-import { ThemeProvider } from "~/lib/components/ui/theme";
+import { Toaster } from "~/components/ui/sonner";
+import { ThemeProvider } from "~/components/ui/theme";
 import { auth } from "~/lib/server/auth";
 import appCss from "~/lib/styles/app.css?url";
 import { AppRouter } from "~/trpc/router";

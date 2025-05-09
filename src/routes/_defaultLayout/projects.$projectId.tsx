@@ -5,9 +5,9 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { NotFound } from "~/lib/components/not-found";
-import PageHeading from "~/lib/components/page-heading";
-import ProjectContent from "~/lib/components/project-content";
+import { NotFound } from "~/components/not-found";
+import PageHeading from "~/components/page-heading";
+import ProjectContent from "~/components/project-content";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({

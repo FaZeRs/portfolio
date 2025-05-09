@@ -4,7 +4,7 @@ import { Code, CommandIcon, File, Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 
-import { Button } from "~/lib/components/ui/button";
+import { Button } from "~/components/ui/button";
 import {
   CommandDialog,
   CommandEmpty,
@@ -13,8 +13,8 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "~/lib/components/ui/command";
-import Icon from "~/lib/components/ui/icon";
+} from "~/components/ui/command";
+import Icon from "~/components/ui/icon";
 
 import { navbarLinks } from "~/lib/config/navbar";
 import { socialConfig } from "~/lib/config/site";

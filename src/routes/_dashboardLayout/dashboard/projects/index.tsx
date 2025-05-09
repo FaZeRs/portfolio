@@ -4,11 +4,11 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Suspense } from "react";
 
-import { DataTable } from "~/lib/components/data-table/data-table";
-import { projectColumns } from "~/lib/components/projects/columns";
-import { buttonVariants } from "~/lib/components/ui/button";
-import { Card } from "~/lib/components/ui/card";
-import { Skeleton } from "~/lib/components/ui/skeleton";
+import { DataTable } from "~/components/data-table/data-table";
+import { projectColumns } from "~/components/projects/columns";
+import { buttonVariants } from "~/components/ui/button";
+import { Card } from "~/components/ui/card";
+import { Skeleton } from "~/components/ui/skeleton";
 import { cn } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 

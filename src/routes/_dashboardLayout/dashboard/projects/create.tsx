@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-import { ProjectsForm } from "~/lib/components/projects/form";
-import { useAppForm } from "~/lib/components/ui/form";
+import { ProjectsForm } from "~/components/projects/form";
+import { useAppForm } from "~/components/ui/form";
 import { ProjectBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 

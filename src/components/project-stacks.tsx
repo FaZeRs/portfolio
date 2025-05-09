@@ -1,10 +1,10 @@
-import Icon from "~/lib/components/ui/icon";
+import Icon from "~/components/ui/icon";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/lib/components/ui/tooltip";
+} from "~/components/ui/tooltip";
 
 import { STACKS } from "~/lib/constants/stack";
 

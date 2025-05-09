@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { siteConfig } from "~/lib/config/site";
-import { cn } from "../utils";
+import { cn } from "../lib/utils";
 
 const Logo = ({ className }: { className?: string }) => {
   return (

@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import { buttonVariants } from "~/lib/components/ui/button";
+import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 const Intro = () => {

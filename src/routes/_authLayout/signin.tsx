@@ -1,16 +1,11 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import type { ComponentProps } from "react";
 import { type SimpleIcon, siGithub } from "simple-icons";
+import Logo from "~/components/logo";
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import Icon from "~/components/ui/icon";
 import authClient from "~/lib/auth-client";
-import Logo from "~/lib/components/logo";
-import { Button } from "~/lib/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "~/lib/components/ui/card";
-import Icon from "~/lib/components/ui/icon";
 import { cn } from "~/lib/utils";
 
 const REDIRECT_URL = "/dashboard";

@@ -2,7 +2,7 @@ import { Share } from "lucide-react";
 import { Suspense, lazy } from "react";
 import { siGithub } from "simple-icons";
 
-import Icon from "~/lib/components/ui/icon";
+import Icon from "~/components/ui/icon";
 
 import type { ProjectType } from "~/types";
 
