@@ -25,6 +25,15 @@ export function DataTableColumnHeader<TData, TValue>({
     return <div className={cn(className)}>{title}</div>;
   }
 
+  const renderSortIcon = () => {
+    if (column.getIsSorted() === "desc") {
+      return <ArrowDown />;
+    } else if (column.getIsSorted() === "asc") {
+      return <ArrowUp />;
+    }
+    return <ChevronsUpDown />;
+  };
+
   return (
     <div className={cn("flex items-center space-x-2", className)}>
       <DropdownMenu>
@@ -35,13 +44,7 @@ export function DataTableColumnHeader<TData, TValue>({
             className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
-            {column.getIsSorted() === "desc" ? (
-              <ArrowDown />
-            ) : column.getIsSorted() === "asc" ? (
-              <ArrowUp />
-            ) : (
-              <ChevronsUpDown />
-            )}
+            {renderSortIcon()}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">

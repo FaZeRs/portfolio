@@ -83,7 +83,7 @@ export const projectRouter = {
 
       if (thumbnail) {
         try {
-          const fileName = `${input.slug || id}-${Date.now()}.avif`;
+          const fileName = `${input.slug ?? id}-${Date.now()}.avif`;
           const imageBuffer = Buffer.from(thumbnail, "base64");
 
           const { url } = await put(`projects/${fileName}`, imageBuffer, {

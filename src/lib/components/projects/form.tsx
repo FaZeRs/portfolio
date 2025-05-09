@@ -395,16 +395,24 @@ Details about how you implemented the project."
         <form.Subscribe
           selector={(formState) => [formState.canSubmit, formState.isSubmitting]}
         >
-          {([canSubmit, isPending, isSubmitting]) => (
-            <Button
-              type="submit"
-              variant="default"
-              disabled={!canSubmit || isPending || isSubmitting}
-              className="w-full md:w-auto"
-            >
-              {isSubmitting ? "Submitting..." : isPending ? "Processing..." : "Submit"}
-            </Button>
-          )}
+          {([canSubmit, isPending, isSubmitting]) => {
+            const buttonText = isSubmitting
+              ? "Submitting..."
+              : isPending
+                ? "Processing..."
+                : "Submit";
+
+            return (
+              <Button
+                type="submit"
+                variant="default"
+                disabled={!canSubmit || isPending || isSubmitting}
+                className="w-full md:w-auto"
+              >
+                {buttonText}
+              </Button>
+            );
+          }}
         </form.Subscribe>
       </>
     );

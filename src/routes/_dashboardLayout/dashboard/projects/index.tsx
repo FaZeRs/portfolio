@@ -52,7 +52,7 @@ function ProjectsContent() {
             Failed to load projects
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            {error.message || "Please try again later."}
+            {error.message ?? "Please try again later."}
           </p>
         </div>
       </Card>

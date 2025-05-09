@@ -11,7 +11,7 @@ interface DataTableToolbarProps {
 export function DataTableToolbar({
   globalFilter,
   setGlobalFilter,
-}: DataTableToolbarProps) {
+}: Readonly<DataTableToolbarProps>) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
