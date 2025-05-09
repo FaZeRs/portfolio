@@ -2,10 +2,10 @@ import { wrapVinxiConfigWithSentry } from "@sentry/tanstackstart-react";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "@tanstack/react-start/config";
+import { generateSitemap } from "tanstack-router-sitemap";
 import unfonts from "unplugin-fonts/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
-import env from "./env";
-import generateSitemap, { sitemap } from "./src/plugins/sitemap";
+import { sitemap } from "./src/plugins/sitemap";
 
 const config = defineConfig({
   vite: {
@@ -72,9 +72,9 @@ const config = defineConfig({
       vite: {
         plugins: [
           sentryVitePlugin({
-            authToken: env.SENTRY_AUTH_TOKEN,
-            org: env.SENTRY_ORG,
-            project: env.SENTRY_PROJECT,
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+            org: process.env.SENTRY_ORG,
+            project: process.env.SENTRY_PROJECT,
             telemetry: false,
           }),
         ],
@@ -84,9 +84,9 @@ const config = defineConfig({
 });
 
 export default wrapVinxiConfigWithSentry(config, {
-  org: env.SENTRY_ORG,
-  project: env.SENTRY_PROJECT,
-  authToken: env.SENTRY_AUTH_TOKEN,
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
   // Only print logs for uploading source maps in CI
   // Set to `true` to suppress logs
   silent: !process.env.CI,

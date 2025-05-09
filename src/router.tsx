@@ -1,15 +1,15 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
+import { createServerFn } from "@tanstack/react-start";
+import { getWebRequest } from "@tanstack/react-start/server";
+import { createTRPCClient, httpBatchStreamLink, loggerLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import superjson from "superjson";
 
 import { DefaultCatchBoundary } from "~/lib/components/default-catch-boundary";
 import { NotFound } from "~/lib/components/not-found";
-
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
-import { createTRPCClient, httpBatchStreamLink, loggerLink } from "@trpc/client";
+import { env } from "~/lib/env.server";
 import { getBaseUrl } from "~/lib/utils";
 import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";
@@ -38,7 +38,7 @@ export function createRouter() {
     links: [
       loggerLink({
         enabled: (op) =>
-          process.env.NODE_ENV === "development" ||
+          env.NODE_ENV === "development" ||
           (op.direction === "down" && op.result instanceof Error),
       }),
       httpBatchStreamLink({

@@ -1,7 +1,7 @@
-import env from "@/env";
 import { createAPIFileRoute } from "@tanstack/react-start/api";
 import { Resend } from "resend";
 import { siteConfig } from "~/lib/config/site";
+import { env } from "~/lib/env.server";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
