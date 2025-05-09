@@ -16,7 +16,8 @@ const calloutVariants = {
   warning: {
     icon: AlertTriangle,
     title: "Warning",
-    styles: "bg-yellow-100 text-yellow-950 dark:bg-yellow-950 dark:text-yellow-50",
+    styles:
+      "bg-yellow-100 text-yellow-950 dark:bg-yellow-950 dark:text-yellow-50",
   },
 };
 
@@ -33,7 +34,10 @@ export default function Callout({
   const { icon: Icon, styles, title } = calloutVariants[variant];
   return (
     <div
-      className={cn("not-prose my-3 mt-4 rounded-md border md:p-3 lg:p-4", styles)}
+      className={cn(
+        "not-prose my-3 mt-4 rounded-md border md:p-3 lg:p-4",
+        styles,
+      )}
       {...props}
     >
       <p className="flex items-center gap-2 pb-4">

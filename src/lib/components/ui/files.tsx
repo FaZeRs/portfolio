@@ -4,7 +4,11 @@ import { useState } from "react";
 
 import { cn } from "~/lib/utils";
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./collapsible";
 
 type FilesProps = React.ComponentPropsWithoutRef<"div">;
 type FileProps = {
@@ -24,7 +28,10 @@ export const Files = (props: FilesProps) => {
   const { children, className, ...rest } = props;
 
   return (
-    <div className={cn("not-prose rounded-md border bg-card p-2", className)} {...rest}>
+    <div
+      className={cn("not-prose rounded-md border bg-card p-2", className)}
+      {...rest}
+    >
       {children}
     </div>
   );

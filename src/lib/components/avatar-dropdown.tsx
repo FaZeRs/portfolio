@@ -43,8 +43,10 @@ export function AvatarDropdown() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{session?.user?.name}</p>
-            <p className="text-xs leading-none text-muted-foreground">
+            <p className="font-medium text-sm leading-none">
+              {session?.user?.name}
+            </p>
+            <p className="text-muted-foreground text-xs leading-none">
               {session?.user?.email}
             </p>
           </div>
@@ -52,7 +54,9 @@ export function AvatarDropdown() {
         {session?.user?.role === "admin" && (
           <>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.navigate({ to: "/dashboard" })}>
+            <DropdownMenuItem
+              onClick={() => router.navigate({ to: "/dashboard" })}
+            >
               Dashboard
             </DropdownMenuItem>
           </>

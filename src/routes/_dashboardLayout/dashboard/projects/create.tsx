@@ -7,7 +7,9 @@ import { useAppForm } from "~/lib/components/ui/form";
 import { ProjectBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/_dashboardLayout/dashboard/projects/create")({
+export const Route = createFileRoute(
+  "/_dashboardLayout/dashboard/projects/create",
+)({
   component: ProjectsCreatePage,
   head: () => ({
     meta: [{ title: "Create Project | Dashboard" }],
@@ -62,7 +64,7 @@ function ProjectsCreatePage() {
     <>
       <div className="mb-2 flex flex-wrap items-center justify-between space-y-2">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Create Project</h2>
+          <h2 className="font-bold text-2xl tracking-tight">Create Project</h2>
           <p className="text-muted-foreground">Create a new project here.</p>
         </div>
       </div>

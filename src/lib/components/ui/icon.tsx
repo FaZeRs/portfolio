@@ -1,6 +1,9 @@
 import type { SimpleIcon } from "simple-icons";
 
-const Icon = ({ icon, className }: { icon: SimpleIcon; className?: string }) => (
+const Icon = ({
+  icon,
+  className,
+}: { icon: SimpleIcon; className?: string }) => (
   <svg
     role="img"
     viewBox="0 0 24 24"

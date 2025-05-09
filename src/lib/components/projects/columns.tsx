@@ -32,18 +32,26 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
   },
   {
     accessorKey: "title",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Title" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Title" />
+    ),
     filterFn: "includesString",
   },
   {
     accessorKey: "description",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
-    cell: ({ row }) => <div className="text-wrap">{row.original.description}</div>,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Description" />
+    ),
+    cell: ({ row }) => (
+      <div className="text-wrap">{row.original.description}</div>
+    ),
     filterFn: "includesString",
   },
   {
     accessorKey: "isFeatured",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Featured" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Featured" />
+    ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.original.isFeatured}
@@ -54,7 +62,9 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
   },
   {
     accessorKey: "isDraft",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Draft" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Draft" />
+    ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.original.isDraft}
@@ -66,7 +76,11 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
   {
     id: "actions",
     cell: ({ row }) => (
-      <Actions id={row.original.id} slug={row.original.slug} title={row.original.title} />
+      <Actions
+        id={row.original.id}
+        slug={row.original.slug}
+        title={row.original.title}
+      />
     ),
   },
 ];

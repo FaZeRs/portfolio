@@ -4,7 +4,9 @@ interface CodePlaygroundProps {
   files: Record<string, string>;
 }
 
-export default function CodePlayground({ files }: Readonly<CodePlaygroundProps>) {
+export default function CodePlayground({
+  files,
+}: Readonly<CodePlaygroundProps>) {
   return (
     <Sandpack
       files={files}

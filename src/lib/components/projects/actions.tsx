@@ -29,7 +29,11 @@ interface DataTableRowActionsProps {
   title: string;
 }
 
-export function Actions({ id, slug, title }: Readonly<DataTableRowActionsProps>) {
+export function Actions({
+  id,
+  slug,
+  title,
+}: Readonly<DataTableRowActionsProps>) {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -44,7 +48,9 @@ export function Actions({ id, slug, title }: Readonly<DataTableRowActionsProps>)
     onError: (error) => {
       console.error(`Error deleting project "${title}":`, error);
       toast.error(
-        error instanceof Error ? error.message : `Failed to delete project "${title}"`,
+        error instanceof Error
+          ? error.message
+          : `Failed to delete project "${title}"`,
       );
     },
   });
@@ -75,7 +81,9 @@ export function Actions({ id, slug, title }: Readonly<DataTableRowActionsProps>)
             View
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.navigate({ to: `/dashboard/projects/${id}/edit` })}
+            onClick={() =>
+              router.navigate({ to: `/dashboard/projects/${id}/edit` })
+            }
             disabled={deleteMutation.isPending}
           >
             Edit
@@ -95,8 +103,8 @@ export function Actions({ id, slug, title }: Readonly<DataTableRowActionsProps>)
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the project "
-              {title}".
+              This action cannot be undone. This will permanently delete the
+              project "{title}".
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -108,7 +116,9 @@ export function Actions({ id, slug, title }: Readonly<DataTableRowActionsProps>)
               disabled={deleteMutation.isPending}
               className="gap-2"
             >
-              {deleteMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+              {deleteMutation.isPending && (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              )}
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

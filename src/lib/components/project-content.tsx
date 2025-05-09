@@ -15,7 +15,9 @@ interface ProjectContentProps {
   project: ProjectType;
 }
 
-export default function ProjectContent({ project }: Readonly<ProjectContentProps>) {
+export default function ProjectContent({
+  project,
+}: Readonly<ProjectContentProps>) {
   const { stacks, githubUrl, demoUrl, imageUrl, title, content } = project;
   const thumbnailUrl =
     imageUrl ??
@@ -38,7 +40,7 @@ export default function ProjectContent({ project }: Readonly<ProjectContentProps
       <div className="flex flex-col justify-between gap-5 sm:flex-row lg:items-center">
         {stacks && stacks.length > 0 && (
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-[15px] font-medium text-neutral-700 dark:text-neutral-300">
+            <span className="font-medium text-[15px] text-neutral-700 dark:text-neutral-300">
               Tech Stack :
             </span>
 

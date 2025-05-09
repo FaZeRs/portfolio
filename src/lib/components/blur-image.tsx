@@ -28,6 +28,7 @@ export function BlurImage({
       className={cn("overflow-hidden", isLoading && "animate-pulse", className)}
       ref={ref}
     >
+      {/* biome-ignore lint: alt is required */}
       <img
         src={src}
         alt={alt}

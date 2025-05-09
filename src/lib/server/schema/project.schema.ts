@@ -31,15 +31,26 @@ export const ProjectBaseSchema = z.object({
     .string()
     .min(1, "Slug is required")
     .max(255, "Slug cannot exceed 255 characters")
-    .regex(slugRegex, "Slug must contain only lowercase letters, numbers, and hyphens"),
+    .regex(
+      slugRegex,
+      "Slug must contain only lowercase letters, numbers, and hyphens",
+    ),
   description: z
     .string()
     .max(255, "Description cannot exceed 255 characters")
     .or(z.literal("")),
   content: z.string().or(z.literal("")),
   thumbnail: z.string().describe("File upload for project thumbnail"),
-  githubUrl: z.string().url("Please enter a valid GitHub URL").max(255).or(z.literal("")),
-  demoUrl: z.string().url("Please enter a valid demo URL").max(255).or(z.literal("")),
+  githubUrl: z
+    .string()
+    .url("Please enter a valid GitHub URL")
+    .max(255)
+    .or(z.literal("")),
+  demoUrl: z
+    .string()
+    .url("Please enter a valid demo URL")
+    .max(255)
+    .or(z.literal("")),
   isFeatured: z.boolean().or(z.literal(false)),
   isDraft: z.boolean().or(z.literal(false)),
   stacks: z.array(z.string()),

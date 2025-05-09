@@ -5,7 +5,7 @@ import { cn } from "../utils";
 const Logo = ({ className }: { className?: string }) => {
   return (
     <Link to="/" className={cn("relative flex items-center", className)}>
-      <span className="font-mono text-lg font-bold lowercase">{`${siteConfig.name}.dev()`}</span>
+      <span className="font-bold font-mono text-lg lowercase">{`${siteConfig.name}.dev()`}</span>
     </Link>
   );
 };

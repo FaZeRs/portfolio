@@ -3,7 +3,11 @@ import { put } from "@vercel/blob";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/schema";
+import {
+  CreateProjectSchema,
+  Project,
+  UpdateProjectSchema,
+} from "~/lib/server/schema";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 async function uploadThumbnail(thumbnail: string, slug: string) {
@@ -62,11 +66,13 @@ export const projectRouter = {
       return project;
     }),
 
-  byId: protectedProcedure.input(z.object({ id: z.string() })).query(({ ctx, input }) => {
-    return ctx.db.query.Project.findFirst({
-      where: eq(Project.id, input.id),
-    });
-  }),
+  byId: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.query.Project.findFirst({
+        where: eq(Project.id, input.id),
+      });
+    }),
 
   create: protectedProcedure
     .input(CreateProjectSchema)
@@ -100,7 +106,10 @@ export const projectRouter = {
 
       if (thumbnail) {
         try {
-          projectData.imageUrl = await uploadThumbnail(thumbnail, input.slug ?? id);
+          projectData.imageUrl = await uploadThumbnail(
+            thumbnail,
+            input.slug ?? id,
+          );
         } catch (error) {
           console.error("Error uploading image:", error);
         }

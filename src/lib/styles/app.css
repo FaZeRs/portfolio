@@ -39,10 +39,12 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
-  --font-sans: "GeistSans", "GeistSans Fallback", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", "Roboto Mono", "Menlo",
-    "Monaco", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace;
+  --font-sans: "GeistSans", "GeistSans Fallback", ui-sans-serif, system-ui,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", "Roboto Mono",
+    "Menlo", "Monaco", "Liberation Mono", "DejaVu Sans Mono", "Courier New",
+    monospace;
 
   @keyframes accordion-down {
     from {

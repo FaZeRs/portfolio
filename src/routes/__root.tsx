@@ -25,6 +25,7 @@ import { AppRouter } from "~/trpc/router";
 import "unfonts.css";
 
 const getUser = createServerFn({ method: "GET" }).handler(async () => {
+  // biome-ignore lint: getWebRequest is not undefined
   const { headers } = getWebRequest()!;
   const session = await auth.api.getSession({ headers });
 

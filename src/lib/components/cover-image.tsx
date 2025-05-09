@@ -14,10 +14,10 @@ export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
           alt={alt}
           width={1920}
           height={1080}
-          className="rounded-8 animate-reveal aspect-[16/9] rounded-xl object-cover shadow-xl saturate-0 filter"
+          className="aspect-[16/9] animate-reveal rounded-8 rounded-xl object-cover shadow-xl saturate-0 filter"
         />
 
-        <div className="absolute bottom-0 left-0 right-0 flex gap-4 rounded-b-xl p-3">
+        <div className="absolute right-0 bottom-0 left-0 flex gap-4 rounded-b-xl p-3">
           <div className="h-28 w-28">
             <img
               alt="Avatar"
@@ -29,7 +29,7 @@ export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
           </div>
 
           <div className="flex flex-col justify-between py-2 text-white">
-            <span className="text-xl font-semibold">Nauris Linde</span>
+            <span className="font-semibold text-xl">Nauris Linde</span>
 
             <div className="flex items-center gap-1">
               <LocateIcon size={16} />

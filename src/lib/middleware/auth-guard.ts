@@ -9,6 +9,7 @@ import { auth } from "~/lib/server/auth";
  * Middleware to force authentication on a server function, and add the user to the context.
  */
 export const authMiddleware = createMiddleware().server(async ({ next }) => {
+  // biome-ignore lint: getWebRequest is not undefined
   const { headers } = getWebRequest()!;
 
   const session = await auth.api.getSession({

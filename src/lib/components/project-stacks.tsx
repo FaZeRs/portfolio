@@ -19,7 +19,9 @@ export default function ProjectStacks({ projectStack }: Readonly<StackProps>) {
         <TooltipProvider key={stack} delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
-              {STACKS[stack] && <Icon icon={STACKS[stack]} className="mr-2 h-4 w-4" />}
+              {STACKS[stack] && (
+                <Icon icon={STACKS[stack]} className="mr-2 h-4 w-4" />
+              )}
             </TooltipTrigger>
             <TooltipContent>{stack}</TooltipContent>
           </Tooltip>

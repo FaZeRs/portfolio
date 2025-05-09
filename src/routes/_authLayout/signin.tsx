@@ -4,7 +4,12 @@ import { type SimpleIcon, siGithub } from "simple-icons";
 import authClient from "~/lib/auth-client";
 import Logo from "~/lib/components/logo";
 import { Button } from "~/lib/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "~/lib/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "~/lib/components/ui/card";
 import Icon from "~/lib/components/ui/icon";
 import { cn } from "~/lib/utils";
 
@@ -34,7 +39,11 @@ function AuthPage() {
             <CardContent>
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
-                  <SignInButton provider="github" label="GitHub" icon={siGithub} />
+                  <SignInButton
+                    provider="github"
+                    label="GitHub"
+                    icon={siGithub}
+                  />
                 </div>
               </div>
             </CardContent>

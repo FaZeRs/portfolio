@@ -63,7 +63,8 @@ export const ProjectsForm = withForm({
         field.setErrorMap({
           onChange: [
             {
-              message: "Please upload a valid image (JPEG, PNG, GIF, WebP, AVIF)",
+              message:
+                "Please upload a valid image (JPEG, PNG, GIF, WebP, AVIF)",
             },
           ],
         });
@@ -166,7 +167,7 @@ export const ProjectsForm = withForm({
                   aria-describedby="slug-desc"
                 />
               </field.FormControl>
-              <p id="slug-desc" className="text-xs text-muted-foreground">
+              <p id="slug-desc" className="text-muted-foreground text-xs">
                 Used in the URL: /projects/your-slug
               </p>
               <field.FormMessage />
@@ -224,11 +225,13 @@ Details about how you implemented the project."
                   <field.FormMessage />
                 </TabsContent>
                 <TabsContent value="preview" className="mt-0">
-                  <div className="min-h-[300px] rounded-md border border-input p-4 overflow-y-auto">
+                  <div className="min-h-[300px] overflow-y-auto rounded-md border border-input p-4">
                     {field.state.value ? (
                       <CustomMDX source={field.state.value} />
                     ) : (
-                      <div className="text-muted-foreground">Nothing to preview</div>
+                      <div className="text-muted-foreground">
+                        Nothing to preview
+                      </div>
                     )}
                   </div>
                 </TabsContent>
@@ -253,8 +256,12 @@ Details about how you implemented the project."
                       className="cursor-pointer"
                       aria-describedby="file-input-help"
                     />
-                    <p id="file-input-help" className="text-xs text-muted-foreground">
-                      Accepted formats: JPEG, PNG, GIF, WebP, AVIF. Max size: 5MB
+                    <p
+                      id="file-input-help"
+                      className="text-muted-foreground text-xs"
+                    >
+                      Accepted formats: JPEG, PNG, GIF, WebP, AVIF. Max size:
+                      5MB
                     </p>
                   </div>
                   {previewImage && (
@@ -356,12 +363,14 @@ Details about how you implemented the project."
                     name={field.name}
                     checked={field.state.value}
                     onBlur={field.handleBlur}
-                    onCheckedChange={(checked: boolean) => field.handleChange(checked)}
+                    onCheckedChange={(checked: boolean) =>
+                      field.handleChange(checked)
+                    }
                   />
                 </field.FormControl>
                 <div className="space-y-1 leading-none">
                   <field.FormLabel>Featured Project</field.FormLabel>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Display this project in featured section
                   </p>
                 </div>
@@ -378,12 +387,14 @@ Details about how you implemented the project."
                     name={field.name}
                     checked={field.state.value}
                     onBlur={field.handleBlur}
-                    onCheckedChange={(checked: boolean) => field.handleChange(checked)}
+                    onCheckedChange={(checked: boolean) =>
+                      field.handleChange(checked)
+                    }
                   />
                 </field.FormControl>
                 <div className="space-y-1 leading-none">
                   <field.FormLabel>Save as Draft</field.FormLabel>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     This project won't be visible to visitors
                   </p>
                 </div>
@@ -393,7 +404,10 @@ Details about how you implemented the project."
         </div>
 
         <form.Subscribe
-          selector={(formState) => [formState.canSubmit, formState.isSubmitting]}
+          selector={(formState) => [
+            formState.canSubmit,
+            formState.isSubmitting,
+          ]}
         >
           {([canSubmit, isPending, isSubmitting]) => {
             const buttonText = isSubmitting

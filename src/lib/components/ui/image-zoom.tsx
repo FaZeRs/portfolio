@@ -7,7 +7,10 @@ interface ImageZoomProps extends ComponentPropsWithoutRef<typeof Zoom> {
   children: ReactNode;
 }
 
-export default function ImageZoom({ children, ...rest }: Readonly<ImageZoomProps>) {
+export default function ImageZoom({
+  children,
+  ...rest
+}: Readonly<ImageZoomProps>) {
   return (
     <Zoom zoomMargin={40} {...rest}>
       {children}

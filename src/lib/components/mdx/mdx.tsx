@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MarkdownHooks } from "react-markdown";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeRaw from "rehype-raw";
@@ -15,7 +14,9 @@ export default function CustomMDX({ source }: Readonly<{ source: string }>) {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
+      // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
       () => (tree: any) => {
+        // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
         visit(tree, (node: any) => {
           if (node?.type === "element" && node?.tagName === "pre") {
             const [codeEl] = node.children;
@@ -49,21 +50,26 @@ export default function CustomMDX({ source }: Readonly<{ source: string }>) {
           defaultLang: {
             block: "plaintext",
           },
+          // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
           onVisitLine(node: any) {
             if (node.children.length === 0) {
               node.children = [{ type: "text", value: " " }];
             }
             node.properties.className = ["line"];
           },
+          // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
           onVisitHighlightedLine(node: any) {
             node.properties.className.push("line--highlighted");
           },
+          // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
           onVisitHighlightedWord(node: any) {
             node.properties.className = ["word--highlighted"];
           },
         },
       ],
+      // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
       () => (tree: any) => {
+        // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
         visit(tree, (node: any) => {
           if (node?.type === "element" && node.tagName === "figure") {
             const preElement = node.children.at(-1);
@@ -72,7 +78,8 @@ export default function CustomMDX({ source }: Readonly<{ source: string }>) {
               return;
             }
 
-            preElement.properties.__withMeta__ = node.children.at(0).tagName === "div";
+            preElement.properties.__withMeta__ =
+              node.children.at(0).tagName === "div";
             preElement.properties.__rawString__ = node.__rawString__;
           }
         });
