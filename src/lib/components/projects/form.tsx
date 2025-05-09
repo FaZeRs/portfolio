@@ -283,26 +283,6 @@ Details about how you implemented the project."
             </field.FormItem>
           )}
         </form.AppField>
-        <form.AppField name="githubUrl">
-          {(field) => (
-            <field.FormItem>
-              <field.FormLabel>GitHub URL</field.FormLabel>
-              <field.FormControl>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  type="text"
-                  placeholder="https://github.com/example"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </field.FormControl>
-              <field.FormMessage />
-            </field.FormItem>
-          )}
-        </form.AppField>
-
         <div className="grid gap-8 md:grid-cols-2">
           <form.AppField name="githubUrl">
             {(field) => (
