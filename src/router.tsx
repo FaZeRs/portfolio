@@ -10,7 +10,7 @@ import { NotFound } from "~/lib/components/not-found";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import { createTRPCClient, httpBatchStreamLink, loggerLink } from "@trpc/client";
-import { getUrl } from "~/lib/utils";
+import { getBaseUrl } from "~/lib/utils";
 import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";
 import { routeTree } from "./routeTree.gen";
@@ -43,7 +43,7 @@ export function createRouter() {
       }),
       httpBatchStreamLink({
         transformer: superjson,
-        url: getUrl(),
+        url: getBaseUrl() + "/api/trpc",
         async headers() {
           return await getRequestHeaders();
         },
@@ -62,7 +62,7 @@ export function createRouter() {
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
     defaultErrorComponent: DefaultCatchBoundary,
-    defaultNotFoundComponent: NotFound,
+    defaultNotFoundComponent: () => <NotFound />,
     scrollRestoration: true,
     defaultStructuralSharing: true,
     Wrap: (props) => {

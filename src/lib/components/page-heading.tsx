@@ -8,7 +8,7 @@ import { slideInWithFadeOut } from "~/lib/constants/framer-motion-variants";
 
 interface PageHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   title: string;
-  description?: string;
+  description?: string | null;
   asChild?: boolean;
   hasMotion?: boolean;
 }

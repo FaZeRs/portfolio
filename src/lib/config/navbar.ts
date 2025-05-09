@@ -16,4 +16,8 @@ export const dashboardNavbarLinks: NavItem[] = [
     title: "Dashboard",
     href: "/dashboard",
   },
+  {
+    title: "Projects",
+    href: "/dashboard/projects",
+  },
 ];

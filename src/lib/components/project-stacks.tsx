@@ -7,24 +7,21 @@ import {
 } from "~/lib/components/ui/tooltip";
 
 import { STACKS } from "~/lib/constants/stack";
-import type { Stack } from "~/types/project";
 
 interface StackProps {
-  projectStack: Stack[];
+  projectStack: string[] | null;
 }
 
 export default function ProjectStacks({ projectStack }: Readonly<StackProps>) {
   return (
     <div className="flex items-center gap-3">
-      {projectStack.map((stack) => (
-        <TooltipProvider key={stack.name} delayDuration={200}>
+      {projectStack?.map((stack) => (
+        <TooltipProvider key={stack} delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
-              {STACKS[stack.name] && (
-                <Icon icon={STACKS[stack.name]} className="mr-2 h-4 w-4" />
-              )}
+              {STACKS[stack] && <Icon icon={STACKS[stack]} className="mr-2 h-4 w-4" />}
             </TooltipTrigger>
-            <TooltipContent>{stack.name}</TooltipContent>
+            <TooltipContent>{stack}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       ))}

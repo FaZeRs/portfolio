@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 
 import { slideInWithFadeOut } from "~/lib/constants/framer-motion-variants";
-import type { Project } from "~/types/project";
+import { ProjectType } from "~/types";
 import ProjectCard from "./project-card";
 
 interface ProjectsProps {
-  projects: Project[];
+  projects: ProjectType[];
 }
 
 export default function Projects({ projects }: Readonly<ProjectsProps>) {

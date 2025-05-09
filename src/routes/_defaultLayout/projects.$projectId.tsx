@@ -1,25 +1,44 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, ErrorComponent, notFound } from "@tanstack/react-router";
+import { TRPCClientError } from "@trpc/client";
+import { NotFound } from "~/lib/components/not-found";
 import PageHeading from "~/lib/components/page-heading";
 import ProjectContent from "~/lib/components/project-content";
-import { projectsData } from "~/lib/constants/projects-data";
+import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
-  loader: ({ params: { projectId } }) =>
-    projectsData.find((project) => project.slug === projectId),
+  loader: async ({ params: { projectId }, context: { trpc, queryClient } }) => {
+    try {
+      const data = await queryClient.ensureQueryData(
+        trpc.project.bySlug.queryOptions({ slug: projectId }),
+      );
+      return { title: data?.title, description: data?.description };
+    } catch (error) {
+      if (error instanceof TRPCClientError && error.data?.code === "NOT_FOUND") {
+        throw notFound();
+      }
+      throw error;
+    }
+  },
+  head: ({ loaderData }) => ({
+    meta: [{ title: `${loaderData.title}`, description: loaderData.description }],
+  }),
   component: RouteComponent,
+  errorComponent: ({ error }) => <ErrorComponent error={error} />,
+  notFoundComponent: () => {
+    return <NotFound>Project not found</NotFound>;
+  },
 });
 
 function RouteComponent() {
-  const project = Route.useLoaderData();
-
-  if (!project) {
-    return <div>Project not found</div>;
-  }
+  const { projectId } = Route.useParams();
+  const trpc = useTRPC();
+  const project = useSuspenseQuery(trpc.project.bySlug.queryOptions({ slug: projectId }));
 
   return (
     <div>
-      <PageHeading title={project.title} description={project.description} />
-      <ProjectContent project={project} />
+      <PageHeading title={project.data?.title} description={project.data?.description} />
+      <ProjectContent project={project.data} />
     </div>
   );
 }

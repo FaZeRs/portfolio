@@ -49,6 +49,14 @@ export function AvatarDropdown() {
             </p>
           </div>
         </DropdownMenuLabel>
+        {session?.user?.role === "admin" && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => router.navigate({ to: "/dashboard" })}>
+              Dashboard
+            </DropdownMenuItem>
+          </>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={async () => {

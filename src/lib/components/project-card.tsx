@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, PinIcon } from "lucide-react";
 
-import type { Project } from "~/types/project";
+import { ProjectType } from "~/types";
 import ProjectStacks from "./project-stacks";
 
 interface ProjectCardProps {
-  project: Project;
+  project: ProjectType;
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { title, description, slug, imageUrl, isFeature, stack } = project;
+  const { title, description, slug, imageUrl, isFeatured, stacks } = project;
   const thumbnailUrl =
     imageUrl ??
     `https://placehold.co/600x400/darkgray/white/png?text=${encodeURIComponent(title)}`;
@@ -21,7 +21,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       }}
       className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4 dark:bg-white/10"
     >
-      {isFeature && (
+      {isFeatured && (
         <div className="absolute right-0 top-0 z-[2] flex items-center gap-1 rounded-bl-lg rounded-tr-lg bg-lime-300 px-2 py-1 text-[13px] font-medium text-emerald-950">
           <PinIcon size={15} />
           <span>Featured</span>
@@ -31,7 +31,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <div className="relative aspect-[2/1] w-full overflow-hidden rounded-md border">
         <img
           src={thumbnailUrl}
-          alt={description}
+          alt={description ?? ""}
           width={1200}
           height={630}
           className="animate-reveal rounded-md object-cover transition-all group-hover:scale-105"
@@ -46,7 +46,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <h1 className="font-bold text-neutral-900 dark:text-neutral-200">{title}</h1>
         <p className="line-clamp-5 text-sm text-muted-foreground">{description}</p>
 
-        <ProjectStacks projectStack={stack} />
+        <ProjectStacks projectStack={stacks} />
       </div>
     </Link>
   );
