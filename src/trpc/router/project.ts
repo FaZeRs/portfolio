@@ -1,4 +1,4 @@
-import { TRPCRouterRecord } from "@trpc/server";
+import { TRPCError, TRPCRouterRecord } from "@trpc/server";
 import { put } from "@vercel/blob";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
@@ -7,13 +7,45 @@ import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const projectRouter = {
-  all: publicProcedure.query(({ ctx }) => {
+  all: protectedProcedure.query(({ ctx }) => {
     return ctx.db.query.Project.findMany({
       orderBy: desc(Project.id),
     });
   }),
 
-  byId: publicProcedure.input(z.object({ id: z.string() })).query(({ ctx, input }) => {
+  allPublic: publicProcedure.query(({ ctx }) => {
+    return ctx.db.query.Project.findMany({
+      orderBy: desc(Project.isFeatured),
+      where: eq(Project.isDraft, false),
+    });
+  }),
+
+  bySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const project = await ctx.db.query.Project.findFirst({
+        where: eq(Project.slug, input.slug),
+      });
+
+      if (!project) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Project not found",
+        });
+      }
+
+      // if project is draft, throw an error unless user is admin
+      if (project.isDraft && ctx.session?.user.role !== "ADMIN") {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Project is not public",
+        });
+      }
+
+      return project;
+    }),
+
+  byId: protectedProcedure.input(z.object({ id: z.string() })).query(({ ctx, input }) => {
     return ctx.db.query.Project.findFirst({
       where: eq(Project.id, input.id),
     });

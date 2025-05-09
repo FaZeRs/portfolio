@@ -1,4 +1,5 @@
 import type { SimpleIcon } from "simple-icons";
+import { type Project } from "~/lib/server/schema";
 
 export interface SiteConfig {
   name: string;
@@ -35,3 +36,5 @@ export interface Social {
   username?: string;
   icon: SimpleIcon;
 }
+
+export type ProjectType = typeof Project.$inferSelect;
