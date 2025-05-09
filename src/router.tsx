@@ -45,7 +45,7 @@ export function createRouter() {
     links: [
       loggerLink({
         enabled: (op) =>
-          env.NODE_ENV === "development" ||
+          process.env.NODE_ENV === "development" ||
           (op.direction === "down" && op.result instanceof Error),
       }),
       httpBatchStreamLink({
