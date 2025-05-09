@@ -8,7 +8,7 @@ import { env } from "~/lib/env.server";
 import { createRouter } from "./router";
 
 Sentry.init({
-  dsn: env.SENTRY_DSN,
+  dsn: env.VITE_SENTRY_DSN,
   integrations: [nodeProfilingIntegration()],
   tracesSampleRate: 1.0,
   profileSessionSampleRate: 1.0,

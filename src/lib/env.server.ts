@@ -17,7 +17,6 @@ export const env = createEnv({
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),
     SENTRY_PROJECT: z.string().optional(),
-    SENTRY_DSN: z.string().url().optional(),
     BLOB_READ_WRITE_TOKEN: z.string().optional(),
   },
 
@@ -26,7 +25,9 @@ export const env = createEnv({
    * a type-level and at runtime.
    */
   clientPrefix: "VITE_",
-  client: {},
+  client: {
+    VITE_SENTRY_DSN: z.string().min(1).optional(),
+  },
 
   /**
    * What object holds the environment variables at runtime. This is usually
