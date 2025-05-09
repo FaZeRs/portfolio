@@ -9,7 +9,10 @@ export const components = {
   h1: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     // @sonar-ignore
     <h1
-      className={cn("mt-2 scroll-m-20 text-4xl font-bold tracking-tight", className)}
+      className={cn(
+        "mt-2 scroll-m-20 font-bold text-4xl tracking-tight",
+        className,
+      )}
       {...props}
     />
     // @end
@@ -18,7 +21,7 @@ export const components = {
     // @sonar-ignore
     <h2
       className={cn(
-        "mt-10 scroll-m-28 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
+        "mt-10 scroll-m-28 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0",
         className,
       )}
       {...props}
@@ -28,7 +31,10 @@ export const components = {
   h3: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     // @sonar-ignore
     <h3
-      className={cn("mt-8 scroll-m-28 text-2xl font-semibold tracking-tight", className)}
+      className={cn(
+        "mt-8 scroll-m-28 font-semibold text-2xl tracking-tight",
+        className,
+      )}
       {...props}
     />
     // @end
@@ -36,7 +42,10 @@ export const components = {
   h4: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     // @sonar-ignore
     <h4
-      className={cn("mt-8 scroll-m-28 text-xl font-semibold tracking-tight", className)}
+      className={cn(
+        "mt-8 scroll-m-28 font-semibold text-xl tracking-tight",
+        className,
+      )}
       {...props}
     />
     // @end
@@ -44,7 +53,10 @@ export const components = {
   h5: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     // @sonar-ignore
     <h5
-      className={cn("mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)}
+      className={cn(
+        "mt-8 scroll-m-20 font-semibold text-lg tracking-tight",
+        className,
+      )}
       {...props}
     />
     // @end
@@ -52,7 +64,10 @@ export const components = {
   h6: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     // @sonar-ignore
     <h6
-      className={cn("mt-8 scroll-m-20 text-base font-semibold tracking-tight", className)}
+      className={cn(
+        "mt-8 scroll-m-20 font-semibold text-base tracking-tight",
+        className,
+      )}
       {...props}
     />
     // @end
@@ -67,7 +82,10 @@ export const components = {
     // @end
   ),
   p: ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-    <p className={cn("leading-8 [&:not(:first-child)]:mt-6", className)} {...props} />
+    <p
+      className={cn("leading-8 [&:not(:first-child)]:mt-6", className)}
+      {...props}
+    />
   ),
   ul: ({ className, ...props }: HTMLAttributes<HTMLElement>) => (
     <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
@@ -87,7 +105,12 @@ export const components = {
       {...props}
     />
   ),
-  img: ({ className, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  img: ({
+    className,
+    alt,
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    // biome-ignore lint: alt is required
     <img className={cn("rounded-md border", className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
@@ -97,7 +120,10 @@ export const components = {
     </div>
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className={cn("m-0 border-t p-0 even:bg-muted", className)} {...props} />
+    <tr
+      className={cn("m-0 border-t p-0 even:bg-muted", className)}
+      {...props}
+    />
   ),
   th: ({ className, ...props }: HTMLAttributes<HTMLTableCellElement>) => (
     <th
@@ -140,7 +166,10 @@ export const components = {
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     // @sonar-ignore
     <h3
-      className={cn("mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)}
+      className={cn(
+        "mt-8 scroll-m-20 font-semibold text-lg tracking-tight",
+        className,
+      )}
       {...props}
     />
     // @end

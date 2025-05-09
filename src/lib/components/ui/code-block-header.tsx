@@ -19,6 +19,7 @@ import Icon from "./icon";
 
 type CodeBlockProps = HTMLAttributes<HTMLElement> & {
   title?: string;
+  // biome-ignore lint: don't use literal key here
   ["data-language"]?: string;
 };
 

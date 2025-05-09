@@ -1,5 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ErrorComponent, createFileRoute, notFound } from "@tanstack/react-router";
+import {
+  ErrorComponent,
+  createFileRoute,
+  notFound,
+} from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
 import { NotFound } from "~/lib/components/not-found";
 import PageHeading from "~/lib/components/page-heading";
@@ -14,14 +18,19 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
       );
       return { title: data?.title, description: data?.description };
     } catch (error) {
-      if (error instanceof TRPCClientError && error.data?.code === "NOT_FOUND") {
+      if (
+        error instanceof TRPCClientError &&
+        error.data?.code === "NOT_FOUND"
+      ) {
         throw notFound();
       }
       throw error;
     }
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: `${loaderData.title}`, description: loaderData.description }],
+    meta: [
+      { title: `${loaderData.title}`, description: loaderData.description },
+    ],
   }),
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
@@ -33,11 +42,16 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
 function RouteComponent() {
   const { projectId } = Route.useParams();
   const trpc = useTRPC();
-  const project = useSuspenseQuery(trpc.project.bySlug.queryOptions({ slug: projectId }));
+  const project = useSuspenseQuery(
+    trpc.project.bySlug.queryOptions({ slug: projectId }),
+  );
 
   return (
     <div>
-      <PageHeading title={project.data?.title} description={project.data?.description} />
+      <PageHeading
+        title={project.data?.title}
+        description={project.data?.description}
+      />
       <ProjectContent project={project.data} />
     </div>
   );

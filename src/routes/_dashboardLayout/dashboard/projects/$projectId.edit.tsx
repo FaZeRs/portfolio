@@ -1,5 +1,13 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { ErrorComponent, createFileRoute, useRouter } from "@tanstack/react-router";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import {
+  ErrorComponent,
+  createFileRoute,
+  useRouter,
+} from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import { NotFound } from "~/lib/components/not-found";
@@ -32,7 +40,9 @@ function ProjectsEditPage() {
   const { projectId } = Route.useParams();
   const trpc = useTRPC();
 
-  const project = useSuspenseQuery(trpc.project.byId.queryOptions({ id: projectId }));
+  const project = useSuspenseQuery(
+    trpc.project.byId.queryOptions({ id: projectId }),
+  );
 
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -46,7 +56,8 @@ function ProjectsEditPage() {
       router.navigate({ to: "/dashboard/projects" });
     },
     onError: (error) => {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       console.error("Error creating project:", errorMessage);
 
       toast.error(
@@ -91,7 +102,7 @@ function ProjectsEditPage() {
     <>
       <div className="mb-2 flex flex-wrap items-center justify-between space-y-2">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Edit Project</h2>
+          <h2 className="font-bold text-2xl tracking-tight">Edit Project</h2>
           <p className="text-muted-foreground">Edit a project here.</p>
         </div>
       </div>

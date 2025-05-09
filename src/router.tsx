@@ -3,7 +3,11 @@ import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
-import { createTRPCClient, httpBatchStreamLink, loggerLink } from "@trpc/client";
+import {
+  createTRPCClient,
+  httpBatchStreamLink,
+  loggerLink,
+} from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import superjson from "superjson";
 
@@ -15,12 +19,15 @@ import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";
 import { routeTree } from "./routeTree.gen";
 
-const getRequestHeaders = createServerFn({ method: "GET" }).handler(async () => {
-  const request = getWebRequest()!;
-  const headers = new Headers(request.headers);
+const getRequestHeaders = createServerFn({ method: "GET" }).handler(
+  async () => {
+    // biome-ignore lint: getWebRequest is not undefined
+    const request = getWebRequest()!;
+    const headers = new Headers(request.headers);
 
-  return Object.fromEntries(headers);
-});
+    return Object.fromEntries(headers);
+  },
+);
 
 export function createRouter() {
   const queryClient = new QueryClient({
@@ -38,12 +45,12 @@ export function createRouter() {
     links: [
       loggerLink({
         enabled: (op) =>
-          env.NODE_ENV === "development" ||
+          process.env.NODE_ENV === "development" ||
           (op.direction === "down" && op.result instanceof Error),
       }),
       httpBatchStreamLink({
         transformer: superjson,
-        url: getBaseUrl() + "/api/trpc",
+        url: `${getBaseUrl()}/api/trpc`,
         async headers() {
           return await getRequestHeaders();
         },

@@ -1,5 +1,9 @@
 import { Slot } from "@radix-ui/react-slot";
-import { createFormHook, createFormHookContexts, useStore } from "@tanstack/react-form";
+import {
+  createFormHook,
+  createFormHookContexts,
+  useStore,
+} from "@tanstack/react-form";
 import { createContext, use, useId, useMemo } from "react";
 
 import { cn } from "~/lib/utils";
@@ -29,7 +33,9 @@ type FormItemContextValue = {
   id: string;
 };
 
-const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue);
+const FormItemContext = createContext<FormItemContextValue>(
+  {} as FormItemContextValue,
+);
 
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = useId();
@@ -37,7 +43,11 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
 
   return (
     <FormItemContext value={contextValue}>
-      <div data-slot="form-item" className={cn("grid gap-2", className)} {...props} />
+      <div
+        data-slot="form-item"
+        className={cn("grid gap-2", className)}
+        {...props}
+      />
     </FormItemContext>
   );
 }
@@ -63,7 +73,10 @@ const useFieldContext = () => {
   };
 };
 
-function FormLabel({ className, ...props }: React.ComponentProps<typeof Label>) {
+function FormLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof Label>) {
   const { formItemId, errors } = useFieldContext();
 
   return (
@@ -78,14 +91,17 @@ function FormLabel({ className, ...props }: React.ComponentProps<typeof Label>) 
 }
 
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
-  const { errors, formItemId, formDescriptionId, formMessageId } = useFieldContext();
+  const { errors, formItemId, formDescriptionId, formMessageId } =
+    useFieldContext();
 
   return (
     <Slot
       data-slot="form-control"
       id={formItemId}
       aria-describedby={
-        !errors.length ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
+        !errors.length
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!errors.length}
       {...props}
@@ -108,7 +124,9 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { errors, formMessageId } = useFieldContext();
-  const body = errors.length ? String(errors.at(0)?.message ?? "") : props.children;
+  const body = errors.length
+    ? String(errors.at(0)?.message ?? "")
+    : props.children;
   if (!body) return null;
 
   return (

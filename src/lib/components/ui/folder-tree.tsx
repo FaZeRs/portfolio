@@ -15,9 +15,9 @@ interface FolderTreeProps {
 
 export default function FolderTree({ title, data }: Readonly<FolderTreeProps>) {
   return (
-    <div className="shadow-surface-elevation-low mt-6 overflow-hidden rounded-lg border bg-background font-mono dark:bg-[#0A0A0A]">
+    <div className="mt-6 overflow-hidden rounded-lg border bg-background font-mono shadow-surface-elevation-low dark:bg-[#0A0A0A]">
       {title && (
-        <div className="mb-0.5 rounded-md bg-rose-100/10 px-3 py-1 text-xs text-rose-100/70 shadow-sm">
+        <div className="mb-0.5 rounded-md bg-rose-100/10 px-3 py-1 text-rose-100/70 text-xs shadow-sm">
           {title}
         </div>
       )}
@@ -41,7 +41,7 @@ const Inner = ({ data, level }: InnerProps) => {
           <Fragment key={node.name}>
             <div
               className={cx(
-                "flex items-center space-x-2 border-l-4 border-l-transparent pr-4 before:ml-2 before:mr-4 before:inline-block before:w-4 before:text-right before:[content:counter(line)] before:[counter-increment:line]",
+                "flex items-center space-x-2 border-l-4 border-l-transparent pr-4 before:mr-4 before:ml-2 before:inline-block before:w-4 before:text-right before:[content:counter(line)] before:[counter-increment:line]",
                 {
                   "border-l-slate-400/70 bg-gray-200/80 before:text-white/70 dark:border-l-rose-300/30 dark:bg-secondary":
                     node.isHighlighted,

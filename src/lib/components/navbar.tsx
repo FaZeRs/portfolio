@@ -87,6 +87,7 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
       <button
         className="flex items-center space-x-2 lg:hidden"
         onClick={() => setShowMobileMenu(!showMobileMenu)}
+        type="button"
       >
         {showMobileMenu ? <X /> : <Menu />}
       </button>
@@ -106,8 +107,8 @@ function ListItem({
     <li {...props}>
       <NavigationMenuLink asChild>
         <Link to={href}>
-          <div className="text-sm leading-none font-medium">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+          <div className="font-medium text-sm leading-none">{title}</div>
+          <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
             {children}
           </p>
         </Link>

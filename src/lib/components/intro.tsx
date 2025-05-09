@@ -30,14 +30,14 @@ const Intro = () => {
       </div>
 
       <motion.div
-        className="mb-10 mt-4 flex flex-col gap-y-4 px-4"
+        className="mt-4 mb-10 flex flex-col gap-y-4 px-4"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span className="text-2xl font-bold leading-[1.5] sm:text-4xl lg:text-6xl">
+        <span className="font-bold text-2xl leading-[1.5] sm:text-4xl lg:text-6xl">
           {"Hello World, I'm Nauris"}
         </span>
-        <span className="text-xl font-semibold text-muted-foreground">
+        <span className="font-semibold text-muted-foreground text-xl">
           Software engineer & open-source maintainer
         </span>
         <span className="text-muted-foreground">
@@ -46,7 +46,7 @@ const Intro = () => {
       </motion.div>
 
       <motion.div
-        className="flex flex-col items-center justify-center gap-2 px-4 text-lg font-medium sm:flex-row"
+        className="flex flex-col items-center justify-center gap-2 px-4 font-medium text-lg sm:flex-row"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{

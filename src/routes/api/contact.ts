@@ -11,7 +11,10 @@ export const APIRoute = createAPIFileRoute("/api/contact")({
     const { email, message } = body;
 
     if (!message || !email) {
-      return Response.json({ error: "Missing required fields" }, { status: 400 });
+      return Response.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
     }
 
     try {

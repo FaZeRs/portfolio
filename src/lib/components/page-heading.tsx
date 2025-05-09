@@ -29,13 +29,18 @@ const PageHeading = ({
       animate="visible"
       exit="hidden"
       variants={slideInWithFadeOut}
-      className={cn("text-2xl font-medium leading-relaxed dark:text-white", className)}
+      className={cn(
+        "font-medium text-2xl leading-relaxed dark:text-white",
+        className,
+      )}
     >
       <div className="space-y-1">
-        <h1 className="font-heading inline-block text-2xl tracking-tight md:text-3xl lg:text-4xl">
+        <h1 className="inline-block font-heading text-2xl tracking-tight md:text-3xl lg:text-4xl">
           {title}
         </h1>
-        <p className="text-base text-muted-foreground md:text-lg">{description}</p>
+        <p className="text-base text-muted-foreground md:text-lg">
+          {description}
+        </p>
       </div>
       <hr className="my-6 md:my-4" />
     </Comp>

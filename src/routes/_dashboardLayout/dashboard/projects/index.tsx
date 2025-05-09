@@ -40,8 +40,12 @@ function ProjectsError() {
   return (
     <Card className="p-6">
       <div className="text-center">
-        <h3 className="text-lg font-medium text-destructive">Failed to load projects</h3>
-        <p className="mt-1 text-sm text-muted-foreground">Please try again later.</p>
+        <h3 className="font-medium text-destructive text-lg">
+          Failed to load projects
+        </h3>
+        <p className="mt-1 text-muted-foreground text-sm">
+          Please try again later.
+        </p>
       </div>
     </Card>
   );
@@ -60,10 +64,10 @@ function ProjectsContent() {
     return (
       <Card className="p-6">
         <div className="text-center">
-          <h3 className="text-lg font-medium text-destructive">
+          <h3 className="font-medium text-destructive text-lg">
             Failed to load projects
           </h3>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-muted-foreground text-sm">
             {error.message ?? "Please try again later."}
           </p>
         </div>
@@ -83,7 +87,7 @@ function Projects() {
     <>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Project List</h2>
+          <h2 className="font-bold text-2xl tracking-tight">Project List</h2>
           <p className="text-muted-foreground">Manage your projects here.</p>
         </div>
         <Link

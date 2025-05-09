@@ -20,7 +20,7 @@ const CopyButton = ({
   const [state, copyToClipboard] = useCopyToClipboard();
 
   return (
-    <div className={cn("absolute right-2 top-1", withMeta && "top-16")}>
+    <div className={cn("absolute top-1 right-2", withMeta && "top-16")}>
       <Button
         {...props}
         size="icon"
@@ -29,7 +29,11 @@ const CopyButton = ({
         onClick={() => copyToClipboard(value)}
       >
         <span className="sr-only">Copy</span>
-        {state.value ? <Check className="size-4" /> : <Copy className="size-4" />}
+        {state.value ? (
+          <Check className="size-4" />
+        ) : (
+          <Copy className="size-4" />
+        )}
       </Button>
     </div>
   );

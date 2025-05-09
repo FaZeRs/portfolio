@@ -36,7 +36,11 @@ function RouteComponent() {
         title="Projects"
         description="Several projects that I have worked on, both private and open source."
       />
-      {isLoading || isFetching ? <ProjectsSkeleton /> : <Projects projects={projects} />}
+      {isLoading || isFetching ? (
+        <ProjectsSkeleton />
+      ) : (
+        <Projects projects={projects} />
+      )}
     </>
   );
 }

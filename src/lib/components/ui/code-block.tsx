@@ -20,12 +20,14 @@ export default function CodeBlock({
     <>
       <pre
         className={cn(
-          "overflow-x-auto rounded-lg bg-white py-4 dark:!bg-[#0A0A0A]",
+          "dark:!bg-[#0A0A0A] overflow-x-auto rounded-lg bg-white py-4",
           className,
         )}
         {...props}
       />
-      {__rawString__ && <CopyButton value={__rawString__} withMeta={__withMeta__} />}
+      {__rawString__ && (
+        <CopyButton value={__rawString__} withMeta={__withMeta__} />
+      )}
     </>
   );
 }

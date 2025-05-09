@@ -28,7 +28,8 @@ export function DataTableColumnHeader<TData, TValue>({
   const renderSortIcon = () => {
     if (column.getIsSorted() === "desc") {
       return <ArrowDown />;
-    } else if (column.getIsSorted() === "asc") {
+    }
+    if (column.getIsSorted() === "asc") {
       return <ArrowUp />;
     }
     return <ChevronsUpDown />;
