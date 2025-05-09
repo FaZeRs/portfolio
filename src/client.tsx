@@ -14,7 +14,6 @@ Sentry.init({
   integrations: [
     Sentry.tanstackRouterBrowserTracingIntegration(router),
     Sentry.browserTracingIntegration(),
-    Sentry.browserProfilingIntegration(),
   ],
   tracesSampleRate: 1.0,
   profilesSampleRate: 1.0,
