@@ -1,4 +1,4 @@
-import { lazy, type AnchorHTMLAttributes, type HTMLAttributes } from "react";
+import { type AnchorHTMLAttributes, type HTMLAttributes, lazy } from "react";
 
 import CodeBlock from "~/lib/components/ui/code-block";
 import CodeBlockHeader from "~/lib/components/ui/code-block-header";

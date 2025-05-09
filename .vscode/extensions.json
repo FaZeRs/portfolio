@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "yoavbls.pretty-ts-errors",
+    "biomejs.biome",
     "bradlc.vscode-tailwindcss"
   ]
 }
