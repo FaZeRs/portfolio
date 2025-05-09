@@ -49,8 +49,9 @@ export type DynamicRouteValue<R extends string> =
 /**
  * Pick which shape to use based on whether `R` is dynamic or static.
  */
-type RouteValue<R extends string> =
-  RouteIsDynamic<R> extends true ? DynamicRouteValue<R> : StaticRouteValue<R>;
+type RouteValue<R extends string> = RouteIsDynamic<R> extends true
+  ? DynamicRouteValue<R>
+  : StaticRouteValue<R>;
 
 /**
  * Generic sitemap definition. The user passes in their

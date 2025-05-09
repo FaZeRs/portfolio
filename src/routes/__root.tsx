@@ -1,10 +1,10 @@
 import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
 import type { QueryClient } from "@tanstack/react-query";
 import {
-  createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
+  createRootRouteWithContext,
   useRouterState,
 } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";

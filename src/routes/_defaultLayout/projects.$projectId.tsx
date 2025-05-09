@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, ErrorComponent, notFound } from "@tanstack/react-router";
+import { ErrorComponent, createFileRoute, notFound } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
 import { NotFound } from "~/lib/components/not-found";
 import PageHeading from "~/lib/components/page-heading";

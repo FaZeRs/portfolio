@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import type { ComponentProps } from "react";
-import { siGithub, type SimpleIcon } from "simple-icons";
+import { type SimpleIcon, siGithub } from "simple-icons";
 import authClient from "~/lib/auth-client";
 import Logo from "~/lib/components/logo";
 import { Button } from "~/lib/components/ui/button";
