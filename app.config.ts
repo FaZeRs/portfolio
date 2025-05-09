@@ -2,8 +2,10 @@ import { wrapVinxiConfigWithSentry } from "@sentry/tanstackstart-react";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "@tanstack/react-start/config";
+import { generateSitemap } from "tanstack-router-sitemap";
 import unfonts from "unplugin-fonts/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
+import { sitemap } from "./src/plugins/sitemap";
 
 const config = defineConfig({
   vite: {
@@ -31,6 +33,7 @@ const config = defineConfig({
           families: ["Geist", "Geist Mono"],
         },
       }),
+      generateSitemap(sitemap),
     ],
     ssr: {
       noExternal: ["react-use", "react-markdown"],
