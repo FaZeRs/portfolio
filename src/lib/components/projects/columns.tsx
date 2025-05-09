@@ -38,6 +38,7 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
   {
     accessorKey: "description",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
+    cell: ({ row }) => <div className="text-wrap">{row.original.description}</div>,
     filterFn: "includesString",
   },
   {
