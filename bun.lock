@@ -85,6 +85,7 @@
         "husky": "^9.1.7",
         "lint-staged": "^15.5.2",
         "tailwindcss": "^4.1.5",
+        "tanstack-router-sitemap": "^1.0.12",
         "typescript": "^5.8.3",
         "vite-tsconfig-paths": "^5.1.4",
       },
@@ -2292,6 +2293,8 @@
     "tailwind-merge": ["tailwind-merge@3.2.0", "", {}, "sha512-FQT/OVqCD+7edmmJpsgCsY820RTD5AkBryuG5IUqR5YQZSdj5xlH5nLgH7YPths7WsLPSpSBNneJdM8aS8aeFA=="],
 
     "tailwindcss": ["tailwindcss@4.1.5", "", {}, "sha512-nYtSPfWGDiWgCkwQG/m+aX83XCwf62sBgg3bIlNiiOcggnS1x3uVRDAuyelBFL+vJdOPPCGElxv9DjHJjRHiVA=="],
+
+    "tanstack-router-sitemap": ["tanstack-router-sitemap@1.0.12", "", { "dependencies": { "sitemap": "^8.0.0" } }, "sha512-FT+KIITnxx/GVpoBj7evkLitdr3popUxN/NojPHVpmUNLRzlGbUKHyYRv+naGgeztgJtm7F7f4NooKa1DHpaHw=="],
 
     "tapable": ["tapable@2.2.1", "", {}, "sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ=="],
 
