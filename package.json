@@ -26,7 +26,8 @@
     "ui": "bunx --bun shadcn@canary",
     "auth": "bunx --bun @better-auth/cli@latest",
     "auth:generate": "bunx --bun @better-auth/cli@latest generate --y --output ./src/lib/server/schema/auth.schema.ts && prettier --write ./src/lib/server/schema/auth.schema.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.20.0",
