@@ -10,9 +10,9 @@ import {
 } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-import { NotFound } from "~/lib/components/not-found";
-import { ProjectsForm } from "~/lib/components/projects/form";
-import { useAppForm } from "~/lib/components/ui/form";
+import { NotFound } from "~/components/not-found";
+import { ProjectsForm } from "~/components/projects/form";
+import { useAppForm } from "~/components/ui/form";
 import { ProjectBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 

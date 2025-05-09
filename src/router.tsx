@@ -11,8 +11,8 @@ import {
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import superjson from "superjson";
 
-import { DefaultCatchBoundary } from "~/lib/components/default-catch-boundary";
-import { NotFound } from "~/lib/components/not-found";
+import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
+import { NotFound } from "~/components/not-found";
 import { env } from "~/lib/env.server";
 import { getBaseUrl } from "~/lib/utils";
 import { TRPCProvider } from "~/trpc/react";

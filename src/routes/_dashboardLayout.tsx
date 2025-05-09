@@ -1,5 +1,5 @@
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
-import { Header } from "~/lib/components/header";
+import { Header } from "~/components/header";
 import { dashboardNavbarLinks } from "~/lib/config/navbar";
 
 export const Route = createFileRoute("/_dashboardLayout")({

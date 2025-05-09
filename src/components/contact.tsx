@@ -3,7 +3,7 @@ import { Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { useAppForm } from "~/lib/components/ui/form";
+import { useAppForm } from "~/components/ui/form";
 import { siteConfig } from "~/lib/config/site";
 import { contactSchema } from "~/lib/validators";
 import SectionHeading from "./section-heading";

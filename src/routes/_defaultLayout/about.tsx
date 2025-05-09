@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail } from "lucide-react";
-import CoverImage from "~/lib/components/cover-image";
-import Icon from "~/lib/components/ui/icon";
+import CoverImage from "~/components/cover-image";
+import Icon from "~/components/ui/icon";
 import { siteConfig, socialConfig } from "~/lib/config/site";
 
 export const Route = createFileRoute("/_defaultLayout/about")({

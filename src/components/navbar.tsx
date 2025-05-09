@@ -10,13 +10,13 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "~/lib/components/ui/navigation-menu";
-import { ThemeToggle } from "~/lib/components/ui/theme";
+} from "~/components/ui/navigation-menu";
+import { ThemeToggle } from "~/components/ui/theme";
 import { cn } from "~/lib/utils";
 
 import { navbarLinks } from "~/lib/config/navbar";
 import { NavItem } from "~/types";
-import authClient from "../auth-client";
+import authClient from "../lib/auth-client";
 import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";

@@ -1,8 +1,8 @@
 import { type AnchorHTMLAttributes, type HTMLAttributes, lazy } from "react";
 
-import CodeBlock from "~/lib/components/ui/code-block";
-import CodeBlockHeader from "~/lib/components/ui/code-block-header";
-import { File, Files, Folder } from "~/lib/components/ui/files";
+import CodeBlock from "~/components/ui/code-block";
+import CodeBlockHeader from "~/components/ui/code-block-header";
+import { File, Files, Folder } from "~/components/ui/files";
 import { cn } from "~/lib/utils";
 
 export const components = {
@@ -174,14 +174,14 @@ export const components = {
     />
     // @end
   ),
-  Image: lazy(() => import("~/lib/components/zoom-image")),
-  Callout: lazy(() => import("~/lib/components/ui/callout")),
-  GridContainer: lazy(() => import("~/lib/components/ui/grid-container")),
-  LoadingSkeleton: lazy(() => import("~/lib/components/ui/loading-skeleton")),
-  ComponentPreview: lazy(() => import("~/lib/components/ui/component-preview")),
-  FolderTree: lazy(() => import("~/lib/components/ui/folder-tree")),
-  CodePlayground: lazy(() => import("~/lib/components/ui/code-playground")),
-  Youtube: lazy(() => import("~/lib/components/ui/youtube")),
+  Image: lazy(() => import("~/components/zoom-image")),
+  Callout: lazy(() => import("~/components/ui/callout")),
+  GridContainer: lazy(() => import("~/components/ui/grid-container")),
+  LoadingSkeleton: lazy(() => import("~/components/ui/loading-skeleton")),
+  ComponentPreview: lazy(() => import("~/components/ui/component-preview")),
+  FolderTree: lazy(() => import("~/components/ui/folder-tree")),
+  CodePlayground: lazy(() => import("~/components/ui/code-playground")),
+  Youtube: lazy(() => import("~/components/ui/youtube")),
   files: Files,
   folder: Folder,
   file: File,

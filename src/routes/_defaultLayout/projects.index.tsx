@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import PageHeading from "~/lib/components/page-heading";
-import Projects from "~/lib/components/projects";
-import { Skeleton } from "~/lib/components/ui/skeleton";
+import PageHeading from "~/components/page-heading";
+import Projects from "~/components/projects";
+import { Skeleton } from "~/components/ui/skeleton";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_defaultLayout/projects/")({
