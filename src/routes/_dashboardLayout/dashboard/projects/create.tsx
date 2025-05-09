@@ -24,6 +24,7 @@ function ProjectsCreatePage() {
     onSuccess: async () => {
       await queryClient.invalidateQueries(trpc.project.pathFilter());
       toast.success("Project created successfully");
+      form.reset();
       router.navigate({ to: "/dashboard/projects" });
     },
     onError: (error) => {
@@ -52,9 +53,8 @@ function ProjectsCreatePage() {
     validators: {
       onChange: ProjectBaseSchema,
     },
-    onSubmit: ({ formApi, value }) => {
+    onSubmit: ({ value }) => {
       handleFormSubmit(value);
-      formApi.reset();
     },
   });
 
