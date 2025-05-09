@@ -42,6 +42,7 @@ export function DataTableColumnHeader<TData, TValue>({
             variant="ghost"
             size="sm"
             className="-ml-3 h-8 data-[state=open]:bg-accent"
+            aria-label={`Sort ${title} column ${column.getIsSorted() ? (column.getIsSorted() === "desc" ? "ascending" : "descending") : ""}`}
           >
             <span>{title}</span>
             {renderSortIcon()}

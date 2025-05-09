@@ -121,16 +121,15 @@ const Contact = () => {
                 </field.FormItem>
               )}
             </form.AppField>
-            <form.AppForm>
-              <Button
-                type="submit"
-                variant="default"
-                disabled={isLoading}
-                className="group"
-              >
-                <Send className="mr-2 h-4 w-4" /> Submit
-              </Button>
-            </form.AppForm>
+
+            <Button
+              type="submit"
+              variant="default"
+              disabled={isLoading}
+              className="group"
+            >
+              <Send className="mr-2 h-4 w-4" /> Submit
+            </Button>
           </form>
         </form.AppForm>
       </div>

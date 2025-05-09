@@ -15,7 +15,7 @@ export function NotFound(
         Error 404!
       </h1>
       <p className="max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
-        {props.children ?? <p>The page you are looking for does not exist.</p>}
+        {props.children ?? "The page you are looking for does not exist."}
       </p>
     </div>
   );

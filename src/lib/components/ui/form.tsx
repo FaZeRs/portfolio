@@ -46,7 +46,7 @@ const useFieldContext = () => {
   const { id } = use(FormItemContext);
   const { name, store, ...fieldContext } = _useFieldContext();
 
-  const errors = useStore(store, (state) => state.meta.errors);
+  const errors = useStore(store, (state) => state.meta.errors) ?? [];
   if (!fieldContext) {
     throw new Error("useFieldContext should be used within <FormItem>");
   }

@@ -1,3 +1,4 @@
+import { ErrorBoundary } from "@sentry/tanstackstart-react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
@@ -32,6 +33,17 @@ function ProjectsLoading() {
         <Skeleton className="h-[400px] w-full rounded-md" />
       </div>
     </div>
+  );
+}
+
+function ProjectsError() {
+  return (
+    <Card className="p-6">
+      <div className="text-center">
+        <h3 className="text-lg font-medium text-destructive">Failed to load projects</h3>
+        <p className="mt-1 text-sm text-muted-foreground">Please try again later.</p>
+      </div>
+    </Card>
   );
 }
 
@@ -82,10 +94,11 @@ function Projects() {
           <span>Add Project</span> <Plus className="ml-1" size={18} />
         </Link>
       </div>
-
-      <Suspense fallback={<ProjectsLoading />}>
-        <ProjectsContent />
-      </Suspense>
+      <ErrorBoundary fallback={<ProjectsError />}>
+        <Suspense fallback={<ProjectsLoading />}>
+          <ProjectsContent />
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }

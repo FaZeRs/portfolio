@@ -15,7 +15,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
   Table,
@@ -58,9 +58,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: Readonly<DataTableProps<TData, TValue>>) {
-  const [tableData] = useState(data);
-  const tableColumns = useMemo(() => columns, [columns]);
-
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState("");
@@ -71,8 +68,8 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
-    data: tableData,
-    columns: tableColumns,
+    data,
+    columns,
     filterFns: {
       fuzzy: fuzzyFilter,
     },

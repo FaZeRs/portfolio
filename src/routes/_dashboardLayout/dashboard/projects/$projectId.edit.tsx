@@ -42,11 +42,20 @@ function ProjectsEditPage() {
     onSuccess: async () => {
       await queryClient.invalidateQueries(trpc.project.pathFilter());
       toast.success("Project updated successfully");
+      form.reset();
       router.navigate({ to: "/dashboard/projects" });
     },
     onError: (error) => {
-      console.error("Error updating project:", error);
-      toast.error("Failed to update project");
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      console.error("Error creating project:", errorMessage);
+
+      toast.error(
+        `Failed to create project: ${
+          errorMessage.includes("validation")
+            ? "Please check your form inputs"
+            : "Server error. Please try again later."
+        }`,
+      );
     },
   });
 
@@ -73,9 +82,8 @@ function ProjectsEditPage() {
     validators: {
       onChange: ProjectBaseSchema,
     },
-    onSubmit: ({ formApi, value }) => {
+    onSubmit: ({ value }) => {
       handleFormSubmit(value);
-      formApi.reset();
     },
   });
 

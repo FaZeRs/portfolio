@@ -6,6 +6,23 @@ import { z } from "zod";
 import { CreateProjectSchema, Project, UpdateProjectSchema } from "~/lib/server/schema";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
+async function uploadThumbnail(thumbnail: string, slug: string) {
+  try {
+    const fileName = `${slug}-${Date.now()}.avif`;
+    const imageBuffer = Buffer.from(thumbnail, "base64");
+
+    const { url } = await put(`projects/${fileName}`, imageBuffer, {
+      access: "public",
+      contentType: "image/avif",
+    });
+
+    return url;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw new Error("Failed to upload image");
+  }
+}
+
 export const projectRouter = {
   all: protectedProcedure.query(({ ctx }) => {
     return ctx.db.query.Project.findMany({
@@ -83,18 +100,9 @@ export const projectRouter = {
 
       if (thumbnail) {
         try {
-          const fileName = `${input.slug ?? id}-${Date.now()}.avif`;
-          const imageBuffer = Buffer.from(thumbnail, "base64");
-
-          const { url } = await put(`projects/${fileName}`, imageBuffer, {
-            access: "public",
-            contentType: "image/avif",
-          });
-
-          projectData.imageUrl = url;
+          projectData.imageUrl = await uploadThumbnail(thumbnail, input.slug ?? id);
         } catch (error) {
           console.error("Error uploading image:", error);
-          throw new Error("Failed to upload image");
         }
       }
 

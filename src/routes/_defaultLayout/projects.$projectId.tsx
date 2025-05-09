@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
       );
       return { title: data?.title, description: data?.description };
     } catch (error) {
-      if (error instanceof TRPCClientError && error.data.code === "NOT_FOUND") {
+      if (error instanceof TRPCClientError && error.data?.code === "NOT_FOUND") {
         throw notFound();
       }
       throw error;
