@@ -249,7 +249,7 @@ Details about how you implemented the project."
                       type="file"
                       accept={VALID_IMAGE_TYPES.join(",")}
                       onBlur={field.handleBlur}
-                      onChange={(e) => handleFileChange(e, field)}
+                      onChange={(e) => handleFileChange(e, field as FormField)}
                       className="cursor-pointer"
                       aria-describedby="file-input-help"
                     />
