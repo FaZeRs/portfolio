@@ -3,7 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin } from "better-auth/plugins";
 import { reactStartCookies } from "better-auth/react-start";
 
-import env from "@/env";
+import { env } from "~/lib/env.server";
 import { getBaseUrl } from "~/lib/utils";
 import { db } from "./db";
 

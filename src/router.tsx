@@ -9,7 +9,7 @@ import { NotFound } from "~/lib/components/not-found";
 
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
-import { createTRPCClient, httpBatchStreamLink, loggerLink } from "@trpc/client";
+import { env } from "~/lib/env.server";
 import { getBaseUrl } from "~/lib/utils";
 import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";
@@ -38,7 +38,7 @@ export function createRouter() {
     links: [
       loggerLink({
         enabled: (op) =>
-          process.env.NODE_ENV === "development" ||
+          env.NODE_ENV === "development" ||
           (op.direction === "down" && op.result instanceof Error),
       }),
       httpBatchStreamLink({
