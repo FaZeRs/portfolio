@@ -1,5 +1,4 @@
 import { TRPCError, TRPCRouterRecord } from "@trpc/server";
-import { put } from "@vercel/blob";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -8,24 +7,8 @@ import {
   Project,
   UpdateProjectSchema,
 } from "~/lib/server/schema";
+import { uploadImage } from "~/lib/utils";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
-
-async function uploadThumbnail(thumbnail: string, slug: string) {
-  try {
-    const fileName = `${slug}-${Date.now()}.avif`;
-    const imageBuffer = Buffer.from(thumbnail, "base64");
-
-    const { url } = await put(`projects/${fileName}`, imageBuffer, {
-      access: "public",
-      contentType: "image/avif",
-    });
-
-    return url;
-  } catch (error) {
-    console.error("Error uploading image:", error);
-    throw new Error("Failed to upload image");
-  }
-}
 
 export const projectRouter = {
   all: protectedProcedure.query(({ ctx }) => {
@@ -81,18 +64,13 @@ export const projectRouter = {
 
       if (thumbnail) {
         try {
-          const fileName = `${input.slug}-${Date.now()}.avif`;
-          const imageBuffer = Buffer.from(thumbnail, "base64");
-
-          const { url } = await put(`projects/${fileName}`, imageBuffer, {
-            access: "public",
-            contentType: "image/avif",
-          });
-
-          projectData.imageUrl = url;
+          projectData.imageUrl = await uploadImage(
+            "projects",
+            thumbnail,
+            input.slug,
+          );
         } catch (error) {
           console.error("Error uploading image:", error);
-          throw new Error("Failed to upload image");
         }
       }
 
@@ -106,7 +84,8 @@ export const projectRouter = {
 
       if (thumbnail) {
         try {
-          projectData.imageUrl = await uploadThumbnail(
+          projectData.imageUrl = await uploadImage(
+            "projects",
             thumbnail,
             input.slug ?? id,
           );

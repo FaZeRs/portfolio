@@ -1,31 +1,39 @@
 import { ValidationErrorMap, formOptions } from "@tanstack/react-form";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import React, { useState } from "react";
 import { MAX_IMAGE_SIZE, VALID_IMAGE_TYPES } from "~/lib/constants";
-import { STACKS } from "~/lib/constants/stack";
-import { generateSlug } from "~/lib/utils";
-import { ProjectType } from "~/types";
-import CustomMDX from "../mdx/mdx";
+import { ExperienceType as ExperienceTypeEnum } from "~/lib/server/schema";
+import { cn } from "~/lib/utils";
+import { ExperienceType } from "~/types";
 import { Button } from "../ui/button";
+import { Calendar } from "../ui/calendar";
 import { Checkbox } from "../ui/checkbox";
 import { withForm } from "../ui/form";
-import Icon from "../ui/icon";
 import { Input } from "../ui/input";
-import { MultiSelect } from "../ui/multi-select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { Textarea } from "../ui/textarea";
 
-export const projectFormOpts = formOptions({
+export const experienceFormOpts = formOptions({
   defaultValues: {
     title: "",
-    slug: "",
+    institution: "",
     description: "",
-    content: "",
-    githubUrl: "",
-    demoUrl: "",
     thumbnail: "",
-    isFeatured: false,
+    startDate: "",
+    endDate: "",
+    url: "",
+    type: ExperienceTypeEnum.WORK,
     isDraft: false,
-    stacks: [] as string[],
+    isOnGoing: false,
   },
 });
 
@@ -34,14 +42,14 @@ interface FormField {
   setErrorMap: (errorMap: ValidationErrorMap) => void;
 }
 
-export const ProjectsForm = withForm({
-  ...projectFormOpts,
+export const ExperiencesForm = withForm({
+  ...experienceFormOpts,
   props: {
-    project: undefined as ProjectType | undefined,
+    experience: undefined as ExperienceType | undefined,
   },
-  render: function Render({ form, project }) {
+  render: function Render({ form, experience }) {
     const [previewImage, setPreviewImage] = useState<string | null>(
-      project?.imageUrl ?? null,
+      experience?.imageUrl ?? null,
     );
 
     const handleFileChange = (
@@ -113,15 +121,7 @@ export const ProjectsForm = withForm({
 
     return (
       <>
-        <form.AppField
-          name="title"
-          listeners={{
-            onChange: ({ value }) => {
-              const slug = generateSlug(value);
-              form.setFieldValue("slug", slug);
-            },
-          }}
-        >
+        <form.AppField name="title">
           {(field) => (
             <field.FormItem>
               <field.FormLabel>Title</field.FormLabel>
@@ -130,7 +130,7 @@ export const ProjectsForm = withForm({
                   id={field.name}
                   name={field.name}
                   type="text"
-                  placeholder="Portfolio Project"
+                  placeholder="Software Engineer"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -142,26 +142,22 @@ export const ProjectsForm = withForm({
           )}
         </form.AppField>
 
-        <form.AppField name="slug">
+        <form.AppField name="institution">
           {(field) => (
             <field.FormItem>
-              <field.FormLabel>Slug</field.FormLabel>
+              <field.FormLabel>Institution</field.FormLabel>
               <field.FormControl>
                 <Input
                   id={field.name}
                   name={field.name}
                   type="text"
-                  placeholder="portfolio-project"
+                  placeholder="Google"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   aria-required="true"
-                  aria-describedby="slug-desc"
                 />
               </field.FormControl>
-              <p id="slug-desc" className="text-muted-foreground text-xs">
-                Used in the URL: /projects/your-slug
-              </p>
               <field.FormMessage />
             </field.FormItem>
           )}
@@ -186,51 +182,26 @@ export const ProjectsForm = withForm({
           )}
         </form.AppField>
 
-        <form.AppField name="content">
+        <form.AppField name="url">
           {(field) => (
             <field.FormItem>
-              <field.FormLabel>Content</field.FormLabel>
-              <Tabs defaultValue="write" className="w-full">
-                <TabsList className="mb-2">
-                  <TabsTrigger value="write">Write</TabsTrigger>
-                  <TabsTrigger value="preview">Preview</TabsTrigger>
-                </TabsList>
-                <TabsContent value="write" className="mt-0">
-                  <field.FormControl>
-                    <Textarea
-                      id={field.name}
-                      name={field.name}
-                      placeholder="# Project Details
-## Overview
-A brief overview of your project.
-## Features
-- Feature 1
-- Feature 2
-## Implementation
-Details about how you implemented the project."
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="min-h-[300px]"
-                    />
-                  </field.FormControl>
-                  <field.FormMessage />
-                </TabsContent>
-                <TabsContent value="preview" className="mt-0">
-                  <div className="min-h-[300px] overflow-y-auto rounded-md border border-input p-4">
-                    {field.state.value ? (
-                      <CustomMDX source={field.state.value} />
-                    ) : (
-                      <div className="text-muted-foreground">
-                        Nothing to preview
-                      </div>
-                    )}
-                  </div>
-                </TabsContent>
-              </Tabs>
+              <field.FormLabel>URL</field.FormLabel>
+              <field.FormControl>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  type="text"
+                  placeholder="https://www.google.com"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </field.FormControl>
+              <field.FormMessage />
             </field.FormItem>
           )}
         </form.AppField>
+
         <form.AppField name="thumbnail">
           {(field) => (
             <field.FormItem>
@@ -282,63 +253,32 @@ Details about how you implemented the project."
             </field.FormItem>
           )}
         </form.AppField>
-        <div className="grid gap-8 md:grid-cols-2">
-          <form.AppField name="githubUrl">
-            {(field) => (
-              <field.FormItem>
-                <field.FormLabel>GitHub URL</field.FormLabel>
-                <field.FormControl>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type="url"
-                    placeholder="https://github.com/username/project"
-                    value={field.state.value ?? ""}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </field.FormControl>
-                <field.FormMessage />
-              </field.FormItem>
-            )}
-          </form.AppField>
 
-          <form.AppField name="demoUrl">
-            {(field) => (
-              <field.FormItem>
-                <field.FormLabel>Demo URL</field.FormLabel>
-                <field.FormControl>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type="url"
-                    placeholder="https://example.com"
-                    value={field.state.value ?? ""}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </field.FormControl>
-                <field.FormMessage />
-              </field.FormItem>
-            )}
-          </form.AppField>
-        </div>
-
-        <form.AppField name="stacks">
+        <form.AppField name="type">
           {(field) => (
             <field.FormItem>
-              <field.FormLabel>Stacks</field.FormLabel>
+              <field.FormLabel>Type</field.FormLabel>
               <field.FormControl>
-                <MultiSelect
-                  options={Object.entries(STACKS).map(([key, value]) => ({
-                    label: key,
-                    value: key,
-                    icon: <Icon icon={value} className="h-4 w-4" />,
-                  }))}
-                  onValueChange={(value) => field.handleChange(value)}
-                  defaultValue={field.state.value}
-                  placeholder="Select technology stacks"
-                />
+                <Select
+                  name={field.name}
+                  value={field.state.value}
+                  onValueChange={(value) =>
+                    field.handleChange(value as ExperienceTypeEnum)
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {Object.values(ExperienceTypeEnum).map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </field.FormControl>
               <field.FormMessage />
             </field.FormItem>
@@ -346,7 +286,104 @@ Details about how you implemented the project."
         </form.AppField>
 
         <div className="grid gap-8 md:grid-cols-2">
-          <form.AppField name="isFeatured">
+          <form.AppField name="startDate">
+            {(field) => (
+              <field.FormItem>
+                <field.FormLabel>Start Date</field.FormLabel>
+                <field.FormControl>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "justify-start text-left font-normal",
+                          !field.state.value && "text-muted-foreground",
+                        )}
+                      >
+                        <CalendarIcon />
+                        {field.state.value ? (
+                          format(field.state.value, "PPP")
+                        ) : (
+                          <span>Pick a start date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        captionLayout="dropdown-buttons"
+                        selected={
+                          field.state.value
+                            ? new Date(field.state.value)
+                            : undefined
+                        }
+                        onSelect={(value) => {
+                          if (value) {
+                            field.handleChange(value.toISOString());
+                          }
+                        }}
+                        initialFocus
+                        fromYear={2010}
+                        toYear={2030}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </field.FormControl>
+                <field.FormMessage />
+              </field.FormItem>
+            )}
+          </form.AppField>
+          <form.AppField name="endDate">
+            {(field) => (
+              <field.FormItem>
+                <field.FormLabel>End Date</field.FormLabel>
+                <field.FormControl>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "justify-start text-left font-normal",
+                          !field.state.value && "text-muted-foreground",
+                        )}
+                      >
+                        <CalendarIcon />
+                        {field.state.value ? (
+                          format(field.state.value, "PPP")
+                        ) : (
+                          <span>Pick an end date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        captionLayout="dropdown-buttons"
+                        selected={
+                          field.state.value
+                            ? new Date(field.state.value)
+                            : undefined
+                        }
+                        onSelect={(value) => {
+                          if (value) {
+                            field.handleChange(value.toISOString());
+                          }
+                        }}
+                        initialFocus
+                        fromYear={2010}
+                        toYear={2030}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </field.FormControl>
+                <field.FormMessage />
+              </field.FormItem>
+            )}
+          </form.AppField>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-2">
+          <form.AppField name="isOnGoing">
             {(field) => (
               <field.FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <field.FormControl>
@@ -361,15 +398,14 @@ Details about how you implemented the project."
                   />
                 </field.FormControl>
                 <div className="space-y-1 leading-none">
-                  <field.FormLabel>Featured Project</field.FormLabel>
+                  <field.FormLabel>On Going</field.FormLabel>
                   <p className="text-muted-foreground text-sm">
-                    Display this project in featured section
+                    This experience is currently ongoing
                   </p>
                 </div>
               </field.FormItem>
             )}
           </form.AppField>
-
           <form.AppField name="isDraft">
             {(field) => (
               <field.FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">

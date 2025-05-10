@@ -13,7 +13,6 @@ import superjson from "superjson";
 
 import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
-import { env } from "~/lib/env.server";
 import { getBaseUrl } from "~/lib/utils";
 import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";

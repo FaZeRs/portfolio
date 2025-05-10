@@ -1,3 +1,4 @@
+import { put } from "@vercel/blob";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -28,3 +29,20 @@ export const generateSlug = (title: string): string => {
     .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
     .trim();
 };
+
+export async function uploadImage(folder: string, image: string, slug: string) {
+  try {
+    const fileName = `${slug}-${Date.now()}.avif`;
+    const imageBuffer = Buffer.from(image, "base64");
+
+    const { url } = await put(`${folder}/${fileName}`, imageBuffer, {
+      access: "public",
+      contentType: "image/avif",
+    });
+
+    return url;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw new Error("Failed to upload image");
+  }
+}
