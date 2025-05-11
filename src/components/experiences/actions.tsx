@@ -35,7 +35,7 @@ export function Actions({ id, title }: Readonly<DataTableRowActionsProps>) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const deleteMutation = useMutation({
-    ...trpc.project.delete.mutationOptions(),
+    ...trpc.experience.delete.mutationOptions(),
     onSuccess: async () => {
       await queryClient.invalidateQueries(trpc.experience.pathFilter());
       toast.success(`Experience "${title}" deleted successfully`);
