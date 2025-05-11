@@ -80,8 +80,7 @@ export const ProjectsForm = withForm({
           const base64String = reader.result as string;
           const base64Data = base64String.split(",")[1];
 
-          field.handleChange("");
-          form.setFieldValue("thumbnail", base64Data);
+          field.handleChange(base64Data);
           setPreviewImage(base64String);
         };
         reader.onerror = () => {

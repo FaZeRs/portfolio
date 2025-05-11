@@ -1,4 +1,4 @@
-import { put } from "@vercel/blob";
+import { del, put } from "@vercel/blob";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -44,5 +44,14 @@ export async function uploadImage(folder: string, image: string, slug: string) {
   } catch (error) {
     console.error("Error uploading image:", error);
     throw new Error("Failed to upload image");
+  }
+}
+
+export async function deleteFile(url: string) {
+  try {
+    await del(url);
+  } catch (error) {
+    console.error("Error deleting file:", error);
+    throw new Error("Failed to delete file");
   }
 }

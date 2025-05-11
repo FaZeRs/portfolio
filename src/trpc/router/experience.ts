@@ -7,7 +7,7 @@ import {
   Experience,
   UpdateExperienceSchema,
 } from "~/lib/server/schema";
-import { uploadImage } from "~/lib/utils";
+import { deleteFile, uploadImage } from "~/lib/utils";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const experienceRouter = {
@@ -76,6 +76,10 @@ export const experienceRouter = {
             thumbnail,
             id,
           );
+
+          if (experienceData.imageUrl) {
+            await deleteFile(experienceData.imageUrl);
+          }
         } catch (error) {
           console.error("Error uploading image:", error);
         }
@@ -87,7 +91,17 @@ export const experienceRouter = {
         .where(eq(Experience.id, id));
     }),
 
-  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(Experience).where(eq(Experience.id, input));
-  }),
+  delete: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const experienceToDelete = await ctx.db.query.Experience.findFirst({
+        where: eq(Experience.id, input),
+      });
+
+      if (experienceToDelete?.imageUrl) {
+        await deleteFile(experienceToDelete.imageUrl);
+      }
+
+      return ctx.db.delete(Experience).where(eq(Experience.id, input));
+    }),
 } satisfies TRPCRouterRecord;

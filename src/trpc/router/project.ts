@@ -7,7 +7,7 @@ import {
   Project,
   UpdateProjectSchema,
 } from "~/lib/server/schema";
-import { uploadImage } from "~/lib/utils";
+import { deleteFile, uploadImage } from "~/lib/utils";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const projectRouter = {
@@ -89,6 +89,10 @@ export const projectRouter = {
             thumbnail,
             input.slug ?? id,
           );
+
+          if (projectData.imageUrl) {
+            await deleteFile(projectData.imageUrl);
+          }
         } catch (error) {
           console.error("Error uploading image:", error);
         }
@@ -97,7 +101,17 @@ export const projectRouter = {
       return ctx.db.update(Project).set(projectData).where(eq(Project.id, id));
     }),
 
-  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(Project).where(eq(Project.id, input));
-  }),
+  delete: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const projectToDelete = await ctx.db.query.Project.findFirst({
+        where: eq(Project.id, input),
+      });
+
+      if (projectToDelete?.imageUrl) {
+        await deleteFile(projectToDelete.imageUrl);
+      }
+
+      return ctx.db.delete(Project).where(eq(Project.id, input));
+    }),
 } satisfies TRPCRouterRecord;
