@@ -1,6 +1,7 @@
 import { del, put } from "@vercel/blob";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { MAX_IMAGE_SIZE } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -30,8 +31,22 @@ export const generateSlug = (title: string): string => {
     .trim();
 };
 
+const allowedDomains = ["vercel-blob.com"];
+
 export async function uploadImage(folder: string, image: string, slug: string) {
   try {
+    if (!image?.trim()) {
+      throw new Error("Invalid image: empty string provided");
+    }
+
+    if (!/^[A-Za-z0-9+/=]+$/.test(image)) {
+      throw new Error("Invalid base64 format");
+    }
+
+    if (Buffer.byteLength(image, "base64") > MAX_IMAGE_SIZE) {
+      throw new Error("Image exceeds maximum allowed size");
+    }
+
     const fileName = `${slug}-${Date.now()}.avif`;
     const imageBuffer = Buffer.from(image, "base64");
 
@@ -49,6 +64,15 @@ export async function uploadImage(folder: string, image: string, slug: string) {
 
 export async function deleteFile(url: string) {
   try {
+    if (!url?.trim()) {
+      throw new Error("Invalid URL: empty string provided");
+    }
+
+    const urlObj = new URL(url);
+    if (!allowedDomains.some((domain) => urlObj.hostname.includes(domain))) {
+      throw new Error("URL does not belong to an allowed storage domain");
+    }
+
     await del(url);
   } catch (error) {
     console.error("Error deleting file:", error);
