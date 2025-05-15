@@ -344,7 +344,10 @@ export const ExperiencesForm = withForm({
                         className={cn(
                           "justify-start text-left font-normal",
                           !field.state.value && "text-muted-foreground",
+                          form.getFieldValue("isOnGoing") &&
+                            "cursor-not-allowed opacity-50",
                         )}
+                        disabled={form.getFieldValue("isOnGoing")}
                       >
                         <CalendarIcon />
                         {field.state.value ? (
@@ -391,9 +394,12 @@ export const ExperiencesForm = withForm({
                     name={field.name}
                     checked={field.state.value}
                     onBlur={field.handleBlur}
-                    onCheckedChange={(checked: boolean) =>
-                      field.handleChange(checked)
-                    }
+                    onCheckedChange={(checked: boolean) => {
+                      field.handleChange(checked);
+                      if (checked) {
+                        form.setFieldValue("endDate", "");
+                      }
+                    }}
                   />
                 </field.FormControl>
                 <div className="space-y-1 leading-none">
