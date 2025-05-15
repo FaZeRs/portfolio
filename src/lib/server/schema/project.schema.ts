@@ -73,7 +73,7 @@ export const CreateProjectSchema = createInsertSchema(Project, {
   })
   .and(
     z.object({
-      thumbnail: z.string().describe("File upload for project thumbnail"),
+      thumbnail: ProjectBaseSchema.shape.thumbnail,
     }),
   );
 
@@ -94,6 +94,6 @@ export const UpdateProjectSchema = createUpdateSchema(Project, {
   })
   .and(
     z.object({
-      thumbnail: z.string().describe("File upload for project thumbnail"),
+      thumbnail: ProjectBaseSchema.shape.thumbnail,
     }),
   );

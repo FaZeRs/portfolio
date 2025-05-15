@@ -21,8 +21,11 @@ import { Route as DefaultLayoutProjectsIndexImport } from './routes/_defaultLayo
 import { Route as DashboardLayoutDashboardIndexImport } from './routes/_dashboardLayout/dashboard/index'
 import { Route as DefaultLayoutProjectsProjectIdImport } from './routes/_defaultLayout/projects.$projectId'
 import { Route as DashboardLayoutDashboardProjectsIndexImport } from './routes/_dashboardLayout/dashboard/projects/index'
+import { Route as DashboardLayoutDashboardExperiencesIndexImport } from './routes/_dashboardLayout/dashboard/experiences/index'
 import { Route as DashboardLayoutDashboardProjectsCreateImport } from './routes/_dashboardLayout/dashboard/projects/create'
+import { Route as DashboardLayoutDashboardExperiencesCreateImport } from './routes/_dashboardLayout/dashboard/experiences/create'
 import { Route as DashboardLayoutDashboardProjectsProjectIdEditImport } from './routes/_dashboardLayout/dashboard/projects/$projectId.edit'
+import { Route as DashboardLayoutDashboardExperiencesExperienceIdEditImport } from './routes/_dashboardLayout/dashboard/experiences/$experienceId.edit'
 
 // Create/Update Routes
 
@@ -88,6 +91,13 @@ const DashboardLayoutDashboardProjectsIndexRoute =
     getParentRoute: () => DashboardLayoutRoute,
   } as any)
 
+const DashboardLayoutDashboardExperiencesIndexRoute =
+  DashboardLayoutDashboardExperiencesIndexImport.update({
+    id: '/dashboard/experiences/',
+    path: '/dashboard/experiences/',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any)
+
 const DashboardLayoutDashboardProjectsCreateRoute =
   DashboardLayoutDashboardProjectsCreateImport.update({
     id: '/dashboard/projects/create',
@@ -95,10 +105,24 @@ const DashboardLayoutDashboardProjectsCreateRoute =
     getParentRoute: () => DashboardLayoutRoute,
   } as any)
 
+const DashboardLayoutDashboardExperiencesCreateRoute =
+  DashboardLayoutDashboardExperiencesCreateImport.update({
+    id: '/dashboard/experiences/create',
+    path: '/dashboard/experiences/create',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any)
+
 const DashboardLayoutDashboardProjectsProjectIdEditRoute =
   DashboardLayoutDashboardProjectsProjectIdEditImport.update({
     id: '/dashboard/projects/$projectId/edit',
     path: '/dashboard/projects/$projectId/edit',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any)
+
+const DashboardLayoutDashboardExperiencesExperienceIdEditRoute =
+  DashboardLayoutDashboardExperiencesExperienceIdEditImport.update({
+    id: '/dashboard/experiences/$experienceId/edit',
+    path: '/dashboard/experiences/$experienceId/edit',
     getParentRoute: () => DashboardLayoutRoute,
   } as any)
 
@@ -169,6 +193,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DefaultLayoutProjectsIndexImport
       parentRoute: typeof DefaultLayoutImport
     }
+    '/_dashboardLayout/dashboard/experiences/create': {
+      id: '/_dashboardLayout/dashboard/experiences/create'
+      path: '/dashboard/experiences/create'
+      fullPath: '/dashboard/experiences/create'
+      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesCreateImport
+      parentRoute: typeof DashboardLayoutImport
+    }
     '/_dashboardLayout/dashboard/projects/create': {
       id: '/_dashboardLayout/dashboard/projects/create'
       path: '/dashboard/projects/create'
@@ -176,11 +207,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutDashboardProjectsCreateImport
       parentRoute: typeof DashboardLayoutImport
     }
+    '/_dashboardLayout/dashboard/experiences/': {
+      id: '/_dashboardLayout/dashboard/experiences/'
+      path: '/dashboard/experiences'
+      fullPath: '/dashboard/experiences'
+      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesIndexImport
+      parentRoute: typeof DashboardLayoutImport
+    }
     '/_dashboardLayout/dashboard/projects/': {
       id: '/_dashboardLayout/dashboard/projects/'
       path: '/dashboard/projects'
       fullPath: '/dashboard/projects'
       preLoaderRoute: typeof DashboardLayoutDashboardProjectsIndexImport
+      parentRoute: typeof DashboardLayoutImport
+    }
+    '/_dashboardLayout/dashboard/experiences/$experienceId/edit': {
+      id: '/_dashboardLayout/dashboard/experiences/$experienceId/edit'
+      path: '/dashboard/experiences/$experienceId/edit'
+      fullPath: '/dashboard/experiences/$experienceId/edit'
+      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditImport
       parentRoute: typeof DashboardLayoutImport
     }
     '/_dashboardLayout/dashboard/projects/$projectId/edit': {
@@ -209,17 +254,26 @@ const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
 
 interface DashboardLayoutRouteChildren {
   DashboardLayoutDashboardIndexRoute: typeof DashboardLayoutDashboardIndexRoute
+  DashboardLayoutDashboardExperiencesCreateRoute: typeof DashboardLayoutDashboardExperiencesCreateRoute
   DashboardLayoutDashboardProjectsCreateRoute: typeof DashboardLayoutDashboardProjectsCreateRoute
+  DashboardLayoutDashboardExperiencesIndexRoute: typeof DashboardLayoutDashboardExperiencesIndexRoute
   DashboardLayoutDashboardProjectsIndexRoute: typeof DashboardLayoutDashboardProjectsIndexRoute
+  DashboardLayoutDashboardExperiencesExperienceIdEditRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
   DashboardLayoutDashboardProjectsProjectIdEditRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
 const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
   DashboardLayoutDashboardIndexRoute: DashboardLayoutDashboardIndexRoute,
+  DashboardLayoutDashboardExperiencesCreateRoute:
+    DashboardLayoutDashboardExperiencesCreateRoute,
   DashboardLayoutDashboardProjectsCreateRoute:
     DashboardLayoutDashboardProjectsCreateRoute,
+  DashboardLayoutDashboardExperiencesIndexRoute:
+    DashboardLayoutDashboardExperiencesIndexRoute,
   DashboardLayoutDashboardProjectsIndexRoute:
     DashboardLayoutDashboardProjectsIndexRoute,
+  DashboardLayoutDashboardExperiencesExperienceIdEditRoute:
+    DashboardLayoutDashboardExperiencesExperienceIdEditRoute,
   DashboardLayoutDashboardProjectsProjectIdEditRoute:
     DashboardLayoutDashboardProjectsProjectIdEditRoute,
 }
@@ -254,8 +308,11 @@ export interface FileRoutesByFullPath {
   '/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
   '/dashboard': typeof DashboardLayoutDashboardIndexRoute
   '/projects': typeof DefaultLayoutProjectsIndexRoute
+  '/dashboard/experiences/create': typeof DashboardLayoutDashboardExperiencesCreateRoute
   '/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
+  '/dashboard/experiences': typeof DashboardLayoutDashboardExperiencesIndexRoute
   '/dashboard/projects': typeof DashboardLayoutDashboardProjectsIndexRoute
+  '/dashboard/experiences/$experienceId/edit': typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
   '/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
@@ -267,8 +324,11 @@ export interface FileRoutesByTo {
   '/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
   '/dashboard': typeof DashboardLayoutDashboardIndexRoute
   '/projects': typeof DefaultLayoutProjectsIndexRoute
+  '/dashboard/experiences/create': typeof DashboardLayoutDashboardExperiencesCreateRoute
   '/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
+  '/dashboard/experiences': typeof DashboardLayoutDashboardExperiencesIndexRoute
   '/dashboard/projects': typeof DashboardLayoutDashboardProjectsIndexRoute
+  '/dashboard/experiences/$experienceId/edit': typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
   '/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
@@ -283,8 +343,11 @@ export interface FileRoutesById {
   '/_defaultLayout/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
   '/_dashboardLayout/dashboard/': typeof DashboardLayoutDashboardIndexRoute
   '/_defaultLayout/projects/': typeof DefaultLayoutProjectsIndexRoute
+  '/_dashboardLayout/dashboard/experiences/create': typeof DashboardLayoutDashboardExperiencesCreateRoute
   '/_dashboardLayout/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
+  '/_dashboardLayout/dashboard/experiences/': typeof DashboardLayoutDashboardExperiencesIndexRoute
   '/_dashboardLayout/dashboard/projects/': typeof DashboardLayoutDashboardProjectsIndexRoute
+  '/_dashboardLayout/dashboard/experiences/$experienceId/edit': typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
   '/_dashboardLayout/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
 }
 
@@ -298,8 +361,11 @@ export interface FileRouteTypes {
     | '/projects/$projectId'
     | '/dashboard'
     | '/projects'
+    | '/dashboard/experiences/create'
     | '/dashboard/projects/create'
+    | '/dashboard/experiences'
     | '/dashboard/projects'
+    | '/dashboard/experiences/$experienceId/edit'
     | '/dashboard/projects/$projectId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -310,8 +376,11 @@ export interface FileRouteTypes {
     | '/projects/$projectId'
     | '/dashboard'
     | '/projects'
+    | '/dashboard/experiences/create'
     | '/dashboard/projects/create'
+    | '/dashboard/experiences'
     | '/dashboard/projects'
+    | '/dashboard/experiences/$experienceId/edit'
     | '/dashboard/projects/$projectId/edit'
   id:
     | '__root__'
@@ -324,8 +393,11 @@ export interface FileRouteTypes {
     | '/_defaultLayout/projects/$projectId'
     | '/_dashboardLayout/dashboard/'
     | '/_defaultLayout/projects/'
+    | '/_dashboardLayout/dashboard/experiences/create'
     | '/_dashboardLayout/dashboard/projects/create'
+    | '/_dashboardLayout/dashboard/experiences/'
     | '/_dashboardLayout/dashboard/projects/'
+    | '/_dashboardLayout/dashboard/experiences/$experienceId/edit'
     | '/_dashboardLayout/dashboard/projects/$projectId/edit'
   fileRoutesById: FileRoutesById
 }
@@ -367,8 +439,11 @@ export const routeTree = rootRoute
       "filePath": "_dashboardLayout.tsx",
       "children": [
         "/_dashboardLayout/dashboard/",
+        "/_dashboardLayout/dashboard/experiences/create",
         "/_dashboardLayout/dashboard/projects/create",
+        "/_dashboardLayout/dashboard/experiences/",
         "/_dashboardLayout/dashboard/projects/",
+        "/_dashboardLayout/dashboard/experiences/$experienceId/edit",
         "/_dashboardLayout/dashboard/projects/$projectId/edit"
       ]
     },
@@ -405,12 +480,24 @@ export const routeTree = rootRoute
       "filePath": "_defaultLayout/projects.index.tsx",
       "parent": "/_defaultLayout"
     },
+    "/_dashboardLayout/dashboard/experiences/create": {
+      "filePath": "_dashboardLayout/dashboard/experiences/create.tsx",
+      "parent": "/_dashboardLayout"
+    },
     "/_dashboardLayout/dashboard/projects/create": {
       "filePath": "_dashboardLayout/dashboard/projects/create.tsx",
       "parent": "/_dashboardLayout"
     },
+    "/_dashboardLayout/dashboard/experiences/": {
+      "filePath": "_dashboardLayout/dashboard/experiences/index.tsx",
+      "parent": "/_dashboardLayout"
+    },
     "/_dashboardLayout/dashboard/projects/": {
       "filePath": "_dashboardLayout/dashboard/projects/index.tsx",
+      "parent": "/_dashboardLayout"
+    },
+    "/_dashboardLayout/dashboard/experiences/$experienceId/edit": {
+      "filePath": "_dashboardLayout/dashboard/experiences/$experienceId.edit.tsx",
       "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/projects/$projectId/edit": {

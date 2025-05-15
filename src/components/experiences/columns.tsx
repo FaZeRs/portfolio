@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ProjectType } from "~/types";
+import { ExperienceType } from "~/types";
 import { DataTableColumnHeader } from "../data-table/data-table-column-header";
 import { Checkbox } from "../ui/checkbox";
 import { Actions } from "./actions";
 
-export const projectColumns: ColumnDef<ProjectType>[] = [
+export const experienceColumns: ColumnDef<ExperienceType>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -14,7 +14,7 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all projects"
+        aria-label="Select all experiences"
       />
     ),
     cell: ({ row }) => (
@@ -36,6 +36,13 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
     filterFn: "includesString",
   },
   {
+    accessorKey: "institution",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Institution" />
+    ),
+    filterFn: "includesString",
+  },
+  {
     accessorKey: "description",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Description" />
@@ -46,14 +53,14 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
     filterFn: "includesString",
   },
   {
-    accessorKey: "isFeatured",
+    accessorKey: "isOnGoing",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Featured" />
+      <DataTableColumnHeader column={column} title="On Going" />
     ),
     cell: ({ row }) => (
       <Checkbox
-        checked={row.original.isFeatured}
-        aria-label={`${row.original.title} is featured: ${row.original.isFeatured ? "Yes" : "No"}`}
+        checked={row.original.isOnGoing}
+        aria-label={`${row.original.title} is on going: ${row.original.isOnGoing ? "Yes" : "No"}`}
         disabled
       />
     ),
@@ -74,11 +81,7 @@ export const projectColumns: ColumnDef<ProjectType>[] = [
   {
     id: "actions",
     cell: ({ row }) => (
-      <Actions
-        id={row.original.id}
-        slug={row.original.slug}
-        title={row.original.title}
-      />
+      <Actions id={row.original.id} title={row.original.title} />
     ),
   },
 ];
