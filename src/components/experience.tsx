@@ -14,9 +14,9 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
 
   return (
     <div className="relative flex max-w-2xl items-start gap-x-4 lg:gap-x-6">
-      {imageUrl && (
+      {imageUrl && url ? (
         <a
-          href={url ?? ""}
+          href={url}
           rel="noreferrer noopener"
           target="_blank"
           className="relative grid min-h-[80px] min-w-[80px] place-items-center overflow-clip rounded-md border border-zinc-200 bg-secondary-bg p-2 dark:border-zinc-800 dark:bg-primary-bg"
@@ -29,6 +29,18 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
             height={50}
           />
         </a>
+      ) : (
+        imageUrl && (
+          <div className="relative grid min-h-[80px] min-w-[80px] place-items-center overflow-clip rounded-md border border-zinc-200 bg-secondary-bg p-2 dark:border-zinc-800 dark:bg-primary-bg">
+            <img
+              src={imageUrl}
+              className="object-cover duration-300"
+              alt={title}
+              width={50}
+              height={50}
+            />
+          </div>
+        )
       )}
 
       <div className="flex flex-col items-start">
