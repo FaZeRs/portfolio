@@ -84,14 +84,19 @@ export const projectRouter = {
 
       if (thumbnail) {
         try {
+          const existingProject = await ctx.db.query.Project.findFirst({
+            where: eq(Project.id, id),
+          });
+          const oldImageUrl = existingProject?.imageUrl;
+
           projectData.imageUrl = await uploadImage(
             "projects",
             thumbnail,
             input.slug ?? id,
           );
 
-          if (projectData.imageUrl) {
-            await deleteFile(projectData.imageUrl);
+          if (oldImageUrl) {
+            await deleteFile(oldImageUrl);
           }
         } catch (error) {
           console.error("Error uploading image:", error);

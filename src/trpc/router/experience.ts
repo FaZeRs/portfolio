@@ -71,14 +71,19 @@ export const experienceRouter = {
 
       if (thumbnail) {
         try {
+          const existingExperience = await ctx.db.query.Experience.findFirst({
+            where: eq(Experience.id, id),
+          });
+          const oldImageUrl = existingExperience?.imageUrl;
+
           dataToUpdate.imageUrl = await uploadImage(
             "experiences",
             thumbnail,
             id,
           );
 
-          if (experienceData.imageUrl) {
-            await deleteFile(experienceData.imageUrl);
+          if (oldImageUrl) {
+            await deleteFile(oldImageUrl);
           }
         } catch (error) {
           console.error("Error uploading image:", error);
