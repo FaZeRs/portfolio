@@ -1,11 +1,11 @@
 import { ValidationErrorMap, formOptions } from "@tanstack/react-form";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import React, { useState } from "react";
-import { MAX_IMAGE_SIZE, VALID_IMAGE_TYPES } from "~/lib/constants";
 import { ExperienceType as ExperienceTypeEnum } from "~/lib/server/schema";
 import { cn } from "~/lib/utils";
 import { ExperienceType } from "~/types";
+import { FormButton } from "../form-button";
+import { ImageUpload } from "../image-upload";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { Checkbox } from "../ui/checkbox";
@@ -48,76 +48,6 @@ export const ExperiencesForm = withForm({
     experience: undefined as ExperienceType | undefined,
   },
   render: function Render({ form, experience }) {
-    const [previewImage, setPreviewImage] = useState<string | null>(
-      experience?.imageUrl ?? null,
-    );
-
-    const handleFileChange = (
-      e: React.ChangeEvent<HTMLInputElement>,
-      field: FormField,
-    ) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      if (!VALID_IMAGE_TYPES.includes(file.type)) {
-        field.setErrorMap({
-          onChange: [
-            {
-              message:
-                "Please upload a valid image (JPEG, PNG, GIF, WebP, AVIF)",
-            },
-          ],
-        });
-        return;
-      }
-
-      if (file.size > MAX_IMAGE_SIZE) {
-        field.setErrorMap({
-          onChange: [
-            {
-              message: "Image size must be less than 5MB",
-            },
-          ],
-        });
-        return;
-      }
-
-      try {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64String = reader.result as string;
-          const base64Data = base64String.split(",")[1];
-
-          field.handleChange(base64Data);
-          setPreviewImage(base64String);
-        };
-        reader.onerror = () => {
-          field.setErrorMap({
-            onChange: [
-              {
-                message: "Error reading file",
-              },
-            ],
-          });
-        };
-        reader.readAsDataURL(file);
-      } catch (error) {
-        console.error("Error processing image:", error);
-        field.setErrorMap({
-          onChange: [
-            {
-              message: "Failed to process image",
-            },
-          ],
-        });
-      }
-    };
-
-    const handleRemoveImage = () => {
-      setPreviewImage(null);
-      form.setFieldValue("thumbnail", "");
-    };
-
     return (
       <>
         <form.AppField name="title">
@@ -206,47 +136,12 @@ export const ExperiencesForm = withForm({
             <field.FormItem>
               <field.FormLabel>Image</field.FormLabel>
               <field.FormControl>
-                <div className="space-y-2">
-                  <div className="flex flex-col gap-2">
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="file"
-                      accept={VALID_IMAGE_TYPES.join(",")}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => handleFileChange(e, field as FormField)}
-                      className="cursor-pointer"
-                      aria-describedby="file-input-help"
-                    />
-                    <p
-                      id="file-input-help"
-                      className="text-muted-foreground text-xs"
-                    >
-                      Accepted formats: JPEG, PNG, GIF, WebP, AVIF. Max size:
-                      5MB
-                    </p>
-                  </div>
-                  {previewImage && (
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                      <div className="relative h-32 w-full max-w-md overflow-hidden rounded-md border border-input">
-                        <img
-                          src={previewImage}
-                          alt="Project preview"
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        size="sm"
-                        onClick={handleRemoveImage}
-                        aria-label="Remove image"
-                      >
-                        Remove Image
-                      </Button>
-                    </div>
-                  )}
-                </div>
+                <ImageUpload
+                  field={field as FormField}
+                  name={field.name}
+                  initialPreview={experience?.imageUrl}
+                  onBlur={field.handleBlur}
+                />
               </field.FormControl>
               <field.FormMessage />
             </field.FormItem>
@@ -351,7 +246,7 @@ export const ExperiencesForm = withForm({
                       >
                         <CalendarIcon />
                         {field.state.value ? (
-                          format(field.state.value, "PPP")
+                          format(new Date(field.state.value), "PPP")
                         ) : (
                           <span>Pick an end date</span>
                         )}
@@ -436,31 +331,28 @@ export const ExperiencesForm = withForm({
           </form.AppField>
         </div>
 
-        <form.Subscribe
-          selector={(formState) => [
-            formState.canSubmit,
-            formState.isSubmitting,
-          ]}
-        >
-          {([canSubmit, isPending, isSubmitting]) => {
-            const buttonText = isSubmitting
-              ? "Submitting..."
-              : isPending
-                ? "Processing..."
-                : "Submit";
-
-            return (
-              <Button
-                type="submit"
+        <div>
+          <form.Subscribe
+            selector={(formState) => [
+              formState.canSubmit,
+              formState.isSubmitting,
+            ]}
+          >
+            {([canSubmit, isPending, isSubmitting]) => (
+              <FormButton
+                canSubmit={canSubmit}
+                isPending={isPending}
+                isSubmitting={isSubmitting}
+                defaultText="Submit"
+                loadingText="Submitting..."
+                processingText="Processing..."
                 variant="default"
-                disabled={!canSubmit || isPending || isSubmitting}
                 className="w-full md:w-auto"
-              >
-                {buttonText}
-              </Button>
-            );
-          }}
-        </form.Subscribe>
+                size="default"
+              />
+            )}
+          </form.Subscribe>
+        </div>
       </>
     );
   },
