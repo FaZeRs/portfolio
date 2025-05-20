@@ -1,6 +1,6 @@
 import { pgEnum, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 export enum ExperienceType {
   WORK = "work",

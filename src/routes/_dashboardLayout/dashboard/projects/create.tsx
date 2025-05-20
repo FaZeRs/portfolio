@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { ProjectsForm } from "~/components/projects/form";
 import { useAppForm } from "~/components/ui/form";
 import { ProjectBaseSchema } from "~/lib/server/schema";

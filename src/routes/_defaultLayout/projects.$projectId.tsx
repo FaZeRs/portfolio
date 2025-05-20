@@ -29,7 +29,10 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData.title}`, description: loaderData.description },
+      {
+        title: `${loaderData?.title}`,
+        description: loaderData?.description,
+      },
     ],
   }),
   component: RouteComponent,

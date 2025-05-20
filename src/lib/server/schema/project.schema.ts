@@ -1,6 +1,6 @@
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 export const Project = pgTable("project", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),

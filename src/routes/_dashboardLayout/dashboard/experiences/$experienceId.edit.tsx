@@ -9,7 +9,7 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { ExperiencesForm } from "~/components/experiences/form";
 import { NotFound } from "~/components/not-found";
 import { useAppForm } from "~/components/ui/form";
@@ -31,7 +31,7 @@ export const Route = createFileRoute(
     return { title: data?.title };
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: `Edit Experience: ${loaderData.title} | Dashboard` }],
+    meta: [{ title: `Edit Experience: ${loaderData?.title} | Dashboard` }],
   }),
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {
