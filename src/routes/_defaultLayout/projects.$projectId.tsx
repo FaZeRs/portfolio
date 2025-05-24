@@ -36,9 +36,9 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
   head: ({ loaderData }) => ({
     meta: seo({
       title: `${loaderData?.title} | ${siteConfig.title}`,
-      description: loaderData?.description ?? "",
+      description: loaderData?.description,
       keywords: siteConfig.keywords,
-      image: loaderData?.image ?? "",
+      image: loaderData?.image,
     }),
   }),
   component: RouteComponent,

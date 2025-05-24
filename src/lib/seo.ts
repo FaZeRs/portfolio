@@ -1,3 +1,5 @@
+import { siteConfig } from "./config/site";
+
 export function seo({
   title,
   description,
@@ -5,24 +7,25 @@ export function seo({
   image,
 }: {
   title: string;
-  description?: string;
-  image?: string;
-  keywords?: string;
+  description?: string | null;
+  image?: string | null;
+  keywords?: string | null;
 }) {
   const tags = [
     { title },
-    { name: "description", content: description },
-    { name: "keywords", content: keywords },
-    { name: "author", content: "Nauris Linde" },
+    ...(description ? [{ name: "description", content: description }] : []),
+    ...(keywords ? [{ name: "keywords", content: keywords }] : []),
+    { name: "author", content: siteConfig.author.name },
     { name: "twitter:title", content: title },
-    { name: "twitter:description", content: description },
-    { name: "twitter:creator", content: "@naurislinde" },
-    { name: "twitter:site", content: "@naurislinde" },
+    ...(description
+      ? [{ name: "twitter:description", content: description }]
+      : []),
+    { name: "twitter:creator", content: siteConfig.author.handle },
+    { name: "twitter:site", content: siteConfig.author.handle },
     { name: "og:type", content: "website" },
-    { name: "og:site_name", content: title },
+    { name: "og:site_name", content: siteConfig.title },
     { name: "og:title", content: title },
-    { name: "og:description", content: description },
-    { name: "og:url", content: "https://naurislinde.dev" },
+    ...(description ? [{ name: "og:description", content: description }] : []),
     { name: "og:locale", content: "en_US" },
     ...(image
       ? [
