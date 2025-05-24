@@ -3,9 +3,17 @@ import { Mail } from "lucide-react";
 import CoverImage from "~/components/cover-image";
 import Icon from "~/components/ui/icon";
 import { siteConfig, socialConfig } from "~/lib/config/site";
+import { seo } from "~/lib/seo";
 
 export const Route = createFileRoute("/_defaultLayout/about")({
   component: RouteComponent,
+  head: () => ({
+    meta: seo({
+      title: `About | ${siteConfig.title}`,
+      description: "About me and my journey.",
+      keywords: siteConfig.keywords,
+    }),
+  }),
 });
 
 function RouteComponent() {

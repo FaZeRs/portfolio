@@ -18,6 +18,8 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { Toaster } from "~/components/ui/sonner";
 import { ThemeProvider } from "~/components/ui/theme";
+import { siteConfig } from "~/lib/config/site";
+import { seo } from "~/lib/seo";
 import { auth } from "~/lib/server/auth";
 import appCss from "~/lib/styles/app.css?url";
 import { AppRouter } from "~/trpc/router";
@@ -53,9 +55,11 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
         name: "viewport",
         content: "width=device-width, initial-scale=1",
       },
-      {
-        title: "Portfolio",
-      },
+      ...seo({
+        title: siteConfig.title,
+        description: siteConfig.description,
+        keywords: siteConfig.keywords,
+      }),
     ],
     links: [{ rel: "stylesheet", href: appCss, as: "style", type: "text/css" }],
   }),

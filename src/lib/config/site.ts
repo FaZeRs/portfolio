@@ -3,9 +3,12 @@ import { siGithub, siLinkedin, siX } from "simple-icons";
 import type { SiteConfig, Social } from "~/types";
 
 export const siteConfig: SiteConfig = {
+  title: "Nauris Linde",
   name: "naurislinde",
   handle: "@naurislinde",
   description: "This website is my personal portfolio.",
+  keywords:
+    "Nauris Linde, Software Engineer, React, TypeScript, tRPC, Drizzle ORM, TanStack, Full-Stack, Web Development, Boilerplate, Starter, Tailwind CSS",
   url: "https://naurislinde.dev",
   links: {
     mail: "naurislinde@gmail.com",

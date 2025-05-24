@@ -2,9 +2,11 @@ import type { SimpleIcon } from "simple-icons";
 import { type Experience, type Project } from "~/lib/server/schema";
 
 export interface SiteConfig {
+  title: string;
   name: string;
   handle: string;
   description: string;
+  keywords: string;
   url: string;
   links: {
     mail: string;
