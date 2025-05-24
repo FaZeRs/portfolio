@@ -3,12 +3,22 @@ import { createFileRoute } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
 import Projects from "~/components/projects";
 import { Skeleton } from "~/components/ui/skeleton";
+import { siteConfig } from "~/lib/config/site";
+import { seo } from "~/lib/seo";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_defaultLayout/projects/")({
   component: RouteComponent,
   loader: async ({ context: { trpc, queryClient } }) =>
     await queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
+  head: () => ({
+    meta: seo({
+      title: `Projects | ${siteConfig.title}`,
+      description:
+        "Several projects that I have worked on, both private and open source.",
+      keywords: siteConfig.keywords,
+    }),
+  }),
 });
 
 function ProjectsSkeleton() {

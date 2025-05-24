@@ -8,6 +8,8 @@ import { TRPCClientError } from "@trpc/client";
 import { NotFound } from "~/components/not-found";
 import PageHeading from "~/components/page-heading";
 import ProjectContent from "~/components/project-content";
+import { siteConfig } from "~/lib/config/site";
+import { seo } from "~/lib/seo";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
@@ -16,7 +18,11 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
       const data = await queryClient.ensureQueryData(
         trpc.project.bySlug.queryOptions({ slug: projectId }),
       );
-      return { title: data?.title, description: data?.description };
+      return {
+        title: data?.title,
+        description: data?.description,
+        image: data?.imageUrl,
+      };
     } catch (error) {
       if (
         error instanceof TRPCClientError &&
@@ -28,12 +34,12 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
     }
   },
   head: ({ loaderData }) => ({
-    meta: [
-      {
-        title: `${loaderData?.title}`,
-        description: loaderData?.description,
-      },
-    ],
+    meta: seo({
+      title: `${loaderData?.title} | ${siteConfig.title}`,
+      description: loaderData?.description,
+      keywords: siteConfig.keywords,
+      image: loaderData?.image,
+    }),
   }),
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,

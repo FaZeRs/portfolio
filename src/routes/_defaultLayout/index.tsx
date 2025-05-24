@@ -4,7 +4,6 @@ import Contact from "~/components/contact";
 import ExperienceSection from "~/components/experience";
 import Intro from "~/components/intro";
 import SkillSection from "~/components/skills";
-import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_defaultLayout/")({
   component: Home,
