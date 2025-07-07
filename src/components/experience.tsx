@@ -13,7 +13,7 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
     experience;
 
   return (
-    <div className="relative flex max-w-2xl items-start gap-x-4 lg:gap-x-6">
+    <div className="relative flex max-w-2xl items-start gap-x-4 before:absolute before:top-[5rem] before:bottom-0 before:left-9 before:h-[calc(100%-70px)] before:w-[1px] before:bg-zinc-200 lg:gap-x-6 dark:before:bg-zinc-800">
       {imageUrl && url ? (
         <a
           href={url}
