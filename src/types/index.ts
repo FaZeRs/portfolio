@@ -42,3 +42,33 @@ export interface Social {
 
 export type ProjectType = typeof Project.$inferSelect;
 export type ExperienceType = typeof Experience.$inferSelect;
+
+export interface ContributionCalendar {
+  weeks: ContributionWeeks[];
+}
+
+export interface ContributionWeeks {
+  contributionDays: ContributionsDay[];
+}
+
+export interface ContributionsDay {
+  contributionCount: number;
+  date: string;
+}
+
+export interface ContributionsCollection {
+  contributionCalendar: ContributionCalendar;
+}
+
+export type GitHubUser = {
+  login: string;
+  name: string;
+  bio: string;
+  avatar_url: string;
+  html_url: string;
+  public_repos: number;
+  followers: number;
+  following: number;
+  created_at: string;
+  updated_at: string;
+};

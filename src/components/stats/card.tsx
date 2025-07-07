@@ -1,0 +1,31 @@
+import Counter from "~/components/counter";
+import { Skeleton } from "~/components/ui/skeleton";
+
+interface StatCardProps {
+  card: { title: string; link?: string; value?: number };
+}
+
+export default function StatCard({ card }: StatCardProps) {
+  const { title, value, link } = card;
+
+  return (
+    <a
+      className="flex flex-col rounded-lg border border-transparent bg-background p-4 shadow hover:border-gray-300 dark:border-gray-800 dark:hover:border-neutral-600"
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <h1 className="my-2 font-bold text-3xl text-gray-600 group-hover:text-black dark:text-gray-200 dark:group-hover:text-white">
+        {value ? (
+          <Counter value={value} />
+        ) : (
+          <Skeleton className="h-[36px] w-28 rounded-sm" />
+        )}
+      </h1>
+
+      <span className="font-medium text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white">
+        {title}
+      </span>
+    </a>
+  );
+}

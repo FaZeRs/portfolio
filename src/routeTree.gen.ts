@@ -15,6 +15,7 @@ import { Route as DefaultLayoutImport } from './routes/_defaultLayout'
 import { Route as DashboardLayoutImport } from './routes/_dashboardLayout'
 import { Route as AuthLayoutImport } from './routes/_authLayout'
 import { Route as DefaultLayoutIndexImport } from './routes/_defaultLayout/index'
+import { Route as DefaultLayoutStatsImport } from './routes/_defaultLayout/stats'
 import { Route as DefaultLayoutAboutImport } from './routes/_defaultLayout/about'
 import { Route as AuthLayoutSigninImport } from './routes/_authLayout/signin'
 import { Route as DefaultLayoutProjectsIndexImport } from './routes/_defaultLayout/projects.index'
@@ -47,6 +48,12 @@ const AuthLayoutRoute = AuthLayoutImport.update({
 const DefaultLayoutIndexRoute = DefaultLayoutIndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => DefaultLayoutRoute,
+} as any)
+
+const DefaultLayoutStatsRoute = DefaultLayoutStatsImport.update({
+  id: '/stats',
+  path: '/stats',
   getParentRoute: () => DefaultLayoutRoute,
 } as any)
 
@@ -163,6 +170,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof DefaultLayoutAboutImport
+      parentRoute: typeof DefaultLayoutImport
+    }
+    '/_defaultLayout/stats': {
+      id: '/_defaultLayout/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof DefaultLayoutStatsImport
       parentRoute: typeof DefaultLayoutImport
     }
     '/_defaultLayout/': {
@@ -284,6 +298,7 @@ const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
 
 interface DefaultLayoutRouteChildren {
   DefaultLayoutAboutRoute: typeof DefaultLayoutAboutRoute
+  DefaultLayoutStatsRoute: typeof DefaultLayoutStatsRoute
   DefaultLayoutIndexRoute: typeof DefaultLayoutIndexRoute
   DefaultLayoutProjectsProjectIdRoute: typeof DefaultLayoutProjectsProjectIdRoute
   DefaultLayoutProjectsIndexRoute: typeof DefaultLayoutProjectsIndexRoute
@@ -291,6 +306,7 @@ interface DefaultLayoutRouteChildren {
 
 const DefaultLayoutRouteChildren: DefaultLayoutRouteChildren = {
   DefaultLayoutAboutRoute: DefaultLayoutAboutRoute,
+  DefaultLayoutStatsRoute: DefaultLayoutStatsRoute,
   DefaultLayoutIndexRoute: DefaultLayoutIndexRoute,
   DefaultLayoutProjectsProjectIdRoute: DefaultLayoutProjectsProjectIdRoute,
   DefaultLayoutProjectsIndexRoute: DefaultLayoutProjectsIndexRoute,
@@ -304,6 +320,7 @@ export interface FileRoutesByFullPath {
   '': typeof DefaultLayoutRouteWithChildren
   '/signin': typeof AuthLayoutSigninRoute
   '/about': typeof DefaultLayoutAboutRoute
+  '/stats': typeof DefaultLayoutStatsRoute
   '/': typeof DefaultLayoutIndexRoute
   '/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
   '/dashboard': typeof DashboardLayoutDashboardIndexRoute
@@ -320,6 +337,7 @@ export interface FileRoutesByTo {
   '': typeof DashboardLayoutRouteWithChildren
   '/signin': typeof AuthLayoutSigninRoute
   '/about': typeof DefaultLayoutAboutRoute
+  '/stats': typeof DefaultLayoutStatsRoute
   '/': typeof DefaultLayoutIndexRoute
   '/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
   '/dashboard': typeof DashboardLayoutDashboardIndexRoute
@@ -339,6 +357,7 @@ export interface FileRoutesById {
   '/_defaultLayout': typeof DefaultLayoutRouteWithChildren
   '/_authLayout/signin': typeof AuthLayoutSigninRoute
   '/_defaultLayout/about': typeof DefaultLayoutAboutRoute
+  '/_defaultLayout/stats': typeof DefaultLayoutStatsRoute
   '/_defaultLayout/': typeof DefaultLayoutIndexRoute
   '/_defaultLayout/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
   '/_dashboardLayout/dashboard/': typeof DashboardLayoutDashboardIndexRoute
@@ -357,6 +376,7 @@ export interface FileRouteTypes {
     | ''
     | '/signin'
     | '/about'
+    | '/stats'
     | '/'
     | '/projects/$projectId'
     | '/dashboard'
@@ -372,6 +392,7 @@ export interface FileRouteTypes {
     | ''
     | '/signin'
     | '/about'
+    | '/stats'
     | '/'
     | '/projects/$projectId'
     | '/dashboard'
@@ -389,6 +410,7 @@ export interface FileRouteTypes {
     | '/_defaultLayout'
     | '/_authLayout/signin'
     | '/_defaultLayout/about'
+    | '/_defaultLayout/stats'
     | '/_defaultLayout/'
     | '/_defaultLayout/projects/$projectId'
     | '/_dashboardLayout/dashboard/'
@@ -451,6 +473,7 @@ export const routeTree = rootRoute
       "filePath": "_defaultLayout.tsx",
       "children": [
         "/_defaultLayout/about",
+        "/_defaultLayout/stats",
         "/_defaultLayout/",
         "/_defaultLayout/projects/$projectId",
         "/_defaultLayout/projects/"
@@ -462,6 +485,10 @@ export const routeTree = rootRoute
     },
     "/_defaultLayout/about": {
       "filePath": "_defaultLayout/about.tsx",
+      "parent": "/_defaultLayout"
+    },
+    "/_defaultLayout/stats": {
+      "filePath": "_defaultLayout/stats.tsx",
       "parent": "/_defaultLayout"
     },
     "/_defaultLayout/": {

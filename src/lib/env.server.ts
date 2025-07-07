@@ -12,6 +12,7 @@ export const env = createEnv({
     BETTER_AUTH_URL: z.string().url().optional(),
     GITHUB_CLIENT_ID: z.string().min(1).optional(),
     GITHUB_CLIENT_SECRET: z.string().min(1).optional(),
+    GITHUB_ACCESS_TOKEN: z.string().min(1).optional(),
     RESEND_FROM_EMAIL: z.string().email().optional(),
     RESEND_API_KEY: z.string().min(1).optional(),
     SENTRY_AUTH_TOKEN: z.string().optional(),
