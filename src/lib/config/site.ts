@@ -13,6 +13,7 @@ export const siteConfig: SiteConfig = {
     mail: "naurislinde@gmail.com",
     twitter: "https://twitter.com/naurislinde",
     github: "https://github.com/fazers",
+    githubRepo: "https://github.com/fazers/portfolio",
   },
   author: {
     name: "Nauris Linde",

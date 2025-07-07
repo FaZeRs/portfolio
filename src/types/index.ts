@@ -11,6 +11,7 @@ export interface SiteConfig {
     mail: string;
     twitter: string;
     github: string;
+    githubRepo: string;
   };
   author: {
     name: string;

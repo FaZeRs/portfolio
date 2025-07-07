@@ -17,7 +17,7 @@ import {
 import Icon from "~/components/ui/icon";
 
 import { navbarLinks } from "~/lib/config/navbar";
-import { socialConfig } from "~/lib/config/site";
+import { siteConfig, socialConfig } from "~/lib/config/site";
 
 export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
             <CommandItem
               onSelect={() =>
                 window.open(
-                  "https://github.com/fazers/portfolio",
+                  siteConfig.links.githubRepo,
                   "_ blank",
                   "noopener,noreferrer",
                 )
