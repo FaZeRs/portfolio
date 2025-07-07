@@ -92,7 +92,12 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
         {showMobileMenu ? <X /> : <Menu />}
       </button>
 
-      {showMobileMenu && <MobileNav items={navbarLinks} />}
+      {showMobileMenu && (
+        <MobileNav
+          items={navbarLinks}
+          onItemClick={() => setShowMobileMenu(false)}
+        />
+      )}
     </div>
   );
 };
