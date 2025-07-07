@@ -8,13 +8,14 @@ import type { NavItem } from "~/types";
 interface MobileNavProps {
   children?: ReactNode;
   items: NavItem[];
+  onItemClick?: () => void;
 }
 
-const MobileNav = ({ items, children }: MobileNavProps) => {
+const MobileNav = ({ items, children, onItemClick }: MobileNavProps) => {
   return (
     <div
       className={cn(
-        "slide-in-from-top-8 fixed inset-0 top-16 z-50 grid h-[calc(100vh-4rem)] animate-in grid-flow-row auto-rows-max overflow-auto p-6 pb-32 shadow-md",
+        "slide-in-from-top-8 fixed inset-0 top-15 z-50 grid h-[calc(100vh-4rem)] animate-in grid-flow-row auto-rows-max overflow-auto p-6 pb-32 shadow-md",
       )}
     >
       <div className="relative z-20 grid gap-6 rounded-md bg-popover p-4 text-popover-foreground shadow-md">
@@ -29,6 +30,7 @@ const MobileNav = ({ items, children }: MobileNavProps) => {
                     "flex w-full items-center rounded-md p-2 font-medium text-sm hover:underline",
                     subItem.disabled && "cursor-not-allowed opacity-60",
                   )}
+                  onClick={onItemClick}
                 >
                   {subItem.title}
                 </Link>
@@ -41,6 +43,7 @@ const MobileNav = ({ items, children }: MobileNavProps) => {
                   "flex w-full items-center rounded-md p-2 font-medium text-sm hover:underline",
                   item.disabled && "cursor-not-allowed opacity-60",
                 )}
+                onClick={onItemClick}
               >
                 {item.title}
               </Link>

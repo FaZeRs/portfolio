@@ -48,26 +48,26 @@ function RouteComponent() {
             interested in working with me!
           </p>
           <span>{"There are several ways to contact it:"}</span>
-          <div className="mt-3 flex items-center gap-4">
+          <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4">
             <a
-              className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 dark:border-gray-700"
+              className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-gray-50 sm:text-base dark:border-gray-700 dark:hover:bg-gray-800"
               target="_blank"
               href={`mailto:${siteConfig.author.email}`}
               rel="noreferrer"
             >
-              <Mail size={18} />
+              <Mail size={16} className="sm:size-18" />
               <span>Mail</span>
             </a>
 
             {socialConfig.map((social) => (
               <a
                 key={social.name}
-                className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 dark:border-gray-700"
+                className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-gray-50 sm:text-base dark:border-gray-700 dark:hover:bg-gray-800"
                 target="_blank"
                 href={social.url}
                 rel="noreferrer"
               >
-                <Icon icon={social.icon} className="size-5" />
+                <Icon icon={social.icon} className="size-4 sm:size-5" />
                 <span>{social.name}</span>
               </a>
             ))}
