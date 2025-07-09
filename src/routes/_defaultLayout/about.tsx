@@ -55,7 +55,7 @@ function RouteComponent() {
               href={`mailto:${siteConfig.author.email}`}
               rel="noreferrer"
             >
-              <Mail size={16} className="sm:size-18" />
+              <Mail size={16} className="size-4 sm:size-5" />
               <span>Mail</span>
             </a>
 

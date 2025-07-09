@@ -1,8 +1,10 @@
 import { json } from "@tanstack/react-start";
-import { createAPIFileRoute } from "@tanstack/react-start/api";
+import { createServerFileRoute } from "@tanstack/react-start/server";
 import { getGithubActivities } from "~/lib/github";
 
-export const APIRoute = createAPIFileRoute("/api/stats/github/activity")({
+export const ServerRoute = createServerFileRoute(
+  "/api/stats/github/activity",
+).methods({
   GET: async ({ request, params }) => {
     try {
       const contributions = await getGithubActivities();

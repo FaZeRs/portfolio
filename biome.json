@@ -15,7 +15,10 @@
       ".zed",
       ".vscode",
       "routeTree.gen.ts",
-      "src-tauri"
+      "src-tauri",
+      ".tanstack",
+      ".nitro",
+      ".output"
     ]
   },
   "formatter": {

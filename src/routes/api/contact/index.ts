@@ -1,11 +1,11 @@
-import { createAPIFileRoute } from "@tanstack/react-start/api";
+import { createServerFileRoute } from "@tanstack/react-start/server";
 import { Resend } from "resend";
 import { siteConfig } from "~/lib/config/site";
 import { env } from "~/lib/env.server";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
-export const APIRoute = createAPIFileRoute("/api/contact")({
+export const ServerRoute = createServerFileRoute("/api/contact/").methods({
   POST: async ({ request }) => {
     const body = (await request.json()) as { email?: string; message?: string };
     const { email, message } = body;
