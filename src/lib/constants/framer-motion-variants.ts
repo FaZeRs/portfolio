@@ -9,4 +9,23 @@ const slideInWithFadeOut: Variants = {
   },
 };
 
-export { slideInWithFadeOut };
+const popUp: Variants = {
+  hidden: { scale: 0, opacity: 0 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: "spring",
+    },
+  },
+};
+
+const fadeContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { delayChildren: 0, staggerChildren: 0.1 },
+  },
+};
+
+export { slideInWithFadeOut, popUp, fadeContainer };

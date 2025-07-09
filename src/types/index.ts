@@ -72,3 +72,10 @@ export type GitHubUser = {
   created_at: string;
   updated_at: string;
 };
+
+export interface UseData {
+  name: string;
+  description: string;
+  icon: SimpleIcon;
+  link: string;
+}
