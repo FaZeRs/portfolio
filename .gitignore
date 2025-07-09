@@ -21,3 +21,5 @@ dist
 .cursor
 /public/sitemap.xml
 .sonarlint
+.nitro
+.tanstack

@@ -1,4 +1,3 @@
-/// <reference types="vinxi/types/client" />
 import * as Sentry from "@sentry/tanstackstart-react";
 import { StartClient } from "@tanstack/react-start";
 import { StrictMode } from "react";

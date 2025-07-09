@@ -1,12 +1,14 @@
-/// <reference types="vinxi/types/server" />
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import * as Sentry from "@sentry/tanstackstart-react";
-import { getRouterManifest } from "@tanstack/react-start/router-manifest";
 import {
   createStartHandler,
   defaultStreamHandler,
 } from "@tanstack/react-start/server";
 
+import {
+  createMiddleware,
+  registerGlobalMiddleware,
+} from "@tanstack/react-start";
 import { env } from "~/lib/env.server";
 import { createRouter } from "./router";
 
@@ -18,7 +20,14 @@ Sentry.init({
   profileLifecycle: "trace",
 });
 
+registerGlobalMiddleware({
+  middleware: [
+    createMiddleware({ type: "function" }).server(
+      Sentry.sentryGlobalServerMiddlewareHandler(),
+    ),
+  ],
+});
+
 export default createStartHandler({
   createRouter,
-  getRouterManifest,
 })(Sentry.wrapStreamHandlerWithSentry(defaultStreamHandler));

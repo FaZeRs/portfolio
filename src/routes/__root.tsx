@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
 import type { QueryClient } from "@tanstack/react-query";
 import {

@@ -116,13 +116,13 @@ export const software: UseData[] = [
     name: "Vercel",
     description: "Hosting for Projects",
     icon: siVercel,
-    link: "http://vercel.com/",
+    link: "https://vercel.com/",
   },
   {
     name: "Railway",
     description: "Hosting for Projects",
     icon: siRailway,
-    link: "http://railway.com/",
+    link: "https://railway.com/",
   },
   {
     name: "Figma",

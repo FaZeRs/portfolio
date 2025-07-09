@@ -8,286 +8,501 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { createServerRootRoute } from "@tanstack/react-start/server";
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as DefaultLayoutImport } from './routes/_defaultLayout'
-import { Route as DashboardLayoutImport } from './routes/_dashboardLayout'
-import { Route as AuthLayoutImport } from './routes/_authLayout'
-import { Route as DefaultLayoutIndexImport } from './routes/_defaultLayout/index'
-import { Route as DefaultLayoutUsesImport } from './routes/_defaultLayout/uses'
-import { Route as DefaultLayoutStatsImport } from './routes/_defaultLayout/stats'
-import { Route as DefaultLayoutAboutImport } from './routes/_defaultLayout/about'
-import { Route as AuthLayoutSigninImport } from './routes/_authLayout/signin'
-import { Route as DefaultLayoutProjectsIndexImport } from './routes/_defaultLayout/projects.index'
-import { Route as DashboardLayoutDashboardIndexImport } from './routes/_dashboardLayout/dashboard/index'
-import { Route as DefaultLayoutProjectsProjectIdImport } from './routes/_defaultLayout/projects.$projectId'
-import { Route as DashboardLayoutDashboardProjectsIndexImport } from './routes/_dashboardLayout/dashboard/projects/index'
-import { Route as DashboardLayoutDashboardExperiencesIndexImport } from './routes/_dashboardLayout/dashboard/experiences/index'
-import { Route as DashboardLayoutDashboardProjectsCreateImport } from './routes/_dashboardLayout/dashboard/projects/create'
-import { Route as DashboardLayoutDashboardExperiencesCreateImport } from './routes/_dashboardLayout/dashboard/experiences/create'
-import { Route as DashboardLayoutDashboardProjectsProjectIdEditImport } from './routes/_dashboardLayout/dashboard/projects/$projectId.edit'
-import { Route as DashboardLayoutDashboardExperiencesExperienceIdEditImport } from './routes/_dashboardLayout/dashboard/experiences/$experienceId.edit'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as DefaultLayoutRouteImport } from "./routes/_defaultLayout";
+import { Route as DashboardLayoutRouteImport } from "./routes/_dashboardLayout";
+import { Route as AuthLayoutRouteImport } from "./routes/_authLayout";
+import { Route as DefaultLayoutIndexRouteImport } from "./routes/_defaultLayout/index";
+import { Route as DefaultLayoutUsesRouteImport } from "./routes/_defaultLayout/uses";
+import { Route as DefaultLayoutStatsRouteImport } from "./routes/_defaultLayout/stats";
+import { Route as DefaultLayoutAboutRouteImport } from "./routes/_defaultLayout/about";
+import { Route as AuthLayoutSigninRouteImport } from "./routes/_authLayout/signin";
+import { Route as DefaultLayoutProjectsIndexRouteImport } from "./routes/_defaultLayout/projects.index";
+import { Route as DashboardLayoutDashboardIndexRouteImport } from "./routes/_dashboardLayout/dashboard/index";
+import { Route as DefaultLayoutProjectsProjectIdRouteImport } from "./routes/_defaultLayout/projects.$projectId";
+import { Route as DashboardLayoutDashboardProjectsIndexRouteImport } from "./routes/_dashboardLayout/dashboard/projects/index";
+import { Route as DashboardLayoutDashboardExperiencesIndexRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/index";
+import { Route as DashboardLayoutDashboardProjectsCreateRouteImport } from "./routes/_dashboardLayout/dashboard/projects/create";
+import { Route as DashboardLayoutDashboardExperiencesCreateRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/create";
+import { Route as DashboardLayoutDashboardProjectsProjectIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/projects/$projectId.edit";
+import { Route as DashboardLayoutDashboardExperiencesExperienceIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/$experienceId.edit";
+import { ServerRoute as ApiContactIndexServerRouteImport } from "./routes/api/contact/index";
+import { ServerRoute as ApiTrpcSplatServerRouteImport } from "./routes/api/trpc/$";
+import { ServerRoute as ApiAuthSplatServerRouteImport } from "./routes/api/auth/$";
+import { ServerRoute as ApiStatsGithubIndexServerRouteImport } from "./routes/api/stats/github/index";
+import { ServerRoute as ApiStatsGithubActivityServerRouteImport } from "./routes/api/stats/github/activity";
 
-// Create/Update Routes
+const rootServerRouteImport = createServerRootRoute();
 
-const DefaultLayoutRoute = DefaultLayoutImport.update({
-  id: '/_defaultLayout',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardLayoutRoute = DashboardLayoutImport.update({
-  id: '/_dashboardLayout',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AuthLayoutRoute = AuthLayoutImport.update({
-  id: '/_authLayout',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DefaultLayoutIndexRoute = DefaultLayoutIndexImport.update({
-  id: '/',
-  path: '/',
+const DefaultLayoutRoute = DefaultLayoutRouteImport.update({
+  id: "/_defaultLayout",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const DashboardLayoutRoute = DashboardLayoutRouteImport.update({
+  id: "/_dashboardLayout",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const AuthLayoutRoute = AuthLayoutRouteImport.update({
+  id: "/_authLayout",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const DefaultLayoutIndexRoute = DefaultLayoutIndexRouteImport.update({
+  id: "/",
+  path: "/",
   getParentRoute: () => DefaultLayoutRoute,
-} as any)
-
-const DefaultLayoutUsesRoute = DefaultLayoutUsesImport.update({
-  id: '/uses',
-  path: '/uses',
+} as any);
+const DefaultLayoutUsesRoute = DefaultLayoutUsesRouteImport.update({
+  id: "/uses",
+  path: "/uses",
   getParentRoute: () => DefaultLayoutRoute,
-} as any)
-
-const DefaultLayoutStatsRoute = DefaultLayoutStatsImport.update({
-  id: '/stats',
-  path: '/stats',
+} as any);
+const DefaultLayoutStatsRoute = DefaultLayoutStatsRouteImport.update({
+  id: "/stats",
+  path: "/stats",
   getParentRoute: () => DefaultLayoutRoute,
-} as any)
-
-const DefaultLayoutAboutRoute = DefaultLayoutAboutImport.update({
-  id: '/about',
-  path: '/about',
+} as any);
+const DefaultLayoutAboutRoute = DefaultLayoutAboutRouteImport.update({
+  id: "/about",
+  path: "/about",
   getParentRoute: () => DefaultLayoutRoute,
-} as any)
-
-const AuthLayoutSigninRoute = AuthLayoutSigninImport.update({
-  id: '/signin',
-  path: '/signin',
+} as any);
+const AuthLayoutSigninRoute = AuthLayoutSigninRouteImport.update({
+  id: "/signin",
+  path: "/signin",
   getParentRoute: () => AuthLayoutRoute,
-} as any)
-
-const DefaultLayoutProjectsIndexRoute = DefaultLayoutProjectsIndexImport.update(
-  {
-    id: '/projects/',
-    path: '/projects/',
+} as any);
+const DefaultLayoutProjectsIndexRoute =
+  DefaultLayoutProjectsIndexRouteImport.update({
+    id: "/projects/",
+    path: "/projects/",
     getParentRoute: () => DefaultLayoutRoute,
-  } as any,
-)
-
+  } as any);
 const DashboardLayoutDashboardIndexRoute =
-  DashboardLayoutDashboardIndexImport.update({
-    id: '/dashboard/',
-    path: '/dashboard/',
+  DashboardLayoutDashboardIndexRouteImport.update({
+    id: "/dashboard/",
+    path: "/dashboard/",
     getParentRoute: () => DashboardLayoutRoute,
-  } as any)
-
+  } as any);
 const DefaultLayoutProjectsProjectIdRoute =
-  DefaultLayoutProjectsProjectIdImport.update({
-    id: '/projects/$projectId',
-    path: '/projects/$projectId',
+  DefaultLayoutProjectsProjectIdRouteImport.update({
+    id: "/projects/$projectId",
+    path: "/projects/$projectId",
     getParentRoute: () => DefaultLayoutRoute,
-  } as any)
-
+  } as any);
 const DashboardLayoutDashboardProjectsIndexRoute =
-  DashboardLayoutDashboardProjectsIndexImport.update({
-    id: '/dashboard/projects/',
-    path: '/dashboard/projects/',
+  DashboardLayoutDashboardProjectsIndexRouteImport.update({
+    id: "/dashboard/projects/",
+    path: "/dashboard/projects/",
     getParentRoute: () => DashboardLayoutRoute,
-  } as any)
-
+  } as any);
 const DashboardLayoutDashboardExperiencesIndexRoute =
-  DashboardLayoutDashboardExperiencesIndexImport.update({
-    id: '/dashboard/experiences/',
-    path: '/dashboard/experiences/',
+  DashboardLayoutDashboardExperiencesIndexRouteImport.update({
+    id: "/dashboard/experiences/",
+    path: "/dashboard/experiences/",
     getParentRoute: () => DashboardLayoutRoute,
-  } as any)
-
+  } as any);
 const DashboardLayoutDashboardProjectsCreateRoute =
-  DashboardLayoutDashboardProjectsCreateImport.update({
-    id: '/dashboard/projects/create',
-    path: '/dashboard/projects/create',
+  DashboardLayoutDashboardProjectsCreateRouteImport.update({
+    id: "/dashboard/projects/create",
+    path: "/dashboard/projects/create",
     getParentRoute: () => DashboardLayoutRoute,
-  } as any)
-
+  } as any);
 const DashboardLayoutDashboardExperiencesCreateRoute =
-  DashboardLayoutDashboardExperiencesCreateImport.update({
-    id: '/dashboard/experiences/create',
-    path: '/dashboard/experiences/create',
+  DashboardLayoutDashboardExperiencesCreateRouteImport.update({
+    id: "/dashboard/experiences/create",
+    path: "/dashboard/experiences/create",
     getParentRoute: () => DashboardLayoutRoute,
-  } as any)
-
+  } as any);
 const DashboardLayoutDashboardProjectsProjectIdEditRoute =
-  DashboardLayoutDashboardProjectsProjectIdEditImport.update({
-    id: '/dashboard/projects/$projectId/edit',
-    path: '/dashboard/projects/$projectId/edit',
+  DashboardLayoutDashboardProjectsProjectIdEditRouteImport.update({
+    id: "/dashboard/projects/$projectId/edit",
+    path: "/dashboard/projects/$projectId/edit",
     getParentRoute: () => DashboardLayoutRoute,
-  } as any)
-
+  } as any);
 const DashboardLayoutDashboardExperiencesExperienceIdEditRoute =
-  DashboardLayoutDashboardExperiencesExperienceIdEditImport.update({
-    id: '/dashboard/experiences/$experienceId/edit',
-    path: '/dashboard/experiences/$experienceId/edit',
+  DashboardLayoutDashboardExperiencesExperienceIdEditRouteImport.update({
+    id: "/dashboard/experiences/$experienceId/edit",
+    path: "/dashboard/experiences/$experienceId/edit",
     getParentRoute: () => DashboardLayoutRoute,
-  } as any)
+  } as any);
+const ApiContactIndexServerRoute = ApiContactIndexServerRouteImport.update({
+  id: "/api/contact/",
+  path: "/api/contact/",
+  getParentRoute: () => rootServerRouteImport,
+} as any);
+const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
+  id: "/api/trpc/$",
+  path: "/api/trpc/$",
+  getParentRoute: () => rootServerRouteImport,
+} as any);
+const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
+  id: "/api/auth/$",
+  path: "/api/auth/$",
+  getParentRoute: () => rootServerRouteImport,
+} as any);
+const ApiStatsGithubIndexServerRoute =
+  ApiStatsGithubIndexServerRouteImport.update({
+    id: "/api/stats/github/",
+    path: "/api/stats/github/",
+    getParentRoute: () => rootServerRouteImport,
+  } as any);
+const ApiStatsGithubActivityServerRoute =
+  ApiStatsGithubActivityServerRouteImport.update({
+    id: "/api/stats/github/activity",
+    path: "/api/stats/github/activity",
+    getParentRoute: () => rootServerRouteImport,
+  } as any);
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  "/signin": typeof AuthLayoutSigninRoute;
+  "/about": typeof DefaultLayoutAboutRoute;
+  "/stats": typeof DefaultLayoutStatsRoute;
+  "/uses": typeof DefaultLayoutUsesRoute;
+  "/": typeof DefaultLayoutIndexRoute;
+  "/projects/$projectId": typeof DefaultLayoutProjectsProjectIdRoute;
+  "/dashboard": typeof DashboardLayoutDashboardIndexRoute;
+  "/projects": typeof DefaultLayoutProjectsIndexRoute;
+  "/dashboard/experiences/create": typeof DashboardLayoutDashboardExperiencesCreateRoute;
+  "/dashboard/projects/create": typeof DashboardLayoutDashboardProjectsCreateRoute;
+  "/dashboard/experiences": typeof DashboardLayoutDashboardExperiencesIndexRoute;
+  "/dashboard/projects": typeof DashboardLayoutDashboardProjectsIndexRoute;
+  "/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
+  "/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
+}
+export interface FileRoutesByTo {
+  "/signin": typeof AuthLayoutSigninRoute;
+  "/about": typeof DefaultLayoutAboutRoute;
+  "/stats": typeof DefaultLayoutStatsRoute;
+  "/uses": typeof DefaultLayoutUsesRoute;
+  "/": typeof DefaultLayoutIndexRoute;
+  "/projects/$projectId": typeof DefaultLayoutProjectsProjectIdRoute;
+  "/dashboard": typeof DashboardLayoutDashboardIndexRoute;
+  "/projects": typeof DefaultLayoutProjectsIndexRoute;
+  "/dashboard/experiences/create": typeof DashboardLayoutDashboardExperiencesCreateRoute;
+  "/dashboard/projects/create": typeof DashboardLayoutDashboardProjectsCreateRoute;
+  "/dashboard/experiences": typeof DashboardLayoutDashboardExperiencesIndexRoute;
+  "/dashboard/projects": typeof DashboardLayoutDashboardProjectsIndexRoute;
+  "/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
+  "/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport;
+  "/_authLayout": typeof AuthLayoutRouteWithChildren;
+  "/_dashboardLayout": typeof DashboardLayoutRouteWithChildren;
+  "/_defaultLayout": typeof DefaultLayoutRouteWithChildren;
+  "/_authLayout/signin": typeof AuthLayoutSigninRoute;
+  "/_defaultLayout/about": typeof DefaultLayoutAboutRoute;
+  "/_defaultLayout/stats": typeof DefaultLayoutStatsRoute;
+  "/_defaultLayout/uses": typeof DefaultLayoutUsesRoute;
+  "/_defaultLayout/": typeof DefaultLayoutIndexRoute;
+  "/_defaultLayout/projects/$projectId": typeof DefaultLayoutProjectsProjectIdRoute;
+  "/_dashboardLayout/dashboard/": typeof DashboardLayoutDashboardIndexRoute;
+  "/_defaultLayout/projects/": typeof DefaultLayoutProjectsIndexRoute;
+  "/_dashboardLayout/dashboard/experiences/create": typeof DashboardLayoutDashboardExperiencesCreateRoute;
+  "/_dashboardLayout/dashboard/projects/create": typeof DashboardLayoutDashboardProjectsCreateRoute;
+  "/_dashboardLayout/dashboard/experiences/": typeof DashboardLayoutDashboardExperiencesIndexRoute;
+  "/_dashboardLayout/dashboard/projects/": typeof DashboardLayoutDashboardProjectsIndexRoute;
+  "/_dashboardLayout/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
+  "/_dashboardLayout/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths:
+    | "/signin"
+    | "/about"
+    | "/stats"
+    | "/uses"
+    | "/"
+    | "/projects/$projectId"
+    | "/dashboard"
+    | "/projects"
+    | "/dashboard/experiences/create"
+    | "/dashboard/projects/create"
+    | "/dashboard/experiences"
+    | "/dashboard/projects"
+    | "/dashboard/experiences/$experienceId/edit"
+    | "/dashboard/projects/$projectId/edit";
+  fileRoutesByTo: FileRoutesByTo;
+  to:
+    | "/signin"
+    | "/about"
+    | "/stats"
+    | "/uses"
+    | "/"
+    | "/projects/$projectId"
+    | "/dashboard"
+    | "/projects"
+    | "/dashboard/experiences/create"
+    | "/dashboard/projects/create"
+    | "/dashboard/experiences"
+    | "/dashboard/projects"
+    | "/dashboard/experiences/$experienceId/edit"
+    | "/dashboard/projects/$projectId/edit";
+  id:
+    | "__root__"
+    | "/_authLayout"
+    | "/_dashboardLayout"
+    | "/_defaultLayout"
+    | "/_authLayout/signin"
+    | "/_defaultLayout/about"
+    | "/_defaultLayout/stats"
+    | "/_defaultLayout/uses"
+    | "/_defaultLayout/"
+    | "/_defaultLayout/projects/$projectId"
+    | "/_dashboardLayout/dashboard/"
+    | "/_defaultLayout/projects/"
+    | "/_dashboardLayout/dashboard/experiences/create"
+    | "/_dashboardLayout/dashboard/projects/create"
+    | "/_dashboardLayout/dashboard/experiences/"
+    | "/_dashboardLayout/dashboard/projects/"
+    | "/_dashboardLayout/dashboard/experiences/$experienceId/edit"
+    | "/_dashboardLayout/dashboard/projects/$projectId/edit";
+  fileRoutesById: FileRoutesById;
+}
+export interface RootRouteChildren {
+  AuthLayoutRoute: typeof AuthLayoutRouteWithChildren;
+  DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren;
+  DefaultLayoutRoute: typeof DefaultLayoutRouteWithChildren;
+}
+export interface FileServerRoutesByFullPath {
+  "/api/auth/$": typeof ApiAuthSplatServerRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
+  "/api/contact": typeof ApiContactIndexServerRoute;
+  "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
+  "/api/stats/github": typeof ApiStatsGithubIndexServerRoute;
+}
+export interface FileServerRoutesByTo {
+  "/api/auth/$": typeof ApiAuthSplatServerRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
+  "/api/contact": typeof ApiContactIndexServerRoute;
+  "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
+  "/api/stats/github": typeof ApiStatsGithubIndexServerRoute;
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport;
+  "/api/auth/$": typeof ApiAuthSplatServerRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
+  "/api/contact/": typeof ApiContactIndexServerRoute;
+  "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
+  "/api/stats/github/": typeof ApiStatsGithubIndexServerRoute;
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath;
+  fullPaths:
+    | "/api/auth/$"
+    | "/api/trpc/$"
+    | "/api/contact"
+    | "/api/stats/github/activity"
+    | "/api/stats/github";
+  fileServerRoutesByTo: FileServerRoutesByTo;
+  to:
+    | "/api/auth/$"
+    | "/api/trpc/$"
+    | "/api/contact"
+    | "/api/stats/github/activity"
+    | "/api/stats/github";
+  id:
+    | "__root__"
+    | "/api/auth/$"
+    | "/api/trpc/$"
+    | "/api/contact/"
+    | "/api/stats/github/activity"
+    | "/api/stats/github/";
+  fileServerRoutesById: FileServerRoutesById;
+}
+export interface RootServerRouteChildren {
+  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute;
+  ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute;
+  ApiContactIndexServerRoute: typeof ApiContactIndexServerRoute;
+  ApiStatsGithubActivityServerRoute: typeof ApiStatsGithubActivityServerRoute;
+  ApiStatsGithubIndexServerRoute: typeof ApiStatsGithubIndexServerRoute;
+}
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/_authLayout': {
-      id: '/_authLayout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthLayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/_dashboardLayout': {
-      id: '/_dashboardLayout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof DashboardLayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/_defaultLayout': {
-      id: '/_defaultLayout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof DefaultLayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authLayout/signin': {
-      id: '/_authLayout/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof AuthLayoutSigninImport
-      parentRoute: typeof AuthLayoutImport
-    }
-    '/_defaultLayout/about': {
-      id: '/_defaultLayout/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof DefaultLayoutAboutImport
-      parentRoute: typeof DefaultLayoutImport
-    }
-    '/_defaultLayout/stats': {
-      id: '/_defaultLayout/stats'
-      path: '/stats'
-      fullPath: '/stats'
-      preLoaderRoute: typeof DefaultLayoutStatsImport
-      parentRoute: typeof DefaultLayoutImport
-    }
-    '/_defaultLayout/uses': {
-      id: '/_defaultLayout/uses'
-      path: '/uses'
-      fullPath: '/uses'
-      preLoaderRoute: typeof DefaultLayoutUsesImport
-      parentRoute: typeof DefaultLayoutImport
-    }
-    '/_defaultLayout/': {
-      id: '/_defaultLayout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof DefaultLayoutIndexImport
-      parentRoute: typeof DefaultLayoutImport
-    }
-    '/_defaultLayout/projects/$projectId': {
-      id: '/_defaultLayout/projects/$projectId'
-      path: '/projects/$projectId'
-      fullPath: '/projects/$projectId'
-      preLoaderRoute: typeof DefaultLayoutProjectsProjectIdImport
-      parentRoute: typeof DefaultLayoutImport
-    }
-    '/_dashboardLayout/dashboard/': {
-      id: '/_dashboardLayout/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardLayoutDashboardIndexImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/_defaultLayout/projects/': {
-      id: '/_defaultLayout/projects/'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof DefaultLayoutProjectsIndexImport
-      parentRoute: typeof DefaultLayoutImport
-    }
-    '/_dashboardLayout/dashboard/experiences/create': {
-      id: '/_dashboardLayout/dashboard/experiences/create'
-      path: '/dashboard/experiences/create'
-      fullPath: '/dashboard/experiences/create'
-      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesCreateImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/_dashboardLayout/dashboard/projects/create': {
-      id: '/_dashboardLayout/dashboard/projects/create'
-      path: '/dashboard/projects/create'
-      fullPath: '/dashboard/projects/create'
-      preLoaderRoute: typeof DashboardLayoutDashboardProjectsCreateImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/_dashboardLayout/dashboard/experiences/': {
-      id: '/_dashboardLayout/dashboard/experiences/'
-      path: '/dashboard/experiences'
-      fullPath: '/dashboard/experiences'
-      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesIndexImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/_dashboardLayout/dashboard/projects/': {
-      id: '/_dashboardLayout/dashboard/projects/'
-      path: '/dashboard/projects'
-      fullPath: '/dashboard/projects'
-      preLoaderRoute: typeof DashboardLayoutDashboardProjectsIndexImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/_dashboardLayout/dashboard/experiences/$experienceId/edit': {
-      id: '/_dashboardLayout/dashboard/experiences/$experienceId/edit'
-      path: '/dashboard/experiences/$experienceId/edit'
-      fullPath: '/dashboard/experiences/$experienceId/edit'
-      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/_dashboardLayout/dashboard/projects/$projectId/edit': {
-      id: '/_dashboardLayout/dashboard/projects/$projectId/edit'
-      path: '/dashboard/projects/$projectId/edit'
-      fullPath: '/dashboard/projects/$projectId/edit'
-      preLoaderRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditImport
-      parentRoute: typeof DashboardLayoutImport
-    }
+    "/_defaultLayout": {
+      id: "/_defaultLayout";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof DefaultLayoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_dashboardLayout": {
+      id: "/_dashboardLayout";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof DashboardLayoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_authLayout": {
+      id: "/_authLayout";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof AuthLayoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_defaultLayout/": {
+      id: "/_defaultLayout/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof DefaultLayoutIndexRouteImport;
+      parentRoute: typeof DefaultLayoutRoute;
+    };
+    "/_defaultLayout/uses": {
+      id: "/_defaultLayout/uses";
+      path: "/uses";
+      fullPath: "/uses";
+      preLoaderRoute: typeof DefaultLayoutUsesRouteImport;
+      parentRoute: typeof DefaultLayoutRoute;
+    };
+    "/_defaultLayout/stats": {
+      id: "/_defaultLayout/stats";
+      path: "/stats";
+      fullPath: "/stats";
+      preLoaderRoute: typeof DefaultLayoutStatsRouteImport;
+      parentRoute: typeof DefaultLayoutRoute;
+    };
+    "/_defaultLayout/about": {
+      id: "/_defaultLayout/about";
+      path: "/about";
+      fullPath: "/about";
+      preLoaderRoute: typeof DefaultLayoutAboutRouteImport;
+      parentRoute: typeof DefaultLayoutRoute;
+    };
+    "/_authLayout/signin": {
+      id: "/_authLayout/signin";
+      path: "/signin";
+      fullPath: "/signin";
+      preLoaderRoute: typeof AuthLayoutSigninRouteImport;
+      parentRoute: typeof AuthLayoutRoute;
+    };
+    "/_defaultLayout/projects/": {
+      id: "/_defaultLayout/projects/";
+      path: "/projects";
+      fullPath: "/projects";
+      preLoaderRoute: typeof DefaultLayoutProjectsIndexRouteImport;
+      parentRoute: typeof DefaultLayoutRoute;
+    };
+    "/_dashboardLayout/dashboard/": {
+      id: "/_dashboardLayout/dashboard/";
+      path: "/dashboard";
+      fullPath: "/dashboard";
+      preLoaderRoute: typeof DashboardLayoutDashboardIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/_defaultLayout/projects/$projectId": {
+      id: "/_defaultLayout/projects/$projectId";
+      path: "/projects/$projectId";
+      fullPath: "/projects/$projectId";
+      preLoaderRoute: typeof DefaultLayoutProjectsProjectIdRouteImport;
+      parentRoute: typeof DefaultLayoutRoute;
+    };
+    "/_dashboardLayout/dashboard/projects/": {
+      id: "/_dashboardLayout/dashboard/projects/";
+      path: "/dashboard/projects";
+      fullPath: "/dashboard/projects";
+      preLoaderRoute: typeof DashboardLayoutDashboardProjectsIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/_dashboardLayout/dashboard/experiences/": {
+      id: "/_dashboardLayout/dashboard/experiences/";
+      path: "/dashboard/experiences";
+      fullPath: "/dashboard/experiences";
+      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/_dashboardLayout/dashboard/projects/create": {
+      id: "/_dashboardLayout/dashboard/projects/create";
+      path: "/dashboard/projects/create";
+      fullPath: "/dashboard/projects/create";
+      preLoaderRoute: typeof DashboardLayoutDashboardProjectsCreateRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/_dashboardLayout/dashboard/experiences/create": {
+      id: "/_dashboardLayout/dashboard/experiences/create";
+      path: "/dashboard/experiences/create";
+      fullPath: "/dashboard/experiences/create";
+      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesCreateRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/_dashboardLayout/dashboard/projects/$projectId/edit": {
+      id: "/_dashboardLayout/dashboard/projects/$projectId/edit";
+      path: "/dashboard/projects/$projectId/edit";
+      fullPath: "/dashboard/projects/$projectId/edit";
+      preLoaderRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/_dashboardLayout/dashboard/experiences/$experienceId/edit": {
+      id: "/_dashboardLayout/dashboard/experiences/$experienceId/edit";
+      path: "/dashboard/experiences/$experienceId/edit";
+      fullPath: "/dashboard/experiences/$experienceId/edit";
+      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+  }
+}
+declare module "@tanstack/react-start/server" {
+  interface ServerFileRoutesByPath {
+    "/api/contact/": {
+      id: "/api/contact/";
+      path: "/api/contact";
+      fullPath: "/api/contact";
+      preLoaderRoute: typeof ApiContactIndexServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
+    "/api/trpc/$": {
+      id: "/api/trpc/$";
+      path: "/api/trpc/$";
+      fullPath: "/api/trpc/$";
+      preLoaderRoute: typeof ApiTrpcSplatServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
+    "/api/auth/$": {
+      id: "/api/auth/$";
+      path: "/api/auth/$";
+      fullPath: "/api/auth/$";
+      preLoaderRoute: typeof ApiAuthSplatServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
+    "/api/stats/github/": {
+      id: "/api/stats/github/";
+      path: "/api/stats/github";
+      fullPath: "/api/stats/github";
+      preLoaderRoute: typeof ApiStatsGithubIndexServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
+    "/api/stats/github/activity": {
+      id: "/api/stats/github/activity";
+      path: "/api/stats/github/activity";
+      fullPath: "/api/stats/github/activity";
+      preLoaderRoute: typeof ApiStatsGithubActivityServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
   }
 }
 
-// Create and export the route tree
-
 interface AuthLayoutRouteChildren {
-  AuthLayoutSigninRoute: typeof AuthLayoutSigninRoute
+  AuthLayoutSigninRoute: typeof AuthLayoutSigninRoute;
 }
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthLayoutSigninRoute: AuthLayoutSigninRoute,
-}
+};
 
 const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
   AuthLayoutRouteChildren,
-)
+);
 
 interface DashboardLayoutRouteChildren {
-  DashboardLayoutDashboardIndexRoute: typeof DashboardLayoutDashboardIndexRoute
-  DashboardLayoutDashboardExperiencesCreateRoute: typeof DashboardLayoutDashboardExperiencesCreateRoute
-  DashboardLayoutDashboardProjectsCreateRoute: typeof DashboardLayoutDashboardProjectsCreateRoute
-  DashboardLayoutDashboardExperiencesIndexRoute: typeof DashboardLayoutDashboardExperiencesIndexRoute
-  DashboardLayoutDashboardProjectsIndexRoute: typeof DashboardLayoutDashboardProjectsIndexRoute
-  DashboardLayoutDashboardExperiencesExperienceIdEditRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
-  DashboardLayoutDashboardProjectsProjectIdEditRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
+  DashboardLayoutDashboardIndexRoute: typeof DashboardLayoutDashboardIndexRoute;
+  DashboardLayoutDashboardExperiencesCreateRoute: typeof DashboardLayoutDashboardExperiencesCreateRoute;
+  DashboardLayoutDashboardProjectsCreateRoute: typeof DashboardLayoutDashboardProjectsCreateRoute;
+  DashboardLayoutDashboardExperiencesIndexRoute: typeof DashboardLayoutDashboardExperiencesIndexRoute;
+  DashboardLayoutDashboardProjectsIndexRoute: typeof DashboardLayoutDashboardProjectsIndexRoute;
+  DashboardLayoutDashboardExperiencesExperienceIdEditRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
+  DashboardLayoutDashboardProjectsProjectIdEditRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
 }
 
 const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
@@ -304,19 +519,19 @@ const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
     DashboardLayoutDashboardExperiencesExperienceIdEditRoute,
   DashboardLayoutDashboardProjectsProjectIdEditRoute:
     DashboardLayoutDashboardProjectsProjectIdEditRoute,
-}
+};
 
 const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
   DashboardLayoutRouteChildren,
-)
+);
 
 interface DefaultLayoutRouteChildren {
-  DefaultLayoutAboutRoute: typeof DefaultLayoutAboutRoute
-  DefaultLayoutStatsRoute: typeof DefaultLayoutStatsRoute
-  DefaultLayoutUsesRoute: typeof DefaultLayoutUsesRoute
-  DefaultLayoutIndexRoute: typeof DefaultLayoutIndexRoute
-  DefaultLayoutProjectsProjectIdRoute: typeof DefaultLayoutProjectsProjectIdRoute
-  DefaultLayoutProjectsIndexRoute: typeof DefaultLayoutProjectsIndexRoute
+  DefaultLayoutAboutRoute: typeof DefaultLayoutAboutRoute;
+  DefaultLayoutStatsRoute: typeof DefaultLayoutStatsRoute;
+  DefaultLayoutUsesRoute: typeof DefaultLayoutUsesRoute;
+  DefaultLayoutIndexRoute: typeof DefaultLayoutIndexRoute;
+  DefaultLayoutProjectsProjectIdRoute: typeof DefaultLayoutProjectsProjectIdRoute;
+  DefaultLayoutProjectsIndexRoute: typeof DefaultLayoutProjectsIndexRoute;
 }
 
 const DefaultLayoutRouteChildren: DefaultLayoutRouteChildren = {
@@ -326,238 +541,27 @@ const DefaultLayoutRouteChildren: DefaultLayoutRouteChildren = {
   DefaultLayoutIndexRoute: DefaultLayoutIndexRoute,
   DefaultLayoutProjectsProjectIdRoute: DefaultLayoutProjectsProjectIdRoute,
   DefaultLayoutProjectsIndexRoute: DefaultLayoutProjectsIndexRoute,
-}
+};
 
 const DefaultLayoutRouteWithChildren = DefaultLayoutRoute._addFileChildren(
   DefaultLayoutRouteChildren,
-)
-
-export interface FileRoutesByFullPath {
-  '': typeof DefaultLayoutRouteWithChildren
-  '/signin': typeof AuthLayoutSigninRoute
-  '/about': typeof DefaultLayoutAboutRoute
-  '/stats': typeof DefaultLayoutStatsRoute
-  '/uses': typeof DefaultLayoutUsesRoute
-  '/': typeof DefaultLayoutIndexRoute
-  '/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
-  '/dashboard': typeof DashboardLayoutDashboardIndexRoute
-  '/projects': typeof DefaultLayoutProjectsIndexRoute
-  '/dashboard/experiences/create': typeof DashboardLayoutDashboardExperiencesCreateRoute
-  '/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
-  '/dashboard/experiences': typeof DashboardLayoutDashboardExperiencesIndexRoute
-  '/dashboard/projects': typeof DashboardLayoutDashboardProjectsIndexRoute
-  '/dashboard/experiences/$experienceId/edit': typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
-  '/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
-}
-
-export interface FileRoutesByTo {
-  '': typeof DashboardLayoutRouteWithChildren
-  '/signin': typeof AuthLayoutSigninRoute
-  '/about': typeof DefaultLayoutAboutRoute
-  '/stats': typeof DefaultLayoutStatsRoute
-  '/uses': typeof DefaultLayoutUsesRoute
-  '/': typeof DefaultLayoutIndexRoute
-  '/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
-  '/dashboard': typeof DashboardLayoutDashboardIndexRoute
-  '/projects': typeof DefaultLayoutProjectsIndexRoute
-  '/dashboard/experiences/create': typeof DashboardLayoutDashboardExperiencesCreateRoute
-  '/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
-  '/dashboard/experiences': typeof DashboardLayoutDashboardExperiencesIndexRoute
-  '/dashboard/projects': typeof DashboardLayoutDashboardProjectsIndexRoute
-  '/dashboard/experiences/$experienceId/edit': typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
-  '/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/_authLayout': typeof AuthLayoutRouteWithChildren
-  '/_dashboardLayout': typeof DashboardLayoutRouteWithChildren
-  '/_defaultLayout': typeof DefaultLayoutRouteWithChildren
-  '/_authLayout/signin': typeof AuthLayoutSigninRoute
-  '/_defaultLayout/about': typeof DefaultLayoutAboutRoute
-  '/_defaultLayout/stats': typeof DefaultLayoutStatsRoute
-  '/_defaultLayout/uses': typeof DefaultLayoutUsesRoute
-  '/_defaultLayout/': typeof DefaultLayoutIndexRoute
-  '/_defaultLayout/projects/$projectId': typeof DefaultLayoutProjectsProjectIdRoute
-  '/_dashboardLayout/dashboard/': typeof DashboardLayoutDashboardIndexRoute
-  '/_defaultLayout/projects/': typeof DefaultLayoutProjectsIndexRoute
-  '/_dashboardLayout/dashboard/experiences/create': typeof DashboardLayoutDashboardExperiencesCreateRoute
-  '/_dashboardLayout/dashboard/projects/create': typeof DashboardLayoutDashboardProjectsCreateRoute
-  '/_dashboardLayout/dashboard/experiences/': typeof DashboardLayoutDashboardExperiencesIndexRoute
-  '/_dashboardLayout/dashboard/projects/': typeof DashboardLayoutDashboardProjectsIndexRoute
-  '/_dashboardLayout/dashboard/experiences/$experienceId/edit': typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute
-  '/_dashboardLayout/dashboard/projects/$projectId/edit': typeof DashboardLayoutDashboardProjectsProjectIdEditRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/signin'
-    | '/about'
-    | '/stats'
-    | '/uses'
-    | '/'
-    | '/projects/$projectId'
-    | '/dashboard'
-    | '/projects'
-    | '/dashboard/experiences/create'
-    | '/dashboard/projects/create'
-    | '/dashboard/experiences'
-    | '/dashboard/projects'
-    | '/dashboard/experiences/$experienceId/edit'
-    | '/dashboard/projects/$projectId/edit'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | ''
-    | '/signin'
-    | '/about'
-    | '/stats'
-    | '/uses'
-    | '/'
-    | '/projects/$projectId'
-    | '/dashboard'
-    | '/projects'
-    | '/dashboard/experiences/create'
-    | '/dashboard/projects/create'
-    | '/dashboard/experiences'
-    | '/dashboard/projects'
-    | '/dashboard/experiences/$experienceId/edit'
-    | '/dashboard/projects/$projectId/edit'
-  id:
-    | '__root__'
-    | '/_authLayout'
-    | '/_dashboardLayout'
-    | '/_defaultLayout'
-    | '/_authLayout/signin'
-    | '/_defaultLayout/about'
-    | '/_defaultLayout/stats'
-    | '/_defaultLayout/uses'
-    | '/_defaultLayout/'
-    | '/_defaultLayout/projects/$projectId'
-    | '/_dashboardLayout/dashboard/'
-    | '/_defaultLayout/projects/'
-    | '/_dashboardLayout/dashboard/experiences/create'
-    | '/_dashboardLayout/dashboard/projects/create'
-    | '/_dashboardLayout/dashboard/experiences/'
-    | '/_dashboardLayout/dashboard/projects/'
-    | '/_dashboardLayout/dashboard/experiences/$experienceId/edit'
-    | '/_dashboardLayout/dashboard/projects/$projectId/edit'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
-  DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren
-  DefaultLayoutRoute: typeof DefaultLayoutRouteWithChildren
-}
+);
 
 const rootRouteChildren: RootRouteChildren = {
   AuthLayoutRoute: AuthLayoutRouteWithChildren,
   DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
   DefaultLayoutRoute: DefaultLayoutRouteWithChildren,
-}
-
-export const routeTree = rootRoute
+};
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/_authLayout",
-        "/_dashboardLayout",
-        "/_defaultLayout"
-      ]
-    },
-    "/_authLayout": {
-      "filePath": "_authLayout.tsx",
-      "children": [
-        "/_authLayout/signin"
-      ]
-    },
-    "/_dashboardLayout": {
-      "filePath": "_dashboardLayout.tsx",
-      "children": [
-        "/_dashboardLayout/dashboard/",
-        "/_dashboardLayout/dashboard/experiences/create",
-        "/_dashboardLayout/dashboard/projects/create",
-        "/_dashboardLayout/dashboard/experiences/",
-        "/_dashboardLayout/dashboard/projects/",
-        "/_dashboardLayout/dashboard/experiences/$experienceId/edit",
-        "/_dashboardLayout/dashboard/projects/$projectId/edit"
-      ]
-    },
-    "/_defaultLayout": {
-      "filePath": "_defaultLayout.tsx",
-      "children": [
-        "/_defaultLayout/about",
-        "/_defaultLayout/stats",
-        "/_defaultLayout/uses",
-        "/_defaultLayout/",
-        "/_defaultLayout/projects/$projectId",
-        "/_defaultLayout/projects/"
-      ]
-    },
-    "/_authLayout/signin": {
-      "filePath": "_authLayout/signin.tsx",
-      "parent": "/_authLayout"
-    },
-    "/_defaultLayout/about": {
-      "filePath": "_defaultLayout/about.tsx",
-      "parent": "/_defaultLayout"
-    },
-    "/_defaultLayout/stats": {
-      "filePath": "_defaultLayout/stats.tsx",
-      "parent": "/_defaultLayout"
-    },
-    "/_defaultLayout/uses": {
-      "filePath": "_defaultLayout/uses.tsx",
-      "parent": "/_defaultLayout"
-    },
-    "/_defaultLayout/": {
-      "filePath": "_defaultLayout/index.tsx",
-      "parent": "/_defaultLayout"
-    },
-    "/_defaultLayout/projects/$projectId": {
-      "filePath": "_defaultLayout/projects.$projectId.tsx",
-      "parent": "/_defaultLayout"
-    },
-    "/_dashboardLayout/dashboard/": {
-      "filePath": "_dashboardLayout/dashboard/index.tsx",
-      "parent": "/_dashboardLayout"
-    },
-    "/_defaultLayout/projects/": {
-      "filePath": "_defaultLayout/projects.index.tsx",
-      "parent": "/_defaultLayout"
-    },
-    "/_dashboardLayout/dashboard/experiences/create": {
-      "filePath": "_dashboardLayout/dashboard/experiences/create.tsx",
-      "parent": "/_dashboardLayout"
-    },
-    "/_dashboardLayout/dashboard/projects/create": {
-      "filePath": "_dashboardLayout/dashboard/projects/create.tsx",
-      "parent": "/_dashboardLayout"
-    },
-    "/_dashboardLayout/dashboard/experiences/": {
-      "filePath": "_dashboardLayout/dashboard/experiences/index.tsx",
-      "parent": "/_dashboardLayout"
-    },
-    "/_dashboardLayout/dashboard/projects/": {
-      "filePath": "_dashboardLayout/dashboard/projects/index.tsx",
-      "parent": "/_dashboardLayout"
-    },
-    "/_dashboardLayout/dashboard/experiences/$experienceId/edit": {
-      "filePath": "_dashboardLayout/dashboard/experiences/$experienceId.edit.tsx",
-      "parent": "/_dashboardLayout"
-    },
-    "/_dashboardLayout/dashboard/projects/$projectId/edit": {
-      "filePath": "_dashboardLayout/dashboard/projects/$projectId.edit.tsx",
-      "parent": "/_dashboardLayout"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
+  ._addFileTypes<FileRouteTypes>();
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+  ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
+  ApiContactIndexServerRoute: ApiContactIndexServerRoute,
+  ApiStatsGithubActivityServerRoute: ApiStatsGithubActivityServerRoute,
+  ApiStatsGithubIndexServerRoute: ApiStatsGithubIndexServerRoute,
+};
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>();
