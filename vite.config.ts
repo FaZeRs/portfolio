@@ -1,6 +1,7 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import unfonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
@@ -51,7 +52,10 @@ export default defineConfig({
 
       // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
       // target: "node-server",
+
+      customViteReactPlugin: true,
     }),
+    viteReact(),
     unfonts({
       google: {
         families: ["Geist", "Geist Mono"],
