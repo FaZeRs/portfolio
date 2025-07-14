@@ -1,27 +1,26 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
-import Projects from "~/components/projects/projects";
+import Snippets from "~/components/snippets";
 import { Skeleton } from "~/components/ui/skeleton";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/_defaultLayout/projects/")({
+export const Route = createFileRoute("/_defaultLayout/snippets/")({
   component: RouteComponent,
   loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
+    await queryClient.prefetchQuery(trpc.snippet.allPublic.queryOptions()),
   head: () => ({
     meta: seo({
-      title: `Projects | ${siteConfig.title}`,
-      description:
-        "Several projects that I have worked on, both private and open source.",
+      title: `Snippets | ${siteConfig.title}`,
+      description: "A collection of code snippets that I use in my projects.",
       keywords: siteConfig.keywords,
     }),
   }),
 });
 
-function ProjectsSkeleton() {
+function SnippetsSkeleton() {
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
       <Skeleton className="h-[400px] w-full rounded-md" />
@@ -35,21 +34,21 @@ function ProjectsSkeleton() {
 function RouteComponent() {
   const trpc = useTRPC();
   const {
-    data: projects,
+    data: snippets,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.project.allPublic.queryOptions());
+  } = useSuspenseQuery(trpc.snippet.allPublic.queryOptions());
 
   return (
     <>
       <PageHeading
-        title="Projects"
-        description="Several projects that I have worked on, both private and open source."
+        title="Snippets"
+        description="A collection of code snippets that I use in my projects."
       />
       {isLoading || isFetching ? (
-        <ProjectsSkeleton />
+        <SnippetsSkeleton />
       ) : (
-        <Projects projects={projects} />
+        <Snippets snippets={snippets} />
       )}
     </>
   );

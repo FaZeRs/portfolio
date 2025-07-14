@@ -9,7 +9,7 @@ import type { ProjectType } from "~/types";
 import ProjectLink from "./project-link";
 import ProjectStacks from "./project-stacks";
 
-const CustomMDX = lazy(() => import("./mdx/mdx"));
+const CustomMDX = lazy(() => import("../mdx/mdx"));
 
 interface ProjectContentProps {
   project: ProjectType;
