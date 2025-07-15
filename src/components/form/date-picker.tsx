@@ -23,7 +23,7 @@ export function FormDatePicker({
   placeholder,
   disabled = false,
   className,
-}: FormDatePickerProps) {
+}: Readonly<FormDatePickerProps>) {
   return (
     <div className={className}>
       <label

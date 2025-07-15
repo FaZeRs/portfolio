@@ -30,7 +30,7 @@ export function FormInput({
   required = false,
   description,
   className,
-}: FormInputProps) {
+}: Readonly<FormInputProps>) {
   return (
     <field.FormItem className={className}>
       <field.FormLabel>{label}</field.FormLabel>

@@ -19,7 +19,7 @@ export function FormMDXEditor({
   label,
   placeholder,
   className,
-}: FormMDXEditorProps) {
+}: Readonly<FormMDXEditorProps>) {
   return (
     <div className={className}>
       <label

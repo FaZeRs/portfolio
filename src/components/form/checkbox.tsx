@@ -17,7 +17,7 @@ export function FormCheckbox({
   label,
   description,
   className,
-}: FormCheckboxProps) {
+}: Readonly<FormCheckboxProps>) {
   return (
     <div
       className={`flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 ${className}`}

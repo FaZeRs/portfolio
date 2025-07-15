@@ -19,7 +19,7 @@ export function FormSlug({
   placeholder,
   urlPath,
   className,
-}: FormSlugProps) {
+}: Readonly<FormSlugProps>) {
   return (
     <div className={className}>
       <label

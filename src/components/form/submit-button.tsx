@@ -28,7 +28,7 @@ export function FormSubmitButton({
   variant = "default",
   size = "default",
   className = "w-full md:w-auto",
-}: FormSubmitButtonProps) {
+}: Readonly<FormSubmitButtonProps>) {
   const buttonText = isSubmitting
     ? loadingText
     : isPending

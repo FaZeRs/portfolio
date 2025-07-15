@@ -18,7 +18,7 @@ export function FormMultiSelect({
   placeholder,
   options,
   className,
-}: FormMultiSelectProps) {
+}: Readonly<FormMultiSelectProps>) {
   return (
     <div className={className}>
       <label

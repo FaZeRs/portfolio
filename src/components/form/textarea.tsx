@@ -26,7 +26,7 @@ export function FormTextarea({
   placeholder,
   className,
   minHeight = "min-h-[80px]",
-}: FormTextareaProps) {
+}: Readonly<FormTextareaProps>) {
   return (
     <field.FormItem className={className}>
       <field.FormLabel>{label}</field.FormLabel>

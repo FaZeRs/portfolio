@@ -33,7 +33,7 @@ export function FormSelect<T = string>({
   placeholder,
   options,
   className,
-}: FormSelectProps<T>) {
+}: Readonly<FormSelectProps<T>>) {
   return (
     <field.FormItem className={className}>
       <field.FormLabel>{label}</field.FormLabel>
