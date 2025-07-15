@@ -29,7 +29,14 @@ export default function Snippets({ snippets }: Readonly<SnippetsProps>) {
         {snippets.map((snippet) => (
           <TableRow key={snippet.slug}>
             <TableCell className="font-medium underline">
-              <Link to={snippet.slug}>{snippet.title}</Link>
+              <Link
+                to="/snippets/$snippetId"
+                params={{
+                  snippetId: snippet.slug,
+                }}
+              >
+                {snippet.title}
+              </Link>
             </TableCell>
             <TableCell>{snippet.description}</TableCell>
             <TableCell>{snippet.category}</TableCell>
