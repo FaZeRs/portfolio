@@ -42,7 +42,7 @@ export const Route = createFileRoute("/_defaultLayout/snippets/$snippetId")({
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {
-    return <NotFound>Project not found</NotFound>;
+    return <NotFound>Snippet not found</NotFound>;
   },
 });
 
