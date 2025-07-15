@@ -24,7 +24,7 @@ export function FormImageUpload({
   label,
   initialPreview,
   className,
-}: FormImageUploadProps) {
+}: Readonly<FormImageUploadProps>) {
   const [previewImage, setPreviewImage] = useState<string | null>(
     initialPreview ?? null,
   );
