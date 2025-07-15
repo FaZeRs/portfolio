@@ -25,7 +25,7 @@ import {
 interface ResourceActionsProps {
   id: string;
   title: string;
-  resourceType: "project" | "experience";
+  resourceType: "project" | "experience" | "snippet";
   viewPath?: string;
   editPath: string;
   trpcDeleteMutation: {

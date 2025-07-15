@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import Contact from "~/components/contact";
-import ExperienceSection from "~/components/experience";
+import ExperienceSection from "~/components/experiences/experience";
 import Intro from "~/components/intro";
 import SkillSection from "~/components/skills";
 

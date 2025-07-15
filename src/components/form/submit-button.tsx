@@ -1,13 +1,12 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
-interface FormButtonProps {
+interface FormSubmitButtonProps {
   canSubmit: boolean;
   isPending: boolean;
   isSubmitting: boolean;
+  defaultText?: string;
   loadingText?: string;
   processingText?: string;
-  defaultText?: string;
-  className?: string;
   variant?:
     | "default"
     | "destructive"
@@ -16,19 +15,20 @@ interface FormButtonProps {
     | "ghost"
     | "link";
   size?: "default" | "sm" | "lg" | "icon";
+  className?: string;
 }
 
-export function FormButton({
+export function FormSubmitButton({
   canSubmit,
   isPending,
   isSubmitting,
+  defaultText = "Submit",
   loadingText = "Submitting...",
   processingText = "Processing...",
-  defaultText = "Submit",
-  className = "w-full md:w-auto",
   variant = "default",
-  size,
-}: Readonly<FormButtonProps>) {
+  size = "default",
+  className = "w-full md:w-auto",
+}: Readonly<FormSubmitButtonProps>) {
   const buttonText = isSubmitting
     ? loadingText
     : isPending

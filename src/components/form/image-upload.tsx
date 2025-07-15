@@ -1,27 +1,30 @@
 import { ValidationErrorMap } from "@tanstack/react-form";
 import { useState } from "react";
 import { MAX_IMAGE_SIZE, VALID_IMAGE_TYPES } from "~/lib/constants";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 interface FormField {
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
+  handleBlur?: () => void;
 }
 
-interface ImageUploadProps {
+interface FormImageUploadProps {
   field: FormField;
-  initialPreview?: string | null;
   name: string;
-  onBlur: () => void;
+  label: string;
+  initialPreview?: string | null;
+  className?: string;
 }
 
-export function ImageUpload({
+export function FormImageUpload({
   field,
-  initialPreview,
   name,
-  onBlur,
-}: Readonly<ImageUploadProps>) {
+  label,
+  initialPreview,
+  className,
+}: Readonly<FormImageUploadProps>) {
   const [previewImage, setPreviewImage] = useState<string | null>(
     initialPreview ?? null,
   );
@@ -89,42 +92,50 @@ export function ImageUpload({
   };
 
   return (
-    <div className="space-y-2">
-      <div className="flex flex-col gap-2">
-        <Input
-          id={name}
-          name={name}
-          type="file"
-          accept={VALID_IMAGE_TYPES.join(",")}
-          onBlur={onBlur}
-          onChange={handleFileChange}
-          className="cursor-pointer"
-          aria-describedby="file-input-help"
-        />
-        <p id="file-input-help" className="text-muted-foreground text-xs">
-          Accepted formats: JPEG, PNG, GIF, WebP, AVIF. Max size: 5MB
-        </p>
-      </div>
-      {previewImage && (
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <div className="relative h-32 w-full max-w-md overflow-hidden rounded-md border border-input">
-            <img
-              src={previewImage}
-              alt="Preview"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <Button
-            type="button"
-            variant="destructive"
-            size="sm"
-            onClick={handleRemoveImage}
-            aria-label="Remove image"
-          >
-            Remove Image
-          </Button>
+    <div className={className}>
+      <label
+        htmlFor={name}
+        className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        {label}
+      </label>
+      <div className="space-y-2">
+        <div className="flex flex-col gap-2">
+          <Input
+            id={name}
+            name={name}
+            type="file"
+            accept={VALID_IMAGE_TYPES.join(",")}
+            onBlur={field.handleBlur}
+            onChange={handleFileChange}
+            className="cursor-pointer"
+            aria-describedby="file-input-help"
+          />
+          <p id="file-input-help" className="text-muted-foreground text-xs">
+            Accepted formats: JPEG, PNG, GIF, WebP, AVIF. Max size: 5MB
+          </p>
         </div>
-      )}
+        {previewImage && (
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <div className="relative h-32 w-full max-w-md overflow-hidden rounded-md border border-input">
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={handleRemoveImage}
+              aria-label="Remove image"
+            >
+              Remove Image
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

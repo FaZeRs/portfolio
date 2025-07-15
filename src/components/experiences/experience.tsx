@@ -2,7 +2,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { formatDate } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 import { ExperienceType } from "~/types";
-import SectionHeading from "./section-heading";
+import SectionHeading from "../section-heading";
 
 interface ExperienceItemProps {
   experience: ExperienceType;

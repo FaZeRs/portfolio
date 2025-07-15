@@ -7,7 +7,7 @@ import {
 import { TRPCClientError } from "@trpc/client";
 import { NotFound } from "~/components/not-found";
 import PageHeading from "~/components/page-heading";
-import ProjectContent from "~/components/project-content";
+import ProjectContent from "~/components/projects/project-content";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/trpc/react";

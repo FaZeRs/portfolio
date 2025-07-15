@@ -1,5 +1,9 @@
 import type { SimpleIcon } from "simple-icons";
-import { type Experience, type Project } from "~/lib/server/schema";
+import {
+  type Experience,
+  type Project,
+  type Snippet,
+} from "~/lib/server/schema";
 
 export interface SiteConfig {
   title: string;
@@ -42,6 +46,7 @@ export interface Social {
 
 export type ProjectType = typeof Project.$inferSelect;
 export type ExperienceType = typeof Experience.$inferSelect;
+export type SnippetType = typeof Snippet.$inferSelect;
 
 export interface ContributionCalendar {
   weeks: ContributionWeeks[];
