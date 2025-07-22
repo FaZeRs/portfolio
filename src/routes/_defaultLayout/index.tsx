@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import BlogSection from "~/components/blog/articles";
 
 import Contact from "~/components/contact";
 import ExperienceSection from "~/components/experiences/experience";
@@ -18,6 +19,7 @@ function Home() {
     <>
       <Intro />
       <div className="mb-20 flex flex-col items-center space-y-40">
+        <BlogSection />
         <SkillSection />
         <ExperienceSection />
         <Contact />

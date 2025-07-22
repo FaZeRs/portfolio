@@ -1,6 +1,9 @@
 import { del, put } from "@vercel/blob";
 import { type ClassValue, clsx } from "clsx";
+import { remark } from "remark";
 import { twMerge } from "tailwind-merge";
+import { remarkHeading } from "~/lib/mdx-plugins/remark/remark-heading";
+import { TOC } from "~/types";
 import { MAX_IMAGE_SIZE } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
@@ -79,3 +82,19 @@ export async function deleteFile(url: string) {
     throw new Error("Failed to delete file");
   }
 }
+
+export const calculateReadingTime = (content: string) => {
+  const wordsPerMinute = 200;
+  const numberOfWords = content.split(/\s/g).length;
+  return Math.ceil(numberOfWords / wordsPerMinute);
+};
+
+export const getTOC = async (content: string) => {
+  const result = await remark().use(remarkHeading).process(content);
+
+  if ("toc" in result.data) {
+    return result.data.toc as TOC[];
+  }
+
+  return [];
+};

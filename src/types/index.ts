@@ -1,5 +1,6 @@
 import type { SimpleIcon } from "simple-icons";
 import {
+  type Article,
   type Experience,
   type Project,
   type Snippet,
@@ -47,6 +48,7 @@ export interface Social {
 export type ProjectType = typeof Project.$inferSelect;
 export type ExperienceType = typeof Experience.$inferSelect;
 export type SnippetType = typeof Snippet.$inferSelect;
+export type ArticleType = typeof Article.$inferSelect;
 
 export interface ContributionCalendar {
   weeks: ContributionWeeks[];
@@ -84,3 +86,9 @@ export interface UseData {
   icon: SimpleIcon;
   link: string;
 }
+
+export type TOC = {
+  title: string;
+  url: string;
+  depth: number;
+};

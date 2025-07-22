@@ -17,6 +17,10 @@ export const dashboardNavbarLinks: NavItem[] = [
     href: "/dashboard",
   },
   {
+    title: "Blog",
+    href: "/dashboard/blog",
+  },
+  {
     title: "Projects",
     href: "/dashboard/projects",
   },

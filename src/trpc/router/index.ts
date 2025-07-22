@@ -1,4 +1,5 @@
 import { createTRPCRouter } from "~/trpc/init";
+import { blogRouter } from "~/trpc/router/blog";
 import { experienceRouter } from "~/trpc/router/experience";
 import { projectRouter } from "~/trpc/router/project";
 import { snippetRouter } from "~/trpc/router/snippet";
@@ -9,6 +10,7 @@ export const appRouter = createTRPCRouter({
   project: projectRouter,
   experience: experienceRouter,
   snippet: snippetRouter,
+  blog: blogRouter,
 });
 
 export type AppRouter = typeof appRouter;

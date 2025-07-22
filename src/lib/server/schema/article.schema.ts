@@ -1,0 +1,87 @@
+import { pgTable } from "drizzle-orm/pg-core";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
+import { z } from "zod/v4";
+import { user } from "./auth.schema";
+
+export const Article = pgTable("article", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  title: t.varchar({ length: 255 }).notNull(),
+  slug: t.varchar({ length: 255 }).notNull().unique(),
+  description: t.varchar({ length: 255 }),
+  content: t.text(),
+  imageUrl: t.varchar({ length: 255 }),
+  isDraft: t.boolean().notNull().default(false),
+  tags: t.text().array(),
+  author: t
+    .text()
+    .references(() => user.id)
+    .notNull(),
+  createdAt: t.timestamp().defaultNow().notNull(),
+  updatedAt: t
+    .timestamp({ mode: "date", withTimezone: true })
+    .$onUpdate(() => new Date()),
+}));
+
+const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export const ArticleBaseSchema = z.object({
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .max(255, "Title cannot exceed 255 characters"),
+  slug: z
+    .string()
+    .min(1, "Slug is required")
+    .max(255, "Slug cannot exceed 255 characters")
+    .regex(
+      slugRegex,
+      "Slug must contain only lowercase letters, numbers, and hyphens",
+    ),
+  description: z
+    .string()
+    .max(255, "Description cannot exceed 255 characters")
+    .or(z.literal("")),
+  content: z.string().or(z.literal("")),
+  thumbnail: z.string().describe("File upload for project thumbnail"),
+  isDraft: z.boolean().or(z.literal(false)),
+  tags: z.array(z.string()),
+});
+
+export const CreateArticleSchema = createInsertSchema(Article, {
+  title: ArticleBaseSchema.shape.title,
+  slug: ArticleBaseSchema.shape.slug,
+  description: ArticleBaseSchema.shape.description,
+  content: ArticleBaseSchema.shape.content,
+  isDraft: ArticleBaseSchema.shape.isDraft,
+  tags: ArticleBaseSchema.shape.tags,
+  author: z.string(),
+})
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+  })
+  .and(
+    z.object({
+      thumbnail: ArticleBaseSchema.shape.thumbnail,
+    }),
+  );
+
+export const UpdateArticleSchema = createUpdateSchema(Article, {
+  id: z.uuid(),
+  title: ArticleBaseSchema.shape.title,
+  slug: ArticleBaseSchema.shape.slug,
+  description: ArticleBaseSchema.shape.description,
+  content: ArticleBaseSchema.shape.content,
+  isDraft: ArticleBaseSchema.shape.isDraft,
+  tags: ArticleBaseSchema.shape.tags,
+})
+  .omit({
+    createdAt: true,
+    updatedAt: true,
+  })
+  .and(
+    z.object({
+      thumbnail: ArticleBaseSchema.shape.thumbnail,
+    }),
+  );
