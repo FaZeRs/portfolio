@@ -13,7 +13,7 @@ export const articles = pgTable("articles", (t) => ({
   imageUrl: t.varchar({ length: 255 }),
   isDraft: t.boolean().notNull().default(false),
   tags: t.text().array(),
-  author: t
+  authorId: t
     .text()
     .references(() => user.id)
     .notNull(),
@@ -27,6 +27,10 @@ export const articles = pgTable("articles", (t) => ({
 
 export const articleRelations = relations(articles, (t) => ({
   comments: t.many(comments),
+  author: t.one(user, {
+    fields: [articles.authorId],
+    references: [user.id],
+  }),
 }));
 
 export const comments = pgTable("comments", (t) => ({
@@ -107,7 +111,7 @@ export const CreateArticleSchema = createInsertSchema(articles, {
   content: ArticleBaseSchema.shape.content,
   isDraft: ArticleBaseSchema.shape.isDraft,
   tags: ArticleBaseSchema.shape.tags,
-  author: z.string(),
+  authorId: z.string(),
 })
   .omit({
     id: true,

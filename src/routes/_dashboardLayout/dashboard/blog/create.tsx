@@ -40,7 +40,7 @@ function ArticlesCreatePage() {
   const handleFormSubmit = (data: z.infer<typeof ArticleBaseSchema>) => {
     createArticleMutation.mutate({
       ...data,
-      author: session?.user?.id ?? "",
+      authorId: session?.user?.id ?? "",
     });
   };
 

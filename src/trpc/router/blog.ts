@@ -34,6 +34,7 @@ export const blogRouter = {
         where: eq(articles.slug, input.slug),
         with: {
           comments: true,
+          author: true,
         },
       });
 

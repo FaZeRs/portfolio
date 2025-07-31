@@ -33,6 +33,7 @@ export const Route = createFileRoute("/_defaultLayout/blog/$articleId")({
         title: data?.title,
         description: data?.description,
         image: data?.imageUrl,
+        author: data?.author?.name,
       };
     } catch (error) {
       if (
@@ -50,6 +51,8 @@ export const Route = createFileRoute("/_defaultLayout/blog/$articleId")({
       description: loaderData?.description,
       keywords: siteConfig.keywords,
       image: loaderData?.image,
+      author: loaderData?.author,
+      type: "article",
     }),
   }),
   component: RouteComponent,
@@ -122,34 +125,22 @@ function RouteComponent() {
 
             <ArticleMetrics article={article.data} />
           </div>
-
-          {/* {authors?.length ? (
-            <div className="mt-4 flex space-x-4">
-              {authors.map((author) =>
-                author ? (
-                  <Link
-                    key={author.name}
-                    href={`https://twitter.com/${author.username}`}
-                    className="flex items-center space-x-2 text-sm"
-                  >
-                    <Image
-                      src={author.avatar}
-                      alt={author.name}
-                      width={42}
-                      height={42}
-                      className="rounded-full bg-white"
-                    />
-                    <div className="flex-1 text-left leading-tight">
-                      <p className="font-medium">{author.name}</p>
-                      <p className="text-[12px] text-muted-foreground">
-                        @{author.username}
-                      </p>
-                    </div>
-                  </Link>
-                ) : null,
+          {article.data?.author ? (
+            <div className="mt-4 flex items-center space-x-4">
+              {article.data.author.image && (
+                <img
+                  src={article.data.author.image}
+                  alt={article.data.author.name}
+                  width={42}
+                  height={42}
+                  className="rounded-full bg-white"
+                />
               )}
+              <div className="flex-1 text-left leading-tight">
+                <p className="font-medium">{article.data.author.name}</p>
+              </div>
             </div>
-          ) : null} */}
+          ) : null}
 
           {article.data?.imageUrl && (
             <img
