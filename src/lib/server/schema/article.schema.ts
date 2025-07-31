@@ -1,9 +1,10 @@
+import { relations } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 import { user } from "./auth.schema";
 
-export const Article = pgTable("article", (t) => ({
+export const articles = pgTable("articles", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   title: t.varchar({ length: 255 }).notNull(),
   slug: t.varchar({ length: 255 }).notNull().unique(),
@@ -16,10 +17,57 @@ export const Article = pgTable("article", (t) => ({
     .text()
     .references(() => user.id)
     .notNull(),
+  likes: t.integer().notNull().default(0),
+  views: t.integer().notNull().default(0),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t
     .timestamp({ mode: "date", withTimezone: true })
     .$onUpdate(() => new Date()),
+}));
+
+export const articleRelations = relations(articles, (t) => ({
+  comments: t.many(comments),
+}));
+
+export const comments = pgTable("comments", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  articleId: t
+    .uuid()
+    .references(() => articles.id)
+    .notNull(),
+  userId: t
+    .text()
+    .references(() => user.id)
+    .notNull(),
+  comment: t.text().notNull(),
+  createdAt: t.timestamp().defaultNow().notNull(),
+  updatedAt: t.timestamp().defaultNow().notNull(),
+}));
+
+export const commentReactions = pgTable("comment_reactions", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  commentId: t
+    .uuid()
+    .references(() => comments.id)
+    .notNull(),
+  userId: t
+    .text()
+    .references(() => user.id)
+    .notNull(),
+  like: t.boolean().notNull(),
+  createdAt: t.timestamp().defaultNow().notNull(),
+}));
+
+export const articleCommentRelations = relations(comments, (t) => ({
+  reactions: t.many(commentReactions),
+  article: t.one(articles, {
+    fields: [comments.articleId],
+    references: [articles.id],
+  }),
+  user: t.one(user, {
+    fields: [comments.userId],
+    references: [user.id],
+  }),
 }));
 
 const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -47,7 +95,7 @@ export const ArticleBaseSchema = z.object({
   tags: z.array(z.string()),
 });
 
-export const CreateArticleSchema = createInsertSchema(Article, {
+export const CreateArticleSchema = createInsertSchema(articles, {
   title: ArticleBaseSchema.shape.title,
   slug: ArticleBaseSchema.shape.slug,
   description: ArticleBaseSchema.shape.description,
@@ -67,7 +115,7 @@ export const CreateArticleSchema = createInsertSchema(Article, {
     }),
   );
 
-export const UpdateArticleSchema = createUpdateSchema(Article, {
+export const UpdateArticleSchema = createUpdateSchema(articles, {
   id: z.uuid(),
   title: ArticleBaseSchema.shape.title,
   slug: ArticleBaseSchema.shape.slug,

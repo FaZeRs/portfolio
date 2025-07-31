@@ -7,6 +7,7 @@ import {
 import { TRPCClientError } from "@trpc/client";
 import { useEffect, useState } from "react";
 import ArticleMetrics from "~/components/blog/article-metrics";
+import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
 import CustomMDX from "~/components/mdx/mdx";
@@ -163,9 +164,9 @@ function RouteComponent() {
           <div className="-mt-10 sticky top-16 max-h-[calc(var(--vh)-4rem)] pt-10">
             <TableOfContents toc={toc} />
             <hr className="my-4" />
-            {/* <div className="flex items-center justify-between">
-            <LikeButton slug={slug} />
-          </div> */}
+            <div className="flex items-center justify-between">
+              <LikeButton slug={articleId} />
+            </div>
           </div>
         </div>
       )}

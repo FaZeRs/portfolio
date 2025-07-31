@@ -1,9 +1,9 @@
-import { TimerIcon } from "lucide-react";
+import { EyeIcon, MessageSquare, ThumbsUpIcon, TimerIcon } from "lucide-react";
 import { calculateReadingTime } from "~/lib/utils";
-import { ArticleType } from "~/types";
+import { ArticleType, CommentType } from "~/types";
 
 interface ArticleMetricsProps {
-  article: ArticleType;
+  article: ArticleType & { comments: CommentType[] };
 }
 
 const ArticleMetrics = ({ article }: ArticleMetricsProps) => {
@@ -15,6 +15,22 @@ const ArticleMetrics = ({ article }: ArticleMetricsProps) => {
         <TimerIcon className="size-4" />
         <span>{readingTime} min read</span>
       </div>
+      <div className="flex items-center gap-1">
+        <EyeIcon className="size-4" />
+        <span>{article.views} views</span>
+      </div>
+
+      <div className="flex items-center gap-1">
+        <ThumbsUpIcon className="size-4" />
+        <span>{article.likes} likes</span>
+      </div>
+
+      {article.comments && (
+        <div className="flex items-center gap-1">
+          <MessageSquare className="size-4" />
+          <span>{article.comments.length} comments</span>
+        </div>
+      )}
     </div>
   );
 };

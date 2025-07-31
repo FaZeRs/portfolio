@@ -34,7 +34,7 @@ export const generateSlug = (title: string): string => {
     .trim();
 };
 
-const allowedDomains = ["vercel-blob.com"];
+const allowedDomains = ["vercel-blob.com", "blob.vercel-storage.com"];
 
 export async function uploadImage(folder: string, image: string, slug: string) {
   try {

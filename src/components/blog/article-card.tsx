@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { EyeIcon, ThumbsUpIcon } from "lucide-react";
 import { formatDate } from "~/lib/utils";
 import { ArticleType } from "~/types";
 
@@ -33,6 +34,18 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
 
         <div className="mt-auto flex items-center justify-between gap-2 pt-4 text-muted-foreground text-sm">
           {article.createdAt && <span>{formatDate(article.createdAt)}</span>}
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+              <EyeIcon className="size-4" />
+              <span>{article.views} views</span>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <ThumbsUpIcon className="size-4" />
+              <span>{article.likes} likes</span>
+            </div>
+          </div>
         </div>
       </div>
 
