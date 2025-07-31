@@ -1,4 +1,8 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {
   ErrorComponent,
   createFileRoute,
@@ -63,6 +67,17 @@ function RouteComponent() {
   );
   const [toc, setToc] = useState<TOC[]>([]);
 
+  const queryClient = useQueryClient();
+  const viewMutation = useMutation({
+    ...trpc.blog.view.mutationOptions(),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(trpc.blog.pathFilter());
+    },
+    onError: (error) => {
+      console.error("Error viewing article:", error);
+    },
+  });
+
   useEffect(() => {
     if (article.data?.content) {
       getTOC(article.data.content).then(setToc);
@@ -70,6 +85,14 @@ function RouteComponent() {
       setToc([]);
     }
   }, [article.data?.content]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to view the article on mount
+  useEffect(() => {
+    // only view the article if it's not already being viewed
+    if (articleId && !viewMutation.isPending) {
+      viewMutation.mutate({ slug: articleId });
+    }
+  }, [articleId]);
 
   if (!article.data) {
     return null;
@@ -81,9 +104,14 @@ function RouteComponent() {
         <BreadcrumbNavigation pageTitle={article.data?.title} />
 
         <div>
-          <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
-            {article.data?.title}
-          </h1>
+          <div className="flex items-start justify-between gap-4">
+            <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
+              {article.data?.title}
+            </h1>
+            <div className="mt-2 flex-shrink-0">
+              <LikeButton article={article.data} />
+            </div>
+          </div>
 
           <div className="mt-4 flex justify-between text-md text-muted-foreground">
             {article.data?.createdAt && (
@@ -163,10 +191,6 @@ function RouteComponent() {
         <div className="hidden text-sm xl:block">
           <div className="-mt-10 sticky top-16 max-h-[calc(var(--vh)-4rem)] pt-10">
             <TableOfContents toc={toc} />
-            <hr className="my-4" />
-            <div className="flex items-center justify-between">
-              <LikeButton slug={articleId} />
-            </div>
           </div>
         </div>
       )}

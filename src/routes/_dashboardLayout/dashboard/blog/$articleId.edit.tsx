@@ -40,7 +40,6 @@ export const Route = createFileRoute(
 function ArticlesEditPage() {
   const { articleId } = Route.useParams();
   const trpc = useTRPC();
-  const { data: session } = authClient.useSession();
 
   const article = useSuspenseQuery(
     trpc.blog.byId.queryOptions({ id: articleId }),

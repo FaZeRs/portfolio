@@ -1,10 +1,13 @@
+import { createHash } from "node:crypto";
 import { TRPCError, TRPCRouterRecord } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod/v4";
 
+import { env } from "~/lib/env.server";
 import {
   CreateArticleSchema,
   UpdateArticleSchema,
+  articleLikes,
   articles,
 } from "~/lib/server/schema";
 import { deleteFile, uploadImage } from "~/lib/utils";
@@ -126,7 +129,7 @@ export const blogRouter = {
       return ctx.db.delete(articles).where(eq(articles.id, input));
     }),
 
-  like: protectedProcedure
+  like: publicProcedure
     .input(z.object({ slug: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const article = await ctx.db.query.articles.findFirst({
@@ -140,10 +143,110 @@ export const blogRouter = {
         });
       }
 
+      // if article is draft, throw an error unless user is admin
+      if (article.isDraft && ctx.session?.user.role !== "ADMIN") {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Article is not public",
+        });
+      }
+
+      // Extract IP address from headers
+      const ipAddress =
+        ctx.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        ctx.headers.get("x-real-ip") ||
+        ctx.headers.get("cf-connecting-ip") ||
+        // Fallback for localhost or non Vercel deployments
+        "0.0.0.0";
+
+      const currentUserId =
+        // Since a users IP address is part of the sessionId in our database, we
+        // hash it to protect their privacy. By combining it with a salt, we get
+        // get a unique id we can refer to, but we won't know what their ip
+        // address was.
+        createHash("md5")
+          .update(ipAddress + (env.IP_ADDRESS_SALT || "fallback-salt"), "utf8")
+          .digest("hex");
+
+      const sessionId = `${input.slug}_${currentUserId}`;
+
+      const existingLike = await ctx.db.query.articleLikes.findFirst({
+        where: eq(articleLikes.id, sessionId),
+      });
+
+      // if like exists, delete it and decrement the likes count
+      if (existingLike) {
+        await ctx.db.delete(articleLikes).where(eq(articleLikes.id, sessionId));
+        return ctx.db
+          .update(articles)
+          .set({
+            likes: article.likes - 1,
+          })
+          .where(eq(articles.slug, input.slug));
+      }
+
+      // if like does not exist, increment the likes count
+      await ctx.db.insert(articleLikes).values({
+        id: sessionId,
+      });
+
       return ctx.db
         .update(articles)
         .set({
           likes: article.likes + 1,
+        })
+        .where(eq(articles.slug, input.slug));
+    }),
+
+  isLiked: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // Extract IP address from headers (same logic as in like mutation)
+      const ipAddress =
+        ctx.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        ctx.headers.get("x-real-ip") ||
+        ctx.headers.get("cf-connecting-ip") ||
+        "0.0.0.0";
+
+      const currentUserId = createHash("md5")
+        .update(ipAddress + (env.IP_ADDRESS_SALT || "fallback-salt"), "utf8")
+        .digest("hex");
+
+      const sessionId = `${input.slug}_${currentUserId}`;
+
+      const existingLike = await ctx.db.query.articleLikes.findFirst({
+        where: eq(articleLikes.id, sessionId),
+      });
+
+      return !!existingLike;
+    }),
+
+  view: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const article = await ctx.db.query.articles.findFirst({
+        where: eq(articles.slug, input.slug),
+      });
+
+      if (!article) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Article not found",
+        });
+      }
+
+      // if article is draft, throw an error unless user is admin
+      if (article.isDraft) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Article is not public",
+        });
+      }
+
+      return ctx.db
+        .update(articles)
+        .set({
+          views: article.views + 1,
         })
         .where(eq(articles.slug, input.slug));
     }),

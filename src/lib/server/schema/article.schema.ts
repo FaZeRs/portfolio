@@ -70,6 +70,11 @@ export const articleCommentRelations = relations(comments, (t) => ({
   }),
 }));
 
+export const articleLikes = pgTable("article_likes", (t) => ({
+  id: t.text().notNull().primaryKey(),
+  createdAt: t.timestamp().defaultNow().notNull(),
+}));
+
 const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export const ArticleBaseSchema = z.object({

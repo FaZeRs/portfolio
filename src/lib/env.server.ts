@@ -19,6 +19,7 @@ export const env = createEnv({
     SENTRY_ORG: z.string().optional(),
     SENTRY_PROJECT: z.string().optional(),
     BLOB_READ_WRITE_TOKEN: z.string().optional(),
+    IP_ADDRESS_SALT: z.string().min(1).optional(),
   },
 
   /**
