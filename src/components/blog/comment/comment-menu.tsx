@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MoreVerticalIcon } from "lucide-react";
-import { useCopyToClipboard } from "react-use";
 import { toast } from "sonner";
+
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -33,11 +33,7 @@ export default function CommentMenu({
   slug,
 }: Readonly<CommentMenuProps>) {
   const { user } = useCurrentUser();
-  const [_, copyToClipboard] = useCopyToClipboard();
-  const { parentId, id, userId } = comment;
-  const commentIdentifier = parentId
-    ? `comment-${parentId}-${id}`
-    : `comment-${id}`;
+  const { id, userId } = comment;
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -50,13 +46,6 @@ export default function CommentMenu({
         trpc.comment.all.queryOptions({ articleId: comment.articleId }),
       ),
   });
-
-  const copyUrl = () => {
-    copyToClipboard(
-      `${window.location.origin}/blog/${slug}#${commentIdentifier}`,
-    );
-    toast.success("Link copied to clipboard");
-  };
 
   return (
     <Dialog>
@@ -73,7 +62,6 @@ export default function CommentMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={copyUrl}>Copy link</DropdownMenuItem>
           {/*
             Radix Dialog + DropdownMenu bug 🥺
             https://github.com/radix-ui/primitives/issues/1836
