@@ -12,11 +12,10 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { ThemeToggle } from "~/components/ui/theme";
-import { cn } from "~/lib/utils";
-
 import { navbarLinks } from "~/lib/config/navbar";
+import { cn } from "~/lib/utils";
 import { NavItem } from "~/types";
-import authClient from "../lib/auth-client";
+
 import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";
@@ -31,7 +30,6 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
   const pathSegments = location.pathname.split("/").filter(Boolean);
   const lastSegment =
     pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : "";
-  const { data: session } = authClient.useSession();
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
@@ -77,7 +75,7 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
       </NavigationMenu>
 
       <div className="hidden items-center gap-4 lg:flex">
-        {session && <AvatarDropdown />}
+        <AvatarDropdown />
         <div className="flex-1 sm:grow-0">
           <SearchCommand />
         </div>

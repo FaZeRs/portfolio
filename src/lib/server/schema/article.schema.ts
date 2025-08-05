@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable } from "drizzle-orm/pg-core";
+import { AnyPgColumn, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 import { user } from "./auth.schema";
@@ -43,7 +43,8 @@ export const comments = pgTable("comments", (t) => ({
     .text()
     .references(() => user.id)
     .notNull(),
-  comment: t.text().notNull(),
+  content: t.json().notNull(),
+  parentId: t.uuid().references((): AnyPgColumn => comments.id),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t.timestamp().defaultNow().notNull(),
 }));
@@ -62,7 +63,12 @@ export const commentReactions = pgTable("comment_reactions", (t) => ({
   createdAt: t.timestamp().defaultNow().notNull(),
 }));
 
-export const articleCommentRelations = relations(comments, (t) => ({
+export const commentRelations = relations(comments, (t) => ({
+  parent: t.one(comments, {
+    fields: [comments.parentId],
+    references: [comments.id],
+  }),
+  children: t.many(comments),
   reactions: t.many(commentReactions),
   article: t.one(articles, {
     fields: [comments.articleId],

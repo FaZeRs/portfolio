@@ -1,5 +1,5 @@
-import useActiveItem from "~/lib/hooks/use-active-item";
-import useMounted from "~/lib/hooks/use-mounted";
+import useActiveItem from "~/hooks/use-active-item";
+import useMounted from "~/hooks/use-mounted";
 import { cn } from "~/lib/utils";
 import { TOC } from "~/types";
 
@@ -7,7 +7,9 @@ interface TableOfContentProps {
   toc: TOC[];
 }
 
-export default function TableOfContents({ toc }: TableOfContentProps) {
+export default function TableOfContents({
+  toc,
+}: Readonly<TableOfContentProps>) {
   const itemIds = toc.map((item) => item.url);
 
   const mounted = useMounted();
@@ -39,7 +41,7 @@ function Tree({ tree, activeItem }: TreeProps) {
         return (
           <li key={item.url} className={cn("mt-0")}>
             <a
-              href={item.url}
+              href={`#${item.url}`}
               className={cn(
                 "inline-block border-l-2 py-1.5 pl-4 no-underline transition-all hover:text-primary hover:underline",
                 item.url === activeItem

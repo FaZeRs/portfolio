@@ -5,6 +5,7 @@ import {
   type Snippet,
   type articles,
   comments,
+  user,
 } from "~/lib/server/schema";
 
 export interface SiteConfig {
@@ -51,6 +52,7 @@ export type ExperienceType = typeof Experience.$inferSelect;
 export type SnippetType = typeof Snippet.$inferSelect;
 export type ArticleType = typeof articles.$inferSelect;
 export type CommentType = typeof comments.$inferSelect;
+export type UserType = typeof user.$inferSelect;
 
 export interface ContributionCalendar {
   weeks: ContributionWeeks[];

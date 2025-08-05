@@ -1,15 +1,12 @@
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   ErrorComponent,
   createFileRoute,
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { useEffect, useState } from "react";
+import SignInModal from "~/components/auth/sign-in-modal";
+import ArticleComment from "~/components/blog/article-comment";
 import ArticleMetrics from "~/components/blog/article-metrics";
 import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
@@ -19,9 +16,8 @@ import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
-import { formatDate, getTOC } from "~/lib/utils";
+import { formatDate } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
-import { TOC } from "~/types";
 
 export const Route = createFileRoute("/_defaultLayout/blog/$articleId")({
   loader: async ({ params: { articleId }, context: { trpc, queryClient } }) => {
@@ -65,126 +61,101 @@ export const Route = createFileRoute("/_defaultLayout/blog/$articleId")({
 function RouteComponent() {
   const { articleId } = Route.useParams();
   const trpc = useTRPC();
-  const article = useSuspenseQuery(
+  const { data: article } = useSuspenseQuery(
     trpc.blog.bySlug.queryOptions({ slug: articleId }),
   );
-  const [toc, setToc] = useState<TOC[]>([]);
 
-  const queryClient = useQueryClient();
-  const viewMutation = useMutation({
-    ...trpc.blog.view.mutationOptions(),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.blog.pathFilter());
-    },
-    onError: (error) => {
-      console.error("Error viewing article:", error);
-    },
-  });
-
-  useEffect(() => {
-    if (article.data?.content) {
-      getTOC(article.data.content).then(setToc);
-    } else {
-      setToc([]);
-    }
-  }, [article.data?.content]);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to view the article on mount
-  useEffect(() => {
-    // only view the article if it's not already being viewed
-    if (articleId && !viewMutation.isPending) {
-      viewMutation.mutate({ slug: articleId });
-    }
-  }, [articleId]);
-
-  if (!article.data) {
+  if (!article) {
     return null;
   }
 
   return (
-    <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px]">
-      <div className="w-full min-w-0">
-        <BreadcrumbNavigation pageTitle={article.data?.title} />
+    <>
+      <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px]">
+        <div className="w-full min-w-0">
+          <BreadcrumbNavigation pageTitle={article.title} />
 
-        <div>
-          <div className="flex items-start justify-between gap-4">
-            <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
-              {article.data?.title}
-            </h1>
-            <div className="mt-2 flex-shrink-0">
-              <LikeButton article={article.data} />
-            </div>
-          </div>
-
-          <div className="mt-4 flex justify-between text-md text-muted-foreground">
-            {article.data?.createdAt && (
-              <time dateTime={article.data?.createdAt.toISOString()}>
-                {formatDate(article.data?.createdAt)}
-              </time>
-            )}
-
-            <ArticleMetrics article={article.data} />
-          </div>
-          {article.data?.author ? (
-            <div className="mt-4 flex items-center space-x-4">
-              {article.data.author.image && (
-                <img
-                  src={article.data.author.image}
-                  alt={article.data.author.name}
-                  width={42}
-                  height={42}
-                  className="rounded-full bg-white"
-                />
-              )}
-              <div className="flex-1 text-left leading-tight">
-                <p className="font-medium">{article.data.author.name}</p>
+          <div>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
+                {article.title}
+              </h1>
+              <div className="mt-2 flex-shrink-0">
+                <LikeButton article={article} />
               </div>
             </div>
-          ) : null}
 
-          {article.data?.imageUrl && (
-            <img
-              src={article.data.imageUrl}
-              alt={article.data.title}
-              width={832}
-              height={405}
-              className="my-8 rounded-md border bg-muted transition-colors"
-            />
-          )}
-        </div>
+            <div className="mt-4 flex justify-between text-md text-muted-foreground">
+              {article.createdAt && (
+                <time dateTime={article.createdAt.toISOString()}>
+                  {formatDate(article.createdAt)}
+                </time>
+              )}
 
-        {article.data?.content && <CustomMDX source={article.data.content} />}
+              <ArticleMetrics article={article} />
+            </div>
+            {article.author ? (
+              <div className="mt-4 flex items-center space-x-4">
+                {article.author.image && (
+                  <img
+                    src={article.author.image}
+                    alt={article.author.name}
+                    width={42}
+                    height={42}
+                    className="rounded-full bg-white"
+                  />
+                )}
+                <div className="flex-1 text-left leading-tight">
+                  <p className="font-medium">{article.author.name}</p>
+                </div>
+              </div>
+            ) : null}
 
-        <hr className="my-4" />
-
-        {/* Post tag */}
-        <div className="flex flex-row items-center justify-between">
-          {article.data?.tags && (
-            <ul className="m-0 list-none space-x-2 p-0 text-muted-foreground text-sm">
-              {article.data.tags.map((tag: string) => (
-                <li className="inline-block p-0" key={tag}>
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          )}
-          <SocialShare
-            text={`${article.data.title} via ${siteConfig.author.handle}`}
-            url={`${siteConfig.url}/blog/${articleId}`}
-          />
-        </div>
-
-        {/* <PostComment slug={slug} /> */}
-      </div>
-
-      {/* Table of contents */}
-      {toc && (
-        <div className="hidden text-sm xl:block">
-          <div className="-mt-10 sticky top-16 max-h-[calc(var(--vh)-4rem)] pt-10">
-            <TableOfContents toc={toc} />
+            {article.imageUrl && (
+              <img
+                src={article.imageUrl}
+                alt={article.title}
+                width={832}
+                height={405}
+                className="my-8 rounded-md border bg-muted transition-colors"
+              />
+            )}
           </div>
+
+          {article.content && <CustomMDX source={article.content} />}
+
+          <hr className="my-4" />
+
+          {/* Post tag */}
+          <div className="flex flex-row items-center justify-between">
+            {article.tags && (
+              <ul className="m-0 list-none space-x-2 p-0 text-muted-foreground text-sm">
+                {article.tags.map((tag: string) => (
+                  <li className="inline-block p-0" key={tag}>
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <SocialShare
+              text={`${article.title} via ${siteConfig.author.handle}`}
+              url={`${siteConfig.url}/blog/${articleId}`}
+            />
+          </div>
+
+          <ArticleComment articleId={article.id} articleSlug={article.slug} />
         </div>
-      )}
-    </article>
+
+        {/* Table of contents */}
+        {article.toc && (
+          <div className="hidden text-sm xl:block">
+            <div className="-mt-10 sticky top-16 max-h-[calc(var(--vh)-4rem)] pt-10">
+              <TableOfContents toc={article.toc} />
+            </div>
+          </div>
+        )}
+      </article>
+      <SignInModal />
+    </>
   );
 }
