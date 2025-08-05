@@ -5,7 +5,7 @@ import Timestamp from "~/components/timestamp";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Skeleton } from "~/components/ui/skeleton";
 import { CommentContext, CommentProvider } from "~/contexts/comment";
-import { CommentType, UserType } from "~/types";
+import { CommentReactionType, CommentType, UserType } from "~/types";
 import CommentActions from "./comment-actions";
 import CommentEditor, { useCommentEditor } from "./comment-editor";
 import CommentMenu from "./comment-menu";
@@ -13,13 +13,13 @@ import CommentReplies from "./comment-replies";
 import CommentReply from "./comment-reply";
 
 interface CommentItemProps {
-  comment: CommentType & {
-    user: UserType;
+  comment: {
+    comment: CommentType;
+    user: UserType | null;
     likesCount: number;
     dislikesCount: number;
     repliesCount: number;
-    liked: boolean;
-    disliked: boolean;
+    userReaction: CommentReactionType | null;
   };
   articleSlug: string;
 }
@@ -29,11 +29,8 @@ export default function CommentItem({
   articleSlug,
 }: Readonly<CommentItemProps>) {
   const {
-    user: { name, image },
-    id,
-    parentId,
-    content,
-    createdAt,
+    user,
+    comment: { id, parentId, content, createdAt },
     repliesCount,
   } = comment;
 
@@ -51,7 +48,7 @@ export default function CommentItem({
       setIsEditing,
       setIsReplying,
       setIsOpenReplies,
-      comment,
+      comment: comment,
     };
   }, [comment, isEditing, isOpenReplies, isReplying]);
 
@@ -62,9 +59,9 @@ export default function CommentItem({
         id={parentId ? `comment-${parentId}-${id}` : `comment-${id}`}
       >
         <div className="flex gap-2 p-2 sm:px-4">
-          {image ? (
+          {user?.image ? (
             <Avatar className="size-8">
-              <AvatarImage src={image} />
+              <AvatarImage src={user.image} />
               <AvatarFallback className="bg-transparent">
                 <Skeleton className="size-8 rounded-full" />
               </AvatarFallback>
@@ -74,12 +71,12 @@ export default function CommentItem({
           <div className="flex-1 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm">
-                <div className="font-semibold">{name}</div>
+                <div className="font-semibold">{user?.name}</div>
 
                 <Timestamp datetime={createdAt.toString()} />
               </div>
 
-              <CommentMenu comment={comment} slug={articleSlug} />
+              <CommentMenu comment={comment.comment} slug={articleSlug} />
             </div>
 
             <ClientOnly>

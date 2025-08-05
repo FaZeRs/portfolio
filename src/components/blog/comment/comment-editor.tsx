@@ -40,7 +40,9 @@ export const useCommentEditor = (): [
 const createCommentEditor = (editor: Editor): UseCommentEditor => {
   return {
     editor,
-    isEmpty: editor.isEmpty,
+    get isEmpty() {
+      return editor.isEmpty;
+    },
     getValue() {
       return editor.getJSON();
     },
@@ -73,6 +75,25 @@ export default function CommentEditor({
   );
 
   useEffect(() => {
+    // Update existing editor
+    if (innerEditor) {
+      innerEditor.setOptions({
+        editable,
+        editorProps: {
+          attributes: {
+            class: tiptapClassName,
+          },
+        },
+      });
+      if (
+        content &&
+        JSON.stringify(innerEditor.getJSON()) !== JSON.stringify(content)
+      ) {
+        innerEditor.commands.setContent(content);
+      }
+      return;
+    }
+
     const instance = new Editor({
       extensions: [
         Bold,
@@ -104,7 +125,7 @@ export default function CommentEditor({
     return () => {
       instance.destroy();
     };
-  }, [autofocus, content, editable, onChange, placeholder, tiptapClassName]);
+  }, [autofocus, placeholder]);
 
   if (!innerEditor) {
     return (

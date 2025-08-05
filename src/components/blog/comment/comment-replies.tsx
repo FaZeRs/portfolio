@@ -17,8 +17,8 @@ export default function CommentReplies({
 
   const { data: comments, isLoading } = useSuspenseQuery(
     trpc.comment.all.queryOptions({
-      articleId: comment.articleId,
-      parentId: comment.id,
+      articleId: comment.comment.articleId,
+      parentId: comment.comment.id,
     }),
   );
 
@@ -27,7 +27,7 @@ export default function CommentReplies({
       {isOpenReplies && !isLoading ? (
         comments?.map((reply) => (
           <CommentItem
-            key={reply.id}
+            key={reply.comment.id}
             comment={reply}
             articleSlug={articleSlug}
           />

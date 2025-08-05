@@ -18,7 +18,9 @@ export default function CommentReply() {
   const { mutate, isPending } = useMutation({
     ...trpc.comment.create.mutationOptions(),
     onSuccess: () => {
-      editor?.clearValue();
+      if (editor) {
+        editor.clearValue();
+      }
       setIsReplying(false);
       toast.success("Comment posted");
     },
@@ -29,8 +31,8 @@ export default function CommentReply() {
     onSettled: async () => {
       await queryClient.invalidateQueries(
         trpc.comment.all.queryOptions({
-          articleId: comment.articleId,
-          parentId: comment.id,
+          articleId: comment.comment.articleId,
+          parentId: comment.comment.id,
         }),
       );
     },
@@ -51,9 +53,9 @@ export default function CommentReply() {
     const content = editor.getValue();
 
     mutate({
-      articleId: comment.articleId,
+      articleId: comment.comment.articleId,
       content,
-      parentId: comment.id,
+      parentId: comment.comment.id,
     });
   };
 

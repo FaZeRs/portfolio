@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { TRPCError, TRPCRouterRecord } from "@trpc/server";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { z } from "zod/v4";
 
 import { env } from "~/lib/env.server";
@@ -192,7 +192,7 @@ export const blogRouter = {
         return ctx.db
           .update(articles)
           .set({
-            likes: article.likes - 1,
+            likes: sql`${articles.likes} - 1`,
           })
           .where(eq(articles.slug, input.slug));
       }
@@ -205,7 +205,7 @@ export const blogRouter = {
       return ctx.db
         .update(articles)
         .set({
-          likes: article.likes + 1,
+          likes: sql`${articles.likes} + 1`,
         })
         .where(eq(articles.slug, input.slug));
     }),

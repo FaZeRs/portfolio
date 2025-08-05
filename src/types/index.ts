@@ -4,6 +4,7 @@ import {
   type Project,
   type Snippet,
   type articles,
+  commentReactions,
   comments,
   user,
 } from "~/lib/server/schema";
@@ -53,6 +54,7 @@ export type SnippetType = typeof Snippet.$inferSelect;
 export type ArticleType = typeof articles.$inferSelect;
 export type CommentType = typeof comments.$inferSelect;
 export type UserType = typeof user.$inferSelect;
+export type CommentReactionType = typeof commentReactions.$inferSelect;
 
 export interface ContributionCalendar {
   weeks: ContributionWeeks[];

@@ -25,10 +25,10 @@ export default function CommentList({
         </div>
       ) : (
         comments
-          ?.filter((c) => !c.parentId)
+          ?.filter((c) => !c.comment.parentId)
           .map((comment) => (
             <CommentItem
-              key={comment.id}
+              key={comment.comment.id}
               comment={comment}
               articleSlug={articleSlug}
             />

@@ -21,10 +21,10 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { useTRPC } from "~/trpc/react";
-import { CommentType, UserType } from "~/types";
+import { CommentType } from "~/types";
 
 interface CommentMenuProps {
-  comment: CommentType & { user: UserType };
+  comment: CommentType;
   slug: string;
 }
 
@@ -32,8 +32,8 @@ export default function CommentMenu({
   comment,
   slug,
 }: Readonly<CommentMenuProps>) {
-  const { user } = useCurrentUser();
-  const { id, userId } = comment;
+  const { user, isAuthenticated } = useCurrentUser();
+  const { id, userId, articleId } = comment;
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -43,7 +43,9 @@ export default function CommentMenu({
     onError: (error) => toast.error(error.message),
     onSettled: () =>
       queryClient.invalidateQueries(
-        trpc.comment.all.queryOptions({ articleId: comment.articleId }),
+        trpc.comment.all.queryOptions({
+          articleId,
+        }),
       ),
   });
 
@@ -67,7 +69,7 @@ export default function CommentMenu({
             https://github.com/radix-ui/primitives/issues/1836
           */}
           <DialogTrigger asChild>
-            {user?.id === userId ? (
+            {isAuthenticated && user?.id === userId ? (
               <DropdownMenuItem
                 className="text-red-600 focus:text-red-500"
                 disabled={isPending}

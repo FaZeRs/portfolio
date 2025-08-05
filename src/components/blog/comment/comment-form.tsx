@@ -26,7 +26,9 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
   const { mutate, isPending } = useMutation({
     ...trpc.comment.create.mutationOptions(),
     onSuccess: () => {
-      editor?.clearValue();
+      if (editor) {
+        editor.clearValue();
+      }
       toast.success("Comment posted");
     },
     onError: (error) => {

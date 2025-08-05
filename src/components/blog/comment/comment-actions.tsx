@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { useCommentContext } from "~/contexts/comment";
 import { useCurrentUser } from "~/hooks/use-current-user";
@@ -11,10 +12,14 @@ export default function CommentActions() {
   const trpc = useTRPC();
   const { mutate: reactMutation } = useMutation({
     ...trpc.comment.react.mutationOptions(),
+    onError: (error) => {
+      console.error("Error reacting to comment:", error);
+      toast.error("Failed to react to comment");
+    },
   });
 
   const handleCommentReaction = (like: boolean) => {
-    reactMutation({ id: comment.id, like });
+    reactMutation({ id: comment.comment.id, like });
   };
 
   return (
@@ -41,7 +46,7 @@ export default function CommentActions() {
         {comment.dislikesCount}
       </Button>
 
-      {!comment.parentId && (
+      {!comment.comment.parentId && (
         <Button
           size="sm"
           variant="secondary"

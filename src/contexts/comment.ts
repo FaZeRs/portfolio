@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { CommentType } from "~/types";
+import { CommentReactionType, CommentType, UserType } from "~/types";
 
 export type CommentContext = {
   isEditing: boolean;
@@ -8,12 +8,13 @@ export type CommentContext = {
   setIsEditing: (value: boolean) => void;
   setIsReplying: (value: boolean) => void;
   setIsOpenReplies: (value: boolean) => void;
-  comment: CommentType & {
+  comment: {
+    comment: CommentType;
+    user: UserType | null;
     likesCount: number;
     dislikesCount: number;
     repliesCount: number;
-    liked: boolean;
-    disliked: boolean;
+    userReaction: CommentReactionType | null;
   };
 };
 
