@@ -6,7 +6,7 @@ import { useCurrentUser } from "~/hooks/use-current-user";
 import { useTRPC } from "~/trpc/react";
 
 export default function CommentActions() {
-  const { isAuthenticated, isPending } = useCurrentUser();
+  const { isAuthenticated } = useCurrentUser();
   const { comment, setIsReplying } = useCommentContext();
   const trpc = useTRPC();
   const { mutate: reactMutation } = useMutation({
@@ -41,12 +41,13 @@ export default function CommentActions() {
         {comment.dislikesCount}
       </Button>
 
-      {!comment.parentId && !isPending && isAuthenticated && (
+      {!comment.parentId && (
         <Button
           size="sm"
           variant="secondary"
           className="font-medium text-muted-foreground text-xs"
           onClick={() => setIsReplying(true)}
+          disabled={!isAuthenticated}
         >
           Reply
         </Button>
