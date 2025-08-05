@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { useCommentContext } from "~/contexts/comment";
@@ -15,7 +15,7 @@ export default function CommentReplies({
   const { comment, isOpenReplies, setIsOpenReplies } = useCommentContext();
   const trpc = useTRPC();
 
-  const { data: comments, isLoading } = useSuspenseQuery(
+  const { data: comments, isLoading } = useQuery(
     trpc.comment.all.queryOptions({
       articleId: comment.comment.articleId,
       parentId: comment.comment.id,

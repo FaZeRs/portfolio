@@ -17,7 +17,7 @@ export default function useActiveItem(itemIds: (string | undefined)[]) {
 
     for (const id of itemIds) {
       if (!id) {
-        return;
+        continue;
       }
 
       const element = document.getElementById(id);
@@ -29,7 +29,7 @@ export default function useActiveItem(itemIds: (string | undefined)[]) {
     return () => {
       for (const id of itemIds) {
         if (!id) {
-          return;
+          continue;
         }
 
         const element = document.getElementById(id);

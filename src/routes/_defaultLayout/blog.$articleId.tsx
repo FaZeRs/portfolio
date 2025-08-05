@@ -25,6 +25,11 @@ export const Route = createFileRoute("/_defaultLayout/blog/$articleId")({
       const data = await queryClient.ensureQueryData(
         trpc.blog.bySlug.queryOptions({ slug: articleId }),
       );
+      await queryClient.prefetchQuery(
+        trpc.comment.all.queryOptions({
+          articleId: data?.id,
+        }),
+      );
       return {
         title: data?.title,
         description: data?.description,

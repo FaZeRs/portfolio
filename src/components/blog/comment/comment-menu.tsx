@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MoreVerticalIcon } from "lucide-react";
+import { Loader2Icon, MoreVerticalIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "~/components/ui/button";
@@ -93,8 +93,16 @@ export default function CommentMenu({
 
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
-          <Button variant="destructive" onClick={() => mutate({ id })}>
-            Delete
+          <Button
+            variant="destructive"
+            onClick={() => mutate({ id })}
+            disabled={isPending}
+          >
+            {isPending ? (
+              <Loader2Icon className="size-4 animate-spin" />
+            ) : (
+              "Delete"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

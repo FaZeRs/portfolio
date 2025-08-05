@@ -10,12 +10,10 @@ declare module "mdast" {
   }
 }
 
-const slugger = new Slugger();
-
 export const remarkHeading: Plugin = () => {
   return (tree, file) => {
+    const slugger = new Slugger();
     const toc: TOC[] = [];
-    slugger.reset();
 
     visit(tree, "heading", (node: Heading) => {
       node.data ??= { hProperties: {} };

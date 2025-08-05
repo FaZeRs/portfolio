@@ -138,7 +138,7 @@ A brief overview of your article."
           >
             {([canSubmit, isPending, isSubmitting]) => (
               <FormSubmitButton
-                canSubmit={true}
+                canSubmit={canSubmit}
                 isPending={isPending}
                 isSubmitting={isSubmitting}
               />
