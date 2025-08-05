@@ -176,7 +176,7 @@ export const blogRouter = {
         // hash it to protect their privacy. By combining it with a salt, we get
         // get a unique id we can refer to, but we won't know what their ip
         // address was.
-        createHash("md5")
+        createHash("sha512")
           .update(ipAddress + (env.IP_ADDRESS_SALT || "fallback-salt"), "utf8")
           .digest("hex");
 
@@ -220,7 +220,7 @@ export const blogRouter = {
         ctx.headers.get("cf-connecting-ip") ||
         "0.0.0.0";
 
-      const currentUserId = createHash("md5")
+      const currentUserId = createHash("sha512")
         .update(ipAddress + (env.IP_ADDRESS_SALT || "fallback-salt"), "utf8")
         .digest("hex");
 
