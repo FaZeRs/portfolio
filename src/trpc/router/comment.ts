@@ -97,7 +97,7 @@ export const commentRouter = {
         });
       }
 
-      if (comment.userId !== ctx.session?.user.id) {
+      if (comment.userId !== ctx.session.user.id) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You are not allowed to delete this comment",
@@ -121,7 +121,7 @@ export const commentRouter = {
         });
       }
 
-      if (comment.userId === ctx.session?.user.id) {
+      if (comment.userId === ctx.session.user.id) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You are not allowed to react to your own comment",
@@ -131,7 +131,7 @@ export const commentRouter = {
       const existingReaction = await ctx.db.query.commentReactions.findFirst({
         where: and(
           eq(commentReactions.commentId, id),
-          eq(commentReactions.userId, ctx.session?.user.id),
+          eq(commentReactions.userId, ctx.session.user.id),
         ),
       });
 
@@ -149,6 +149,3 @@ export const commentRouter = {
       });
     }),
 } satisfies TRPCRouterRecord;
-
-// export type GetCommentsResponse = RouterOutputs["comment"]["all"]
-// export type CommentResponse = RouterOutputs["comment"]["all"][0]
