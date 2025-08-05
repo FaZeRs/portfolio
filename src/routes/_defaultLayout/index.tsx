@@ -10,6 +10,7 @@ export const Route = createFileRoute("/_defaultLayout/")({
   component: Home,
   loader: async ({ context: { trpc, queryClient, user } }) => {
     await queryClient.prefetchQuery(trpc.experience.allPublic.queryOptions());
+    await queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions());
     return { user };
   },
 });
