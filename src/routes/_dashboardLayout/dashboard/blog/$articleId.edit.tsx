@@ -13,7 +13,6 @@ import { z } from "zod/v4";
 import { ArticleForm } from "~/components/blog/form";
 import { NotFound } from "~/components/not-found";
 import { useAppForm } from "~/components/ui/form";
-import authClient from "~/lib/auth-client";
 import { ArticleBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 

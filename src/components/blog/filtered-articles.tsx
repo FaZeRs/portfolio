@@ -9,7 +9,9 @@ interface FilteredArticlesProps {
   articles: ArticleType[];
 }
 
-export default function FilteredArticles({ articles }: FilteredArticlesProps) {
+export default function FilteredArticles({
+  articles,
+}: Readonly<FilteredArticlesProps>) {
   const [searchValue, setSearchValue] = useState("");
 
   const filteredArticles = articles.filter((article) =>

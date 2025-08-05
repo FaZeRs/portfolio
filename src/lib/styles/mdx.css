@@ -1,4 +1,4 @@
-@reference "./app.css";
+@reference "./app.css"; /* NOSONAR */
 
 code[data-theme*=" "],
 code[data-theme*=" "] span {

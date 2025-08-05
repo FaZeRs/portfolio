@@ -1,4 +1,4 @@
-@reference "./app.css";
+@reference "./app.css"; /* NOSONAR */
 
 .tiptap p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);

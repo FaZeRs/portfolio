@@ -144,15 +144,26 @@ export default function CommentEditor({
   innerEditor.setEditable(!disabled);
 
   return (
+    // @sonar-ignore
     <div
+      // biome-ignore lint/a11y/useSemanticElements: tiptap editor
+      role="textbox"
       aria-disabled={disabled}
+      aria-multiline="true"
+      tabIndex={disabled ? -1 : 0}
       className={editorClassName}
       onMouseUp={() => {
         innerEditor?.commands.focus();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          innerEditor?.commands.focus();
+        }
       }}
     >
       <EditorContent editor={innerEditor} />
       <EditorToolbar editor={innerEditor} />
     </div>
+    // @end
   );
 }
