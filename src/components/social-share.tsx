@@ -18,6 +18,7 @@ interface SocialShareProps {
 
 const SocialShare = ({ url, text }: SocialShareProps) => {
   const encodedUrl = encodeURIComponent(url);
+  const encodedText = text ? encodeURIComponent(text) : "";
 
   return (
     <DropdownMenu>
@@ -29,7 +30,7 @@ const SocialShare = ({ url, text }: SocialShareProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <a
-            href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${text}`}
+            href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`}
             rel="noreferrer noopener"
             target="_blank"
           >
@@ -69,7 +70,7 @@ const SocialShare = ({ url, text }: SocialShareProps) => {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <a
-            href={`mailto:info@example.com?&subject=&cc=&bcc=&body=${encodedUrl}%20${text}`}
+            href={`mailto:info@example.com?&subject=&cc=&bcc=&body=${encodedUrl}%20${encodedText}`}
             rel="noreferrer noopener"
             target="_blank"
           >
