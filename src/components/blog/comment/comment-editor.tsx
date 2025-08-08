@@ -74,6 +74,7 @@ export default function CommentEditor({
     editable && "min-h-10 px-3 py-2",
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we don't want to re-create the editor on every render
   useEffect(() => {
     // Update existing editor
     if (innerEditor) {
@@ -125,15 +126,7 @@ export default function CommentEditor({
     return () => {
       instance.destroy();
     };
-  }, [
-    autofocus,
-    placeholder,
-    content,
-    editable,
-    innerEditor,
-    onChange,
-    tiptapClassName,
-  ]);
+  }, [autofocus, placeholder]);
 
   if (!innerEditor) {
     return (
