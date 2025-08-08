@@ -27,7 +27,7 @@ async function getGithubStats() {
       fork: boolean;
       stargazers_count: number;
     }>;
-    console.log("myRepos", myRepos);
+
     const filteredRepos = myRepos.filter((repo) => !repo.fork);
     const starsCount = filteredRepos.reduce(
       (acc, curr) => acc + curr.stargazers_count,
