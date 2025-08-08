@@ -61,14 +61,12 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
   return (
     <form className="mt-6" onSubmit={handlePostComment}>
       <div className="relative">
-        <ClientOnly>
-          <CommentEditor
-            editor={editor}
-            onChange={setEditor}
-            placeholder={"Leave comment"}
-            disabled={disabled}
-          />
-        </ClientOnly>
+        <CommentEditor
+          editor={editor}
+          onChange={setEditor}
+          placeholder={"Leave comment"}
+          disabled={disabled}
+        />
 
         <Button
           variant="ghost"
@@ -82,13 +80,15 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
           <SendIcon className="size-4" />
         </Button>
 
-        {!isAuthenticated && !isSessionPending ? (
-          <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/5 backdrop-blur-[0.8px]">
-            <Button type="button" onClick={() => setOpen(true)}>
-              Please sign in to comment
-            </Button>
-          </div>
-        ) : null}
+        <ClientOnly>
+          {!isAuthenticated && !isSessionPending ? (
+            <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/5 backdrop-blur-[0.8px]">
+              <Button type="button" onClick={() => setOpen(true)}>
+                Please sign in to comment
+              </Button>
+            </div>
+          ) : null}
+        </ClientOnly>
       </div>
     </form>
   );

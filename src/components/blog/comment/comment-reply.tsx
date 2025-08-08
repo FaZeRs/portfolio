@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ClientOnly } from "@tanstack/react-router";
 import { FormEvent } from "react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
@@ -61,14 +60,12 @@ export default function CommentReply() {
 
   return (
     <form onSubmit={handleReplySubmit}>
-      <ClientOnly>
-        <CommentEditor
-          editor={editor}
-          onChange={setEditor}
-          placeholder={"Reply to comment"}
-          disabled={disabled}
-        />
-      </ClientOnly>
+      <CommentEditor
+        editor={editor}
+        onChange={setEditor}
+        placeholder={"Reply to comment"}
+        disabled={disabled}
+      />
 
       <div className="mt-2 space-x-1">
         <Button

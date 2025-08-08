@@ -79,14 +79,12 @@ export default function CommentItem({
               <CommentMenu comment={comment.comment} slug={articleSlug} />
             </div>
 
-            <ClientOnly>
-              <CommentEditor
-                editor={editor}
-                onChange={setEditor}
-                content={content as JSONContent}
-                editable={false}
-              />
-            </ClientOnly>
+            <CommentEditor
+              editor={editor}
+              onChange={setEditor}
+              content={content as JSONContent}
+              editable={false}
+            />
 
             {isReplying ? <CommentReply /> : <CommentActions />}
 
