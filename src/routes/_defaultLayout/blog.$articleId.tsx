@@ -1,10 +1,15 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {
   ErrorComponent,
   createFileRoute,
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
+import { useEffect, useRef } from "react";
 import SignInModal from "~/components/auth/sign-in-modal";
 import ArticleComment from "~/components/blog/article-comment";
 import ArticleMetrics from "~/components/blog/article-metrics";
@@ -69,6 +74,32 @@ function RouteComponent() {
   const { data: article } = useSuspenseQuery(
     trpc.blog.bySlug.queryOptions({ slug: articleId }),
   );
+
+  const queryClient = useQueryClient();
+  const viewMutation = useMutation({
+    ...trpc.blog.view.mutationOptions(),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(trpc.blog.pathFilter());
+    },
+    onError: (error) => {
+      console.error("Error viewing article:", error);
+    },
+  });
+
+  const hasViewedRef = useRef(false);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: view once per mount
+  useEffect(() => {
+    if (!articleId) return;
+    if (hasViewedRef.current) return;
+    hasViewedRef.current = true;
+
+    // Session guard to avoid duplicate increments across navigation's in the same tab
+    const sessionKey = `viewed:${articleId}`;
+    if (sessionStorage.getItem(sessionKey)) return;
+    sessionStorage.setItem(sessionKey, "1");
+
+    viewMutation.mutate({ slug: articleId });
+  }, [articleId]);
 
   if (!article) {
     return null;

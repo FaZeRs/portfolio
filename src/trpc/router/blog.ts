@@ -53,15 +53,6 @@ export const blogRouter = {
         });
       }
 
-      // Increment view count
-      await ctx.db
-        .update(articles)
-        .set({
-          views: article.views + 1,
-        })
-        .where(eq(articles.id, article.id));
-      article.views = article.views + 1;
-
       const toc = await getTOC(article.content ?? "");
 
       return { ...article, toc };
@@ -231,5 +222,35 @@ export const blogRouter = {
       });
 
       return !!existingLike;
+    }),
+
+  view: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const article = await ctx.db.query.articles.findFirst({
+        where: eq(articles.slug, input.slug),
+      });
+
+      if (!article) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Article not found",
+        });
+      }
+
+      // if article is draft, throw an error unless user is admin
+      if (article.isDraft) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Article is not public",
+        });
+      }
+
+      return ctx.db
+        .update(articles)
+        .set({
+          views: article.views + 1,
+        })
+        .where(eq(articles.slug, input.slug));
     }),
 } satisfies TRPCRouterRecord;
