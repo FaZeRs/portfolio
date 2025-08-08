@@ -32,6 +32,8 @@ export const auth = betterAuth({
     },
   },
 
+  trustedOrigins: [getBaseUrl()],
+
   // https://www.better-auth.com/docs/authentication/email-password
   // emailAndPassword: {
   //   enabled: true,
