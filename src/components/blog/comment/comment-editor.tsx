@@ -125,7 +125,15 @@ export default function CommentEditor({
     return () => {
       instance.destroy();
     };
-  }, [autofocus, placeholder]);
+  }, [
+    autofocus,
+    placeholder,
+    content,
+    editable,
+    innerEditor,
+    onChange,
+    tiptapClassName,
+  ]);
 
   if (!innerEditor) {
     return (
