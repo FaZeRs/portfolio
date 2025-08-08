@@ -15,7 +15,7 @@ export const articles = pgTable("articles", (t) => ({
   tags: t.text().array(),
   authorId: t
     .text()
-    .references(() => user.id)
+    .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
   likes: t.integer().notNull().default(0),
   views: t.integer().notNull().default(0),
@@ -37,11 +37,11 @@ export const comments = pgTable("comments", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   articleId: t
     .uuid()
-    .references(() => articles.id)
+    .references(() => articles.id, { onDelete: "cascade" })
     .notNull(),
   userId: t
     .text()
-    .references(() => user.id)
+    .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
   content: t.json().notNull(),
   parentId: t.uuid().references((): AnyPgColumn => comments.id),
@@ -53,11 +53,11 @@ export const commentReactions = pgTable("comment_reactions", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   commentId: t
     .uuid()
-    .references(() => comments.id)
+    .references(() => comments.id, { onDelete: "cascade" })
     .notNull(),
   userId: t
     .text()
-    .references(() => user.id)
+    .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
   like: t.boolean().notNull(),
   createdAt: t.timestamp().defaultNow().notNull(),
