@@ -1,12 +1,11 @@
 import { formatISO, subDays } from "date-fns";
-import { GitHubUser } from "~/types";
-import { env } from "./env.server";
-
 import {
   ContributionCalendar,
   ContributionsCollection,
   ContributionsDay,
+  GitHubUser,
 } from "~/types";
+import { env } from "./env.server";
 
 const GITHUB_API_URL = "https://api.github.com/users/fazers";
 
@@ -28,6 +27,7 @@ async function getGithubStats() {
       fork: boolean;
       stargazers_count: number;
     }>;
+    console.log("myRepos", myRepos);
     const filteredRepos = myRepos.filter((repo) => !repo.fork);
     const starsCount = filteredRepos.reduce(
       (acc, curr) => acc + curr.stargazers_count,
