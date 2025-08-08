@@ -1,4 +1,6 @@
+/* @sonar-ignore */
 @reference "./app.css";
+/* @end */
 
 code[data-theme*=" "],
 code[data-theme*=" "] span {

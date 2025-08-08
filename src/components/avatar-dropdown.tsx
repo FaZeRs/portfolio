@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 
+import { useCurrentUser } from "~/hooks/use-current-user";
 import authClient from "../lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -22,20 +23,22 @@ const getInitials = (name: string) => {
 };
 
 export function AvatarDropdown() {
-  const { data: session } = authClient.useSession();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const initials = getInitials(session?.user?.name ?? "");
+  const { user, isAuthenticated, isPending } = useCurrentUser();
+
+  if (isPending || !isAuthenticated) {
+    return null;
+  }
+
+  const initials = getInitials(user?.name ?? "");
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage
-              src={session?.user?.image ?? ""}
-              alt={session?.user?.name ?? ""}
-            />
+            <AvatarImage src={user?.image ?? ""} alt={user?.name ?? ""} />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>
@@ -43,15 +46,13 @@ export function AvatarDropdown() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="font-medium text-sm leading-none">
-              {session?.user?.name}
-            </p>
+            <p className="font-medium text-sm leading-none">{user?.name}</p>
             <p className="text-muted-foreground text-xs leading-none">
-              {session?.user?.email}
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
-        {session?.user?.role === "admin" && (
+        {user?.role === "admin" && (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem

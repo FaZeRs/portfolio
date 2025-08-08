@@ -14,7 +14,7 @@ export const auth = betterAuth({
   }),
 
   // https://www.better-auth.com/docs/integrations/tanstack#usage-tips
-  plugins: [reactStartCookies(), admin()],
+  plugins: [admin(), reactStartCookies()],
 
   // https://www.better-auth.com/docs/concepts/session-management#session-caching
   session: {

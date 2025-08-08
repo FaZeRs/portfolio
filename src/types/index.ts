@@ -3,6 +3,10 @@ import {
   type Experience,
   type Project,
   type Snippet,
+  type articles,
+  commentReactions,
+  comments,
+  user,
 } from "~/lib/server/schema";
 
 export interface SiteConfig {
@@ -47,6 +51,10 @@ export interface Social {
 export type ProjectType = typeof Project.$inferSelect;
 export type ExperienceType = typeof Experience.$inferSelect;
 export type SnippetType = typeof Snippet.$inferSelect;
+export type ArticleType = typeof articles.$inferSelect;
+export type CommentType = typeof comments.$inferSelect;
+export type UserType = typeof user.$inferSelect;
+export type CommentReactionType = typeof commentReactions.$inferSelect;
 
 export interface ContributionCalendar {
   weeks: ContributionWeeks[];
@@ -84,3 +92,9 @@ export interface UseData {
   icon: SimpleIcon;
   link: string;
 }
+
+export type TOC = {
+  title: string;
+  url: string;
+  depth: number;
+};

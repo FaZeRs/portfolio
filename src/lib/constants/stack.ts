@@ -10,6 +10,7 @@ import {
   siHtml5,
   siJavascript,
   siLaravel,
+  siLinux,
   siNestjs,
   siNextdotjs,
   siNodedotjs,
@@ -25,6 +26,7 @@ import {
   siTrpc,
   siTurborepo,
   siTypescript,
+  siUbuntu,
   siVite,
   siVuedotjs,
   siWebpack,
@@ -61,4 +63,6 @@ export const STACKS: Stack = {
   Drizzle: siDrizzle,
   Ollama: siOllama,
   Rust: siRust,
+  Ubuntu: siUbuntu,
+  Linux: siLinux,
 };
