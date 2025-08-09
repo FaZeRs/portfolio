@@ -21,7 +21,6 @@ import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
-import { formatDate } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_defaultLayout/blog/$articleId")({
@@ -112,37 +111,32 @@ function RouteComponent() {
           <BreadcrumbNavigation pageTitle={article.title} />
 
           <div>
-            <div className="flex items-start justify-between gap-4">
-              <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+              <h1 className="mt-2 inline-block font-heading text-3xl leading-tight sm:text-4xl lg:text-5xl">
                 {article.title}
               </h1>
-              <div className="mt-2 flex-shrink-0">
+              <div className="mt-1 sm:mt-2 sm:flex-shrink-0">
                 <LikeButton article={article} />
               </div>
             </div>
 
-            <div className="mt-4 flex justify-between text-md text-muted-foreground">
-              {article.createdAt && (
-                <time dateTime={article.createdAt.toISOString()}>
-                  {formatDate(article.createdAt)}
-                </time>
-              )}
+            <ArticleMetrics article={article} />
 
-              <ArticleMetrics article={article} />
-            </div>
             {article.author ? (
-              <div className="mt-4 flex items-center space-x-4">
+              <div className="mt-4 flex items-center gap-3 sm:gap-4">
                 {article.author.image && (
                   <img
                     src={article.author.image}
                     alt={article.author.name}
-                    width={42}
-                    height={42}
+                    width={40}
+                    height={40}
                     className="rounded-full bg-white"
                   />
                 )}
                 <div className="flex-1 text-left leading-tight">
-                  <p className="font-medium">{article.author.name}</p>
+                  <p className="font-medium text-sm sm:text-base">
+                    {article.author.name}
+                  </p>
                 </div>
               </div>
             ) : null}
@@ -153,7 +147,7 @@ function RouteComponent() {
                 alt={article.title}
                 width={832}
                 height={405}
-                className="my-8 rounded-md border bg-muted transition-colors"
+                className="my-6 w-full rounded-md border bg-muted transition-colors sm:my-8"
               />
             )}
           </div>
@@ -163,11 +157,11 @@ function RouteComponent() {
           <hr className="my-4" />
 
           {/* Post tag */}
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             {article.tags && (
-              <ul className="m-0 list-none space-x-2 p-0 text-muted-foreground text-sm">
+              <ul className="m-0 list-none p-0 text-muted-foreground text-sm">
                 {article.tags.map((tag: string) => (
-                  <li className="inline-block p-0" key={tag}>
+                  <li className="mr-2 inline-block p-0" key={tag}>
                     {tag}
                   </li>
                 ))}
