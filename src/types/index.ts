@@ -98,3 +98,22 @@ export type TOC = {
   url: string;
   depth: number;
 };
+
+export type Collection = {
+  _id: string;
+  title: string;
+  description: string;
+  slug: string;
+  count: number;
+};
+
+export type Bookmark = {
+  _id: string;
+  title: string;
+  link: string;
+  cover: string;
+  tags: string[];
+  excerpt: string;
+  note: string;
+  domain: string;
+};
