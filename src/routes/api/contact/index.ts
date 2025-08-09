@@ -27,7 +27,7 @@ export const ServerRoute = createServerFileRoute("/api/contact/").methods({
       });
 
       if (error) {
-        console.log(error);
+        console.error(error);
         return Response.json({ error: error }, { status: 500 });
       }
 
