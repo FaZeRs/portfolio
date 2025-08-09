@@ -22,6 +22,7 @@ export const env = createEnv({
     IP_ADDRESS_SALT: z.string().min(1).optional(),
     KV_REST_API_URL: z.url(),
     KV_REST_API_TOKEN: z.string().min(1),
+    RAINDROP_ACCESS_TOKEN: z.string().min(1),
   },
 
   /**

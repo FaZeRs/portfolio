@@ -1,0 +1,29 @@
+import { Bookmark } from "~/types";
+
+import BookmarkCard from "~/components/bookmarks/bookmark-card";
+import LoadMore from "~/components/bookmarks/load-more";
+import { PAGE_SIZE } from "~/lib/raindrop";
+
+interface BookmarkListProps {
+  id: number;
+  initialBookmarks: Bookmark[];
+}
+
+export default function BookmarkList({
+  id,
+  initialBookmarks,
+}: Readonly<BookmarkListProps>) {
+  const isLoadMoreEnabled = PAGE_SIZE <= initialBookmarks.length;
+
+  return (
+    <>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {initialBookmarks.map((bookmark) => (
+          <BookmarkCard key={bookmark._id} bookmark={bookmark} />
+        ))}
+      </div>
+
+      {isLoadMoreEnabled && <LoadMore id={id} />}
+    </>
+  );
+}

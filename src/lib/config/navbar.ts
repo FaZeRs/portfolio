@@ -32,6 +32,11 @@ export const navbarLinks: NavItem[] = [
         href: "/uses",
         description: "My hardware, software, and other tools.",
       },
+      {
+        title: "Bookmarks",
+        href: "/bookmarks",
+        description: "My bookmarks from the web.",
+      },
     ],
   },
 ];
