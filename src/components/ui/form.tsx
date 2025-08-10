@@ -4,7 +4,7 @@ import {
   createFormHookContexts,
   useStore,
 } from "@tanstack/react-form";
-import { createContext, use, useId, useMemo } from "react";
+import { createContext, useContext, useId } from "react";
 
 import { cn } from "~/lib/utils";
 import { Label } from "./label";
@@ -12,7 +12,7 @@ import { Label } from "./label";
 const {
   fieldContext,
   formContext,
-  useFieldContext: _useFieldContext,
+  useFieldContext: useFormFieldContext,
   useFormContext,
 } = createFormHookContexts();
 
@@ -39,24 +39,23 @@ const FormItemContext = createContext<FormItemContextValue>(
 
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = useId();
-  const contextValue = useMemo(() => ({ id }), [id]);
 
   return (
-    <FormItemContext value={contextValue}>
+    <FormItemContext.Provider value={{ id }}>
       <div
         data-slot="form-item"
         className={cn("grid gap-2", className)}
         {...props}
       />
-    </FormItemContext>
+    </FormItemContext.Provider>
   );
 }
 
 const useFieldContext = () => {
-  const { id } = use(FormItemContext);
-  const { name, store, ...fieldContext } = _useFieldContext();
+  const { id } = useContext(FormItemContext);
+  const { name, store, ...fieldContext } = useFormFieldContext();
 
-  const errors = useStore(store, (state) => state.meta.errors) ?? [];
+  const errors = useStore(store, (state) => state.meta.errors);
   if (!fieldContext) {
     throw new Error("useFieldContext should be used within <FormItem>");
   }
