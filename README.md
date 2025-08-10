@@ -38,26 +38,26 @@ My personal portfolio website
 
 ## Issue watchlist
 
-- [React Compiler docs](https://react.dev/learn/react-compiler), [Working Group](https://github.com/reactwg/react-compiler/discussions) - React Compiler is still in beta. You can disable it in [app.config.ts](./app.config.ts#L15) if you prefer.
+- [React Compiler docs](https://react.dev/learn/react-compiler), [Working Group](https://github.com/reactwg/react-compiler/discussions) - React Compiler is still in beta. You can disable it in [vite.config.ts](./vite.config.ts#L36) if you prefer.
 - https://github.com/TanStack/router/discussions/2863 - TanStack Start is currently in beta and may still undergo major changes.
 - https://github.com/shadcn-ui/ui/discussions/6714 - We're using the `canary` version of shadcn/ui for Tailwind v4 support.
 
 ## Auth
 
-Better Auth is currently configured for OAuth with GitHub, Google, and Discord, but can be easily modified to use other providers.
+Better Auth is currently configured for OAuth with GitHub, but can be easily modified to use other providers.
 
-If you want to use email/password authentication or change providers, update the [auth config](./src/lib/server/auth.ts#L36) and [signin page](./src/routes/signin.tsx) with your own UI. You can use [shadcn/ui login blocks](https://ui.shadcn.com/blocks/login) or [@daveyplate/better-auth-ui](https://better-auth-ui.com/) as a starting point.
+If you want to use email/password authentication or change providers, update the [auth config](./src/lib/server/auth.ts#L38) and [signin page](./src/routes/_authLayout/signin.tsx) with your own UI. You can use [shadcn/ui login blocks](https://ui.shadcn.com/blocks/login) or [@daveyplate/better-auth-ui](https://better-auth-ui.com/) as a starting point.
 
 ## Goodies
 
 #### Scripts
 
-These scripts in [package.json](./package.json#L5) use **pnpm** by default, but you can modify them to use your preferred package manager.
+These scripts in [package.json](./package.json#L17) use **bun** by default, but you can modify them to use your preferred package manager.
 
 - **`auth:generate`** - Regenerate the [auth db schema](./src/lib/server/schema/auth.schema.ts) if you've made changes to your Better Auth [config](./src/lib/server/auth.ts).
-- **`db`** - Run drizzle-kit commands. (e.g. `pnpm db generate` to generate a migration)
-- **`ui`** - The shadcn/ui CLI. (e.g. `pnpm ui add button` to add the button component)
-- **`format`** and **`lint`** - Run Prettier and ESLint.
+- **`db`** - Run drizzle-kit commands. (e.g. `bun db generate` to generate a migration)
+- **`ui`** - The shadcn/ui CLI. (e.g. `bun ui add button` to add the button component)
+- **`format`**, **`check`** and **`lint`** - Run Biome.
 
 #### Utilities
 
