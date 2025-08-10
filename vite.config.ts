@@ -28,22 +28,7 @@ export default defineConfig({
     tsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
-    tailwindcss(),
     tanstackStart({
-      // https://react.dev/learn/react-compiler
-      react: {
-        babel: {
-          plugins: [
-            [
-              "babel-plugin-react-compiler",
-              {
-                target: "19",
-              },
-            ],
-          ],
-        },
-      },
-
       tsr: {
         quoteStyle: "double",
         semicolons: true,
@@ -55,7 +40,20 @@ export default defineConfig({
 
       customViteReactPlugin: true,
     }),
-    viteReact(),
+    viteReact({
+      // https://react.dev/learn/react-compiler
+      babel: {
+        plugins: [
+          [
+            "babel-plugin-react-compiler",
+            {
+              target: "19",
+            },
+          ],
+        ],
+      },
+    }),
+    tailwindcss(),
     unfonts({
       google: {
         families: ["Geist", "Geist Mono"],
