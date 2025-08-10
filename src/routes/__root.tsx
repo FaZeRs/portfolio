@@ -41,9 +41,10 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
   user: Awaited<ReturnType<typeof getUser>>;
 }>()({
   beforeLoad: async ({ context }) => {
-    const user = await context.queryClient.fetchQuery({
+    const user = await context.queryClient.ensureQueryData({
       queryKey: ["user"],
       queryFn: ({ signal }) => getUser({ signal }),
+      revalidateIfStale: true,
     }); // we're using react-query for caching, see router.tsx
     return { user };
   },
