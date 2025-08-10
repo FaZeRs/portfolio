@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
-import { routerWithQueryClient } from "@tanstack/react-router-with-query";
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import {
@@ -80,7 +80,14 @@ export function createRouter() {
     },
   });
 
-  return routerWithQueryClient(router, queryClient);
+  setupRouterSsrQueryIntegration({
+    router,
+    queryClient,
+    handleRedirects: true,
+    wrapQueryClient: true,
+  });
+
+  return router;
 }
 
 declare module "@tanstack/react-router" {
