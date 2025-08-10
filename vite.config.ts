@@ -3,9 +3,11 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
+import { generateSitemap } from "tanstack-router-sitemap";
 import unfonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
+import sitemap from "./src/plugins/sitemap";
 
 dotenv.config();
 
@@ -59,6 +61,7 @@ export default defineConfig({
         families: ["Geist", "Geist Mono"],
       },
     }),
+    generateSitemap(sitemap),
     sentryVitePlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN,
       org: process.env.SENTRY_ORG,
