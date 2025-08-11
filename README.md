@@ -12,7 +12,11 @@ My personal portfolio website
 
 ## Getting Started
 
-1. [Use this template](https://github.com/new?template_name=tanstarter&template_owner=dotnize) or clone this repository.
+1. Clone this repository
+
+   ```bash
+   git clone git@github.com:FaZeRs/portfolio.git
+   ```
 
 2. Install dependencies:
 
