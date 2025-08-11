@@ -97,7 +97,10 @@ export const commentRouter = {
         });
       }
 
-      if (comment.userId !== ctx.session.user.id) {
+      if (
+        comment.userId !== ctx.session.user.id &&
+        ctx.session.user.role !== "admin"
+      ) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You are not allowed to delete this comment",

@@ -69,7 +69,8 @@ export default function CommentMenu({
             https://github.com/radix-ui/primitives/issues/1836
           */}
           <DialogTrigger asChild>
-            {isAuthenticated && user?.id === userId ? (
+            {isAuthenticated &&
+            (user?.id === userId || user?.role === "admin") ? (
               <DropdownMenuItem
                 className="text-red-600 focus:text-red-500"
                 disabled={isPending}
