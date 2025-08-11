@@ -1,5 +1,7 @@
 # [Portfolio](https://github.com/fazers/portfolio)
 
+![Cover Image](public/images/cover.avif)
+
 My personal portfolio website
 
 - [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler)

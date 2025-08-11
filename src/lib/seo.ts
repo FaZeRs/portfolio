@@ -1,10 +1,11 @@
 import { siteConfig } from "./config/site";
+import { getBaseUrl } from "./utils";
 
 export function seo({
   title,
   description,
   keywords,
-  image,
+  image = `${getBaseUrl()}/images/cover.avif`,
   author,
   type = "website",
 }: {
