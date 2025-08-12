@@ -68,7 +68,6 @@ function UsersError() {
 
 function UsersContent() {
   const { users } = Route.useLoaderData();
-  console.log(users);
 
   return <DataTable columns={userColumns} data={users as UserType[]} />;
 }
