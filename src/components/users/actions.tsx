@@ -1,0 +1,196 @@
+import { MoreHorizontal, ReceiptTurkishLiraIcon } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "~/components/ui/alert-dialog";
+import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import authClient from "~/lib/auth-client";
+import { UserType } from "~/types";
+
+interface DataTableRowActionsProps {
+  user: UserType;
+}
+
+export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showBanDialog, setShowBanDialog] = useState(false);
+  const [banReason, setBanReason] = useState("");
+  const [banExpiresIn, setBanExpiresIn] = useState("");
+  const isAdmin = user.role === "admin";
+
+  const handleDelete = async () => {
+    const { error } = await authClient.admin.removeUser({
+      userId: user.id,
+    });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    toast.success("User deleted successfully");
+    setShowDeleteDialog(false);
+  };
+
+  const handleImpersonate = async () => {
+    const { error } = await authClient.admin.impersonateUser({
+      userId: user.id,
+    });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    toast.success("User impersonated successfully");
+  };
+
+  const handleBan = async () => {
+    if (!banReason.trim()) {
+      toast.error("Please provide a ban reason");
+      return;
+    }
+
+    const expiresInSeconds = Number.parseInt(banExpiresIn, 10) || 0;
+    if (expiresInSeconds < 0) {
+      toast.error("Expiration time must be a positive number");
+      return;
+    }
+
+    const { error } = await authClient.admin.banUser({
+      userId: user.id,
+      banReason: banReason.trim(),
+      banExpiresIn: expiresInSeconds,
+    });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("User banned successfully");
+    setShowBanDialog(false);
+    setBanReason("");
+    setBanExpiresIn("");
+  };
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="h-8 w-8 p-0"
+            aria-label={`Actions for ${user.name}`}
+          >
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={handleImpersonate} disabled={isAdmin}>
+            Impersonate User
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setShowBanDialog(true)}
+            disabled={isAdmin}
+          >
+            Ban User
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={() => setShowDeleteDialog(true)}
+            disabled={isAdmin}
+            className="text-destructive focus:text-destructive"
+          >
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the{" "}
+              user "{user.name}".
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="gap-2">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showBanDialog} onOpenChange={setShowBanDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Ban User</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will ban the user "{user.name}". Please provide a reason and
+              optional expiration time.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="ban-reason" className="font-medium text-sm">
+                Ban Reason
+              </Label>
+              <Input
+                id="ban-reason"
+                type="text"
+                placeholder="Enter ban reason..."
+                value={banReason}
+                onChange={(e) => setBanReason(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ban-expires" className="font-medium text-sm">
+                Expires In (seconds)
+              </Label>
+              <Input
+                id="ban-expires"
+                type="number"
+                placeholder="0 = permanent ban"
+                value={banExpiresIn}
+                onChange={(e) => setBanExpiresIn(e.target.value)}
+                min="0"
+              />
+            </div>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setBanReason("");
+                setBanExpiresIn("");
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleBan} className="gap-2">
+              Ban User
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}

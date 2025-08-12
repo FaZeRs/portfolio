@@ -28,6 +28,7 @@ import { Route as DefaultLayoutSnippetsSnippetIdRouteImport } from "./routes/_de
 import { Route as DefaultLayoutProjectsProjectIdRouteImport } from "./routes/_defaultLayout/projects.$projectId";
 import { Route as DefaultLayoutBookmarksBookmarkIdRouteImport } from "./routes/_defaultLayout/bookmarks.$bookmarkId";
 import { Route as DefaultLayoutBlogArticleIdRouteImport } from "./routes/_defaultLayout/blog.$articleId";
+import { Route as DashboardLayoutDashboardUsersIndexRouteImport } from "./routes/_dashboardLayout/dashboard/users/index";
 import { Route as DashboardLayoutDashboardSnippetsIndexRouteImport } from "./routes/_dashboardLayout/dashboard/snippets/index";
 import { Route as DashboardLayoutDashboardProjectsIndexRouteImport } from "./routes/_dashboardLayout/dashboard/projects/index";
 import { Route as DashboardLayoutDashboardExperiencesIndexRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/index";
@@ -137,6 +138,12 @@ const DefaultLayoutBlogArticleIdRoute =
     id: "/blog/$articleId",
     path: "/blog/$articleId",
     getParentRoute: () => DefaultLayoutRoute,
+  } as any);
+const DashboardLayoutDashboardUsersIndexRoute =
+  DashboardLayoutDashboardUsersIndexRouteImport.update({
+    id: "/dashboard/users/",
+    path: "/dashboard/users/",
+    getParentRoute: () => DashboardLayoutRoute,
   } as any);
 const DashboardLayoutDashboardSnippetsIndexRoute =
   DashboardLayoutDashboardSnippetsIndexRouteImport.update({
@@ -261,6 +268,7 @@ export interface FileRoutesByFullPath {
   "/dashboard/experiences": typeof DashboardLayoutDashboardExperiencesIndexRoute;
   "/dashboard/projects": typeof DashboardLayoutDashboardProjectsIndexRoute;
   "/dashboard/snippets": typeof DashboardLayoutDashboardSnippetsIndexRoute;
+  "/dashboard/users": typeof DashboardLayoutDashboardUsersIndexRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
@@ -289,6 +297,7 @@ export interface FileRoutesByTo {
   "/dashboard/experiences": typeof DashboardLayoutDashboardExperiencesIndexRoute;
   "/dashboard/projects": typeof DashboardLayoutDashboardProjectsIndexRoute;
   "/dashboard/snippets": typeof DashboardLayoutDashboardSnippetsIndexRoute;
+  "/dashboard/users": typeof DashboardLayoutDashboardUsersIndexRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
@@ -321,6 +330,7 @@ export interface FileRoutesById {
   "/_dashboardLayout/dashboard/experiences/": typeof DashboardLayoutDashboardExperiencesIndexRoute;
   "/_dashboardLayout/dashboard/projects/": typeof DashboardLayoutDashboardProjectsIndexRoute;
   "/_dashboardLayout/dashboard/snippets/": typeof DashboardLayoutDashboardSnippetsIndexRoute;
+  "/_dashboardLayout/dashboard/users/": typeof DashboardLayoutDashboardUsersIndexRoute;
   "/_dashboardLayout/dashboard/blog/$articleId/edit": typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
   "/_dashboardLayout/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
   "/_dashboardLayout/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
@@ -351,6 +361,7 @@ export interface FileRouteTypes {
     | "/dashboard/experiences"
     | "/dashboard/projects"
     | "/dashboard/snippets"
+    | "/dashboard/users"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
@@ -379,6 +390,7 @@ export interface FileRouteTypes {
     | "/dashboard/experiences"
     | "/dashboard/projects"
     | "/dashboard/snippets"
+    | "/dashboard/users"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
@@ -410,6 +422,7 @@ export interface FileRouteTypes {
     | "/_dashboardLayout/dashboard/experiences/"
     | "/_dashboardLayout/dashboard/projects/"
     | "/_dashboardLayout/dashboard/snippets/"
+    | "/_dashboardLayout/dashboard/users/"
     | "/_dashboardLayout/dashboard/blog/$articleId/edit"
     | "/_dashboardLayout/dashboard/experiences/$experienceId/edit"
     | "/_dashboardLayout/dashboard/projects/$projectId/edit"
@@ -596,6 +609,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DefaultLayoutBlogArticleIdRouteImport;
       parentRoute: typeof DefaultLayoutRoute;
     };
+    "/_dashboardLayout/dashboard/users/": {
+      id: "/_dashboardLayout/dashboard/users/";
+      path: "/dashboard/users";
+      fullPath: "/dashboard/users";
+      preLoaderRoute: typeof DashboardLayoutDashboardUsersIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
     "/_dashboardLayout/dashboard/snippets/": {
       id: "/_dashboardLayout/dashboard/snippets/";
       path: "/dashboard/snippets";
@@ -744,6 +764,7 @@ interface DashboardLayoutRouteChildren {
   DashboardLayoutDashboardExperiencesIndexRoute: typeof DashboardLayoutDashboardExperiencesIndexRoute;
   DashboardLayoutDashboardProjectsIndexRoute: typeof DashboardLayoutDashboardProjectsIndexRoute;
   DashboardLayoutDashboardSnippetsIndexRoute: typeof DashboardLayoutDashboardSnippetsIndexRoute;
+  DashboardLayoutDashboardUsersIndexRoute: typeof DashboardLayoutDashboardUsersIndexRoute;
   DashboardLayoutDashboardBlogArticleIdEditRoute: typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
   DashboardLayoutDashboardExperiencesExperienceIdEditRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
   DashboardLayoutDashboardProjectsProjectIdEditRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
@@ -768,6 +789,8 @@ const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
     DashboardLayoutDashboardProjectsIndexRoute,
   DashboardLayoutDashboardSnippetsIndexRoute:
     DashboardLayoutDashboardSnippetsIndexRoute,
+  DashboardLayoutDashboardUsersIndexRoute:
+    DashboardLayoutDashboardUsersIndexRoute,
   DashboardLayoutDashboardBlogArticleIdEditRoute:
     DashboardLayoutDashboardBlogArticleIdEditRoute,
   DashboardLayoutDashboardExperiencesExperienceIdEditRoute:
