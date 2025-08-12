@@ -17,6 +17,7 @@ import { Route as AuthLayoutRouteImport } from "./routes/_authLayout";
 import { Route as DefaultLayoutIndexRouteImport } from "./routes/_defaultLayout/index";
 import { Route as DefaultLayoutUsesRouteImport } from "./routes/_defaultLayout/uses";
 import { Route as DefaultLayoutStatsRouteImport } from "./routes/_defaultLayout/stats";
+import { Route as DefaultLayoutProfileRouteImport } from "./routes/_defaultLayout/profile";
 import { Route as DefaultLayoutAboutRouteImport } from "./routes/_defaultLayout/about";
 import { Route as AuthLayoutSigninRouteImport } from "./routes/_authLayout/signin";
 import { Route as DefaultLayoutSnippetsIndexRouteImport } from "./routes/_defaultLayout/snippets.index";
@@ -74,6 +75,11 @@ const DefaultLayoutUsesRoute = DefaultLayoutUsesRouteImport.update({
 const DefaultLayoutStatsRoute = DefaultLayoutStatsRouteImport.update({
   id: "/stats",
   path: "/stats",
+  getParentRoute: () => DefaultLayoutRoute,
+} as any);
+const DefaultLayoutProfileRoute = DefaultLayoutProfileRouteImport.update({
+  id: "/profile",
+  path: "/profile",
   getParentRoute: () => DefaultLayoutRoute,
 } as any);
 const DefaultLayoutAboutRoute = DefaultLayoutAboutRouteImport.update({
@@ -248,6 +254,7 @@ const ApiStatsGithubActivityServerRoute =
 export interface FileRoutesByFullPath {
   "/signin": typeof AuthLayoutSigninRoute;
   "/about": typeof DefaultLayoutAboutRoute;
+  "/profile": typeof DefaultLayoutProfileRoute;
   "/stats": typeof DefaultLayoutStatsRoute;
   "/uses": typeof DefaultLayoutUsesRoute;
   "/": typeof DefaultLayoutIndexRoute;
@@ -277,6 +284,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/signin": typeof AuthLayoutSigninRoute;
   "/about": typeof DefaultLayoutAboutRoute;
+  "/profile": typeof DefaultLayoutProfileRoute;
   "/stats": typeof DefaultLayoutStatsRoute;
   "/uses": typeof DefaultLayoutUsesRoute;
   "/": typeof DefaultLayoutIndexRoute;
@@ -310,6 +318,7 @@ export interface FileRoutesById {
   "/_defaultLayout": typeof DefaultLayoutRouteWithChildren;
   "/_authLayout/signin": typeof AuthLayoutSigninRoute;
   "/_defaultLayout/about": typeof DefaultLayoutAboutRoute;
+  "/_defaultLayout/profile": typeof DefaultLayoutProfileRoute;
   "/_defaultLayout/stats": typeof DefaultLayoutStatsRoute;
   "/_defaultLayout/uses": typeof DefaultLayoutUsesRoute;
   "/_defaultLayout/": typeof DefaultLayoutIndexRoute;
@@ -341,6 +350,7 @@ export interface FileRouteTypes {
   fullPaths:
     | "/signin"
     | "/about"
+    | "/profile"
     | "/stats"
     | "/uses"
     | "/"
@@ -370,6 +380,7 @@ export interface FileRouteTypes {
   to:
     | "/signin"
     | "/about"
+    | "/profile"
     | "/stats"
     | "/uses"
     | "/"
@@ -402,6 +413,7 @@ export interface FileRouteTypes {
     | "/_defaultLayout"
     | "/_authLayout/signin"
     | "/_defaultLayout/about"
+    | "/_defaultLayout/profile"
     | "/_defaultLayout/stats"
     | "/_defaultLayout/uses"
     | "/_defaultLayout/"
@@ -530,6 +542,13 @@ declare module "@tanstack/react-router" {
       path: "/stats";
       fullPath: "/stats";
       preLoaderRoute: typeof DefaultLayoutStatsRouteImport;
+      parentRoute: typeof DefaultLayoutRoute;
+    };
+    "/_defaultLayout/profile": {
+      id: "/_defaultLayout/profile";
+      path: "/profile";
+      fullPath: "/profile";
+      preLoaderRoute: typeof DefaultLayoutProfileRouteImport;
       parentRoute: typeof DefaultLayoutRoute;
     };
     "/_defaultLayout/about": {
@@ -807,6 +826,7 @@ const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
 
 interface DefaultLayoutRouteChildren {
   DefaultLayoutAboutRoute: typeof DefaultLayoutAboutRoute;
+  DefaultLayoutProfileRoute: typeof DefaultLayoutProfileRoute;
   DefaultLayoutStatsRoute: typeof DefaultLayoutStatsRoute;
   DefaultLayoutUsesRoute: typeof DefaultLayoutUsesRoute;
   DefaultLayoutIndexRoute: typeof DefaultLayoutIndexRoute;
@@ -822,6 +842,7 @@ interface DefaultLayoutRouteChildren {
 
 const DefaultLayoutRouteChildren: DefaultLayoutRouteChildren = {
   DefaultLayoutAboutRoute: DefaultLayoutAboutRoute,
+  DefaultLayoutProfileRoute: DefaultLayoutProfileRoute,
   DefaultLayoutStatsRoute: DefaultLayoutStatsRoute,
   DefaultLayoutUsesRoute: DefaultLayoutUsesRoute,
   DefaultLayoutIndexRoute: DefaultLayoutIndexRoute,
