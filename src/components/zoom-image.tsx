@@ -1,6 +1,5 @@
-import ImageZoom from "./ui/image-zoom";
-
 import { BlurImage } from "./blur-image";
+import ImageZoom from "./ui/image-zoom";
 
 export default function ZoomImage(
   props: React.ComponentPropsWithoutRef<typeof BlurImage>,

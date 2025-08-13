@@ -14,6 +14,9 @@
     "pnpm-lock.yaml": true,
     "bun.lock": true
   },
+  "biome.lsp": {
+    "configurationPath": "./biome.json"
+  },
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "[typescript]": {

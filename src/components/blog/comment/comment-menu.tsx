@@ -25,13 +25,9 @@ import { CommentType } from "~/types";
 
 interface CommentMenuProps {
   comment: CommentType;
-  slug: string;
 }
 
-export default function CommentMenu({
-  comment,
-  slug,
-}: Readonly<CommentMenuProps>) {
+export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
   const { user, isAuthenticated } = useCurrentUser();
   const { id, userId, articleId } = comment;
 

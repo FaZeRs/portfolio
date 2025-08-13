@@ -3,7 +3,7 @@ import { createServerFileRoute } from "@tanstack/react-start/server";
 import { getGithubStats } from "~/lib/github";
 
 export const ServerRoute = createServerFileRoute("/api/stats/github/").methods({
-  GET: async ({ request, params }) => {
+  GET: async () => {
     try {
       const { user, repos, starsCount } = (await getGithubStats()) || {};
       return json({ user, repos, starsCount });

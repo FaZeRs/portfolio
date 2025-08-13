@@ -1,4 +1,4 @@
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { CheckIcon, ChevronDown, WandSparkles, X, XCircle } from "lucide-react";
 import * as React from "react";
 import { useOptimistic, useState } from "react";
@@ -127,7 +127,7 @@ export const MultiSelect = ({
 
   const [optimisticSelectedValues, updateSelectedValues] = useOptimistic(
     selectedValues,
-    (state, newValues: string[]) => newValues,
+    (_, newValues: string[]) => newValues,
   );
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

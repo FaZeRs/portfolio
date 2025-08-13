@@ -14,7 +14,7 @@ import { type FileRouteTypes } from "../../routeTree.gen";
 
 export type TRoutes = FileRouteTypes["fullPaths"];
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
+// biome-ignore lint/style/noNonNullAssertion: this is valid
 const driver = neon(process.env.DATABASE_URL!);
 
 const db = drizzle({ client: driver, schema, casing: "snake_case" });
@@ -26,7 +26,7 @@ export const sitemap: Sitemap<TRoutes> = {
     "/": { priority: 1, changeFrequency: "daily" },
     "/about": { priority: 1, changeFrequency: "daily" },
     "/projects": { priority: 1, changeFrequency: "daily" },
-    "/projects/$projectId": async (route) => {
+    "/projects/$projectId": async () => {
       try {
         // Fetch all published projects
         const projects = await db
@@ -49,7 +49,7 @@ export const sitemap: Sitemap<TRoutes> = {
       }
     },
     "/blog": { priority: 1, changeFrequency: "daily" },
-    "/blog/$articleId": async (route) => {
+    "/blog/$articleId": async () => {
       try {
         // Fetch all published articles
         const publishedArticles = await db
@@ -74,7 +74,7 @@ export const sitemap: Sitemap<TRoutes> = {
     "/bookmarks": { priority: 1, changeFrequency: "daily" },
     "/stats": { priority: 1, changeFrequency: "daily" },
     "/snippets": { priority: 1, changeFrequency: "daily" },
-    "/snippets/$snippetId": async (route) => {
+    "/snippets/$snippetId": async () => {
       try {
         // Fetch all published snippets
         const snippets = await db

@@ -75,7 +75,7 @@ export default function CommentItem({
                 <Timestamp datetime={createdAt.toString()} />
               </div>
 
-              <CommentMenu comment={comment.comment} slug={articleSlug} />
+              <CommentMenu comment={comment.comment} />
             </div>
 
             <CommentEditor

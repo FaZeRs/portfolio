@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
-  ErrorComponent,
   createFileRoute,
+  ErrorComponent,
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";

@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { getCollections } from "~/lib/raindrop";

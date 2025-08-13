@@ -45,6 +45,7 @@ html.dark code[data-theme*=" "] span {
 }
 
 /* Word Highlighting */
+/* biome-ignore lint/style/noDescendingSpecificity: fix later */
 [data-highlighted-chars] span {
   @apply relative;
 }

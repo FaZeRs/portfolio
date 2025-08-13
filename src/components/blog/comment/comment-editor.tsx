@@ -146,8 +146,8 @@ export default function CommentEditor({
 
   return (
     // @sonar-ignore
+    // biome-ignore lint/a11y/useSemanticElements: tiptap editor
     <div
-      // biome-ignore lint/a11y/useSemanticElements: tiptap editor
       role="textbox"
       aria-disabled={disabled}
       aria-multiline="true"

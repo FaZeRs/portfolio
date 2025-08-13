@@ -1,10 +1,9 @@
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { Bookmark } from "~/types";
-
 import BookmarkCard from "~/components/bookmarks/bookmark-card";
-import { PAGE_SIZE, getBookmarksByCollectionId } from "~/lib/raindrop";
+import { getBookmarksByCollectionId, PAGE_SIZE } from "~/lib/raindrop";
+import { Bookmark } from "~/types";
 
 interface LoadMoreProps {
   id: number;

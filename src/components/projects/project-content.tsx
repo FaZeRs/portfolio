@@ -1,5 +1,5 @@
 import { Share } from "lucide-react";
-import { Suspense, lazy } from "react";
+import { lazy, Suspense } from "react";
 import { siGithub } from "simple-icons";
 
 import Icon from "~/components/ui/icon";

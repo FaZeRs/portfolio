@@ -5,7 +5,7 @@ import { getGithubActivities } from "~/lib/github";
 export const ServerRoute = createServerFileRoute(
   "/api/stats/github/activity",
 ).methods({
-  GET: async ({ request, params }) => {
+  GET: async () => {
     try {
       const contributions = await getGithubActivities();
       return json(contributions);

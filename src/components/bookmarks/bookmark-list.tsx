@@ -1,8 +1,7 @@
-import { Bookmark } from "~/types";
-
 import BookmarkCard from "~/components/bookmarks/bookmark-card";
 import LoadMore from "~/components/bookmarks/load-more";
 import { PAGE_SIZE } from "~/lib/raindrop";
+import { Bookmark } from "~/types";
 
 interface BookmarkListProps {
   id: number;

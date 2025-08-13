@@ -119,7 +119,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.1.4",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@sentry/vite-plugin": "^4.1.1",
@@ -141,12 +141,13 @@
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
       "biome check --files-ignore-unknown=true",
       "biome check --write --no-errors-on-unmatched",
-      "biome check --write --organize-imports-enabled=false --no-errors-on-unmatched",
       "biome check --write --unsafe --no-errors-on-unmatched",
       "biome format --write --no-errors-on-unmatched",
       "biome lint --write --no-errors-on-unmatched"
     ],
-    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
+    "*": [
+      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
   },
   "trustedDependencies": [
     "@biomejs/biome",
