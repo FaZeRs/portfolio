@@ -1,10 +1,8 @@
 import { Slot } from "@radix-ui/react-slot";
 import { motion } from "framer-motion";
 import type { HTMLAttributes } from "react";
-
-import { cn } from "~/lib/utils";
-
 import { slideInWithFadeOut } from "~/lib/constants/framer-motion-variants";
+import { cn } from "~/lib/utils";
 
 interface PageHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   title: string;

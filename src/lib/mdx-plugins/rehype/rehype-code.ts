@@ -8,9 +8,9 @@ import {
 } from "@shikijs/transformers";
 import type { Root } from "hast";
 import {
-  type ShikiTransformer,
   bundledLanguages,
   getSingletonHighlighter,
+  type ShikiTransformer,
 } from "shiki";
 import { createOnigurumaEngine } from "shiki/engine/oniguruma";
 import type { Plugin } from "unified";

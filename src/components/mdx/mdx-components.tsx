@@ -110,7 +110,6 @@ export const components = {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // biome-ignore lint: alt is required
     <img className={cn("rounded-md border", className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,

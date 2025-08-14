@@ -1,4 +1,4 @@
-import { ValidationErrorMap, formOptions } from "@tanstack/react-form";
+import { formOptions, ValidationErrorMap } from "@tanstack/react-form";
 import { STACKS } from "~/lib/constants/stack";
 import { generateSlug } from "~/lib/utils";
 import { ProjectType } from "~/types";

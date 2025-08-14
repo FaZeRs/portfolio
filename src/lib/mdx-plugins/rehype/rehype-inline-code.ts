@@ -1,9 +1,9 @@
 import type { RehypeShikiCoreOptions } from "@shikijs/rehype/core";
 import type { Root } from "hast";
 import {
-  type Highlighter,
   bundledLanguages,
   getSingletonHighlighter,
+  type Highlighter,
 } from "shiki";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";

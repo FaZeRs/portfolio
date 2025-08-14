@@ -62,6 +62,9 @@ export function AvatarDropdown() {
             </DropdownMenuItem>
           </>
         )}
+        <DropdownMenuItem onClick={() => router.navigate({ to: "/profile" })}>
+          Profile
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={async () => {

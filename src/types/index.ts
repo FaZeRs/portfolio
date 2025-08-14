@@ -1,11 +1,11 @@
 import type { SimpleIcon } from "simple-icons";
 import {
-  type Experience,
-  type Project,
-  type Snippet,
   type articles,
   commentReactions,
   comments,
+  type Experience,
+  type Project,
+  type Snippet,
   user,
 } from "~/lib/server/schema";
 

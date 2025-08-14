@@ -4,8 +4,8 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import {
-  ErrorComponent,
   createFileRoute,
+  ErrorComponent,
   useRouter,
 } from "@tanstack/react-router";
 import { toast } from "sonner";
