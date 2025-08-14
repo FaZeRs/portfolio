@@ -124,24 +124,33 @@ function ProfilePage() {
 
   const getInitials = (name: string) => {
     return name
-      .split(" ")
-      .map((n) => n[0])
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((word) => word.charAt(0))
       .join("")
       .toUpperCase();
   };
 
   const handleEditSubmit = async () => {
     try {
+      const newName = editForm.name.trim();
+      if (!newName || newName === user.name) {
+        toast.info("No changes to save");
+        setIsEditing(false);
+        return;
+      }
       await authClient.updateUser({
-        name: editForm.name.trim(),
+        name: newName,
       });
       await queryClient.invalidateQueries({ queryKey: ["user"] });
       await router.invalidate();
       toast.success("Profile updated successfully");
-      setIsEditing(false);
     } catch (error) {
       toast.error("Failed to update profile");
       console.error("Profile update error:", error);
+    } finally {
+      setIsEditing(false);
     }
   };
 
@@ -257,7 +266,15 @@ function ProfilePage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Dialog open={isEditing} onOpenChange={setIsEditing}>
+            <Dialog
+              open={isEditing}
+              onOpenChange={(open) => {
+                setIsEditing(open);
+                if (open) {
+                  setEditForm({ name: user.name });
+                }
+              }}
+            >
               <DialogTrigger asChild>
                 <Button variant="outline" className="w-full justify-start">
                   <EditIcon className="mr-2 h-4 w-4" />
@@ -291,7 +308,15 @@ function ProfilePage() {
                   <Button variant="outline" onClick={() => setIsEditing(false)}>
                     Cancel
                   </Button>
-                  <Button onClick={handleEditSubmit}>Save Changes</Button>
+                  <Button
+                    onClick={handleEditSubmit}
+                    disabled={
+                      editForm.name.trim().length === 0 ||
+                      editForm.name.trim() === user.name.trim()
+                    }
+                  >
+                    Save Changes
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

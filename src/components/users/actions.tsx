@@ -1,3 +1,4 @@
+import { useRouter } from "@tanstack/react-router";
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -29,35 +30,51 @@ interface DataTableRowActionsProps {
 }
 
 export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
+  const router = useRouter();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showBanDialog, setShowBanDialog] = useState(false);
   const [banReason, setBanReason] = useState("");
   const [banExpiresIn, setBanExpiresIn] = useState("");
   const isAdmin = user.role === "admin";
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isBanning, setIsBanning] = useState(false);
+  const [isImpersonating, setIsImpersonating] = useState(false);
 
   const handleDelete = async () => {
-    const { error } = await authClient.admin.removeUser({
-      userId: user.id,
-    });
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      setIsDeleting(true);
+      const { error } = await authClient.admin.removeUser({ userId: user.id });
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      toast.success("User deleted successfully");
+      setShowDeleteDialog(false);
+      await router.invalidate();
+    } catch {
+      toast.error("Failed to delete user");
+    } finally {
+      setIsDeleting(false);
     }
-
-    toast.success("User deleted successfully");
-    setShowDeleteDialog(false);
   };
 
   const handleImpersonate = async () => {
-    const { error } = await authClient.admin.impersonateUser({
-      userId: user.id,
-    });
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
+    try {
+      setIsImpersonating(true);
+      const { error } = await authClient.admin.impersonateUser({
+        userId: user.id,
+      });
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
 
-    toast.success("User impersonated successfully");
+      toast.success("User impersonated successfully");
+    } catch {
+      toast.error("Failed to impersonate user");
+    } finally {
+      setIsImpersonating(false);
+    }
   };
 
   const handleBan = async () => {
@@ -71,20 +88,27 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
       toast.error("Expiration time must be a positive number");
       return;
     }
-
-    const { error } = await authClient.admin.banUser({
-      userId: user.id,
-      banReason: banReason.trim(),
-      banExpiresIn: expiresInSeconds,
-    });
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      setIsBanning(true);
+      const { error } = await authClient.admin.banUser({
+        userId: user.id,
+        banReason: banReason.trim(),
+        banExpiresIn: expiresInSeconds,
+      });
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      toast.success("User banned successfully");
+      setShowBanDialog(false);
+      setBanReason("");
+      setBanExpiresIn("");
+      await router.invalidate();
+    } catch {
+      toast.error("Failed to ban user");
+    } finally {
+      setIsBanning(false);
     }
-    toast.success("User banned successfully");
-    setShowBanDialog(false);
-    setBanReason("");
-    setBanExpiresIn("");
   };
 
   return (
@@ -101,19 +125,22 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={handleImpersonate} disabled={isAdmin}>
+          <DropdownMenuItem
+            onClick={handleImpersonate}
+            disabled={isAdmin || isImpersonating}
+          >
             Impersonate User
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setShowBanDialog(true)}
-            disabled={isAdmin}
+            disabled={isAdmin || isBanning}
           >
             Ban User
           </DropdownMenuItem>
 
           <DropdownMenuItem
             onClick={() => setShowDeleteDialog(true)}
-            disabled={isAdmin}
+            disabled={isAdmin || isDeleting}
             className="text-destructive focus:text-destructive"
           >
             Delete

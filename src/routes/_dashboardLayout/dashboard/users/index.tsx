@@ -22,7 +22,7 @@ const getUsers = createServerFn({ method: "GET" }).handler(async () => {
     headers,
   });
 
-  return { users: data.users };
+  return { users: data.users as UserType[] };
 });
 
 export const Route = createFileRoute("/_dashboardLayout/dashboard/users/")({
@@ -69,7 +69,7 @@ function UsersError() {
 function UsersContent() {
   const { users } = Route.useLoaderData();
 
-  return <DataTable columns={userColumns} data={users as UserType[]} />;
+  return <DataTable columns={userColumns} data={users} />;
 }
 
 function Users() {
