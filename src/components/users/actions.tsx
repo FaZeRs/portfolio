@@ -41,6 +41,7 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   const [isImpersonating, setIsImpersonating] = useState(false);
 
   const handleDelete = async () => {
+    if (isDeleting) return;
     try {
       setIsDeleting(true);
       const { error } = await authClient.admin.removeUser({ userId: user.id });
@@ -59,6 +60,7 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   };
 
   const handleImpersonate = async () => {
+    if (isImpersonating) return;
     try {
       setIsImpersonating(true);
       const { error } = await authClient.admin.impersonateUser({
@@ -70,6 +72,7 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
       }
 
       toast.success("User impersonated successfully");
+      await router.invalidate();
     } catch {
       toast.error("Failed to impersonate user");
     } finally {
@@ -78,6 +81,7 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   };
 
   const handleBan = async () => {
+    if (isBanning) return;
     if (!banReason.trim()) {
       toast.error("Please provide a ban reason");
       return;
@@ -159,8 +163,12 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="gap-2">
-              Delete
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="gap-2"
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -212,8 +220,12 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
             >
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleBan} className="gap-2">
-              Ban User
+            <AlertDialogAction
+              onClick={handleBan}
+              className="gap-2"
+              disabled={isBanning}
+            >
+              {isBanning ? "Banning..." : "Ban User"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
