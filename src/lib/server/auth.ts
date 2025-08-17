@@ -7,6 +7,9 @@ import { env } from "~/lib/env.server";
 import { getBaseUrl } from "~/lib/utils";
 import { db } from "./db";
 
+// biome-ignore lint/style/noMagicNumbers: valid constant
+const MAX_AGE = 5 * 60; // 5 minutes
+
 export const auth = betterAuth({
   baseURL: getBaseUrl(),
   database: drizzleAdapter(db, {
@@ -20,7 +23,7 @@ export const auth = betterAuth({
   session: {
     cookieCache: {
       enabled: true,
-      maxAge: 5 * 60, // 5 minutes
+      maxAge: MAX_AGE,
     },
   },
 

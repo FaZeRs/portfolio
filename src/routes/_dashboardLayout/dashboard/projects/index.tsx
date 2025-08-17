@@ -91,9 +91,9 @@ function Projects() {
           <p className="text-muted-foreground">Manage your projects here.</p>
         </div>
         <Link
-          to="/dashboard/projects/create"
-          className={cn(buttonVariants({ variant: "default" }), "group")}
           aria-label="Add new project"
+          className={cn(buttonVariants({ variant: "default" }), "group")}
+          to="/dashboard/projects/create"
         >
           <span>Add Project</span> <Plus className="ml-1" size={18} />
         </Link>

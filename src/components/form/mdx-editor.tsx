@@ -2,7 +2,7 @@ import CustomMDX from "../mdx/mdx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
 
-interface FormMDXEditorProps {
+type FormMDXEditorProps = {
   field: {
     name: string;
     state: { value: string };
@@ -12,7 +12,7 @@ interface FormMDXEditorProps {
   label: string;
   placeholder: string;
   className?: string;
-}
+};
 
 export function FormMDXEditor({
   field,
@@ -23,28 +23,28 @@ export function FormMDXEditor({
   return (
     <div className={className}>
       <label
-        htmlFor={field.name}
         className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        htmlFor={field.name}
       >
         {label}
       </label>
-      <Tabs defaultValue="write" className="w-full">
+      <Tabs className="w-full" defaultValue="write">
         <TabsList className="mb-2">
           <TabsTrigger value="write">Write</TabsTrigger>
           <TabsTrigger value="preview">Preview</TabsTrigger>
         </TabsList>
-        <TabsContent value="write" className="mt-0">
+        <TabsContent className="mt-0" value="write">
           <Textarea
+            className="min-h-[300px]"
             id={field.name}
             name={field.name}
-            placeholder={placeholder}
-            value={field.state.value}
             onBlur={field.handleBlur}
             onChange={(e) => field.handleChange(e.target.value)}
-            className="min-h-[300px]"
+            placeholder={placeholder}
+            value={field.state.value}
           />
         </TabsContent>
-        <TabsContent value="preview" className="mt-0">
+        <TabsContent className="mt-0" value="preview">
           <div className="min-h-[300px] overflow-y-auto rounded-md border border-input p-4">
             {field.state.value ? (
               <CustomMDX source={field.state.value} />

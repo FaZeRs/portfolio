@@ -2,16 +2,16 @@ import cx from "clsx";
 import { FileCode, Folder } from "lucide-react";
 import { Fragment } from "react";
 
-interface Node {
+type Node = {
   name: string;
   isHighlighted?: boolean;
   children?: Node[];
-}
+};
 
-interface FolderTreeProps {
+type FolderTreeProps = {
   data: Node[];
   title?: string;
-}
+};
 
 export default function FolderTree({ title, data }: Readonly<FolderTreeProps>) {
   return (
@@ -22,16 +22,16 @@ export default function FolderTree({ title, data }: Readonly<FolderTreeProps>) {
         </div>
       )}
       <div className="py-3 text-[13px] leading-6 [counter-reset:line]">
-        <Inner level={0} data={data} />
+        <Inner data={data} level={0} />
       </div>
     </div>
   );
 }
 
-interface InnerProps {
+type InnerProps = {
   data: Node[];
   level: number;
-}
+};
 
 const Inner = ({ data, level }: InnerProps) => {
   return (
@@ -46,7 +46,7 @@ const Inner = ({ data, level }: InnerProps) => {
                   "border-l-slate-400/70 bg-gray-200/80 before:text-white/70 dark:border-l-rose-300/30 dark:bg-secondary":
                     node.isHighlighted,
                   "before:text-white/20": !node.isHighlighted,
-                },
+                }
               )}
             >
               <div
@@ -55,20 +55,22 @@ const Inner = ({ data, level }: InnerProps) => {
                   {
                     "pl-[20px]": level === 1,
                     "pl-[40px]": level === 2,
+                    // biome-ignore lint/style/noMagicNumbers: Magic numbers are used for indentation
                     "pl-[60px]": level === 3,
+                    // biome-ignore lint/style/noMagicNumbers: Magic numbers are used for indentation
                     "pl-[80px]": level === 4,
-                  },
+                  }
                 )}
               >
-                {!node.children ? (
-                  <FileCode className="w-4" />
-                ) : (
+                {node.children ? (
                   <Folder className="w-4" />
+                ) : (
+                  <FileCode className="w-4" />
                 )}
               </div>
               <div
                 className={cx(
-                  node.isHighlighted ? "text-primary" : "text-muted-foreground",
+                  node.isHighlighted ? "text-primary" : "text-muted-foreground"
                 )}
               >
                 {node.name}

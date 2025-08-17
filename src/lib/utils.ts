@@ -19,11 +19,19 @@ export function formatDate(input: string | number | Date): string {
   });
 }
 
+const DEFAULT_PORT = 3000 as const;
+
 export const getBaseUrl = () => {
-  if (process.env.VITE_BASE_URL) return process.env.VITE_BASE_URL;
-  if (typeof window !== "undefined") return window.location.origin;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return `http://localhost:${process.env.PORT ?? 3000}`;
+  if (process.env.VITE_BASE_URL) {
+    return process.env.VITE_BASE_URL;
+  }
+  if (typeof window !== "undefined") {
+    return window.location.origin;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return `http://localhost:${process.env.PORT ?? DEFAULT_PORT}`;
 };
 
 export const generateSlug = (title: string): string => {
@@ -37,13 +45,15 @@ export const generateSlug = (title: string): string => {
 
 const allowedDomains = ["vercel-blob.com", "blob.vercel-storage.com"];
 
+const BASE64_REGEX = /^[A-Za-z0-9+/=]+$/;
+
 export async function uploadImage(folder: string, image: string, slug: string) {
   try {
     if (!image?.trim()) {
       throw new Error("Invalid image: empty string provided");
     }
 
-    if (!/^[A-Za-z0-9+/=]+$/.test(image)) {
+    if (!BASE64_REGEX.test(image)) {
       throw new Error("Invalid base64 format");
     }
 
@@ -60,8 +70,7 @@ export async function uploadImage(folder: string, image: string, slug: string) {
     });
 
     return url;
-  } catch (error) {
-    console.error("Error uploading image:", error);
+  } catch (_error) {
     throw new Error("Failed to upload image");
   }
 }
@@ -78,8 +87,7 @@ export async function deleteFile(url: string) {
     }
 
     await del(url);
-  } catch (error) {
-    console.error("Error deleting file:", error);
+  } catch (_error) {
     throw new Error("Failed to delete file");
   }
 }

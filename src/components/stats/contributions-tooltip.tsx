@@ -5,7 +5,7 @@ import {
 } from "recharts/types/component/DefaultTooltipContent";
 
 export default function ContributionsTooltip(
-  props: TooltipContentProps<ValueType, NameType>,
+  props: TooltipContentProps<ValueType, NameType>
 ) {
   const { active, payload } = props;
 

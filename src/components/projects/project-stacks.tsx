@@ -8,19 +8,19 @@ import {
 
 import { STACKS } from "~/lib/constants/stack";
 
-interface StackProps {
+type StackProps = {
   projectStack: string[] | null;
-}
+};
 
 export default function ProjectStacks({ projectStack }: Readonly<StackProps>) {
   return (
     <div className="flex items-center gap-3">
       {projectStack?.map((stack) => (
-        <TooltipProvider key={stack} delayDuration={200}>
+        <TooltipProvider delayDuration={200} key={stack}>
           <Tooltip>
             <TooltipTrigger>
               {STACKS[stack] && (
-                <Icon icon={STACKS[stack]} className="mr-2 h-4 w-4" />
+                <Icon className="mr-2 h-4 w-4" icon={STACKS[stack]} />
               )}
             </TooltipTrigger>
             <TooltipContent>{stack}</TooltipContent>

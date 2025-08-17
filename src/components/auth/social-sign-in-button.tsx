@@ -16,12 +16,12 @@ export default function SocialSignInButton() {
   return (
     <div className="flex flex-col items-center gap-2">
       <Button
-        size="lg"
         className="flex w-full gap-2"
-        variant="outline"
         onClick={() => handleClick("github")}
+        size="lg"
+        variant="outline"
       >
-        <Icon icon={siGithub} className="size-5" />
+        <Icon className="size-5" icon={siGithub} />
         Continue with Github
       </Button>
     </div>

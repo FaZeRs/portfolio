@@ -4,9 +4,9 @@ import { ArrowRight, PinIcon } from "lucide-react";
 import { ProjectType } from "~/types";
 import ProjectStacks from "./project-stacks";
 
-interface ProjectCardProps {
+type ProjectCardProps = {
   project: ProjectType;
-}
+};
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const { title, description, slug, imageUrl, isFeatured, stacks } = project;
@@ -15,11 +15,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     `https://placehold.co/600x400/darkgray/white/png?text=${encodeURIComponent(title)}`;
   return (
     <Link
-      to="/projects/$projectId"
+      className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4 dark:bg-white/10"
       params={{
         projectId: slug,
       }}
-      className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4 dark:bg-white/10"
+      to="/projects/$projectId"
     >
       {isFeatured && (
         <div className="absolute top-0 right-0 z-[2] flex items-center gap-1 rounded-tr-lg rounded-bl-lg bg-lime-300 px-2 py-1 font-medium text-[13px] text-emerald-950">
@@ -30,11 +30,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <div className="relative aspect-[2/1] w-full overflow-hidden rounded-md border">
         <img
-          src={thumbnailUrl}
           alt={description ?? ""}
-          width={1200}
-          height={630}
           className="animate-reveal rounded-md object-cover transition-all group-hover:scale-105"
+          height={630}
+          src={thumbnailUrl}
+          width={1200}
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center gap-1 rounded-md bg-black font-medium text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-80">
           <span>View Project</span>

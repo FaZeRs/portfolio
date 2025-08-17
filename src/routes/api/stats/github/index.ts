@@ -8,7 +8,7 @@ export const ServerRoute = createServerFileRoute("/api/stats/github/").methods({
       const { user, repos, starsCount } = (await getGithubStats()) || {};
       return json({ user, repos, starsCount });
     } catch (error) {
-      return json({ error: error }, { status: 500 });
+      return json({ error }, { status: 500 });
     }
   },
 });

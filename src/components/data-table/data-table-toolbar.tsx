@@ -3,10 +3,10 @@ import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-interface DataTableToolbarProps {
+type DataTableToolbarProps = {
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
-}
+};
 
 export function DataTableToolbar({
   globalFilter,
@@ -16,18 +16,18 @@ export function DataTableToolbar({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter projects..."
-          value={globalFilter ?? ""}
+          className="h-8 w-[150px] lg:w-[250px]"
           onChange={(event) => {
             setGlobalFilter(String(event.target.value));
           }}
-          className="h-8 w-[150px] lg:w-[250px]"
+          placeholder="Filter projects..."
+          value={globalFilter ?? ""}
         />
         {globalFilter && (
           <Button
-            variant="ghost"
-            onClick={() => setGlobalFilter("")}
             className="h-8 px-2 lg:px-3"
+            onClick={() => setGlobalFilter("")}
+            variant="ghost"
           >
             Reset
             <X />

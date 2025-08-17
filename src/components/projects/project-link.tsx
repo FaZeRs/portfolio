@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-interface ProjectLinksProps {
+type ProjectLinksProps = {
   title: string;
   url: string;
   icon?: ReactNode;
-}
+};
 
 export default function ProjectLink({
   title,
@@ -13,7 +13,7 @@ export default function ProjectLink({
   icon,
 }: Readonly<ProjectLinksProps>) {
   return (
-    <Link to={url} target="_blank">
+    <Link target="_blank" to={url}>
       <div className="flex cursor-pointer items-center gap-x-2 rounded-md border border-transparent bg-white px-4 py-2 text-zinc-700 duration-200 hover:border-zinc-200 dark:bg-white/10 dark:text-white hover:dark:border-zinc-700">
         {icon}
         {title}

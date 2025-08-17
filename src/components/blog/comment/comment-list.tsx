@@ -2,10 +2,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "~/trpc/react";
 import CommentItem from "./comment-item";
 
-interface CommentListProps {
+type CommentListProps = {
   articleId: string;
   articleSlug: string;
-}
+};
 
 export default function CommentList({
   articleId,
@@ -13,7 +13,7 @@ export default function CommentList({
 }: Readonly<CommentListProps>) {
   const trpc = useTRPC();
   const { data: comments } = useSuspenseQuery(
-    trpc.comment.all.queryOptions({ articleId: articleId }),
+    trpc.comment.all.queryOptions({ articleId })
   );
   const filteredComments = comments?.filter((c) => !c.comment.parentId);
 
@@ -21,9 +21,9 @@ export default function CommentList({
     <div className="space-y-2 rounded-lg border py-2 dark:bg-zinc-900/30">
       {filteredComments.map((comment) => (
         <CommentItem
-          key={comment.comment.id}
-          comment={comment}
           articleSlug={articleSlug}
+          comment={comment}
+          key={comment.comment.id}
         />
       ))}
 

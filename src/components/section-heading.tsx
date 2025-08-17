@@ -1,6 +1,6 @@
-interface SectionHeadingProps {
+type SectionHeadingProps = {
   children: React.ReactNode;
-}
+};
 
 export default function SectionHeading({
   children,

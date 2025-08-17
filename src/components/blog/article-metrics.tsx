@@ -2,9 +2,9 @@ import { EyeIcon, MessageSquare, ThumbsUpIcon, TimerIcon } from "lucide-react";
 import { calculateReadingTime, formatDate } from "~/lib/utils";
 import { ArticleType, CommentType } from "~/types";
 
-interface ArticleMetricsProps {
+type ArticleMetricsProps = {
   article: ArticleType & { comments: CommentType[] };
-}
+};
 
 const ArticleMetrics = ({ article }: ArticleMetricsProps) => {
   const readingTime = calculateReadingTime(article.content ?? "");

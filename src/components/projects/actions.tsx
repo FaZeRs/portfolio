@@ -2,11 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "~/trpc/react";
 import { ResourceActions } from "../resource-actions";
 
-interface DataTableRowActionsProps {
+type DataTableRowActionsProps = {
   id: string;
   slug: string;
   title: string;
-}
+};
 
 export function Actions({
   id,
@@ -22,17 +22,17 @@ export function Actions({
 
   return (
     <ResourceActions
-      id={id}
-      title={title}
-      resourceType="project"
-      viewPath={`/projects/${slug}`}
       editPath={`/dashboard/projects/${id}/edit`}
+      id={id}
+      resourceType="project"
+      title={title}
       trpcDeleteMutation={{
-        mutationFn: (id: string) => mutation.mutateAsync(id),
+        mutationFn: (resourceId: string) => mutation.mutateAsync(resourceId),
         invalidateQuery: async () => {
           await queryClient.invalidateQueries(trpc.project.pathFilter());
         },
       }}
+      viewPath={`/projects/${slug}`}
     />
   );
 }

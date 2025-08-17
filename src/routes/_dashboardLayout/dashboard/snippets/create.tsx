@@ -8,7 +8,7 @@ import { SnippetBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/snippets/create",
+  "/_dashboardLayout/dashboard/snippets/create"
 )({
   component: SnippetsCreatePage,
   head: () => ({
@@ -29,8 +29,7 @@ function SnippetsCreatePage() {
       form.reset();
       router.navigate({ to: "/dashboard/snippets" });
     },
-    onError: (error) => {
-      console.error("Error creating snippet:", error);
+    onError: (_error) => {
       toast.error("Failed to create snippet");
     },
   });
@@ -67,12 +66,12 @@ function SnippetsCreatePage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
             <SnippetsForm form={form} />
           </form>

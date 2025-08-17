@@ -24,25 +24,28 @@ export default function CommentReply() {
       toast.success("Comment posted");
     },
     onError: (error) => {
-      console.error("Error posting comment reply:", error);
       toast.error(error.message);
+      // biome-ignore lint/suspicious/noConsole: logging error
+      console.error(error);
     },
     onSettled: async () => {
       await queryClient.invalidateQueries(
         trpc.comment.all.queryOptions({
           articleId: comment.comment.articleId,
           parentId: comment.comment.id,
-        }),
+        })
       );
     },
   });
 
   const disabled = !isAuthenticated || isPending;
 
-  const handleReplySubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleReplySubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!editor) return;
+    if (!editor) {
+      return;
+    }
     if (editor.isEmpty) {
       toast.error("Comment cannot be empty");
 
@@ -61,27 +64,27 @@ export default function CommentReply() {
   return (
     <form onSubmit={handleReplySubmit}>
       <CommentEditor
+        disabled={disabled}
         editor={editor}
         onChange={setEditor}
         placeholder={"Reply to comment"}
-        disabled={disabled}
       />
 
       <div className="mt-2 space-x-1">
         <Button
-          variant="secondary"
-          className="h-8 px-2 font-medium text-xs"
-          type="submit"
-          disabled={disabled || !editor || editor.isEmpty}
           aria-disabled={disabled || !editor || editor.isEmpty}
+          className="h-8 px-2 font-medium text-xs"
+          disabled={disabled || !editor || editor.isEmpty}
+          type="submit"
+          variant="secondary"
         >
           Reply
         </Button>
         <Button
-          variant="secondary"
           className="h-8 px-2 font-medium text-xs"
-          type="button"
           onClick={() => setIsReplying(false)}
+          type="button"
+          variant="secondary"
         >
           Cancel
         </Button>

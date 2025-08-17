@@ -2,8 +2,10 @@
 
 @import "tw-animate-css";
 
+/* biome-ignore lint/suspicious/noUnknownAtRules: @custom-variant is a valid CSS at-rule */
 @custom-variant dark (&:is(.dark *));
 
+/* biome-ignore lint/suspicious/noUnknownAtRules: @theme is a valid CSS at-rule */
 @theme {
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -64,6 +66,7 @@
   }
 }
 
+/* biome-ignore lint/suspicious/noUnknownAtRules: @utility is a valid CSS at-rule */
 @utility container {
   margin-inline: auto;
   padding-inline: 2rem;
@@ -162,6 +165,7 @@
 }
 
 .rdp-vhidden {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply hidden;
 }
 

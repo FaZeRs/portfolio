@@ -5,9 +5,9 @@ import { visit } from "unist-util-visit";
 import { TOC } from "~/types";
 
 declare module "mdast" {
-  interface Data {
+  type Data = {
     hProperties?: { id?: string };
-  }
+  };
 }
 
 export const remarkHeading: Plugin = () => {
@@ -21,7 +21,9 @@ export const remarkHeading: Plugin = () => {
 
       const childNode = node.children[0];
 
-      if (childNode?.type !== "text") return;
+      if (childNode?.type !== "text") {
+        return;
+      }
 
       const text = childNode.value;
       const id = slugger.slug(childNode.value);

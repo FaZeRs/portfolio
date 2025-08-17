@@ -11,7 +11,7 @@ export const components = {
     <h1
       className={cn(
         "mt-2 scroll-m-20 font-bold text-4xl tracking-tight",
-        className,
+        className
       )}
       {...props}
     />
@@ -22,7 +22,7 @@ export const components = {
     <h2
       className={cn(
         "mt-10 scroll-m-28 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0",
-        className,
+        className
       )}
       {...props}
     />
@@ -33,7 +33,7 @@ export const components = {
     <h3
       className={cn(
         "mt-8 scroll-m-28 font-semibold text-2xl tracking-tight",
-        className,
+        className
       )}
       {...props}
     />
@@ -44,7 +44,7 @@ export const components = {
     <h4
       className={cn(
         "mt-8 scroll-m-28 font-semibold text-xl tracking-tight",
-        className,
+        className
       )}
       {...props}
     />
@@ -55,7 +55,7 @@ export const components = {
     <h5
       className={cn(
         "mt-8 scroll-m-20 font-semibold text-lg tracking-tight",
-        className,
+        className
       )}
       {...props}
     />
@@ -66,7 +66,7 @@ export const components = {
     <h6
       className={cn(
         "mt-8 scroll-m-20 font-semibold text-base tracking-tight",
-        className,
+        className
       )}
       {...props}
     />
@@ -76,6 +76,7 @@ export const components = {
     // @sonar-ignore
     <a
       className={cn("font-medium underline underline-offset-4", className)}
+      href={props.href as string}
       target={props.href?.startsWith("http") ? "_blank" : undefined}
       {...props}
     />
@@ -100,7 +101,7 @@ export const components = {
     <blockquote
       className={cn(
         "my-6 border-l-4 pl-6 italic [&>*]:text-gray-800 dark:[&>*]:text-gray-300",
-        className,
+        className
       )}
       {...props}
     />
@@ -110,7 +111,8 @@ export const components = {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img className={cn("rounded-md border", className)} alt={alt} {...props} />
+    // biome-ignore lint/nursery/useImageSize: props.width and props.height are used
+    <img alt={alt} className={cn("rounded-md border", className)} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
@@ -128,7 +130,7 @@ export const components = {
     <th
       className={cn(
         "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
-        className,
+        className
       )}
       {...props}
     />
@@ -137,7 +139,7 @@ export const components = {
     <td
       className={cn(
         "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
-        className,
+        className
       )}
       {...props}
     />
@@ -151,7 +153,7 @@ export const components = {
     <code
       className={cn(
         "relative rounded border bg-muted px-[0.3rem] py-0.5 font-mono text-[0.95em]",
-        className,
+        className
       )}
       {...props}
     />
@@ -167,7 +169,7 @@ export const components = {
     <h3
       className={cn(
         "mt-8 scroll-m-20 font-semibold text-lg tracking-tight",
-        className,
+        className
       )}
       {...props}
     />

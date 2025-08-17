@@ -7,28 +7,28 @@ const Footer = () => {
         <p className="text-center text-sm leading-loose md:text-left">
           Built by{" "}
           <a
-            href={siteConfig.links.twitter}
-            target="_blank"
-            rel="noreferrer"
             className="font-medium underline underline-offset-4"
+            href={siteConfig.links.twitter}
+            rel="noreferrer"
+            target="_blank"
           >
             {siteConfig.author.name}
           </a>
           . Hosted on{" "}
           <a
-            href="https://vercel.com"
-            target="_blank"
-            rel="noreferrer"
             className="font-medium underline underline-offset-4"
+            href="https://vercel.com"
+            rel="noreferrer"
+            target="_blank"
           >
             Vercel
           </a>
           . The source code is available on{" "}
           <a
-            href={siteConfig.links.githubRepo}
-            target="_blank"
-            rel="noreferrer"
             className="font-medium underline underline-offset-4"
+            href={siteConfig.links.githubRepo}
+            rel="noreferrer"
+            target="_blank"
           >
             GitHub
           </a>

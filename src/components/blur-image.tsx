@@ -19,6 +19,8 @@ export function BlurImage({
   className,
   lazy = true,
   ref,
+  height = 100,
+  width = 100,
   ...rest
 }: BlurImageProps) {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,11 +30,14 @@ export function BlurImage({
       className={cn("overflow-hidden", isLoading && "animate-pulse", className)}
       ref={ref}
     >
+      {/** biome-ignore lint/a11y/noNoninteractiveElementInteractions: Bad element */}
       <img
-        src={src}
         alt={alt}
+        height={height}
         loading={lazy ? "lazy" : undefined}
         onLoad={() => setIsLoading(false)}
+        src={src}
+        width={width}
         {...rest}
       />
     </div>

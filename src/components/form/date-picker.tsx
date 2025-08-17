@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
-interface FormDatePickerProps {
+type FormDatePickerProps = {
   field: {
     name: string;
     state: { value: string };
@@ -15,7 +15,7 @@ interface FormDatePickerProps {
   placeholder: string;
   disabled?: boolean;
   className?: string;
-}
+};
 
 export function FormDatePicker({
   field,
@@ -27,21 +27,21 @@ export function FormDatePicker({
   return (
     <div className={className}>
       <label
-        htmlFor={field.name}
         className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        htmlFor={field.name}
       >
         {label}
       </label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={"outline"}
             className={cn(
               "justify-start text-left font-normal",
               !field.state.value && "text-muted-foreground",
-              disabled && "cursor-not-allowed opacity-50",
+              disabled && "cursor-not-allowed opacity-50"
             )}
             disabled={disabled}
+            variant={"outline"}
           >
             <CalendarIcon />
             {field.state.value ? (
@@ -51,20 +51,20 @@ export function FormDatePicker({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent align="start" className="w-auto p-0">
           <Calendar
-            mode="single"
             captionLayout="dropdown-buttons"
-            selected={
-              field.state.value ? new Date(field.state.value) : undefined
-            }
+            fromYear={2010}
+            initialFocus
+            mode="single"
             onSelect={(value) => {
               if (value) {
                 field.handleChange(value.toISOString());
               }
             }}
-            initialFocus
-            fromYear={2010}
+            selected={
+              field.state.value ? new Date(field.state.value) : undefined
+            }
             toYear={2030}
           />
         </PopoverContent>

@@ -27,12 +27,12 @@ export const Route = createFileRoute("/_defaultLayout/blog/$articleId")({
   loader: async ({ params: { articleId }, context: { trpc, queryClient } }) => {
     try {
       const data = await queryClient.ensureQueryData(
-        trpc.blog.bySlug.queryOptions({ slug: articleId }),
+        trpc.blog.bySlug.queryOptions({ slug: articleId })
       );
       await queryClient.prefetchQuery(
         trpc.comment.all.queryOptions({
           articleId: data?.id,
-        }),
+        })
       );
       return {
         title: data?.title,
@@ -71,7 +71,7 @@ function RouteComponent() {
   const { articleId } = Route.useParams();
   const trpc = useTRPC();
   const { data: article } = useSuspenseQuery(
-    trpc.blog.bySlug.queryOptions({ slug: articleId }),
+    trpc.blog.bySlug.queryOptions({ slug: articleId })
   );
 
   const queryClient = useQueryClient();
@@ -81,20 +81,27 @@ function RouteComponent() {
       await queryClient.invalidateQueries(trpc.blog.pathFilter());
     },
     onError: (error) => {
-      console.error("Error viewing article:", error);
+      // biome-ignore lint/suspicious/noConsole: log error
+      console.error(error);
     },
   });
 
   const hasViewedRef = useRef(false);
   // biome-ignore lint/correctness/useExhaustiveDependencies: view once per mount
   useEffect(() => {
-    if (!articleId) return;
-    if (hasViewedRef.current) return;
+    if (!articleId) {
+      return;
+    }
+    if (hasViewedRef.current) {
+      return;
+    }
     hasViewedRef.current = true;
 
     // Session guard to avoid duplicate increments across navigation's in the same tab
     const sessionKey = `viewed:${articleId}`;
-    if (sessionStorage.getItem(sessionKey)) return;
+    if (sessionStorage.getItem(sessionKey)) {
+      return;
+    }
     sessionStorage.setItem(sessionKey, "1");
 
     viewMutation.mutate({ slug: articleId });
@@ -126,11 +133,11 @@ function RouteComponent() {
               <div className="mt-4 flex items-center gap-3 sm:gap-4">
                 {article.author.image && (
                   <img
-                    src={article.author.image}
                     alt={article.author.name}
-                    width={40}
-                    height={40}
                     className="rounded-full bg-white"
+                    height={40}
+                    src={article.author.image}
+                    width={40}
                   />
                 )}
                 <div className="flex-1 text-left leading-tight">
@@ -143,11 +150,11 @@ function RouteComponent() {
 
             {article.imageUrl && (
               <img
-                src={article.imageUrl}
                 alt={article.title}
-                width={832}
-                height={405}
                 className="my-6 w-full rounded-md border bg-muted transition-colors sm:my-8"
+                height={405}
+                src={article.imageUrl}
+                width={832}
               />
             )}
           </div>

@@ -23,17 +23,17 @@ export const snippetFormOpts = formOptions({
 
 export const SnippetsForm = withForm({
   ...snippetFormOpts,
-  render: function Render({ form }) {
+  render({ form }) {
     return (
       <>
         <form.AppField
-          name="title"
           listeners={{
             onChange: ({ value }) => {
               const slug = generateSlug(value);
               form.setFieldValue("slug", slug);
             },
           }}
+          name="title"
         >
           {(field) => (
             <FormInput
@@ -92,9 +92,9 @@ const add = (a, b) => a + b;
         <form.AppField name="isDraft">
           {(field) => (
             <FormCheckbox
+              description="This snippet won't be visible to visitors"
               field={field}
               label="Save as Draft"
-              description="This snippet won't be visible to visitors"
             />
           )}
         </form.AppField>

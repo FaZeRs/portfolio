@@ -1,6 +1,6 @@
 import { Textarea } from "../ui/textarea";
 
-interface FormTextareaProps {
+type FormTextareaProps = {
   field: {
     name: string;
     state: { value: string };
@@ -18,7 +18,7 @@ interface FormTextareaProps {
   placeholder?: string;
   className?: string;
   minHeight?: string;
-}
+};
 
 export function FormTextarea({
   field,
@@ -32,13 +32,13 @@ export function FormTextarea({
       <field.FormLabel>{label}</field.FormLabel>
       <field.FormControl>
         <Textarea
+          className={minHeight}
           id={field.name}
           name={field.name}
-          placeholder={placeholder}
-          value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
-          className={minHeight}
+          placeholder={placeholder}
+          value={field.state.value}
         />
       </field.FormControl>
       <field.FormMessage />

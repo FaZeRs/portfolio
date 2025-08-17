@@ -23,10 +23,11 @@ export const authMiddleware = createMiddleware({ type: "function" }).server(
     });
 
     if (!session) {
+      // biome-ignore lint/style/noMagicNumbers: 401 is the status code for unauthorized
       setResponseStatus(401);
       throw new Error("Unauthorized");
     }
 
     return next({ context: { user: session.user } });
-  },
+  }
 );

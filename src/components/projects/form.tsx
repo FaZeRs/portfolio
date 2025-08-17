@@ -30,28 +30,28 @@ export const projectFormOpts = formOptions({
   },
 });
 
-interface FormField {
+type FormField = {
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
   handleBlur: () => void;
-}
+};
 
 export const ProjectsForm = withForm({
   ...projectFormOpts,
   props: {
     project: undefined as ProjectType | undefined,
   },
-  render: function Render({ form, project }) {
+  render({ form, project }) {
     return (
       <>
         <form.AppField
-          name="title"
           listeners={{
             onChange: ({ value }) => {
               const slug = generateSlug(value);
               form.setFieldValue("slug", slug);
             },
           }}
+          name="title"
         >
           {(field) => (
             <FormInput
@@ -105,9 +105,9 @@ Details about how you implemented the project."
           {(field) => (
             <FormImageUpload
               field={field as FormField}
-              name={field.name}
-              label="Image"
               initialPreview={project?.imageUrl}
+              label="Image"
+              name={field.name}
             />
           )}
         </form.AppField>
@@ -118,8 +118,8 @@ Details about how you implemented the project."
               <FormInput
                 field={field}
                 label="GitHub URL"
-                type="url"
                 placeholder="https://github.com/username/project"
+                type="url"
               />
             )}
           </form.AppField>
@@ -129,8 +129,8 @@ Details about how you implemented the project."
               <FormInput
                 field={field}
                 label="Demo URL"
-                type="url"
                 placeholder="https://example.com"
+                type="url"
               />
             )}
           </form.AppField>
@@ -141,12 +141,12 @@ Details about how you implemented the project."
             <FormMultiSelect
               field={field}
               label="Stacks"
-              placeholder="Select technology stacks"
               options={Object.entries(STACKS).map(([key, value]) => ({
                 label: key,
                 value: key,
-                icon: <Icon icon={value} className="h-4 w-4" />,
+                icon: <Icon className="h-4 w-4" icon={value} />,
               }))}
+              placeholder="Select technology stacks"
             />
           )}
         </form.AppField>
@@ -155,9 +155,9 @@ Details about how you implemented the project."
           <form.AppField name="isFeatured">
             {(field) => (
               <FormCheckbox
+                description="Display this project in featured section"
                 field={field}
                 label="Featured Project"
-                description="Display this project in featured section"
               />
             )}
           </form.AppField>
@@ -165,9 +165,9 @@ Details about how you implemented the project."
           <form.AppField name="isDraft">
             {(field) => (
               <FormCheckbox
+                description="This project won't be visible to visitors"
                 field={field}
                 label="Save as Draft"
-                description="This project won't be visible to visitors"
               />
             )}
           </form.AppField>

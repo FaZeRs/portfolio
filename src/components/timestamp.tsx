@@ -1,21 +1,23 @@
 import { format, formatDistanceToNow, isToday } from "date-fns";
 import { useEffect, useState } from "react";
 
-interface TimestampProps {
+type TimestampProps = {
   datetime: string;
-}
+};
+
+const INTERVAL_MS = 60_000 as const; // 1 minute
 
 const Timestamp = ({ datetime }: TimestampProps) => {
   const [formattedTimestamp, setFormattedTimestamp] = useState<string>(
-    formatDistanceToNow(new Date(datetime), { addSuffix: true }),
+    formatDistanceToNow(new Date(datetime), { addSuffix: true })
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
       setFormattedTimestamp(
-        formatDistanceToNow(new Date(datetime), { addSuffix: true }),
+        formatDistanceToNow(new Date(datetime), { addSuffix: true })
       );
-    }, 60_000);
+    }, INTERVAL_MS);
 
     return () => clearInterval(interval);
   }, [datetime]);

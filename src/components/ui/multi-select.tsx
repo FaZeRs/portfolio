@@ -1,7 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { CheckIcon, ChevronDown, WandSparkles, X, XCircle } from "lucide-react";
-import * as React from "react";
-import { useOptimistic, useState } from "react";
+import { ComponentProps, useOptimistic, useState } from "react";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -43,14 +42,14 @@ const multiSelectVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  },
+  }
 );
 
 /**
  * Props for MultiSelect component
  */
 interface MultiSelectProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends ComponentProps<"button">,
     VariantProps<typeof multiSelectVariants> {
   /**
    * An array of option objects to be displayed in the multi-select component.
@@ -127,7 +126,7 @@ export const MultiSelect = ({
 
   const [optimisticSelectedValues, updateSelectedValues] = useOptimistic(
     selectedValues,
-    (_, newValues: string[]) => newValues,
+    (_, newValues: string[]) => newValues
   );
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -181,19 +180,19 @@ export const MultiSelect = ({
 
   return (
     <Popover
-      open={isPopoverOpen}
-      onOpenChange={setIsPopoverOpen}
       modal={modalPopover}
+      onOpenChange={setIsPopoverOpen}
+      open={isPopoverOpen}
     >
       <PopoverTrigger asChild>
         <Button
           ref={ref}
           {...props}
-          onClick={handleTogglePopover}
           className={cn(
             "flex h-auto min-h-10 w-full items-center justify-between rounded-md border bg-inherit p-1 hover:bg-inherit [&_svg]:pointer-events-auto",
-            className,
+            className
           )}
+          onClick={handleTogglePopover}
         >
           {optimisticSelectedValues.length > 0 ? (
             <div className="flex w-full items-center justify-between">
@@ -202,11 +201,11 @@ export const MultiSelect = ({
                   const option = options.find((o) => o.value === value);
                   return (
                     <Badge
-                      key={value}
                       className={cn(
                         isAnimating ? "animate-bounce" : "",
-                        multiSelectVariants({ variant }),
+                        multiSelectVariants({ variant })
                       )}
+                      key={value}
                       style={{ animationDuration: `${animation}s` }}
                     >
                       {option?.icon}
@@ -226,7 +225,7 @@ export const MultiSelect = ({
                     className={cn(
                       "border-foreground/1 bg-transparent text-foreground hover:bg-transparent",
                       isAnimating ? "animate-bounce" : "",
-                      multiSelectVariants({ variant }),
+                      multiSelectVariants({ variant })
                     )}
                     style={{ animationDuration: `${animation}s` }}
                   >
@@ -250,8 +249,8 @@ export const MultiSelect = ({
                   }}
                 />
                 <Separator
-                  orientation="vertical"
                   className="flex h-full min-h-6"
+                  orientation="vertical"
                 />
                 <ChevronDown className="mx-2 h-4 cursor-pointer text-muted-foreground" />
               </div>
@@ -267,29 +266,29 @@ export const MultiSelect = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-auto p-0"
         align="start"
+        className="w-auto p-0"
         onEscapeKeyDown={() => setIsPopoverOpen(false)}
       >
         <Command>
           <CommandInput
-            placeholder="Search..."
             onKeyDown={handleInputKeyDown}
+            placeholder="Search..."
           />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               <CommandItem
+                className="cursor-pointer"
                 key="all"
                 onSelect={toggleAll}
-                className="cursor-pointer"
               >
                 <div
                   className={cn(
                     "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
                     optimisticSelectedValues.length === options.length
                       ? "bg-primary text-primary-foreground"
-                      : "opacity-50 [&_svg]:invisible",
+                      : "opacity-50 [&_svg]:invisible"
                   )}
                 >
                   <CheckIcon className="h-4 w-4" />
@@ -298,20 +297,20 @@ export const MultiSelect = ({
               </CommandItem>
               {options.map((option) => {
                 const isSelected = optimisticSelectedValues.includes(
-                  option.value,
+                  option.value
                 );
                 return (
                   <CommandItem
+                    className="cursor-pointer"
                     key={option.value}
                     onSelect={() => toggleOption(option.value)}
-                    className="cursor-pointer"
                   >
                     <div
                       className={cn(
                         "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
                         isSelected
                           ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible",
+                          : "opacity-50 [&_svg]:invisible"
                       )}
                     >
                       <CheckIcon className="h-4 w-4" />
@@ -332,20 +331,20 @@ export const MultiSelect = ({
                 {optimisticSelectedValues.length > 0 && (
                   <>
                     <CommandItem
-                      onSelect={handleClear}
                       className="flex-1 cursor-pointer justify-center"
+                      onSelect={handleClear}
                     >
                       Clear
                     </CommandItem>
                     <Separator
-                      orientation="vertical"
                       className="flex h-full min-h-6"
+                      orientation="vertical"
                     />
                   </>
                 )}
                 <CommandItem
-                  onSelect={() => setIsPopoverOpen(false)}
                   className="max-w-full flex-1 cursor-pointer justify-center"
+                  onSelect={() => setIsPopoverOpen(false)}
                 >
                   Close
                 </CommandItem>
@@ -358,7 +357,7 @@ export const MultiSelect = ({
         <WandSparkles
           className={cn(
             "my-2 h-3 w-3 cursor-pointer bg-background text-foreground",
-            isAnimating ? "" : "text-muted-foreground",
+            isAnimating ? "" : "text-muted-foreground"
           )}
           onClick={() => setIsAnimating(!isAnimating)}
         />

@@ -13,7 +13,7 @@ import { cn } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/experiences/",
+  "/_dashboardLayout/dashboard/experiences/"
 )({
   component: Experiences,
   loader: async ({ context: { trpc, queryClient } }) =>
@@ -93,9 +93,9 @@ function Experiences() {
           <p className="text-muted-foreground">Manage your experiences here.</p>
         </div>
         <Link
-          to="/dashboard/experiences/create"
-          className={cn(buttonVariants({ variant: "default" }), "group")}
           aria-label="Add new experience"
+          className={cn(buttonVariants({ variant: "default" }), "group")}
+          to="/dashboard/experiences/create"
         >
           <span>Add Experience</span> <Plus className="ml-1" size={18} />
         </Link>

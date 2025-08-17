@@ -1,7 +1,9 @@
+/** biome-ignore-all lint/style/noMagicNumbers: valid constant */
 import { pgEnum, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
+// biome-ignore lint/style/noEnum: valid enum
 export enum ExperienceType {
   WORK = "work",
   EDUCATION = "education",
@@ -70,7 +72,7 @@ export const CreateExperienceSchema = createInsertSchema(Experience, {
   .and(
     z.object({
       thumbnail: ExperienceBaseSchema.shape.thumbnail,
-    }),
+    })
   );
 
 export const UpdateExperienceSchema = createUpdateSchema(Experience, {
@@ -92,5 +94,5 @@ export const UpdateExperienceSchema = createUpdateSchema(Experience, {
   .and(
     z.object({
       thumbnail: ExperienceBaseSchema.shape.thumbnail,
-    }),
+    })
   );

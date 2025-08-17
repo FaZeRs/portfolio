@@ -3,9 +3,9 @@ import { BoldIcon, ItalicIcon, StrikethroughIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
-interface EditorToolbarProps {
+type EditorToolbarProps = {
   editor: Editor;
-}
+};
 
 export default function EditorToolbar({
   editor,
@@ -27,17 +27,17 @@ export default function EditorToolbar({
         },
       ].map((item) => (
         <Button
-          key={item.name}
           aria-label={`Toggle ${item.name}`}
-          variant="ghost"
-          size="icon"
           className={cn(
             "size-7",
-            editor.isActive(item.name) && "bg-accent text-accent-foreground",
+            editor.isActive(item.name) && "bg-accent text-accent-foreground"
           )}
-          disabled={!editor.can().toggleMark(item.name) || !editor.isEditable}
+          disabled={!(editor.can().toggleMark(item.name) && editor.isEditable)}
+          key={item.name}
           onClick={() => editor.commands.toggleMark(item.name)}
+          size="icon"
           type="button"
+          variant="ghost"
         >
           {item.icon}
         </Button>

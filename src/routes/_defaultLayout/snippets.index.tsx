@@ -42,8 +42,8 @@ function RouteComponent() {
   return (
     <>
       <PageHeading
-        title="Snippets"
         description="A collection of code snippets that I use in my projects."
+        title="Snippets"
       />
       {isLoading || isFetching ? (
         <SnippetsSkeleton />

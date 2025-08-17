@@ -40,10 +40,10 @@ export function DataTableColumnHeader<TData, TValue>({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
-            size="sm"
-            className="-ml-3 h-8 data-[state=open]:bg-accent"
             aria-label={`Sort ${title} column ${column.getIsSorted() ? (column.getIsSorted() === "desc" ? "ascending" : "descending") : ""}`}
+            className="-ml-3 h-8 data-[state=open]:bg-accent"
+            size="sm"
+            variant="ghost"
           >
             <span>{title}</span>
             {renderSortIcon()}

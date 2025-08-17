@@ -12,12 +12,16 @@ export const Route = createFileRoute("/_defaultLayout/bookmarks/$bookmarkId")({
   component: RouteComponent,
   loader: async ({ params }) => {
     const collections = await getCollections();
-    if (!collections) return;
+    if (!collections) {
+      return;
+    }
 
     const currentCollection = collections.items.find(
-      (collection: Collection) => collection.slug === params.bookmarkId,
+      (c: Collection) => c.slug === params.bookmarkId
     );
-    if (!currentCollection) return;
+    if (!currentCollection) {
+      return;
+    }
 
     const [collection, bookmarks] = await Promise.all([
       getCollection({ data: { id: currentCollection._id } }),
@@ -44,8 +48,8 @@ function RouteComponent() {
   return (
     <>
       <PageHeading
-        title={collection.item.title}
         description={collection.item.description}
+        title={collection.item.title}
       />
 
       <BookmarkList

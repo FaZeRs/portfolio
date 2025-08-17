@@ -33,11 +33,11 @@ export default function CodeBlockHeader({
   const getLanguageIcon = (lang: string): ReactNode => {
     switch (lang) {
       case "html":
-        return <Icon icon={siHtml5} className="size-4" />;
+        return <Icon className="size-4" icon={siHtml5} />;
       case "css":
-        return <Icon icon={siCss3} className="size-4" />;
+        return <Icon className="size-4" icon={siCss3} />;
       case "js":
-        return <Icon icon={siJavascript} className="size-4" />;
+        return <Icon className="size-4" icon={siJavascript} />;
       case "bash":
       case "sh":
       case "shell":
@@ -45,24 +45,24 @@ export default function CodeBlockHeader({
         return <TerminalIcon className="size-4" />;
       }
       case "py":
-        return <Icon icon={siPython} className="size-4" />;
+        return <Icon className="size-4" icon={siPython} />;
       case "json":
-        return <Icon icon={siJson} className="size-4" />;
+        return <Icon className="size-4" icon={siJson} />;
       case "jsx":
-        return <Icon icon={siReact} className="size-4" />;
+        return <Icon className="size-4" icon={siReact} />;
       case "text":
         return <FileText className="size-4" />;
       case "md":
-        return <Icon icon={siMarkdown} className="size-4" />;
+        return <Icon className="size-4" icon={siMarkdown} />;
       case "next":
-        return <Icon icon={siNextdotjs} className="size-4" />;
+        return <Icon className="size-4" icon={siNextdotjs} />;
       case "directory":
         return <FolderOpen className="size-4" />;
       case "vercel":
-        return <Icon icon={siVercel} className="size-4" />;
+        return <Icon className="size-4" icon={siVercel} />;
       case "ts":
       case "tsx":
-        return <Icon icon={siTypescript} className="size-4" />;
+        return <Icon className="size-4" icon={siTypescript} />;
       default:
         return <FileCode className="size-4" />;
     }
@@ -72,7 +72,7 @@ export default function CodeBlockHeader({
     <figcaption
       className={cn(
         "flex items-center gap-1.5 rounded-t-lg border-b bg-[#FAFAFA] px-4 py-2 text-sm dark:bg-background",
-        className,
+        className
       )}
       {...props}
     >

@@ -1,14 +1,20 @@
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import * as React from "react";
+import {
+  Content,
+  Portal,
+  Provider,
+  Root,
+  Trigger,
+} from "@radix-ui/react-tooltip";
+import { ComponentProps } from "react";
 
 import { cn } from "~/lib/utils";
 
 function TooltipProvider({
   delayDuration = 0,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
+}: Readonly<ComponentProps<typeof Provider>>) {
   return (
-    <TooltipPrimitive.Provider
+    <Provider
       data-slot="tooltip-provider"
       delayDuration={delayDuration}
       {...props}
@@ -16,20 +22,18 @@ function TooltipProvider({
   );
 }
 
-function Tooltip({
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+function Tooltip({ ...props }: Readonly<ComponentProps<typeof Root>>) {
   return (
     <TooltipProvider>
-      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+      <Root data-slot="tooltip" {...props} />
     </TooltipProvider>
   );
 }
 
 function TooltipTrigger({
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
+}: Readonly<ComponentProps<typeof Trigger>>) {
+  return <Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
 function TooltipContent({
@@ -37,21 +41,21 @@ function TooltipContent({
   sideOffset = 0,
   children,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Content>) {
+}: Readonly<ComponentProps<typeof Content>>) {
   return (
-    <TooltipPrimitive.Portal>
-      <TooltipPrimitive.Content
-        data-slot="tooltip-content"
-        sideOffset={sideOffset}
+    <Portal>
+      <Content
         className={cn(
           "fade-in-0 zoom-in-95 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 animate-in overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-popover-foreground text-sm shadow-md data-[state=closed]:animate-out",
-          className,
+          className
         )}
+        data-slot="tooltip-content"
+        sideOffset={sideOffset}
         {...props}
       >
         {children}
-      </TooltipPrimitive.Content>
-    </TooltipPrimitive.Portal>
+      </Content>
+    </Portal>
   );
 }
 

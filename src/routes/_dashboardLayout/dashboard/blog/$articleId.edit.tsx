@@ -17,12 +17,12 @@ import { ArticleBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/blog/$articleId/edit",
+  "/_dashboardLayout/dashboard/blog/$articleId/edit"
 )({
   component: ArticlesEditPage,
   loader: async ({ params: { articleId }, context: { trpc, queryClient } }) => {
     const data = await queryClient.ensureQueryData(
-      trpc.blog.byId.queryOptions({ id: articleId }),
+      trpc.blog.byId.queryOptions({ id: articleId })
     );
 
     return { title: data?.title };
@@ -41,7 +41,7 @@ function ArticlesEditPage() {
   const trpc = useTRPC();
 
   const article = useSuspenseQuery(
-    trpc.blog.byId.queryOptions({ id: articleId }),
+    trpc.blog.byId.queryOptions({ id: articleId })
   );
 
   const router = useRouter();
@@ -58,14 +58,13 @@ function ArticlesEditPage() {
     onError: (error) => {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      console.error("Error creating article:", errorMessage);
 
       toast.error(
         `Failed to create article: ${
           errorMessage.includes("validation")
             ? "Please check your form inputs"
             : "Server error. Please try again later."
-        }`,
+        }`
       );
     },
   });
@@ -106,14 +105,14 @@ function ArticlesEditPage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
-            <ArticleForm form={form} article={article.data} />
+            <ArticleForm article={article.data} form={form} />
           </form>
         </form.AppForm>
       </div>

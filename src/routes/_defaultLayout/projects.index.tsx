@@ -43,8 +43,8 @@ function RouteComponent() {
   return (
     <>
       <PageHeading
-        title="Projects"
         description="Several projects that I have worked on, both private and open source."
+        title="Projects"
       />
       {isLoading || isFetching ? (
         <ProjectsSkeleton />

@@ -6,6 +6,7 @@ import { Sitemap } from "tanstack-router-sitemap";
 
 dotenv.config();
 
+// biome-ignore lint/performance/noNamespaceImport: valid import
 import * as schema from "../../lib/server/schema";
 import { articles } from "../../lib/server/schema/article.schema";
 import { Project } from "../../lib/server/schema/project.schema";
@@ -40,11 +41,7 @@ export const sitemap: Sitemap<TRoutes> = {
           changeFrequency: "weekly" as const,
           lastModified: project.updatedAt || new Date(),
         }));
-      } catch (error) {
-        console.warn(
-          "Database connection failed, returning empty projects sitemap:",
-          error,
-        );
+      } catch (_error) {
         return [];
       }
     },
@@ -63,11 +60,7 @@ export const sitemap: Sitemap<TRoutes> = {
           changeFrequency: "weekly" as const,
           lastModified: article.updatedAt || new Date(),
         }));
-      } catch (error) {
-        console.warn(
-          "Database connection failed, returning empty articles sitemap:",
-          error,
-        );
+      } catch (_error) {
         return [];
       }
     },
@@ -88,11 +81,7 @@ export const sitemap: Sitemap<TRoutes> = {
           changeFrequency: "monthly" as const,
           lastModified: snippet.updatedAt || new Date(),
         }));
-      } catch (error) {
-        console.warn(
-          "Database connection failed, returning empty snippets sitemap:",
-          error,
-        );
+      } catch (_error) {
         return [];
       }
     },

@@ -12,7 +12,7 @@ export default function SignInModal() {
   const { open, setOpen } = useSignInModal();
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-left text-2xl">Sign in</DialogTitle>

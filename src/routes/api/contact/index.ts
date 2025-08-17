@@ -10,10 +10,10 @@ export const ServerRoute = createServerFileRoute("/api/contact/").methods({
     const body = (await request.json()) as { email?: string; message?: string };
     const { email, message } = body;
 
-    if (!message || !email) {
+    if (!(message && email)) {
       return Response.json(
         { error: "Missing required fields" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -27,8 +27,7 @@ export const ServerRoute = createServerFileRoute("/api/contact/").methods({
       });
 
       if (error) {
-        console.error(error);
-        return Response.json({ error: error }, { status: 500 });
+        return Response.json({ error }, { status: 500 });
       }
 
       return Response.json(data);

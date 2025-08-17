@@ -10,20 +10,22 @@ export const userColumns: ColumnDef<UserType>[] = [
     id: "select",
     header: ({ table }) => (
       <Checkbox
+        aria-label="Select all users"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all users"
+        onCheckedChange={(value) =>
+          table.toggleAllPageRowsSelected(Boolean(value))
+        }
       />
     ),
     cell: ({ row }) => (
       <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label={`Select ${row.original.name}`}
+        checked={row.getIsSelected()}
         disabled={!row.getCanSelect()}
+        onCheckedChange={(value) => row.toggleSelected(Boolean(value))}
       />
     ),
     enableSorting: false,

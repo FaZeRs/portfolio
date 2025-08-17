@@ -1,30 +1,30 @@
 import { Info, LocateIcon } from "lucide-react";
 
-interface CoverImageProps {
+type CoverImageProps = {
   src: string;
   alt: string;
-}
+};
 
 export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
   return (
     <figure>
       <div className="relative mb-12 w-full">
         <img
-          src={src}
           alt={alt}
-          width={1920}
-          height={1080}
           className="aspect-[16/9] animate-reveal rounded-8 rounded-xl object-cover shadow-xl saturate-0 filter"
+          height={1080}
+          src={src}
+          width={1920}
         />
 
         <div className="absolute right-0 bottom-0 left-0 flex gap-4 rounded-b-xl p-3">
           <div className="h-28 w-28">
             <img
               alt="Avatar"
-              height={933}
-              width={933}
-              src="/images/avatar.avif"
               className="!m-0 h-full rounded-full bg-gradient-to-tl from-purple-700/60 to-rose-400/60 object-cover p-[3px] shadow-lg ring-[5px] ring-purple-500/10"
+              height={933}
+              src="/images/avatar.avif"
+              width={933}
             />
           </div>
 

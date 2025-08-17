@@ -21,7 +21,7 @@ export default function CodeBlock({
       <pre
         className={cn(
           "dark:!bg-[#0A0A0A] overflow-x-auto rounded-lg bg-white py-4",
-          className,
+          className
         )}
         {...props}
       />

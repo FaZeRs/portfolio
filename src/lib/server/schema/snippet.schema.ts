@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noMagicNumbers: valid constant */
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod/v4";
@@ -29,7 +30,7 @@ export const SnippetBaseSchema = z.object({
     .max(255, "Slug cannot exceed 255 characters")
     .regex(
       slugRegex,
-      "Slug must contain only lowercase letters, numbers, and hyphens",
+      "Slug must contain only lowercase letters, numbers, and hyphens"
     ),
   description: z
     .string()

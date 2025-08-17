@@ -1,9 +1,9 @@
 import Counter from "~/components/counter";
 import { Skeleton } from "~/components/ui/skeleton";
 
-interface StatCardProps {
+type StatCardProps = {
   card: { title: string; link?: string; value?: number };
-}
+};
 
 export default function StatCard({ card }: StatCardProps) {
   const { title, value, link } = card;
@@ -12,8 +12,8 @@ export default function StatCard({ card }: StatCardProps) {
     <a
       className="flex flex-col rounded-lg border border-transparent bg-background p-4 shadow hover:border-gray-300 dark:border-gray-800 dark:hover:border-neutral-600"
       href={link}
-      target="_blank"
       rel="noreferrer"
+      target="_blank"
     >
       <h1 className="my-2 font-bold text-3xl text-gray-600 group-hover:text-black dark:text-gray-200 dark:group-hover:text-white">
         {value ? (

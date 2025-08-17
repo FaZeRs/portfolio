@@ -8,6 +8,8 @@ type CounterProps = {
   delay?: number;
 } & ComponentPropsWithoutRef<"span">;
 
+const MILLISECONDS_PER_SECOND = 1000 as const;
+
 export default function Counter({
   value,
   className,
@@ -30,7 +32,7 @@ export default function Counter({
     isInView &&
       setTimeout(() => {
         motionValue.set(direction === "down" ? 0 : value);
-      }, delay * 1000);
+      }, delay * MILLISECONDS_PER_SECOND);
   }, [motionValue, isInView, delay, value, direction]);
 
   useEffect(
@@ -42,7 +44,7 @@ export default function Counter({
           }).format(Number(latest.toFixed(digits)));
         }
       }),
-    [springValue, digits],
+    [springValue, digits]
   );
 
   return (

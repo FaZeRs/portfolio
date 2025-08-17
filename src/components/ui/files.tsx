@@ -21,7 +21,7 @@ type FolderProps = {
 } & React.ComponentPropsWithoutRef<"div">;
 
 const item = cva(
-  "flex flex-row items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground",
+  "flex flex-row items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
 );
 
 export const Files = (props: FilesProps) => {
@@ -53,7 +53,7 @@ export const Folder = (props: FolderProps) => {
   const [isOpen, setOpen] = useState(open);
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setOpen} {...rest}>
+    <Collapsible onOpenChange={setOpen} open={isOpen} {...rest}>
       <CollapsibleTrigger className={cn(item({ className: "w-full" }))}>
         {isOpen ? (
           <FolderOpenIcon className="size-4" />

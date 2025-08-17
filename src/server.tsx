@@ -1,5 +1,9 @@
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
-import * as Sentry from "@sentry/tanstackstart-react";
+import {
+  init,
+  sentryGlobalServerMiddlewareHandler,
+  wrapStreamHandlerWithSentry,
+} from "@sentry/tanstackstart-react";
 import {
   createMiddleware,
   registerGlobalMiddleware,
@@ -11,7 +15,7 @@ import {
 import { env } from "~/lib/env.server";
 import { createRouter } from "./router";
 
-Sentry.init({
+init({
   dsn: env.VITE_SENTRY_DSN,
   integrations: [nodeProfilingIntegration()],
   tracesSampleRate: 1.0,
@@ -22,11 +26,11 @@ Sentry.init({
 registerGlobalMiddleware({
   middleware: [
     createMiddleware({ type: "function" }).server(
-      Sentry.sentryGlobalServerMiddlewareHandler(),
+      sentryGlobalServerMiddlewareHandler()
     ),
   ],
 });
 
 export default createStartHandler({
   createRouter,
-})(Sentry.wrapStreamHandlerWithSentry(defaultStreamHandler));
+})(wrapStreamHandlerWithSentry(defaultStreamHandler));

@@ -8,7 +8,7 @@ import { ProjectBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/projects/create",
+  "/_dashboardLayout/dashboard/projects/create"
 )({
   component: ProjectsCreatePage,
   head: () => ({
@@ -29,8 +29,7 @@ function ProjectsCreatePage() {
       form.reset();
       router.navigate({ to: "/dashboard/projects" });
     },
-    onError: (error) => {
-      console.error("Error creating project:", error);
+    onError: (_error) => {
       toast.error("Failed to create project");
     },
   });
@@ -71,12 +70,12 @@ function ProjectsCreatePage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
             <ProjectsForm form={form} project={undefined} />
           </form>

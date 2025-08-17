@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_dashboardLayout/dashboard/blog/create")(
     head: () => ({
       meta: [{ title: "Create Article | Dashboard" }],
     }),
-  },
+  }
 );
 
 function ArticlesCreatePage() {
@@ -31,8 +31,7 @@ function ArticlesCreatePage() {
       form.reset();
       router.navigate({ to: "/dashboard/blog" });
     },
-    onError: (error) => {
-      console.error("Error creating article:", error);
+    onError: (_error) => {
       toast.error("Failed to create article");
     },
   });
@@ -73,14 +72,14 @@ function ArticlesCreatePage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
-            <ArticleForm form={form} article={undefined} />
+            <ArticleForm article={undefined} form={form} />
           </form>
         </form.AppForm>
       </div>

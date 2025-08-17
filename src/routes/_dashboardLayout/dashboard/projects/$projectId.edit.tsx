@@ -17,12 +17,12 @@ import { ProjectBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/projects/$projectId/edit",
+  "/_dashboardLayout/dashboard/projects/$projectId/edit"
 )({
   component: ProjectsEditPage,
   loader: async ({ params: { projectId }, context: { trpc, queryClient } }) => {
     const data = await queryClient.ensureQueryData(
-      trpc.project.byId.queryOptions({ id: projectId }),
+      trpc.project.byId.queryOptions({ id: projectId })
     );
 
     return { title: data?.title };
@@ -41,7 +41,7 @@ function ProjectsEditPage() {
   const trpc = useTRPC();
 
   const project = useSuspenseQuery(
-    trpc.project.byId.queryOptions({ id: projectId }),
+    trpc.project.byId.queryOptions({ id: projectId })
   );
 
   const router = useRouter();
@@ -58,14 +58,13 @@ function ProjectsEditPage() {
     onError: (error) => {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      console.error("Error creating project:", errorMessage);
 
       toast.error(
         `Failed to create project: ${
           errorMessage.includes("validation")
             ? "Please check your form inputs"
             : "Server error. Please try again later."
-        }`,
+        }`
       );
     },
   });
@@ -109,12 +108,12 @@ function ProjectsEditPage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
             <ProjectsForm form={form} project={project.data} />
           </form>

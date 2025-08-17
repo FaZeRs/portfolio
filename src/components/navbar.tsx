@@ -20,16 +20,15 @@ import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";
 
-interface MainNavbarProps {
+type MainNavbarProps = {
   links: NavItem[];
-}
+};
 
 const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const { location } = useRouterState();
   const pathSegments = location.pathname.split("/").filter(Boolean);
-  const lastSegment =
-    pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : "";
+  const lastSegment = pathSegments.length > 0 ? pathSegments.at(-1) : "";
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
@@ -44,9 +43,9 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                       {link.content.map((subItem) => (
                         <ListItem
+                          href={subItem.href}
                           key={subItem.href.trim()}
                           title={subItem.title}
-                          href={subItem.href}
                         >
                           {subItem.description}
                         </ListItem>
@@ -56,15 +55,15 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
                 </>
               ) : (
                 <NavigationMenuLink
-                  target={link.href?.startsWith("http") ? "_blank" : "_self"}
+                  asChild
                   className={cn(
                     navigationMenuTriggerStyle(),
                     lastSegment &&
                       link.href?.endsWith(`/${lastSegment}`) &&
                       "bg-accent font-semibold",
-                    link.disabled && "cursor-not-allowed opacity-80",
+                    link.disabled && "cursor-not-allowed opacity-80"
                   )}
-                  asChild
+                  target={link.href?.startsWith("http") ? "_blank" : "_self"}
                 >
                   <Link to={link.href ?? "#"}>{link.title}</Link>
                 </NavigationMenuLink>

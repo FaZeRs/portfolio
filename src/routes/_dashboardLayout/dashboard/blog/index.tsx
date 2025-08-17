@@ -80,9 +80,9 @@ function Articles() {
           <p className="text-muted-foreground">Manage your articles here.</p>
         </div>
         <Link
-          to="/dashboard/blog/create"
-          className={cn(buttonVariants({ variant: "default" }), "group")}
           aria-label="Add new article"
+          className={cn(buttonVariants({ variant: "default" }), "group")}
+          to="/dashboard/blog/create"
         >
           <span>Add Article</span> <Plus className="ml-1" size={18} />
         </Link>

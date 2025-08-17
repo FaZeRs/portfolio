@@ -5,9 +5,9 @@ import BookmarkCard from "~/components/bookmarks/bookmark-card";
 import { getBookmarksByCollectionId, PAGE_SIZE } from "~/lib/raindrop";
 import { Bookmark } from "~/types";
 
-interface LoadMoreProps {
+type LoadMoreProps = {
   id: number;
-}
+};
 
 export default function LoadMore({ id }: Readonly<LoadMoreProps>) {
   const { ref, inView } = useInView();
@@ -33,7 +33,9 @@ export default function LoadMore({ id }: Readonly<LoadMoreProps>) {
           },
         });
 
-        if (PAGE_SIZE > newBookmarks.items.length) setIsReachingEnd(true);
+        if (PAGE_SIZE > newBookmarks.items.length) {
+          setIsReachingEnd(true);
+        }
 
         setData((prev) => [...prev, ...newBookmarks.items]);
         setPageIndex(pageIndex + 1);
@@ -49,7 +51,7 @@ export default function LoadMore({ id }: Readonly<LoadMoreProps>) {
     <>
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {data.map((bookmark) => (
-          <BookmarkCard key={bookmark._id} bookmark={bookmark} />
+          <BookmarkCard bookmark={bookmark} key={bookmark._id} />
         ))}
       </div>
 

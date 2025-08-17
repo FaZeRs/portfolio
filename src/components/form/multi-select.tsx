@@ -1,6 +1,6 @@
 import { MultiSelect } from "../ui/multi-select";
 
-interface FormMultiSelectProps {
+type FormMultiSelectProps = {
   field: {
     name: string;
     state: { value: string[] };
@@ -10,7 +10,7 @@ interface FormMultiSelectProps {
   placeholder: string;
   options: { label: string; value: string; icon?: React.ReactNode }[];
   className?: string;
-}
+};
 
 export function FormMultiSelect({
   field,
@@ -22,15 +22,15 @@ export function FormMultiSelect({
   return (
     <div className={className}>
       <label
-        htmlFor={field.name}
         className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        htmlFor={field.name}
       >
         {label}
       </label>
       <MultiSelect
-        options={options}
-        onValueChange={(value) => field.handleChange(value)}
         defaultValue={field.state.value}
+        onValueChange={(value) => field.handleChange(value)}
+        options={options}
         placeholder={placeholder}
       />
     </div>

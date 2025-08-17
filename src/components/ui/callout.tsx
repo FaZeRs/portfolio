@@ -21,10 +21,10 @@ const calloutVariants = {
   },
 };
 
-interface CalloutProps {
+type CalloutProps = {
   children?: React.ReactNode;
   variant?: "default" | "warning" | "danger";
-}
+};
 
 export default function Callout({
   children,
@@ -36,7 +36,7 @@ export default function Callout({
     <div
       className={cn(
         "not-prose my-3 mt-4 rounded-md border md:p-3 lg:p-4",
-        styles,
+        styles
       )}
       {...props}
     >

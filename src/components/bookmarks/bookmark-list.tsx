@@ -3,10 +3,10 @@ import LoadMore from "~/components/bookmarks/load-more";
 import { PAGE_SIZE } from "~/lib/raindrop";
 import { Bookmark } from "~/types";
 
-interface BookmarkListProps {
+type BookmarkListProps = {
   id: number;
   initialBookmarks: Bookmark[];
-}
+};
 
 export default function BookmarkList({
   id,
@@ -18,7 +18,7 @@ export default function BookmarkList({
     <>
       <div className="grid gap-4 sm:grid-cols-2">
         {initialBookmarks.map((bookmark) => (
-          <BookmarkCard key={bookmark._id} bookmark={bookmark} />
+          <BookmarkCard bookmark={bookmark} key={bookmark._id} />
         ))}
       </div>
 

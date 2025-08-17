@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_defaultLayout/about")({
 function RouteComponent() {
   return (
     <>
-      <CoverImage src="/images/about.avif" alt="About" />
+      <CoverImage alt="About" src="/images/about.avif" />
       <p className="prose prose-slate">
         Hello World! I'm <strong>Nauris Linde</strong>, a{" "}
         <strong>software engineer</strong> from Liepaja Latvia, with over a
@@ -51,23 +51,23 @@ function RouteComponent() {
           <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4">
             <a
               className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-gray-50 sm:text-base dark:border-gray-700 dark:hover:bg-gray-800"
-              target="_blank"
               href={`mailto:${siteConfig.author.email}`}
               rel="noreferrer"
+              target="_blank"
             >
-              <Mail size={16} className="size-4 sm:size-5" />
+              <Mail className="size-4 sm:size-5" size={16} />
               <span>Mail</span>
             </a>
 
             {socialConfig.map((social) => (
               <a
-                key={social.name}
                 className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-gray-50 sm:text-base dark:border-gray-700 dark:hover:bg-gray-800"
-                target="_blank"
                 href={social.url}
+                key={social.name}
                 rel="noreferrer"
+                target="_blank"
               >
-                <Icon icon={social.icon} className="size-4 sm:size-5" />
+                <Icon className="size-4 sm:size-5" icon={social.icon} />
                 <span>{social.name}</span>
               </a>
             ))}

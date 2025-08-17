@@ -23,14 +23,14 @@ const PageHeading = ({
 
   return (
     <Comp
-      initial="hidden"
       animate="visible"
-      exit="hidden"
-      variants={slideInWithFadeOut}
       className={cn(
         "font-medium text-2xl leading-relaxed dark:text-white",
-        className,
+        className
       )}
+      exit="hidden"
+      initial="hidden"
+      variants={slideInWithFadeOut}
     >
       <div className="space-y-1">
         <h1 className="inline-block font-heading text-2xl tracking-tight md:text-3xl lg:text-4xl">

@@ -12,9 +12,9 @@ import {
 import ContributionCountByDayOfWeekToolTip from "~/components/stats/contribution-count-by-day-of-week-tooltip";
 import { ContributionCountByDayOfWeek } from "~/lib/github";
 
-interface GithubActivityBarChartProps {
+type GithubActivityBarChartProps = {
   contributionCountByDayOfWeek?: ContributionCountByDayOfWeek[];
-}
+};
 
 export default function GithubActivityBarChart({
   contributionCountByDayOfWeek,
@@ -35,22 +35,22 @@ export default function GithubActivityBarChart({
   return (
     <div className="relative h-[300px] w-full">
       {contributionCountByDayOfWeek ? (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer height={300} width="100%">
           <BarChart
-            width={730}
-            height={250}
             data={contributionCountByDayOfWeek}
+            height={250}
             margin={{ top: 25, left: -30 }}
+            width={730}
           >
             <CartesianGrid
-              strokeDasharray="2 3"
               stroke={isDarkMode ? "#ffffff20" : "#00000020"}
+              strokeDasharray="2 3"
             />
             <XAxis dataKey="day" />
             <YAxis />
             <Tooltip
-              cursor={{ fill: isDarkMode ? "#ffffff20" : "#00000020" }}
               content={ContributionCountByDayOfWeekToolTip}
+              cursor={{ fill: isDarkMode ? "#ffffff20" : "#00000020" }}
             />
             <Bar dataKey="count" fill="#26a641" />
           </BarChart>
@@ -62,21 +62,21 @@ export default function GithubActivityBarChart({
           </div>
           <ResponsiveContainer>
             <BarChart
-              width={730}
-              height={250}
-              data={barGraphLoadingData}
-              margin={{ top: 25, left: -30 }}
               className="pointer-events-none opacity-50"
+              data={barGraphLoadingData}
+              height={250}
+              margin={{ top: 25, left: -30 }}
+              width={730}
             >
               <CartesianGrid
-                strokeDasharray="2 3"
                 stroke={isDarkMode ? "#ffffff20" : "#00000020"}
+                strokeDasharray="2 3"
               />
               <XAxis dataKey="day" />
               <YAxis />
               <Tooltip
-                cursor={{ fill: isDarkMode ? "#ffffff20" : "#00000020" }}
                 content={ContributionCountByDayOfWeekToolTip}
+                cursor={{ fill: isDarkMode ? "#ffffff20" : "#00000020" }}
               />
               <Bar dataKey="count" fill={isDarkMode ? "#404040" : "#ababab"} />
             </BarChart>

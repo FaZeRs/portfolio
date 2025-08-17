@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 
-interface FormSubmitButtonProps {
+type FormSubmitButtonProps = {
   canSubmit: boolean;
   isPending: boolean;
   isSubmitting: boolean;
@@ -16,7 +16,7 @@ interface FormSubmitButtonProps {
     | "link";
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
-}
+};
 
 export function FormSubmitButton({
   canSubmit,
@@ -29,19 +29,25 @@ export function FormSubmitButton({
   size = "default",
   className = "w-full md:w-auto",
 }: Readonly<FormSubmitButtonProps>) {
-  const buttonText = isSubmitting
-    ? loadingText
-    : isPending
-      ? processingText
-      : defaultText;
+  const buttonText = (() => {
+    if (isSubmitting) {
+      return loadingText;
+    }
+
+    if (isPending) {
+      return processingText;
+    }
+
+    return defaultText;
+  })();
 
   return (
     <Button
+      className={className}
+      disabled={!canSubmit || isPending || isSubmitting}
+      size={size}
       type="submit"
       variant={variant}
-      size={size}
-      disabled={!canSubmit || isPending || isSubmitting}
-      className={className}
     >
       {buttonText}
     </Button>
