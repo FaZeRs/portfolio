@@ -43,8 +43,8 @@ function RouteComponent() {
   return (
     <>
       <PageHeading
-        title="Blog"
         description={`On my blog, I have written ${articles.length} items in total. In the search box below, you can look for articles by title.`}
+        title="Blog"
       />
 
       {isLoading || isFetching ? (

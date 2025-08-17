@@ -17,12 +17,12 @@ import { SnippetBaseSchema } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/snippets/$snippetId/edit",
+  "/_dashboardLayout/dashboard/snippets/$snippetId/edit"
 )({
   component: SnippetsEditPage,
   loader: async ({ params: { snippetId }, context: { trpc, queryClient } }) => {
     const data = await queryClient.ensureQueryData(
-      trpc.snippet.byId.queryOptions({ id: snippetId }),
+      trpc.snippet.byId.queryOptions({ id: snippetId })
     );
 
     return { title: data?.title };
@@ -41,7 +41,7 @@ function SnippetsEditPage() {
   const trpc = useTRPC();
 
   const snippet = useSuspenseQuery(
-    trpc.snippet.byId.queryOptions({ id: snippetId }),
+    trpc.snippet.byId.queryOptions({ id: snippetId })
   );
 
   const router = useRouter();
@@ -58,14 +58,13 @@ function SnippetsEditPage() {
     onError: (error) => {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      console.error("Error updating experience:", errorMessage);
 
       toast.error(
         `Failed to update snippet: ${
           errorMessage.includes("validation")
             ? "Please check your form inputs"
             : "Server error. Please try again later."
-        }`,
+        }`
       );
     },
   });
@@ -105,12 +104,12 @@ function SnippetsEditPage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
             <SnippetsForm form={form} />
           </form>

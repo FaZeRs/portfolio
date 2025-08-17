@@ -44,7 +44,8 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "editor.codeActionsOnSave": {
-    "source.organizeImports.biome": "explicit"
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
   },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
@@ -52,16 +53,18 @@
     "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
     "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig, .gitattributes, bun.lock"
   },
-  // always choose typescript from node_modules
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  // use LF line endings
+  "typescript.tsdk": "node_modules/typescript/lib",
   "files.eol": "\n",
-  // set prettier as default formatter for json, ts, tsx, js, jsx, html, css
   "[json][jsonc][typescript][typescriptreact][javascript][javascriptreact][html][css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "sonarlint.connectedMode.project": {
     "connectionId": "fazers-1",
     "projectKey": "FaZeRs_portfolio"
-  }
+  },
+  "[graphql]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "editor.formatOnPaste": true,
+  "emmet.showExpandedAbbreviation": "never"
 }

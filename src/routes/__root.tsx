@@ -80,7 +80,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
 
   return (
     // suppress since we're updating the "dark" class in a custom script below
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+    <html className="scroll-smooth" lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
@@ -88,8 +88,8 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
           disableTransitionOnChange
+          enableSystem
         >
           {children}
           <Toaster />

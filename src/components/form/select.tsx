@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "../ui/select";
 
-interface FormSelectProps<T = string> {
+type FormSelectProps<T = string> = {
   field: {
     name: string;
     state: { value: T };
@@ -25,7 +25,7 @@ interface FormSelectProps<T = string> {
   placeholder: string;
   options: { value: string; label: string }[];
   className?: string;
-}
+};
 
 export function FormSelect<T = string>({
   field,
@@ -40,8 +40,8 @@ export function FormSelect<T = string>({
       <field.FormControl>
         <Select
           name={field.name}
-          value={String(field.state.value)}
           onValueChange={(value) => field.handleChange(value as T)}
+          value={String(field.state.value)}
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder={placeholder} />

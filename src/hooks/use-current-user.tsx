@@ -5,7 +5,7 @@ export const useCurrentUser = () => {
 
   return {
     user: data?.user,
-    isAuthenticated: !!data?.user,
+    isAuthenticated: Boolean(data?.user),
     isPending,
   };
 };

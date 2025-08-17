@@ -9,7 +9,7 @@ import ArticleCard from "./article-card";
 const BlogSection = () => {
   const trpc = useTRPC();
   const { data: articles } = useSuspenseQuery(
-    trpc.blog.allPublic.queryOptions(),
+    trpc.blog.allPublic.queryOptions()
   );
 
   return (
@@ -18,20 +18,20 @@ const BlogSection = () => {
       {articles?.length ? (
         <div className="grid gap-10 sm:grid-cols-2">
           {articles.map((article) => (
-            <ArticleCard key={article.slug} article={article} />
+            <ArticleCard article={article} key={article.slug} />
           ))}
         </div>
       ) : null}
 
       <div className="my-8 flex items-center justify-center">
         <Link
-          to="/blog"
           className={cn(
             buttonVariants({
               variant: "outline",
             }),
-            "rounded-xl",
+            "rounded-xl"
           )}
+          to="/blog"
         >
           See all articles
         </Link>

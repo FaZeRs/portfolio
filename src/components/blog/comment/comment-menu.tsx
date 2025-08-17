@@ -23,9 +23,9 @@ import { useCurrentUser } from "~/hooks/use-current-user";
 import { useTRPC } from "~/trpc/react";
 import { CommentType } from "~/types";
 
-interface CommentMenuProps {
+type CommentMenuProps = {
   comment: CommentType;
-}
+};
 
 export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
   const { user, isAuthenticated } = useCurrentUser();
@@ -41,7 +41,7 @@ export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
       queryClient.invalidateQueries(
         trpc.comment.all.queryOptions({
           articleId,
-        }),
+        })
       ),
   });
 
@@ -50,11 +50,11 @@ export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
-            size="icon"
-            className="size-8"
             aria-label="Open menu"
+            className="size-8"
+            size="icon"
             type="button"
+            variant="ghost"
           >
             <MoreVerticalIcon className="size-5" />
           </Button>
@@ -68,9 +68,9 @@ export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
             {isAuthenticated &&
             (user?.id === userId || user?.role === "admin") ? (
               <DropdownMenuItem
+                aria-disabled={isPending}
                 className="text-red-600 focus:text-red-500"
                 disabled={isPending}
-                aria-disabled={isPending}
               >
                 Delete
               </DropdownMenuItem>
@@ -91,9 +91,9 @@ export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
           <Button
-            variant="destructive"
-            onClick={() => mutate({ id })}
             disabled={isPending}
+            onClick={() => mutate({ id })}
+            variant="destructive"
           >
             {isPending ? (
               <Loader2Icon className="size-4 animate-spin" />

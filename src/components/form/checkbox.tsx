@@ -1,6 +1,6 @@
 import { Checkbox } from "../ui/checkbox";
 
-interface FormCheckboxProps {
+type FormCheckboxProps = {
   field: {
     name: string;
     state: { value: boolean };
@@ -10,7 +10,7 @@ interface FormCheckboxProps {
   label: string;
   description?: string;
   className?: string;
-}
+};
 
 export function FormCheckbox({
   field,
@@ -23,16 +23,16 @@ export function FormCheckbox({
       className={`flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 ${className}`}
     >
       <Checkbox
+        checked={field.state.value}
         id={field.name}
         name={field.name}
-        checked={field.state.value}
         onBlur={field.handleBlur}
         onCheckedChange={(checked: boolean) => field.handleChange(checked)}
       />
       <div className="space-y-1 leading-none">
         <label
-          htmlFor={field.name}
           className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          htmlFor={field.name}
         >
           {label}
         </label>

@@ -3,9 +3,9 @@ import { EyeIcon, ThumbsUpIcon } from "lucide-react";
 import { formatDate } from "~/lib/utils";
 import { ArticleType } from "~/types";
 
-interface ArticleCardProps {
+type ArticleCardProps = {
   article: ArticleType;
-}
+};
 
 const ArticleCard = ({ article }: ArticleCardProps) => {
   return (
@@ -13,11 +13,11 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
       {article.imageUrl && (
         <div className="relative w-full">
           <img
-            src={article.imageUrl}
             alt={article.title}
-            width={1200}
-            height={630}
             className="my-auto aspect-[2/1] h-auto animate-reveal rounded-xl border bg-muted object-cover transition-colors"
+            height={630}
+            src={article.imageUrl}
+            width={1200}
           />
         </div>
       )}
@@ -50,11 +50,11 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
       </div>
 
       <Link
-        to="/blog/$articleId"
+        className="absolute inset-0"
         params={{
           articleId: article.slug,
         }}
-        className="absolute inset-0"
+        to="/blog/$articleId"
       >
         <span className="sr-only">View Article</span>
       </Link>

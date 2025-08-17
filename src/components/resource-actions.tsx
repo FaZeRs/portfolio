@@ -22,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-interface ResourceActionsProps {
+type ResourceActionsProps = {
   id: string;
   title: string;
   resourceType: "project" | "experience" | "snippet" | "blog";
@@ -32,7 +32,7 @@ interface ResourceActionsProps {
     mutationFn: (id: string) => Promise<unknown>;
     invalidateQuery: () => Promise<void>;
   };
-}
+};
 
 export function ResourceActions({
   id,
@@ -50,15 +50,14 @@ export function ResourceActions({
     onSuccess: async () => {
       await trpcDeleteMutation.invalidateQuery();
       toast.success(
-        `${resourceType.charAt(0).toUpperCase() + resourceType.slice(1)} "${title}" deleted successfully`,
+        `${resourceType.charAt(0).toUpperCase() + resourceType.slice(1)} "${title}" deleted successfully`
       );
     },
     onError: (error) => {
-      console.error(`Error deleting ${resourceType} "${title}":`, error);
       toast.error(
         error instanceof Error
           ? error.message
-          : `Failed to delete ${resourceType} "${title}"`,
+          : `Failed to delete ${resourceType} "${title}"`
       );
     },
   });
@@ -73,9 +72,9 @@ export function ResourceActions({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
-            className="h-8 w-8 p-0"
             aria-label={`Actions for ${title}`}
+            className="h-8 w-8 p-0"
+            variant="ghost"
           >
             <MoreHorizontal className="h-4 w-4" />
           </Button>
@@ -84,29 +83,29 @@ export function ResourceActions({
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           {viewPath && (
             <DropdownMenuItem
-              onClick={() => router.navigate({ to: viewPath })}
               disabled={deleteMutation.isPending}
+              onClick={() => router.navigate({ to: viewPath })}
             >
               View
             </DropdownMenuItem>
           )}
           <DropdownMenuItem
-            onClick={() => router.navigate({ to: editPath })}
             disabled={deleteMutation.isPending}
+            onClick={() => router.navigate({ to: editPath })}
           >
             Edit
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setShowDeleteDialog(true)}
-            disabled={deleteMutation.isPending}
             className="text-destructive focus:text-destructive"
+            disabled={deleteMutation.isPending}
+            onClick={() => setShowDeleteDialog(true)}
           >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+      <AlertDialog onOpenChange={setShowDeleteDialog} open={showDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
@@ -120,9 +119,9 @@ export function ResourceActions({
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              onClick={handleDelete}
-              disabled={deleteMutation.isPending}
               className="gap-2"
+              disabled={deleteMutation.isPending}
+              onClick={handleDelete}
             >
               {deleteMutation.isPending && (
                 <Loader2 className="h-4 w-4 animate-spin" />

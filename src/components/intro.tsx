@@ -11,28 +11,28 @@ const Intro = () => {
       <div className="flex items-center justify-center">
         <div className="relative">
           <motion.div
-            initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0 }}
             transition={{
               type: "tween",
               duration: 0.2,
             }}
           >
             <img
-              src="/images/avatar.avif"
               alt="Nauris Linde"
-              width="320"
-              height="320"
               className="h-56 w-56 rounded-full border-[0.35rem] border-secondary object-cover shadow-xl saturate-0 filter sm:h-80 sm:w-80"
+              height="320"
+              src="/images/avatar.avif"
+              width="320"
             />
           </motion.div>
         </div>
       </div>
 
       <motion.div
+        animate={{ opacity: 1, y: 0 }}
         className="mt-4 mb-10 flex flex-col gap-y-4 px-4"
         initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
       >
         <span className="font-bold text-2xl leading-[1.5] sm:text-4xl lg:text-6xl">
           {"Hello World, I'm Nauris"}
@@ -46,19 +46,19 @@ const Intro = () => {
       </motion.div>
 
       <motion.div
+        animate={{ opacity: 1, y: 0 }}
         className="flex flex-col items-center justify-center gap-2 px-4 font-medium text-lg sm:flex-row"
         initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
         transition={{
           delay: 0.1,
         }}
       >
         <Link
-          to="/"
+          className={cn(buttonVariants({ variant: "default" }), "group")}
           params={{
             section: "contact",
           }}
-          className={cn(buttonVariants({ variant: "default" }), "group")}
+          to="/"
         >
           Contact me
           <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />

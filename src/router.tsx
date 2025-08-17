@@ -18,22 +18,22 @@ import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";
 import { routeTree } from "./routeTree.gen";
 
-const getRequestHeaders = createServerFn({ method: "GET" }).handler(
-  async () => {
-    // biome-ignore lint: getWebRequest is not undefined
-    const request = getWebRequest()!;
-    const headers = new Headers(request.headers);
+const getRequestHeaders = createServerFn({ method: "GET" }).handler(() => {
+  const request = getWebRequest();
+  const headers = new Headers(request.headers);
 
-    return Object.fromEntries(headers);
-  },
-);
+  return Object.fromEntries(headers);
+});
+
+// biome-ignore lint/style/noMagicNumbers: valid constant
+const STALE_TIME = 1000 * 60; // 1 minute
 
 export function createRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        staleTime: 1000 * 60, // 1 minute
+        staleTime: STALE_TIME,
       },
       dehydrate: { serializeData: superjson.serialize },
       hydrate: { deserializeData: superjson.deserialize },
@@ -73,7 +73,7 @@ export function createRouter() {
     defaultStructuralSharing: true,
     Wrap: (props) => {
       return (
-        <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
+        <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>
           {props.children}
         </TRPCProvider>
       );
@@ -91,6 +91,7 @@ export function createRouter() {
 }
 
 declare module "@tanstack/react-router" {
+  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
   interface Register {
     router: ReturnType<typeof createRouter>;
   }

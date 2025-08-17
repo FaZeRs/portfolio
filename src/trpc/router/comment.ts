@@ -13,7 +13,7 @@ const baseJSONContent = z.object({
       z.object({
         type: z.string(),
         attrs: z.record(z.any(), z.any()).optional(),
-      }),
+      })
     )
     .optional(),
   text: z.string().optional(),
@@ -31,9 +31,9 @@ export const commentRouter = {
         articleId: z.uuid(),
         content: JSONContentSchema,
         parentId: z.string().optional(),
-      }),
+      })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       return ctx.db.insert(comments).values({
         userId: ctx.session.user.id,
         articleId: input.articleId,
@@ -47,13 +47,13 @@ export const commentRouter = {
         articleId: z.uuid(),
         parentId: z.string().optional(),
         sort: z.enum(["asc", "desc"]).optional(),
-      }),
+      })
     )
     .query(async ({ ctx, input }) => {
       const commentsWithCounts = await ctx.db
         .select({
           comment: comments,
-          user: user,
+          user,
           repliesCount: sql<number>`(SELECT COUNT(*) FROM ${comments} c2 WHERE c2.parent_id = ${comments.id})`,
           likesCount: sql<number>`(SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = true)`,
           dislikesCount: sql<number>`(SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = false)`,
@@ -65,19 +65,19 @@ export const commentRouter = {
           commentReactions,
           and(
             eq(commentReactions.commentId, comments.id),
-            eq(commentReactions.userId, ctx.session?.user.id ?? ""),
-          ),
+            eq(commentReactions.userId, ctx.session?.user.id ?? "")
+          )
         )
         .where(
           input.parentId
             ? and(
                 eq(comments.articleId, input.articleId),
-                eq(comments.parentId, input.parentId),
+                eq(comments.parentId, input.parentId)
               )
             : and(
                 eq(comments.articleId, input.articleId),
-                isNull(comments.parentId),
-              ),
+                isNull(comments.parentId)
+              )
         );
 
       return commentsWithCounts;
@@ -134,7 +134,7 @@ export const commentRouter = {
       const existingReaction = await ctx.db.query.commentReactions.findFirst({
         where: and(
           eq(commentReactions.commentId, id),
-          eq(commentReactions.userId, ctx.session.user.id),
+          eq(commentReactions.userId, ctx.session.user.id)
         ),
       });
 

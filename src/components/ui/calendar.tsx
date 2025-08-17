@@ -1,5 +1,11 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import * as React from "react";
+import {
+  ChangeEvent,
+  Children,
+  ComponentProps,
+  HTMLProps,
+  ReactElement,
+} from "react";
 import { DayPicker, DropdownProps } from "react-day-picker";
 
 import { buttonVariants } from "~/components/ui/button";
@@ -18,10 +24,9 @@ function Calendar({
   classNames,
   showOutsideDays = true,
   ...props
-}: React.ComponentProps<typeof DayPicker>) {
+}: ComponentProps<typeof DayPicker>) {
   return (
     <DayPicker
-      showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -32,7 +37,7 @@ function Calendar({
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
@@ -44,7 +49,7 @@ function Calendar({
         cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
         ),
         day_selected:
           "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
@@ -57,29 +62,34 @@ function Calendar({
         ...classNames,
       }}
       components={{
+        // biome-ignore lint/correctness/noNestedComponentDefinitions: allow nested component definitions
+        // biome-ignore lint/nursery/noShadow: allow shadowing
         IconLeft: ({ className, ...props }) => (
           <ChevronLeft className={cn("size-4", className)} {...props} />
         ),
+        // biome-ignore lint/correctness/noNestedComponentDefinitions: allow nested component definitions
+        // biome-ignore lint/nursery/noShadow: allow shadowing
         IconRight: ({ className, ...props }) => (
           <ChevronRight className={cn("size-4", className)} {...props} />
         ),
+        // biome-ignore lint/correctness/noNestedComponentDefinitions: allow nested component definitions
         Dropdown: ({ value, onChange, children }: DropdownProps) => {
-          const options = React.Children.toArray(
-            children,
-          ) as React.ReactElement<React.HTMLProps<HTMLOptionElement>>[];
+          const options = Children.toArray(children) as ReactElement<
+            HTMLProps<HTMLOptionElement>
+          >[];
           const selected = options.find((child) => child.props.value === value);
-          const handleChange = (value: string) => {
+          const handleChange = (selectedValue: string) => {
             const changeEvent = {
-              target: { value },
-            } as React.ChangeEvent<HTMLSelectElement>;
+              target: { value: selectedValue },
+            } as ChangeEvent<HTMLSelectElement>;
             onChange?.(changeEvent);
           };
           return (
             <Select
-              value={value?.toString()}
-              onValueChange={(value) => {
-                handleChange(value);
+              onValueChange={(selectedValue) => {
+                handleChange(selectedValue);
               }}
+              value={value?.toString()}
             >
               <SelectTrigger className="pr-1.5 focus:ring-0">
                 <SelectValue>{selected?.props?.children}</SelectValue>
@@ -100,6 +110,7 @@ function Calendar({
           );
         },
       }}
+      showOutsideDays={showOutsideDays}
       {...props}
     />
   );

@@ -58,19 +58,17 @@ export const snippetRouter = {
 
   create: protectedProcedure
     .input(CreateSnippetSchema)
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       return ctx.db.insert(Snippet).values(input);
     }),
 
   update: protectedProcedure
     .input(UpdateSnippetSchema)
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       return ctx.db.update(Snippet).set(input).where(eq(Snippet.id, input.id));
     }),
 
-  delete: protectedProcedure
-    .input(z.string())
-    .mutation(async ({ ctx, input }) => {
-      return ctx.db.delete(Snippet).where(eq(Snippet.id, input));
-    }),
+  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.db.delete(Snippet).where(eq(Snippet.id, input));
+  }),
 } satisfies TRPCRouterRecord;

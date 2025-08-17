@@ -17,7 +17,7 @@ import { ExperienceBaseSchema, ExperienceType } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/experiences/$experienceId/edit",
+  "/_dashboardLayout/dashboard/experiences/$experienceId/edit"
 )({
   component: ExperiencesEditPage,
   loader: async ({
@@ -25,7 +25,7 @@ export const Route = createFileRoute(
     context: { trpc, queryClient },
   }) => {
     const data = await queryClient.ensureQueryData(
-      trpc.experience.byId.queryOptions({ id: experienceId }),
+      trpc.experience.byId.queryOptions({ id: experienceId })
     );
 
     return { title: data?.title };
@@ -44,7 +44,7 @@ function ExperiencesEditPage() {
   const trpc = useTRPC();
 
   const experience = useSuspenseQuery(
-    trpc.experience.byId.queryOptions({ id: experienceId }),
+    trpc.experience.byId.queryOptions({ id: experienceId })
   );
 
   const router = useRouter();
@@ -61,14 +61,13 @@ function ExperiencesEditPage() {
     onError: (error) => {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      console.error("Error updating experience:", errorMessage);
 
       toast.error(
         `Failed to update experience: ${
           errorMessage.includes("validation")
             ? "Please check your form inputs"
             : "Server error. Please try again later."
-        }`,
+        }`
       );
     },
   });
@@ -112,14 +111,14 @@ function ExperiencesEditPage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
-            <ExperiencesForm form={form} experience={experience.data} />
+            <ExperiencesForm experience={experience.data} form={form} />
           </form>
         </form.AppForm>
       </div>

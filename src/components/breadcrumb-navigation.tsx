@@ -8,9 +8,9 @@ import {
   BreadcrumbSeparator,
 } from "~/components/ui/breadcrumb";
 
-interface BreadcrumbProps {
+type BreadcrumbProps = {
   pageTitle: string;
-}
+};
 
 export default function BreadcrumbNavigation({
   pageTitle,
@@ -19,7 +19,7 @@ export default function BreadcrumbNavigation({
     <Breadcrumb className="mb-6">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/" className="flex items-center gap-2">
+          <BreadcrumbLink className="flex items-center gap-2" href="/">
             <Home className="h-4 w-4" /> Home
           </BreadcrumbLink>
         </BreadcrumbItem>

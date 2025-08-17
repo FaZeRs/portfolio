@@ -48,10 +48,11 @@ export const experienceRouter = {
           dataToInsert.imageUrl = await uploadImage(
             "experiences",
             thumbnail,
-            input.title,
+            input.title
           );
         } catch (error) {
-          console.error("Error uploading image:", error);
+          // biome-ignore lint/suspicious/noConsole: log error
+          console.error(error);
         }
       }
 
@@ -79,14 +80,15 @@ export const experienceRouter = {
           dataToUpdate.imageUrl = await uploadImage(
             "experiences",
             thumbnail,
-            id,
+            id
           );
 
           if (oldImageUrl) {
             await deleteFile(oldImageUrl);
           }
         } catch (error) {
-          console.error("Error uploading image:", error);
+          // biome-ignore lint/suspicious/noConsole: log error
+          console.error(error);
         }
       }
 

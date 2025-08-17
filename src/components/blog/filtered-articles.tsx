@@ -5,9 +5,9 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { ArticleType } from "~/types";
 
-interface FilteredArticlesProps {
+type FilteredArticlesProps = {
   articles: ArticleType[];
-}
+};
 
 export default function FilteredArticles({
   articles,
@@ -15,7 +15,7 @@ export default function FilteredArticles({
   const [searchValue, setSearchValue] = useState("");
 
   const filteredArticles = articles.filter((article) =>
-    article.title.toLowerCase().includes(searchValue.toLowerCase()),
+    article.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,13 +26,13 @@ export default function FilteredArticles({
     <>
       <div className="relative my-8">
         <Input
-          type="text"
-          value={searchValue}
-          onChange={handleInputChange}
-          placeholder="Search articles"
           aria-label="Search articles"
           className="w-full pl-12"
           id="search"
+          onChange={handleInputChange}
+          placeholder="Search articles"
+          type="text"
+          value={searchValue}
         />
 
         <Label htmlFor="search">
@@ -43,7 +43,7 @@ export default function FilteredArticles({
       {filteredArticles.length ? (
         <div className="grid gap-10 lg:grid-cols-2">
           {filteredArticles.map((article) => (
-            <ArticleCard key={article.slug} article={article} />
+            <ArticleCard article={article} key={article.slug} />
           ))}
         </div>
       ) : (

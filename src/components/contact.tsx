@@ -52,19 +52,19 @@ const Contact = () => {
 
   return (
     <motion.section
-      id="contact"
       className="mb-20 text-center sm:mb-28"
+      id="contact"
       initial={{
         opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
       }}
       transition={{
         duration: 1,
       }}
       viewport={{
         once: true,
+      }}
+      whileInView={{
+        opacity: 1,
       }}
     >
       <SectionHeading>Contact me</SectionHeading>
@@ -80,24 +80,24 @@ const Contact = () => {
       <div className="mx-auto mt-8 max-w-xl">
         <form.AppForm>
           <form
+            className="flex w-full flex-col gap-4"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="flex w-full flex-col gap-4"
           >
             <form.AppField name="email">
               {(field) => (
                 <field.FormItem>
                   <field.FormControl>
                     <Input
-                      type="email"
-                      placeholder="Your email"
-                      value={field.state.value}
+                      autoComplete="email"
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      autoComplete="email"
+                      placeholder="Your email"
+                      type="email"
+                      value={field.state.value}
                     />
                   </field.FormControl>
                   <field.FormMessage />
@@ -110,11 +110,11 @@ const Contact = () => {
                 <field.FormItem>
                   <field.FormControl>
                     <Textarea
-                      placeholder="Type your message here."
                       className="h-32"
-                      value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
+                      placeholder="Type your message here."
+                      value={field.state.value}
                     />
                   </field.FormControl>
                   <field.FormMessage />
@@ -123,10 +123,10 @@ const Contact = () => {
             </form.AppField>
 
             <Button
+              className="group"
+              disabled={isLoading}
               type="submit"
               variant="default"
-              disabled={isLoading}
-              className="group"
             >
               <Send className="mr-2 h-4 w-4" /> Submit
             </Button>

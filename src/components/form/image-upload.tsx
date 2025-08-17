@@ -4,19 +4,19 @@ import { MAX_IMAGE_SIZE, VALID_IMAGE_TYPES } from "~/lib/constants";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-interface FormField {
+type FormField = {
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
   handleBlur?: () => void;
-}
+};
 
-interface FormImageUploadProps {
+type FormImageUploadProps = {
   field: FormField;
   name: string;
   label: string;
   initialPreview?: string | null;
   className?: string;
-}
+};
 
 export function FormImageUpload({
   field,
@@ -26,12 +26,14 @@ export function FormImageUpload({
   className,
 }: Readonly<FormImageUploadProps>) {
   const [previewImage, setPreviewImage] = useState<string | null>(
-    initialPreview ?? null,
+    initialPreview ?? null
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
     if (!VALID_IMAGE_TYPES.includes(file.type)) {
       field.setErrorMap({
@@ -74,8 +76,7 @@ export function FormImageUpload({
         });
       };
       reader.readAsDataURL(file);
-    } catch (error) {
-      console.error("Error processing image:", error);
+    } catch (_error) {
       field.setErrorMap({
         onChange: [
           {
@@ -94,24 +95,24 @@ export function FormImageUpload({
   return (
     <div className={className}>
       <label
-        htmlFor={name}
         className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        htmlFor={name}
       >
         {label}
       </label>
       <div className="space-y-2">
         <div className="flex flex-col gap-2">
           <Input
+            accept={VALID_IMAGE_TYPES.join(",")}
+            aria-describedby="file-input-help"
+            className="cursor-pointer"
             id={name}
             name={name}
-            type="file"
-            accept={VALID_IMAGE_TYPES.join(",")}
             onBlur={field.handleBlur}
             onChange={handleFileChange}
-            className="cursor-pointer"
-            aria-describedby="file-input-help"
+            type="file"
           />
-          <p id="file-input-help" className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-xs" id="file-input-help">
             Accepted formats: JPEG, PNG, GIF, WebP, AVIF. Max size: 5MB
           </p>
         </div>
@@ -119,17 +120,19 @@ export function FormImageUpload({
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <div className="relative h-32 w-full max-w-md overflow-hidden rounded-md border border-input">
               <img
-                src={previewImage}
                 alt="Preview"
                 className="h-full w-full object-cover"
+                height={128}
+                src={previewImage}
+                width={128}
               />
             </div>
             <Button
+              aria-label="Remove image"
+              onClick={handleRemoveImage}
+              size="sm"
               type="button"
               variant="destructive"
-              size="sm"
-              onClick={handleRemoveImage}
-              aria-label="Remove image"
             >
               Remove Image
             </Button>

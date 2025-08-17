@@ -26,12 +26,12 @@ export default function GithubContributor() {
           <ClientOnly>
             <div className="min-w-full">
               <GitHubCalendar
-                username="FaZeRs"
-                year={currentYear}
                 colorScheme={theme === "dark" ? "dark" : "light"}
                 style={{
                   width: "100%",
                 }}
+                username="FaZeRs"
+                year={currentYear}
               />
             </div>
           </ClientOnly>

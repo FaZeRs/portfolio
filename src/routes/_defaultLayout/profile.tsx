@@ -72,7 +72,7 @@ const getCurrentUser = createServerFn({ method: "GET" }).handler(async () => {
 
 export const Route = createFileRoute("/_defaultLayout/profile")({
   component: ProfilePage,
-  beforeLoad: async ({ context }) => {
+  beforeLoad: ({ context }) => {
     if (!context.user) {
       throw redirect({ to: "/signin" });
     }
@@ -92,6 +92,19 @@ export const Route = createFileRoute("/_defaultLayout/profile")({
   }),
 });
 
+const getInitials = (name: string) => {
+  return (
+    name
+      .trim()
+      // biome-ignore lint/performance/useTopLevelRegex: valid regex
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((word) => word.charAt(0))
+      .join("")
+      .toUpperCase()
+  );
+};
+
 function ProfilePage() {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -106,7 +119,7 @@ function ProfilePage() {
     return <ProfileSkeleton />;
   }
 
-  if (!isAuthenticated || !user) {
+  if (!(isAuthenticated && user)) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center space-y-4">
         <div className="space-y-2 text-center">
@@ -121,16 +134,6 @@ function ProfilePage() {
       </div>
     );
   }
-
-  const getInitials = (name: string) => {
-    return name
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((word) => word.charAt(0))
-      .join("")
-      .toUpperCase();
-  };
 
   const handleEditSubmit = async () => {
     try {
@@ -147,8 +150,9 @@ function ProfilePage() {
       await router.invalidate();
       toast.success("Profile updated successfully");
     } catch (error) {
+      // biome-ignore lint/suspicious/noConsole: log error
+      console.error(error);
       toast.error("Failed to update profile");
-      console.error("Profile update error:", error);
     } finally {
       setIsEditing(false);
     }
@@ -161,8 +165,9 @@ function ProfilePage() {
       });
       toast.success("Account deleted successfully");
     } catch (error) {
+      // biome-ignore lint/suspicious/noConsole: log error
+      console.error(error);
       toast.error("Failed to delete account");
-      console.error("Account deletion error:", error);
     }
   };
 
@@ -173,17 +178,16 @@ function ProfilePage() {
       await router.navigate({ to: "/" });
       await router.invalidate();
       toast.success("Signed out successfully");
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to sign out");
-      console.error("Sign out error:", error);
     }
   };
 
   return (
     <div className="space-y-6">
       <PageHeading
-        title="Profile"
         description="Manage your account settings and preferences"
+        title="Profile"
       />
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -200,7 +204,7 @@ function ProfilePage() {
           <CardContent className="space-y-6">
             <div className="flex items-center space-x-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src={user.image || ""} alt={user.name} />
+                <AvatarImage alt={user.name} src={user.image || ""} />
                 <AvatarFallback className="text-lg">
                   {getInitials(user.name)}
                 </AvatarFallback>
@@ -267,16 +271,16 @@ function ProfilePage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <Dialog
-              open={isEditing}
               onOpenChange={(open) => {
                 setIsEditing(open);
                 if (open) {
                   setEditForm({ name: user.name });
                 }
               }}
+              open={isEditing}
             >
               <DialogTrigger asChild>
-                <Button variant="outline" className="w-full justify-start">
+                <Button className="w-full justify-start" variant="outline">
                   <EditIcon className="mr-2 h-4 w-4" />
                   Edit Profile
                 </Button>
@@ -293,7 +297,6 @@ function ProfilePage() {
                     <Label htmlFor="name">Name</Label>
                     <Input
                       id="name"
-                      value={editForm.name}
                       onChange={(e) =>
                         setEditForm((prev) => ({
                           ...prev,
@@ -301,19 +304,20 @@ function ProfilePage() {
                         }))
                       }
                       placeholder="Enter your name"
+                      value={editForm.name}
                     />
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsEditing(false)}>
+                  <Button onClick={() => setIsEditing(false)} variant="outline">
                     Cancel
                   </Button>
                   <Button
-                    onClick={handleEditSubmit}
                     disabled={
                       editForm.name.trim().length === 0 ||
                       editForm.name.trim() === user.name.trim()
                     }
+                    onClick={handleEditSubmit}
                   >
                     Save Changes
                   </Button>
@@ -322,9 +326,9 @@ function ProfilePage() {
             </Dialog>
 
             <Button
-              variant="outline"
               className="w-full justify-start"
               onClick={handleSignOut}
+              variant="outline"
             >
               <LogOutIcon className="mr-2 h-4 w-4" />
               Sign Out
@@ -332,9 +336,9 @@ function ProfilePage() {
 
             <Separator />
 
-            <AlertDialog open={isDeleting} onOpenChange={setIsDeleting}>
+            <AlertDialog onOpenChange={setIsDeleting} open={isDeleting}>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" className="w-full justify-start">
+                <Button className="w-full justify-start" variant="destructive">
                   <TrashIcon className="mr-2 h-4 w-4" />
                   Delete Account
                 </Button>
@@ -350,8 +354,8 @@ function ProfilePage() {
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
-                    onClick={handleDeleteAccount}
                     className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    onClick={handleDeleteAccount}
                   >
                     Delete Account
                   </AlertDialogAction>
@@ -389,8 +393,9 @@ function ProfileSkeleton() {
             </div>
             <Separator />
             <div className="space-y-4">
+              {/** biome-ignore lint/style/noMagicNumbers: valid constant */}
               {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center gap-3">
+                <div className="flex items-center gap-3" key={i}>
                   <Skeleton className="h-4 w-4" />
                   <div className="space-y-1">
                     <Skeleton className="h-4 w-16" />
@@ -408,8 +413,9 @@ function ProfileSkeleton() {
             <Skeleton className="h-4 w-64" />
           </CardHeader>
           <CardContent className="space-y-4">
+            {/** biome-ignore lint/style/noMagicNumbers: valid constant */}
             {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" key={i} />
             ))}
           </CardContent>
         </Card>

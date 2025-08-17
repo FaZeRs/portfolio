@@ -9,7 +9,7 @@ import {
   user,
 } from "~/lib/server/schema";
 
-export interface SiteConfig {
+export type SiteConfig = {
   title: string;
   name: string;
   description: string;
@@ -27,26 +27,26 @@ export interface SiteConfig {
     url: string;
     handle: string;
   };
-}
+};
 
-export interface NavItem {
+export type NavItem = {
   title: string;
   href?: string;
   disabled?: boolean;
   description?: string;
   content?: ContentNavItem[];
-}
+};
 
 export interface ContentNavItem extends NavItem {
   href: string;
 }
 
-export interface Social {
+export type Social = {
   name: string;
   url: string;
   username?: string;
   icon: SimpleIcon;
-}
+};
 
 export type ProjectType = typeof Project.$inferSelect;
 export type ExperienceType = typeof Experience.$inferSelect;
@@ -56,22 +56,22 @@ export type CommentType = typeof comments.$inferSelect;
 export type UserType = typeof user.$inferSelect;
 export type CommentReactionType = typeof commentReactions.$inferSelect;
 
-export interface ContributionCalendar {
+export type ContributionCalendar = {
   weeks: ContributionWeeks[];
-}
+};
 
-export interface ContributionWeeks {
+export type ContributionWeeks = {
   contributionDays: ContributionsDay[];
-}
+};
 
-export interface ContributionsDay {
+export type ContributionsDay = {
   contributionCount: number;
   date: string;
-}
+};
 
-export interface ContributionsCollection {
+export type ContributionsCollection = {
   contributionCalendar: ContributionCalendar;
-}
+};
 
 export type GitHubUser = {
   login: string;
@@ -86,12 +86,12 @@ export type GitHubUser = {
   updated_at: string;
 };
 
-export interface UseData {
+export type UseData = {
   name: string;
   description: string;
   icon: SimpleIcon;
   link: string;
-}
+};
 
 export type TOC = {
   title: string;

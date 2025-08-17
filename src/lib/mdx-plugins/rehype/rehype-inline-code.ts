@@ -18,7 +18,9 @@ const themeKeys = Object.keys(DEFAULT_SHIKI_THEMES);
 let cachedHighlighter: Highlighter | null = null;
 
 const getHighlighter = async () => {
-  if (cachedHighlighter) return cachedHighlighter;
+  if (cachedHighlighter) {
+    return cachedHighlighter;
+  }
 
   cachedHighlighter = await getSingletonHighlighter({
     themes: themeNames,
@@ -32,19 +34,28 @@ export const rehypeInlineCode: Plugin<[RehypeShikiCoreOptions], Root> = () => {
   return async (tree) => {
     const highlighter = await getHighlighter();
 
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: valid visit
     visit(tree, "element", (node, index, parent) => {
-      if (node.tagName !== "code") return;
+      if (node.tagName !== "code") {
+        return;
+      }
 
       const childNode = node.children[0];
 
-      if (childNode?.type !== "text") return;
+      if (childNode?.type !== "text") {
+        return;
+      }
 
       const match = inlineShikiRegex.exec(childNode.value);
-      if (!match) return;
+      if (!match) {
+        return;
+      }
 
       const [, code, lang] = match;
 
-      if (!code || !lang) return;
+      if (!(code && lang)) {
+        return;
+      }
 
       const isLang = !lang.startsWith(".");
 
@@ -56,11 +67,17 @@ export const rehypeInlineCode: Plugin<[RehypeShikiCoreOptions], Root> = () => {
 
       const preNode = hast.children[0];
 
-      if (preNode?.type !== "element") return;
-      if (preNode.tagName !== "pre") return;
+      if (preNode?.type !== "element") {
+        return;
+      }
+      if (preNode.tagName !== "pre") {
+        return;
+      }
 
       const inlineCode = preNode.children[0];
-      if (inlineCode?.type !== "element") return;
+      if (inlineCode?.type !== "element") {
+        return;
+      }
 
       /**
        * Set the color by scope if language is not specified
@@ -72,13 +89,17 @@ export const rehypeInlineCode: Plugin<[RehypeShikiCoreOptions], Root> = () => {
             highlighter
               .getTheme(name)
               .settings.find(({ scope }) => scope?.includes(lang.slice(1)))
-              ?.settings.foreground ?? "inherit",
+              ?.settings.foreground ?? "inherit"
         );
 
         const spanNode = inlineCode.children[0];
 
-        if (spanNode?.type !== "element") return;
-        if (spanNode.tagName !== "span") return;
+        if (spanNode?.type !== "element") {
+          return;
+        }
+        if (spanNode.tagName !== "span") {
+          return;
+        }
 
         spanNode.properties.style = themeKeys
           .map((key, i) => `--shiki-${key}:${colors[i]}`)

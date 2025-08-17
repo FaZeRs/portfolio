@@ -10,9 +10,9 @@ import {
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
 
-interface DataTableViewOptionsProps<TData> {
+type DataTableViewOptionsProps<TData> = {
   table: Table<TData>;
-}
+};
 
 export function DataTableViewOptions<TData>({
   table,
@@ -20,7 +20,7 @@ export function DataTableViewOptions<TData>({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="ml-auto flex h-8">
+        <Button className="ml-auto flex h-8" size="sm" variant="outline">
           <Settings2 />
           <span className="ml-2 hidden lg:inline">View</span>
         </Button>
@@ -32,15 +32,17 @@ export function DataTableViewOptions<TData>({
           .getAllColumns()
           .filter(
             (column) =>
-              typeof column.accessorFn !== "undefined" && column.getCanHide(),
+              typeof column.accessorFn !== "undefined" && column.getCanHide()
           )
           .map((column) => {
             return (
               <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize"
                 checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                className="capitalize"
+                key={column.id}
+                onCheckedChange={(value) =>
+                  column.toggleVisibility(Boolean(value))
+                }
               >
                 {column.id}
               </DropdownMenuCheckboxItem>

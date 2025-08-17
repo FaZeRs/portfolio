@@ -12,7 +12,7 @@ const REDIRECT_URL = "/dashboard";
 
 export const Route = createFileRoute("/_authLayout/signin")({
   component: AuthPage,
-  beforeLoad: async ({ context }) => {
+  beforeLoad: ({ context }) => {
     if (context.user) {
       throw redirect({
         to: REDIRECT_URL,
@@ -35,9 +35,9 @@ function AuthPage() {
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
                   <SignInButton
-                    provider="github"
-                    label="GitHub"
                     icon={siGithub}
+                    label="GitHub"
+                    provider="github"
                   />
                 </div>
               </div>
@@ -64,22 +64,22 @@ function SignInButton({
 }: Readonly<SignInButtonProps>) {
   return (
     <Button
+      className={cn(
+        "flex w-full items-center justify-center gap-2 text-white hover:text-white",
+        className
+      )}
       onClick={() =>
         authClient.signIn.social({
           provider,
           callbackURL: REDIRECT_URL,
         })
       }
+      size="lg"
       type="button"
       variant="outline"
-      size="lg"
-      className={cn(
-        "flex w-full items-center justify-center gap-2 text-white hover:text-white",
-        className,
-      )}
       {...props}
     >
-      <Icon icon={icon} className="h-5 w-5" />
+      <Icon className="h-5 w-5" icon={icon} />
       <span>Sign in with {label}</span>
     </Button>
   );

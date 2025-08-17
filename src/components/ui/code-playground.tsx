@@ -1,8 +1,8 @@
 import { Sandpack } from "@codesandbox/sandpack-react";
 
-interface CodePlaygroundProps {
+type CodePlaygroundProps = {
   files: Record<string, string>;
-}
+};
 
 export default function CodePlayground({
   files,
@@ -10,9 +10,9 @@ export default function CodePlayground({
   return (
     <Sandpack
       files={files}
-      theme="light"
-      template="vanilla"
       options={{ showConsole: true, showConsoleButton: true }}
+      template="vanilla"
+      theme="light"
     />
   );
 }

@@ -3,9 +3,9 @@ import useMounted from "~/hooks/use-mounted";
 import { cn } from "~/lib/utils";
 import { TOC } from "~/types";
 
-interface TableOfContentProps {
+type TableOfContentProps = {
   toc: TOC[];
-}
+};
 
 export default function TableOfContents({
   toc,
@@ -15,22 +15,24 @@ export default function TableOfContents({
   const mounted = useMounted();
   const activeHeading = useActiveItem(itemIds);
 
-  if (!toc || !mounted) {
+  if (!(toc && mounted)) {
     return null;
   }
 
   return (
     <div className="space-y-2">
       <p className="font-medium uppercase">On This Page</p>
-      <Tree tree={toc} activeItem={activeHeading} />
+      <Tree activeItem={activeHeading} tree={toc} />
     </div>
   );
 }
 
-interface TreeProps {
+type TreeProps = {
   tree: TOC[];
   activeItem?: string | null;
-}
+};
+
+const PADDING_LEFT = 16 as const;
 
 function Tree({ tree, activeItem }: TreeProps) {
   const minDepth = Math.min(...tree.map((item) => item.depth));
@@ -39,17 +41,17 @@ function Tree({ tree, activeItem }: TreeProps) {
     <ul className={cn("m-0 list-none")}>
       {tree.map((item) => {
         return (
-          <li key={item.url} className={cn("mt-0")}>
+          <li className={cn("mt-0")} key={item.url}>
             <a
-              href={`#${item.url}`}
               className={cn(
                 "inline-block border-l-2 py-1.5 pl-4 no-underline transition-all hover:text-primary hover:underline",
                 item.url === activeItem
                   ? "border-primary text-primary"
-                  : "text-muted-foreground text-sm",
+                  : "text-muted-foreground text-sm"
               )}
+              href={`#${item.url}`}
               style={{
-                paddingLeft: `${(item.depth - minDepth + 1) * 16}px`,
+                paddingLeft: `${(item.depth - minDepth + 1) * PADDING_LEFT}px`,
               }}
             >
               {item.title}

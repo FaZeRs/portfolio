@@ -3,14 +3,14 @@ import { createServerFileRoute } from "@tanstack/react-start/server";
 import { getGithubActivities } from "~/lib/github";
 
 export const ServerRoute = createServerFileRoute(
-  "/api/stats/github/activity",
+  "/api/stats/github/activity"
 ).methods({
   GET: async () => {
     try {
       const contributions = await getGithubActivities();
       return json(contributions);
     } catch (error) {
-      return json({ error: error }, { status: 500 });
+      return json({ error }, { status: 500 });
     }
   },
 });

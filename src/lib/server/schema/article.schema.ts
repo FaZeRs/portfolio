@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noMagicNumbers: valid constant */
 import { relations } from "drizzle-orm";
 import { AnyPgColumn, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
@@ -98,7 +99,7 @@ export const ArticleBaseSchema = z.object({
     .max(255, "Slug cannot exceed 255 characters")
     .regex(
       slugRegex,
-      "Slug must contain only lowercase letters, numbers, and hyphens",
+      "Slug must contain only lowercase letters, numbers, and hyphens"
     ),
   description: z
     .string()
@@ -127,7 +128,7 @@ export const CreateArticleSchema = createInsertSchema(articles, {
   .and(
     z.object({
       thumbnail: ArticleBaseSchema.shape.thumbnail,
-    }),
+    })
   );
 
 export const UpdateArticleSchema = createUpdateSchema(articles, {
@@ -146,5 +147,5 @@ export const UpdateArticleSchema = createUpdateSchema(articles, {
   .and(
     z.object({
       thumbnail: ArticleBaseSchema.shape.thumbnail,
-    }),
+    })
   );

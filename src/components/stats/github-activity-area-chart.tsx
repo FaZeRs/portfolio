@@ -13,10 +13,13 @@ import {
 import ContributionsTooltip from "~/components/stats/contributions-tooltip";
 import { ContributionsDay } from "~/types";
 
-interface GithubActivityAreaChartProps {
+type GithubActivityAreaChartProps = {
   contributionsByLast30Days?: ContributionsDay[];
-}
+};
 
+const CONTRIBUTION_COUNT_RANDOM = 20;
+
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: valid function
 export default function GithubActivityAreaChart({
   contributionsByLast30Days,
 }: Readonly<GithubActivityAreaChartProps>) {
@@ -28,7 +31,9 @@ export default function GithubActivityAreaChart({
       const date = subDays(new Date(), i);
       return {
         shortDate: format(date, "dd"),
-        contributionCount: Math.floor(Math.random() * Math.floor(20)),
+        contributionCount: Math.floor(
+          Math.random() * CONTRIBUTION_COUNT_RANDOM
+        ),
       };
     });
 
@@ -45,13 +50,13 @@ export default function GithubActivityAreaChart({
       {contributionsByLast30Days ? (
         <ResponsiveContainer>
           <AreaChart
-            width={730}
-            height={250}
             data={transformedData}
+            height={250}
             margin={{ top: 25, left: -30 }}
+            width={730}
           >
             <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="colorUv" x1="0" x2="0" y1="0" y2="1">
                 <stop
                   offset="5%"
                   stopColor={isDarkMode ? "#26a64160" : "#26a641"}
@@ -67,20 +72,20 @@ export default function GithubActivityAreaChart({
             <XAxis dataKey="shortDate" />
             <YAxis />
             <CartesianGrid
-              strokeDasharray="2 3"
               stroke={isDarkMode ? "#ffffff20" : "#00000020"}
+              strokeDasharray="2 3"
             />
             <Tooltip content={ContributionsTooltip} />
             <Area
-              dot
               activeDot
+              aria-label="count"
+              dataKey="contributionCount"
+              dot
+              fill="url(#colorUv)"
+              fillOpacity={1}
+              stroke={isDarkMode ? "#26a641" : "#216e39"}
               strokeWidth={3}
               type="monotone"
-              dataKey="contributionCount"
-              aria-label="count"
-              stroke={isDarkMode ? "#26a641" : "#216e39"}
-              fillOpacity={1}
-              fill="url(#colorUv)"
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -91,14 +96,14 @@ export default function GithubActivityAreaChart({
           </div>
           <ResponsiveContainer>
             <AreaChart
-              width={730}
-              height={250}
-              data={getChartLoadingData()}
-              margin={{ top: 25, left: -30 }}
               className="pointer-events-none opacity-50"
+              data={getChartLoadingData()}
+              height={250}
+              margin={{ top: 25, left: -30 }}
+              width={730}
             >
               <defs>
-                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id="colorUv" x1="0" x2="0" y1="0" y2="1">
                   <stop
                     offset="5%"
                     stopColor={isDarkMode ? "#404040" : "#ababab"}
@@ -114,19 +119,19 @@ export default function GithubActivityAreaChart({
               <XAxis dataKey="shortDate" />
               <YAxis />
               <CartesianGrid
-                strokeDasharray="2 3"
                 stroke={isDarkMode ? "#ffffff20" : "#00000020"}
+                strokeDasharray="2 3"
               />
               <Area
-                dot
                 activeDot
+                aria-label="count"
+                dataKey="contributionCount"
+                dot
+                fill="url(#colorUv)"
+                fillOpacity={1}
+                stroke={isDarkMode ? "#404040" : "#ababab"}
                 strokeWidth={3}
                 type="monotone"
-                dataKey="contributionCount"
-                aria-label="count"
-                stroke={isDarkMode ? "#404040" : "#ababab"}
-                fillOpacity={1}
-                fill="url(#colorUv)"
               />
             </AreaChart>
           </ResponsiveContainer>

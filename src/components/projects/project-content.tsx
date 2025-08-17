@@ -11,9 +11,9 @@ import ProjectStacks from "./project-stacks";
 
 const CustomMDX = lazy(() => import("../mdx/mdx"));
 
-interface ProjectContentProps {
+type ProjectContentProps = {
   project: ProjectType;
-}
+};
 
 export default function ProjectContent({
   project,
@@ -53,21 +53,23 @@ export default function ProjectContent({
             (link) =>
               link.url && (
                 <ProjectLink
+                  icon={link.icon}
                   key={link.title}
                   title={link.title}
                   url={link.url}
-                  icon={link.icon}
                 />
-              ),
+              )
           )}
         </div>
       </div>
 
       <div className="relative aspect-[16/9] overflow-hidden">
         <img
-          src={thumbnailUrl}
           alt={title}
           className="scale-100 rounded-lg border object-cover blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"
+          height={600}
+          src={thumbnailUrl}
+          width={1000}
         />
       </div>
 

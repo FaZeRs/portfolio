@@ -5,6 +5,7 @@ import { visit } from "unist-util-visit";
 import { TOC } from "~/types";
 
 declare module "mdast" {
+  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
   interface Data {
     hProperties?: { id?: string };
   }
@@ -21,7 +22,9 @@ export const remarkHeading: Plugin = () => {
 
       const childNode = node.children[0];
 
-      if (childNode?.type !== "text") return;
+      if (childNode?.type !== "text") {
+        return;
+      }
 
       const text = childNode.value;
       const id = slugger.slug(childNode.value);

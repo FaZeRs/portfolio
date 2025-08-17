@@ -28,7 +28,7 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        setOpen((currentOpen) => !currentOpen);
       }
     };
 
@@ -44,16 +44,16 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   return (
     <>
       <Button
-        variant="ghost"
-        size="sm"
         className="size-8 px-0"
         onClick={() => setOpen(true)}
+        size="sm"
+        variant="ghost"
         {...props}
       >
         <CommandIcon className="size-5" strokeWidth="1.5" />
       </Button>
 
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog onOpenChange={setOpen} open={open}>
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
@@ -64,7 +64,7 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
                 window.open(
                   siteConfig.links.githubRepo,
                   "_ blank",
-                  "noopener,noreferrer",
+                  "noopener,noreferrer"
                 )
               }
             >
@@ -81,29 +81,29 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
                 link.content.map((subLink) => (
                   <MenuCommandItem
                     key={subLink.href}
-                    value={subLink.title}
                     onSelect={() => {
                       runCommand(() =>
                         navigate({
                           href: subLink.href,
-                        }),
+                        })
                       );
                     }}
+                    value={subLink.title}
                   />
                 ))
               ) : (
                 <MenuCommandItem
                   key={link.href}
-                  value={link.title}
                   onSelect={() => {
                     runCommand(() =>
                       navigate({
                         href: link.href ?? "#",
-                      }),
+                      })
                     );
                   }}
+                  value={link.title}
                 />
-              ),
+              )
             )}
           </CommandGroup>
 
@@ -112,7 +112,7 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
           <CommandGroup heading="Social">
             {socialConfig.map((social) => (
               <CommandItem key={social.name}>
-                <Icon icon={social.icon} className="mr-2 h-4 w-4" />
+                <Icon className="mr-2 h-4 w-4" icon={social.icon} />
                 {social.name}
               </CommandItem>
             ))}
@@ -140,13 +140,13 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   );
 }
 
-interface MenuCommandProps {
+type MenuCommandProps = {
   value: string;
   onSelect?: (value: string) => void;
-}
+};
 
 const MenuCommandItem = ({ value, onSelect }: MenuCommandProps) => (
-  <CommandItem value={value} onSelect={onSelect}>
+  <CommandItem onSelect={onSelect} value={value}>
     <File className="mr-2 h-4 w-4" />
     <span>{value}</span>
   </CommandItem>

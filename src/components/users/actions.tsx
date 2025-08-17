@@ -25,9 +25,9 @@ import { Label } from "~/components/ui/label";
 import authClient from "~/lib/auth-client";
 import { UserType } from "~/types";
 
-interface DataTableRowActionsProps {
+type DataTableRowActionsProps = {
   user: UserType;
-}
+};
 
 export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   const router = useRouter();
@@ -41,7 +41,9 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   const [isImpersonating, setIsImpersonating] = useState(false);
 
   const handleDelete = async () => {
-    if (isDeleting) return;
+    if (isDeleting) {
+      return;
+    }
     try {
       setIsDeleting(true);
       const { error } = await authClient.admin.removeUser({ userId: user.id });
@@ -60,7 +62,9 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   };
 
   const handleImpersonate = async () => {
-    if (isImpersonating) return;
+    if (isImpersonating) {
+      return;
+    }
     try {
       setIsImpersonating(true);
       const { error } = await authClient.admin.impersonateUser({
@@ -81,7 +85,9 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   };
 
   const handleBan = async () => {
-    if (isBanning) return;
+    if (isBanning) {
+      return;
+    }
     if (!banReason.trim()) {
       toast.error("Please provide a ban reason");
       return;
@@ -120,9 +126,9 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
-            className="h-8 w-8 p-0"
             aria-label={`Actions for ${user.name}`}
+            className="h-8 w-8 p-0"
+            variant="ghost"
           >
             <MoreHorizontal className="h-4 w-4" />
           </Button>
@@ -130,29 +136,29 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={handleImpersonate}
             disabled={isAdmin || isImpersonating}
+            onClick={handleImpersonate}
           >
             Impersonate User
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setShowBanDialog(true)}
             disabled={isAdmin || isBanning}
+            onClick={() => setShowBanDialog(true)}
           >
             Ban User
           </DropdownMenuItem>
 
           <DropdownMenuItem
-            onClick={() => setShowDeleteDialog(true)}
-            disabled={isAdmin || isDeleting}
             className="text-destructive focus:text-destructive"
+            disabled={isAdmin || isDeleting}
+            onClick={() => setShowDeleteDialog(true)}
           >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+      <AlertDialog onOpenChange={setShowDeleteDialog} open={showDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
@@ -164,9 +170,9 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={handleDelete}
               className="gap-2"
               disabled={isDeleting}
+              onClick={handleDelete}
             >
               {isDeleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>
@@ -174,7 +180,7 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
         </AlertDialogContent>
       </AlertDialog>
 
-      <AlertDialog open={showBanDialog} onOpenChange={setShowBanDialog}>
+      <AlertDialog onOpenChange={setShowBanDialog} open={showBanDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Ban User</AlertDialogTitle>
@@ -185,29 +191,29 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
           </AlertDialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="ban-reason" className="font-medium text-sm">
+              <Label className="font-medium text-sm" htmlFor="ban-reason">
                 Ban Reason
               </Label>
               <Input
                 id="ban-reason"
-                type="text"
-                placeholder="Enter ban reason..."
-                value={banReason}
                 onChange={(e) => setBanReason(e.target.value)}
+                placeholder="Enter ban reason..."
                 required
+                type="text"
+                value={banReason}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="ban-expires" className="font-medium text-sm">
+              <Label className="font-medium text-sm" htmlFor="ban-expires">
                 Expires In (seconds)
               </Label>
               <Input
                 id="ban-expires"
-                type="number"
-                placeholder="0 = permanent ban"
-                value={banExpiresIn}
-                onChange={(e) => setBanExpiresIn(e.target.value)}
                 min="0"
+                onChange={(e) => setBanExpiresIn(e.target.value)}
+                placeholder="0 = permanent ban"
+                type="number"
+                value={banExpiresIn}
               />
             </div>
           </div>
@@ -221,9 +227,9 @@ export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              onClick={handleBan}
               className="gap-2"
               disabled={isBanning}
+              onClick={handleBan}
             >
               {isBanning ? "Banning..." : "Ban User"}
             </AlertDialogAction>

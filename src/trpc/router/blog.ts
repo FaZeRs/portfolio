@@ -76,10 +76,11 @@ export const blogRouter = {
           articleData.imageUrl = await uploadImage(
             "articles",
             thumbnail,
-            input.slug,
+            input.slug
           );
         } catch (error) {
-          console.error("Error uploading image:", error);
+          // biome-ignore lint/suspicious/noConsole: log error
+          console.error(error);
         }
       }
 
@@ -101,14 +102,15 @@ export const blogRouter = {
           articleData.imageUrl = await uploadImage(
             "articles",
             thumbnail,
-            input.slug ?? id,
+            input.slug ?? id
           );
 
           if (oldImageUrl) {
             await deleteFile(oldImageUrl);
           }
         } catch (error) {
-          console.error("Error uploading image:", error);
+          // biome-ignore lint/suspicious/noConsole: log error
+          console.error(error);
         }
       }
 
@@ -221,7 +223,7 @@ export const blogRouter = {
         where: eq(articleLikes.id, sessionId),
       });
 
-      return !!existingLike;
+      return Boolean(existingLike);
     }),
 
   view: publicProcedure

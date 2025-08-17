@@ -1,6 +1,6 @@
 import { Input } from "../ui/input";
 
-interface FormInputProps {
+type FormInputProps = {
   field: {
     name: string;
     state: { value: string };
@@ -20,7 +20,7 @@ interface FormInputProps {
   required?: boolean;
   description?: string;
   className?: string;
-}
+};
 
 export function FormInput({
   field,
@@ -36,19 +36,19 @@ export function FormInput({
       <field.FormLabel>{label}</field.FormLabel>
       <field.FormControl>
         <Input
+          aria-describedby={description ? `${field.name}-desc` : undefined}
+          aria-required={required}
           id={field.name}
           name={field.name}
-          type={type}
-          placeholder={placeholder}
-          value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
-          aria-required={required}
-          aria-describedby={description ? `${field.name}-desc` : undefined}
+          placeholder={placeholder}
+          type={type}
+          value={field.state.value}
         />
       </field.FormControl>
       {description && (
-        <p id={`${field.name}-desc`} className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-xs" id={`${field.name}-desc`}>
           {description}
         </p>
       )}

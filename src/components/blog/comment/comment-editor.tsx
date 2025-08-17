@@ -13,7 +13,7 @@ import EditorToolbar from "./editor-toolbar";
 
 import "~/lib/styles/editor.css";
 
-interface CommentEditorProps {
+type CommentEditorProps = {
   editor: UseCommentEditor | null;
   placeholder?: string;
   autofocus?: boolean;
@@ -21,14 +21,14 @@ interface CommentEditorProps {
   disabled?: boolean;
   content?: JSONContent;
   onChange?: (editor: UseCommentEditor) => void;
-}
+};
 
-interface UseCommentEditor {
+type UseCommentEditor = {
   editor: Editor;
   isEmpty: boolean;
   getValue: () => JSONContent;
   clearValue: () => void;
-}
+};
 
 export const useCommentEditor = (): [
   editor: UseCommentEditor | null,
@@ -66,12 +66,12 @@ export default function CommentEditor({
   const editorClassName = cn(
     "rounded-lg border bg-background pb-1 ring-offset-background",
     "focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
-    "aria-disabled:cursor-not-allowed aria-disabled:opacity-80",
+    "aria-disabled:cursor-not-allowed aria-disabled:opacity-80"
   );
 
   const tiptapClassName = cn(
     "focus-visible:outline-none",
-    editable && "min-h-10 px-3 py-2",
+    editable && "min-h-10 px-3 py-2"
   );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: we don't want to re-create the editor on every render
@@ -148,19 +148,19 @@ export default function CommentEditor({
     // @sonar-ignore
     // biome-ignore lint/a11y/useSemanticElements: tiptap editor
     <div
-      role="textbox"
       aria-disabled={disabled}
       aria-multiline="true"
-      tabIndex={disabled ? -1 : 0}
       className={editorClassName}
-      onMouseUp={() => {
-        innerEditor?.commands.focus();
-      }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           innerEditor?.commands.focus();
         }
       }}
+      onMouseUp={() => {
+        innerEditor?.commands.focus();
+      }}
+      role="textbox"
+      tabIndex={disabled ? -1 : 0}
     >
       <EditorContent editor={innerEditor} />
       <EditorToolbar editor={innerEditor} />

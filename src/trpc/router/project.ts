@@ -67,10 +67,11 @@ export const projectRouter = {
           projectData.imageUrl = await uploadImage(
             "projects",
             thumbnail,
-            input.slug,
+            input.slug
           );
         } catch (error) {
-          console.error("Error uploading image:", error);
+          // biome-ignore lint/suspicious/noConsole: log error
+          console.error(error);
         }
       }
 
@@ -92,14 +93,15 @@ export const projectRouter = {
           projectData.imageUrl = await uploadImage(
             "projects",
             thumbnail,
-            input.slug ?? id,
+            input.slug ?? id
           );
 
           if (oldImageUrl) {
             await deleteFile(oldImageUrl);
           }
         } catch (error) {
-          console.error("Error uploading image:", error);
+          // biome-ignore lint/suspicious/noConsole: log error
+          console.error(error);
         }
       }
 

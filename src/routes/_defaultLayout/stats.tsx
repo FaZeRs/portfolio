@@ -19,8 +19,8 @@ function RouteComponent() {
   return (
     <>
       <PageHeading
-        title="Statistics"
         description="Insights into my digital life"
+        title="Statistics"
       />
       <Stats />
     </>

@@ -9,6 +9,8 @@ import { components } from "./mdx-components";
 
 import "~/lib/styles/mdx.css";
 
+const eventRegex = /event="([^"]*)"/;
+
 export default function CustomMDX({ source }: Readonly<{ source: string }>) {
   const options = {
     remarkPlugins: [remarkGfm],
@@ -17,6 +19,7 @@ export default function CustomMDX({ source }: Readonly<{ source: string }>) {
       // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
       () => (tree: any) => {
         // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
+        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: valid visit
         visit(tree, (node: any) => {
           if (node?.type === "element" && node?.tagName === "pre") {
             const [codeEl] = node.children;
@@ -27,11 +30,10 @@ export default function CustomMDX({ source }: Readonly<{ source: string }>) {
 
             if (codeEl.data?.meta) {
               // Extract event from meta and pass it down the tree.
-              const regex = /event="([^"]*)"/;
-              const match = codeEl.data?.meta.match(regex);
+              const match = codeEl.data?.meta.match(eventRegex);
               if (match) {
                 node.__event__ = match ? match[1] : null;
-                codeEl.data.meta = codeEl.data.meta.replace(regex, "");
+                codeEl.data.meta = codeEl.data.meta.replace(eventRegex, "");
               }
             }
 
@@ -90,9 +92,9 @@ export default function CustomMDX({ source }: Readonly<{ source: string }>) {
   return (
     <MarkdownHooks
       components={{ ...components }}
+      // biome-ignore lint/suspicious/noExplicitAny: valid any
+      rehypePlugins={options.rehypePlugins as any}
       remarkPlugins={options.remarkPlugins}
-      // @ts-expect-error - Types are incorrect but the functionality works
-      rehypePlugins={options.rehypePlugins}
     >
       {source}
     </MarkdownHooks>

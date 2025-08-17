@@ -1,28 +1,32 @@
-import * as ProgressPrimitive from "@radix-ui/react-progress";
-import * as React from "react";
+import { Indicator, Root } from "@radix-ui/react-progress";
+import { ComponentProps } from "react";
 
 import { cn } from "~/lib/utils";
+
+const PERCENTAGE_CALCULATION_FACTOR = 100;
 
 function Progress({
   className,
   value,
   ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+}: Readonly<ComponentProps<typeof Root>>) {
   return (
-    <ProgressPrimitive.Root
-      data-slot="progress"
+    <Root
       className={cn(
         "relative h-2 w-full overflow-hidden rounded-full bg-primary/20",
-        className,
+        className
       )}
+      data-slot="progress"
       {...props}
     >
-      <ProgressPrimitive.Indicator
-        data-slot="progress-indicator"
+      <Indicator
         className="h-full w-full flex-1 bg-primary transition-all"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+        data-slot="progress-indicator"
+        style={{
+          transform: `translateX(-${PERCENTAGE_CALCULATION_FACTOR - (value || 0)}%)`,
+        }}
       />
-    </ProgressPrimitive.Root>
+    </Root>
   );
 }
 

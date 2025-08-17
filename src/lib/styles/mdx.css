@@ -1,4 +1,5 @@
 /* @sonar-ignore */
+/* biome-ignore lint/suspicious/noUnknownAtRules: @reference is a valid CSS at-rule */
 @reference "./app.css";
 /* @end */
 
@@ -15,10 +16,12 @@ html.dark code[data-theme*=" "] span {
 }
 
 [data-rehype-pretty-code-figure] {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply relative my-6 rounded-lg border;
 }
 
 [data-rehype-pretty-code-figure] code {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply grid min-w-full rounded-none border-0 bg-transparent p-0 break-words;
   counter-reset: line;
   box-decoration-break: clone;
@@ -26,10 +29,12 @@ html.dark code[data-theme*=" "] span {
 
 /* Line numbers */
 [data-line] {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply inline-block min-h-[1rem] w-full px-4 py-0.5;
 }
 
 [data-line-numbers] > [data-line]::before {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply text-muted-foreground;
   counter-increment: line;
   content: counter(line);
@@ -41,15 +46,18 @@ html.dark code[data-theme*=" "] span {
 
 /* Line highlighting */
 [data-highlighted-line] {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply !bg-accent border-l-4 border-l-blue-500;
 }
 
 /* Word Highlighting */
 /* biome-ignore lint/style/noDescendingSpecificity: fix later */
 [data-highlighted-chars] span {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply relative;
 }
 
 [data-highlighted-chars] {
+  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply bg-muted-foreground/10 text-foreground dark:bg-muted-foreground/50 rounded-sm border p-1;
 }

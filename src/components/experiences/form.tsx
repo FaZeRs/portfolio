@@ -27,18 +27,18 @@ export const experienceFormOpts = formOptions({
   },
 });
 
-interface FormField {
+type FormField = {
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
   handleBlur: () => void;
-}
+};
 
 export const ExperiencesForm = withForm({
   ...experienceFormOpts,
   props: {
     experience: undefined as ExperienceType | undefined,
   },
-  render: function Render({ form, experience }) {
+  render({ form, experience }) {
     return (
       <>
         <form.AppField name="title">
@@ -78,8 +78,8 @@ export const ExperiencesForm = withForm({
             <FormInput
               field={field}
               label="URL"
-              type="url"
               placeholder="https://www.google.com"
+              type="url"
             />
           )}
         </form.AppField>
@@ -88,9 +88,9 @@ export const ExperiencesForm = withForm({
           {(field) => (
             <FormImageUpload
               field={field as FormField}
-              name={field.name}
-              label="Image"
               initialPreview={experience?.imageUrl}
+              label="Image"
+              name={field.name}
             />
           )}
         </form.AppField>
@@ -100,11 +100,11 @@ export const ExperiencesForm = withForm({
             <FormSelect
               field={field}
               label="Type"
-              placeholder="Select a type"
               options={Object.values(ExperienceTypeEnum).map((type) => ({
                 value: type,
                 label: type,
               }))}
+              placeholder="Select a type"
             />
           )}
         </form.AppField>
@@ -122,10 +122,10 @@ export const ExperiencesForm = withForm({
           <form.AppField name="endDate">
             {(field) => (
               <FormDatePicker
+                disabled={form.getFieldValue("isOnGoing")}
                 field={field}
                 label="End Date"
                 placeholder="Pick an end date"
-                disabled={form.getFieldValue("isOnGoing")}
               />
             )}
           </form.AppField>
@@ -135,19 +135,19 @@ export const ExperiencesForm = withForm({
           <form.AppField name="isOnGoing">
             {(field) => (
               <FormCheckbox
+                className=""
+                description="This experience is currently ongoing"
                 field={field}
                 label="On Going"
-                description="This experience is currently ongoing"
-                className=""
               />
             )}
           </form.AppField>
           <form.AppField name="isDraft">
             {(field) => (
               <FormCheckbox
+                description="This project won't be visible to visitors"
                 field={field}
                 label="Save as Draft"
-                description="This project won't be visible to visitors"
               />
             )}
           </form.AppField>

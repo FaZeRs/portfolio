@@ -10,9 +10,9 @@ import {
   TableRow,
 } from "../ui/table";
 
-interface SnippetsProps {
+type SnippetsProps = {
   snippets: SnippetType[];
-}
+};
 
 export default function Snippets({ snippets }: Readonly<SnippetsProps>) {
   return (
@@ -30,10 +30,10 @@ export default function Snippets({ snippets }: Readonly<SnippetsProps>) {
           <TableRow key={snippet.slug}>
             <TableCell className="font-medium underline">
               <Link
-                to="/snippets/$snippetId"
                 params={{
                   snippetId: snippet.slug,
                 }}
+                to="/snippets/$snippetId"
               >
                 {snippet.title}
               </Link>

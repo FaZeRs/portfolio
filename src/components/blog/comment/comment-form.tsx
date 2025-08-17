@@ -9,9 +9,9 @@ import { useSignInModal } from "~/hooks/use-sign-in-modal";
 import { useTRPC } from "~/trpc/react";
 import CommentEditor, { useCommentEditor } from "./comment-editor";
 
-interface CommentFormProps {
+type CommentFormProps = {
   articleId: string;
-}
+};
 
 export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
   const [editor, setEditor] = useCommentEditor();
@@ -31,29 +31,32 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
       toast.success("Comment posted");
     },
     onError: (error) => {
-      console.error("Error posting comment:", error);
       toast.error(error.message);
+      // biome-ignore lint/suspicious/noConsole: logging error
+      console.error(error);
     },
     onSettled: async () => {
       await queryClient.invalidateQueries(
-        trpc.comment.all.queryOptions({ articleId: articleId }),
+        trpc.comment.all.queryOptions({ articleId })
       );
     },
   });
 
   const disabled = !isAuthenticated || isPending;
 
-  const handlePostComment = async (event: FormEvent<HTMLFormElement>) => {
+  const handlePostComment = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!editor) return;
+    if (!editor) {
+      return;
+    }
     if (editor.isEmpty) {
       toast.error("Comment cannot be empty");
       return;
     }
     const content = editor.getValue();
     mutate({
-      articleId: articleId,
-      content: content,
+      articleId,
+      content,
     });
   };
 
@@ -61,32 +64,32 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
     <form className="mt-6" onSubmit={handlePostComment}>
       <div className="relative">
         <CommentEditor
+          disabled={disabled}
           editor={editor}
           onChange={setEditor}
           placeholder={"Leave comment"}
-          disabled={disabled}
         />
 
         <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-2 bottom-1.5 size-7"
-          type="submit"
-          disabled={disabled || !editor || editor.isEmpty}
-          aria-label="Send comment"
           aria-disabled={disabled || !editor || editor.isEmpty}
+          aria-label="Send comment"
+          className="absolute right-2 bottom-1.5 size-7"
+          disabled={disabled || !editor || editor.isEmpty}
+          size="icon"
+          type="submit"
+          variant="ghost"
         >
           <SendIcon className="size-4" />
         </Button>
 
         <ClientOnly>
-          {!isAuthenticated && !isSessionPending ? (
+          {isAuthenticated || isSessionPending ? null : (
             <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/5 backdrop-blur-[0.8px]">
-              <Button type="button" onClick={() => setOpen(true)}>
+              <Button onClick={() => setOpen(true)} type="button">
                 Please sign in to comment
               </Button>
             </div>
-          ) : null}
+          )}
         </ClientOnly>
       </div>
     </form>

@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_defaultLayout/projects/$projectId")({
   loader: async ({ params: { projectId }, context: { trpc, queryClient } }) => {
     try {
       const data = await queryClient.ensureQueryData(
-        trpc.project.bySlug.queryOptions({ slug: projectId }),
+        trpc.project.bySlug.queryOptions({ slug: projectId })
       );
       return {
         title: data?.title,
@@ -52,14 +52,14 @@ function RouteComponent() {
   const { projectId } = Route.useParams();
   const trpc = useTRPC();
   const project = useSuspenseQuery(
-    trpc.project.bySlug.queryOptions({ slug: projectId }),
+    trpc.project.bySlug.queryOptions({ slug: projectId })
   );
 
   return (
     <div>
       <PageHeading
-        title={project.data?.title}
         description={project.data?.description}
+        title={project.data?.title}
       />
       <ProjectContent project={project.data} />
     </div>

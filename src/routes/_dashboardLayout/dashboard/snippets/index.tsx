@@ -91,9 +91,9 @@ function Snippets() {
           <p className="text-muted-foreground">Manage your snippets here.</p>
         </div>
         <Link
-          to="/dashboard/snippets/create"
-          className={cn(buttonVariants({ variant: "default" }), "group")}
           aria-label="Add new snippet"
+          className={cn(buttonVariants({ variant: "default" }), "group")}
+          to="/dashboard/snippets/create"
         >
           <span>Add Snippet</span> <Plus className="ml-1" size={18} />
         </Link>

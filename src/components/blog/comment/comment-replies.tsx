@@ -5,9 +5,9 @@ import { useCommentContext } from "~/contexts/comment";
 import { useTRPC } from "~/trpc/react";
 import CommentItem from "./comment-item";
 
-interface CommentRepliesProps {
+type CommentRepliesProps = {
   articleSlug: string;
-}
+};
 
 export default function CommentReplies({
   articleSlug,
@@ -19,7 +19,7 @@ export default function CommentReplies({
     trpc.comment.all.queryOptions({
       articleId: comment.comment.articleId,
       parentId: comment.comment.id,
-    }),
+    })
   );
 
   return (
@@ -27,17 +27,17 @@ export default function CommentReplies({
       {isOpenReplies && !isLoading ? (
         comments?.map((reply) => (
           <CommentItem
-            key={reply.comment.id}
-            comment={reply}
             articleSlug={articleSlug}
+            comment={reply}
+            key={reply.comment.id}
           />
         ))
       ) : (
         <Button
-          variant="link"
           className="px-0"
           onClick={() => setIsOpenReplies(true)}
           type="button"
+          variant="link"
         >
           Show all {comment.repliesCount} replies
           {isLoading ? (

@@ -33,11 +33,14 @@ export const rehypeCode: Plugin<[RehypeShikiOptions], Root> = () => {
         if (meta) {
           meta.__raw = meta.__raw?.replace(titleRegex, "");
         }
+        // biome-ignore lint/performance/useTopLevelRegex: valid regex
         return code.replace(/\n$/, "");
       },
       root(hast) {
         const pre = hast.children[0];
-        if (pre?.type !== "element") return;
+        if (pre?.type !== "element") {
+          return;
+        }
         hast.children = [
           {
             ...pre,
@@ -81,7 +84,7 @@ export const rehypeCode: Plugin<[RehypeShikiOptions], Root> = () => {
 
         return { title };
       },
-    }),
+    })
   );
 
   return async (tree, file) => {

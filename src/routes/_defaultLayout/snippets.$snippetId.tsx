@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_defaultLayout/snippets/$snippetId")({
   loader: async ({ params: { snippetId }, context: { trpc, queryClient } }) => {
     try {
       const data = await queryClient.ensureQueryData(
-        trpc.snippet.bySlug.queryOptions({ slug: snippetId }),
+        trpc.snippet.bySlug.queryOptions({ slug: snippetId })
       );
       return {
         title: data?.title,
@@ -50,7 +50,7 @@ function RouteComponent() {
   const { snippetId } = Route.useParams();
   const trpc = useTRPC();
   const snippet = useSuspenseQuery(
-    trpc.snippet.bySlug.queryOptions({ slug: snippetId }),
+    trpc.snippet.bySlug.queryOptions({ slug: snippetId })
   );
 
   return (

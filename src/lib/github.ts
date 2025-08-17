@@ -7,7 +7,8 @@ import {
 } from "~/types";
 import { env } from "./env.server";
 
-const GITHUB_API_URL = "https://api.github.com/users/fazers";
+const GITHUB_API_URL = "https://api.github.com/users/fazers" as const;
+const DAYS_TO_FETCH = 30 as const;
 
 const headers = new Headers({
   Authorization: `token ${env.GITHUB_ACCESS_TOKEN}`,
@@ -31,24 +32,23 @@ async function getGithubStats() {
     const filteredRepos = myRepos.filter((repo) => !repo.fork);
     const starsCount = filteredRepos.reduce(
       (acc, curr) => acc + curr.stargazers_count,
-      0,
+      0
     );
 
     return { user, repos: filteredRepos.length, starsCount };
-  } catch (error) {
-    console.error(error);
+  } catch (_error) {
     return null;
   }
 }
 
-export interface ContributionCountByDay {
+export type ContributionCountByDay = {
   [day: string]: number;
-}
+};
 
-export interface ContributionCountByDayOfWeek {
+export type ContributionCountByDayOfWeek = {
   day: string;
   count: number;
-}
+};
 
 export type Contributions = {
   contributionsByLast30Days: ContributionsDay[];
@@ -57,9 +57,6 @@ export type Contributions = {
 
 async function getGithubActivities() {
   if (!env.GITHUB_ACCESS_TOKEN) {
-    console.warn(
-      "GitHub access token not found. Skipping GitHub activities fetch.",
-    );
     return {
       contributionsByLast30Days: [],
       contributionCountByDayOfWeek: [],
@@ -72,7 +69,7 @@ async function getGithubActivities() {
   };
 
   const now = new Date();
-  const from = formatISO(subDays(now, 30));
+  const from = formatISO(subDays(now, DAYS_TO_FETCH));
   const to = formatISO(now);
   const q = {
     query: `
@@ -106,14 +103,12 @@ async function getGithubActivities() {
   });
 
   if (!response.ok) {
-    console.error("GitHub API error:", response.status, response.statusText);
     return contributions;
   }
 
   const apiResponse = await response.json();
 
   if (apiResponse.errors) {
-    console.error("GitHub GraphQL errors:", apiResponse.errors);
     return contributions;
   }
 
@@ -132,7 +127,7 @@ async function getGithubActivities() {
   }
 
   contributions.contributionCountByDayOfWeek = calculateMostProductiveDayOfWeek(
-    contributionsCollection.contributionCalendar,
+    contributionsCollection.contributionCalendar
   );
 
   return contributions;
@@ -140,7 +135,7 @@ async function getGithubActivities() {
 
 // Function to calculate the productive data by days
 function calculateMostProductiveDayOfWeek(
-  contributionCalendar: ContributionCalendar,
+  contributionCalendar: ContributionCalendar
 ): { day: string; count: number }[] {
   const daysOfWeek = [
     "Sunday",

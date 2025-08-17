@@ -27,28 +27,28 @@ export const articleFormOpts = formOptions({
   },
 });
 
-interface FormField {
+type FormField = {
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
   handleBlur: () => void;
-}
+};
 
 export const ArticleForm = withForm({
   ...articleFormOpts,
   props: {
     article: undefined as ArticleType | undefined,
   },
-  render: function Render({ form, article }) {
+  render({ form, article }) {
     return (
       <>
         <form.AppField
-          name="title"
           listeners={{
             onChange: ({ value }) => {
               const slug = generateSlug(value);
               form.setFieldValue("slug", slug);
             },
           }}
+          name="title"
         >
           {(field) => (
             <FormInput
@@ -97,9 +97,9 @@ A brief overview of your article."
           {(field) => (
             <FormImageUpload
               field={field as FormField}
-              name={field.name}
-              label="Image"
               initialPreview={article?.imageUrl}
+              label="Image"
+              name={field.name}
             />
           )}
         </form.AppField>
@@ -109,12 +109,12 @@ A brief overview of your article."
             <FormMultiSelect
               field={field}
               label="Tags"
-              placeholder="Select tags"
               options={Object.entries(STACKS).map(([key, value]) => ({
                 label: key,
                 value: key,
-                icon: <Icon icon={value} className="h-4 w-4" />,
+                icon: <Icon className="h-4 w-4" icon={value} />,
               }))}
+              placeholder="Select tags"
             />
           )}
         </form.AppField>
@@ -122,9 +122,9 @@ A brief overview of your article."
         <form.AppField name="isDraft">
           {(field) => (
             <FormCheckbox
+              description="This article won't be visible to visitors"
               field={field}
               label="Save as Draft"
-              description="This article won't be visible to visitors"
             />
           )}
         </form.AppField>

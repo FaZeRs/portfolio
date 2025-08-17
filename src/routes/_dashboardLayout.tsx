@@ -4,7 +4,7 @@ import { dashboardNavbarLinks } from "~/lib/config/navbar";
 
 export const Route = createFileRoute("/_dashboardLayout")({
   component: LayoutComponent,
-  beforeLoad: async ({ context }) => {
+  beforeLoad: ({ context }) => {
     if (!context.user) {
       throw redirect({ to: "/signin" });
     }

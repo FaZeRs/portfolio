@@ -2,35 +2,37 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header";
 import { Checkbox } from "~/components/ui/checkbox";
 
-export interface BaseItemType {
+export type BaseItemType = {
   id: string;
   title: string;
   description: string | null;
   isDraft: boolean;
-}
+};
 
 export function createCommonColumns<T extends BaseItemType>(
-  entityName: string,
+  entityName: string
 ): ColumnDef<T>[] {
   return [
     {
       id: "select",
       header: ({ table }) => (
         <Checkbox
+          aria-label={`Select all ${entityName}`}
           checked={
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label={`Select all ${entityName}`}
+          onCheckedChange={(value) =>
+            table.toggleAllPageRowsSelected(Boolean(value))
+          }
         />
       ),
       cell: ({ row }) => (
         <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label={`Select ${row.original.title}`}
+          checked={row.getIsSelected()}
           disabled={!row.getCanSelect()}
+          onCheckedChange={(value) => row.toggleSelected(Boolean(value))}
         />
       ),
       enableSorting: false,
@@ -60,8 +62,8 @@ export function createCommonColumns<T extends BaseItemType>(
       ),
       cell: ({ row }) => (
         <Checkbox
-          checked={row.original.isDraft}
           aria-label={`${row.original.title} is draft: ${row.original.isDraft ? "Yes" : "No"}`}
+          checked={row.original.isDraft}
           disabled
         />
       ),
@@ -71,7 +73,7 @@ export function createCommonColumns<T extends BaseItemType>(
 
 export function createToggleColumn<T extends { title: string }>(
   accessorKey: keyof T & string,
-  title: string,
+  title: string
 ): ColumnDef<T> {
   return {
     accessorKey,
@@ -82,10 +84,10 @@ export function createToggleColumn<T extends { title: string }>(
       const value = row.original[accessorKey] as unknown as boolean;
       return (
         <Checkbox
-          checked={value}
           aria-label={`${row.original.title} is ${title.toLowerCase()}: ${
             value ? "Yes" : "No"
           }`}
+          checked={value}
           disabled
         />
       );

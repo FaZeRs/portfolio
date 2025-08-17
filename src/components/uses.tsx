@@ -8,7 +8,7 @@ import { software } from "~/lib/constants/uses-data";
 
 const createIconComponent =
   (icon: SimpleIcon) => (props: React.ComponentProps<"svg">) => (
-    <svg {...props} viewBox="0 0 24 24" fill="currentColor">
+    <svg {...props} fill="currentColor" viewBox="0 0 24 24">
       <title>{icon.title}</title>
       <path d={icon.path} />
     </svg>
@@ -22,8 +22,8 @@ export default function Uses() {
       </motion.h2>
 
       <AnimatedDiv
-        variants={fadeContainer}
         className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-7"
+        variants={fadeContainer}
       >
         {software.map((item) => {
           const Icon = createIconComponent(item.icon);
@@ -31,11 +31,11 @@ export default function Uses() {
           return (
             <motion.div key={item.name} variants={popUp}>
               <Link
-                title={`${item.name} - ${item.description}`}
+                className="active:!scale-90 lg:hover:!scale-125 relative flex flex-col items-center justify-center gap-2 rounded-md border border-transparent bg-background p-6 text-gray-700 shadow transition-all hover:z-10 hover:origin-center hover:border-gray-400 hover:text-black hover:shadow-lg dark:bg-secondary dark:text-gray-300/80 dark:shadow-md dark:hover:border-neutral-600 dark:hover:text-white"
                 rel="noopener noreferrer"
                 target="_blank"
+                title={`${item.name} - ${item.description}`}
                 to={item.link}
-                className="active:!scale-90 lg:hover:!scale-125 relative flex flex-col items-center justify-center gap-2 rounded-md border border-transparent bg-background p-6 text-gray-700 shadow transition-all hover:z-10 hover:origin-center hover:border-gray-400 hover:text-black hover:shadow-lg dark:bg-secondary dark:text-gray-300/80 dark:shadow-md dark:hover:border-neutral-600 dark:hover:text-white"
               >
                 <Icon className="!pointer-events-none mb-4 h-8 w-8" />
                 <p className="line-clamp-1 select-none text-xs">{item.name}</p>

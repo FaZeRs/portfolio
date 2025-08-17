@@ -8,12 +8,12 @@ const Icon = ({
   className?: string;
 }) => (
   <svg
+    className={className}
+    height="24"
     role="img"
     viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
     width="24"
-    height="24"
-    className={className}
+    xmlns="http://www.w3.org/2000/svg"
   >
     <title>{icon.title}</title>
     <path d={icon.path} fill="currentColor" />

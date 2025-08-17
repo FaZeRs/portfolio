@@ -11,7 +11,7 @@ import CommentMenu from "./comment-menu";
 import CommentReplies from "./comment-replies";
 import CommentReply from "./comment-reply";
 
-interface CommentItemProps {
+type CommentItemProps = {
   comment: {
     comment: CommentType;
     user: UserType | null;
@@ -21,7 +21,7 @@ interface CommentItemProps {
     userReaction: CommentReactionType | null;
   };
   articleSlug: string;
-}
+};
 
 export default function CommentItem({
   comment,
@@ -47,7 +47,7 @@ export default function CommentItem({
       setIsEditing,
       setIsReplying,
       setIsOpenReplies,
-      comment: comment,
+      comment,
     };
   }, [comment, isEditing, isOpenReplies, isReplying]);
 
@@ -79,10 +79,10 @@ export default function CommentItem({
             </div>
 
             <CommentEditor
-              editor={editor}
-              onChange={setEditor}
               content={content as JSONContent}
               editable={false}
+              editor={editor}
+              onChange={setEditor}
             />
 
             {isReplying ? <CommentReply /> : <CommentActions />}

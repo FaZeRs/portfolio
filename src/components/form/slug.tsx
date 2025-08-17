@@ -1,6 +1,6 @@
 import { Input } from "../ui/input";
 
-interface FormSlugProps {
+type FormSlugProps = {
   field: {
     name: string;
     state: { value: string };
@@ -11,7 +11,7 @@ interface FormSlugProps {
   placeholder: string;
   urlPath: string;
   className?: string;
-}
+};
 
 export function FormSlug({
   field,
@@ -23,23 +23,23 @@ export function FormSlug({
   return (
     <div className={className}>
       <label
-        htmlFor={field.name}
         className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        htmlFor={field.name}
       >
         {label}
       </label>
       <Input
+        aria-describedby="slug-desc"
+        aria-required="true"
         id={field.name}
         name={field.name}
-        type="text"
-        placeholder={placeholder}
-        value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
-        aria-required="true"
-        aria-describedby="slug-desc"
+        placeholder={placeholder}
+        type="text"
+        value={field.state.value}
       />
-      <p id="slug-desc" className="text-muted-foreground text-xs">
+      <p className="text-muted-foreground text-xs" id="slug-desc">
         Used in the URL: {urlPath}
       </p>
     </div>

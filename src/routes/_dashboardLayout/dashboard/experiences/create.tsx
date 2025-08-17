@@ -8,7 +8,7 @@ import { ExperienceBaseSchema, ExperienceType } from "~/lib/server/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_dashboardLayout/dashboard/experiences/create",
+  "/_dashboardLayout/dashboard/experiences/create"
 )({
   component: ExperiencesCreatePage,
   head: () => ({
@@ -29,8 +29,7 @@ function ExperiencesCreatePage() {
       form.reset();
       router.navigate({ to: "/dashboard/experiences" });
     },
-    onError: (error) => {
-      console.error("Error creating experience:", error);
+    onError: (_error) => {
       toast.error("Failed to create experience");
     },
   });
@@ -73,14 +72,14 @@ function ExperiencesCreatePage() {
       <div className="py-4">
         <form.AppForm>
           <form
+            className="space-y-8"
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="space-y-8"
           >
-            <ExperiencesForm form={form} experience={undefined} />
+            <ExperiencesForm experience={undefined} form={form} />
           </form>
         </form.AppForm>
       </div>

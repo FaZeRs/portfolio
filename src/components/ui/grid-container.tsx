@@ -1,6 +1,6 @@
-interface GridContainerProps {
+type GridContainerProps = {
   children: React.ReactNode;
-}
+};
 
 const GridContainer = ({ children }: GridContainerProps) => {
   return (

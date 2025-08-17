@@ -11,10 +11,10 @@ import {
 } from "./ui/dropdown-menu";
 import Icon from "./ui/icon";
 
-interface SocialShareProps {
+type SocialShareProps = {
   url: string;
   text?: string;
-}
+};
 
 const SocialShare = ({ url, text }: SocialShareProps) => {
   const encodedUrl = encodeURIComponent(url);
@@ -34,7 +34,7 @@ const SocialShare = ({ url, text }: SocialShareProps) => {
             rel="noreferrer noopener"
             target="_blank"
           >
-            <Icon icon={siX} className="mr-2 h-3 w-3" />
+            <Icon className="mr-2 h-3 w-3" icon={siX} />
             Twitter
           </a>
         </DropdownMenuItem>
@@ -44,7 +44,7 @@ const SocialShare = ({ url, text }: SocialShareProps) => {
             rel="noreferrer noopener"
             target="_blank"
           >
-            <Icon icon={siFacebook} className="mr-2 h-3 w-3" />
+            <Icon className="mr-2 h-3 w-3" icon={siFacebook} />
             Facebook
           </a>
         </DropdownMenuItem>
@@ -54,7 +54,7 @@ const SocialShare = ({ url, text }: SocialShareProps) => {
             rel="noreferrer noopener"
             target="_blank"
           >
-            <Icon icon={siLinkedin} className="mr-2 h-3 w-3" />
+            <Icon className="mr-2 h-3 w-3" icon={siLinkedin} />
             LinkedIn
           </a>
         </DropdownMenuItem>
@@ -64,7 +64,7 @@ const SocialShare = ({ url, text }: SocialShareProps) => {
             rel="noreferrer noopener"
             target="_blank"
           >
-            <Icon icon={siYcombinator} className="mr-2 h-3 w-3" />
+            <Icon className="mr-2 h-3 w-3" icon={siYcombinator} />
             Hacker News
           </a>
         </DropdownMenuItem>

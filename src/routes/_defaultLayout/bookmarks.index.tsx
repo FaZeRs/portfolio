@@ -17,20 +17,20 @@ function RouteComponent() {
   return (
     <>
       <PageHeading
-        title="Bookmarks"
         description="Discoveries from the World Wide Web"
+        title="Bookmarks"
       />
 
       <ScrollArea>
         <div className="divide-y">
           {collections.map((collection: Collection) => (
             <Link
+              className="flex flex-col gap-1 px-2 py-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-800"
               key={collection._id}
-              to="/bookmarks/$bookmarkId"
               params={{
                 bookmarkId: collection.slug,
               }}
-              className="flex flex-col gap-1 px-2 py-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-800"
+              to="/bookmarks/$bookmarkId"
             >
               <div>
                 <h2 className="font-semibold text-lg">{collection.title}</h2>

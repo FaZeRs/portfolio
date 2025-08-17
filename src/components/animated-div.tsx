@@ -15,12 +15,12 @@ export default function AnimatedDiv({
 }: AnimatedDivProps) {
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: !infinity }}
-      variants={variants}
       className={className}
+      initial="hidden"
       transition={{ staggerChildren: 0.5 }}
+      variants={variants}
+      viewport={{ once: !infinity }}
+      whileInView="visible"
     >
       {children}
     </motion.div>

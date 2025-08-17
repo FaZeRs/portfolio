@@ -1,10 +1,10 @@
 import CommentForm from "./comment/comment-form";
 import CommentList from "./comment/comment-list";
 
-interface ArticleCommentProps {
+type ArticleCommentProps = {
   articleId: string;
   articleSlug: string;
-}
+};
 
 export default function ArticleComment({
   articleId,
