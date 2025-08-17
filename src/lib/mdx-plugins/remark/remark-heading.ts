@@ -5,9 +5,10 @@ import { visit } from "unist-util-visit";
 import { TOC } from "~/types";
 
 declare module "mdast" {
-  type Data = {
+  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
+  interface Data {
     hProperties?: { id?: string };
-  };
+  }
 }
 
 export const remarkHeading: Plugin = () => {

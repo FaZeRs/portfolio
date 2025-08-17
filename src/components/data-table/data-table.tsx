@@ -29,12 +29,14 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 
 declare module "@tanstack/react-table" {
-  type FilterFns = {
+  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
+  interface FilterFns {
     fuzzy: FilterFn<unknown>;
-  };
-  type FilterMeta = {
+  }
+  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
+  interface FilterMeta {
     itemRank: RankingInfo;
-  };
+  }
 }
 
 type DataTableProps<TData, TValue> = {

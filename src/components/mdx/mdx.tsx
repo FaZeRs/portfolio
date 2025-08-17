@@ -92,8 +92,8 @@ export default function CustomMDX({ source }: Readonly<{ source: string }>) {
   return (
     <MarkdownHooks
       components={{ ...components }}
-      rehypePlugins={options.rehypePlugins}
-      // @ts-expect-error - Types are incorrect but the functionality works
+      // biome-ignore lint/suspicious/noExplicitAny: valid any
+      rehypePlugins={options.rehypePlugins as any}
       remarkPlugins={options.remarkPlugins}
     >
       {source}
