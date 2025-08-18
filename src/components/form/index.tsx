@@ -1,3 +1,4 @@
+/** biome-ignore lint/performance/noBarrelFile: this is a barrel file */
 export { FormCheckbox } from "./checkbox";
 export { FormDatePicker } from "./date-picker";
 export { FormImageUpload } from "./image-upload";

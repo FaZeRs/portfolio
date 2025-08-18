@@ -40,4 +40,5 @@ function ThemeToggle() {
 }
 
 export { ThemeToggle };
+/** biome-ignore lint/performance/noBarrelFile: this is a barrel file */
 export { ThemeProvider } from "next-themes";
