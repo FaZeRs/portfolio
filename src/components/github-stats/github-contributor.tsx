@@ -2,7 +2,7 @@ import { ClientOnly } from "@tanstack/react-router";
 import { useTheme } from "next-themes";
 import GitHubCalendar from "react-github-calendar";
 
-import GithubActivityGraph from "~/components/stats/github-activity-graph";
+import GithubActivityGraph from "~/components/github-stats/github-activity-graph";
 
 export default function GithubContributor() {
   const { theme } = useTheme();

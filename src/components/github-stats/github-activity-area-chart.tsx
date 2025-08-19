@@ -10,7 +10,7 @@ import {
   YAxis,
 } from "recharts";
 
-import ContributionsTooltip from "~/components/stats/contributions-tooltip";
+import ContributionsTooltip from "~/components/github-stats/contributions-tooltip";
 import { ContributionsDay } from "~/types";
 
 type GithubActivityAreaChartProps = {

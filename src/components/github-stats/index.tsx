@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import StatCard from "~/components/stats/card";
-import GithubContributor from "~/components/stats/github-contributor";
+import StatCard from "~/components/github-stats/card";
+import GithubContributor from "~/components/github-stats/github-contributor";
 
 export default function Stats() {
   const { data: githubData } = useQuery({

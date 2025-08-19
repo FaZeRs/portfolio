@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-import ContributionCountByDayOfWeekToolTip from "~/components/stats/contribution-count-by-day-of-week-tooltip";
+import ContributionCountByDayOfWeekToolTip from "~/components/github-stats/contribution-count-by-day-of-week-tooltip";
 import { ContributionCountByDayOfWeek } from "~/lib/github";
 
 type GithubActivityBarChartProps = {

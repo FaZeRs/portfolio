@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import GithubActivityAreaChart from "~/components/stats/github-activity-area-chart";
-import GithubActivityBarChart from "~/components/stats/github-activity-bar-chart";
+import GithubActivityAreaChart from "~/components/github-stats/github-activity-area-chart";
+import GithubActivityBarChart from "~/components/github-stats/github-activity-bar-chart";
 import { ContributionCountByDayOfWeek } from "~/lib/github";
 import { ContributionsDay } from "~/types";
 
