@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import Stats from "~/components/github-stats";
 import PageHeading from "~/components/page-heading";
-import Stats from "~/components/stats";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 
