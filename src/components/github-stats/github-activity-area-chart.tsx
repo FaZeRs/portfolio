@@ -17,9 +17,79 @@ type GithubActivityAreaChartProps = {
   contributionsByLast30Days?: ContributionsDay[];
 };
 
+type ChartColors = {
+  gradientStart: string;
+  gradientEnd: string;
+  stroke: string;
+};
+
+type AreaChartComponentProps = {
+  data: Array<{ shortDate: string; contributionCount: number }>;
+  colors: ChartColors;
+  gridStroke: string;
+  className?: string;
+  showTooltip?: boolean;
+};
+
 const CONTRIBUTION_COUNT_RANDOM = 20;
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: valid function
+const CHART_CONFIG = {
+  height: 250,
+  margin: { top: 25, left: -30 },
+  width: 730,
+  strokeDasharray: "2 3",
+} as const;
+
+const AREA_CONFIG = {
+  activeDot: true,
+  "aria-label": "count",
+  dataKey: "contributionCount",
+  dot: true,
+  fill: "url(#colorUv)",
+  fillOpacity: 1,
+  strokeWidth: 3,
+  type: "monotone" as const,
+};
+
+function AreaChartComponent({
+  data,
+  colors,
+  gridStroke,
+  className,
+  showTooltip = false,
+}: Readonly<AreaChartComponentProps>) {
+  return (
+    <ResponsiveContainer>
+      <AreaChart
+        className={className}
+        data={data}
+        height={CHART_CONFIG.height}
+        margin={CHART_CONFIG.margin}
+        width={CHART_CONFIG.width}
+      >
+        <defs>
+          <linearGradient id="colorUv" x1="0" x2="0" y1="0" y2="1">
+            <stop
+              offset="5%"
+              stopColor={colors.gradientStart}
+              stopOpacity={0.8}
+            />
+            <stop offset="95%" stopColor={colors.gradientEnd} stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <XAxis dataKey="shortDate" />
+        <YAxis />
+        <CartesianGrid
+          stroke={gridStroke}
+          strokeDasharray={CHART_CONFIG.strokeDasharray}
+        />
+        {showTooltip && <Tooltip content={ContributionsTooltip} />}
+        <Area {...AREA_CONFIG} stroke={colors.stroke} />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+}
+
 export default function GithubActivityAreaChart({
   contributionsByLast30Days,
 }: Readonly<GithubActivityAreaChartProps>) {
@@ -40,101 +110,44 @@ export default function GithubActivityAreaChart({
     return dates.reverse();
   }
 
-  const transformedData = contributionsByLast30Days?.map((item) => ({
-    ...item,
-    shortDate: format(new Date(item.date), "dd"),
-  }));
+  const dataColors: ChartColors = {
+    gradientStart: isDarkMode ? "#26a64160" : "#26a641",
+    gradientEnd: isDarkMode ? "#26a64160" : "#26a641",
+    stroke: isDarkMode ? "#26a641" : "#216e39",
+  };
+
+  const loadingColors: ChartColors = {
+    gradientStart: isDarkMode ? "#404040" : "#ababab",
+    gradientEnd: isDarkMode ? "#404040" : "#ababab",
+    stroke: isDarkMode ? "#404040" : "#ababab",
+  };
+
+  const gridStroke = isDarkMode ? "#ffffff20" : "#00000020";
 
   return (
     <div className="relative h-[300px] w-full">
       {contributionsByLast30Days ? (
-        <ResponsiveContainer>
-          <AreaChart
-            data={transformedData}
-            height={250}
-            margin={{ top: 25, left: -30 }}
-            width={730}
-          >
-            <defs>
-              <linearGradient id="colorUv" x1="0" x2="0" y1="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor={isDarkMode ? "#26a64160" : "#26a641"}
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor={isDarkMode ? "#26a64160" : "#26a641"}
-                  stopOpacity={0}
-                />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="shortDate" />
-            <YAxis />
-            <CartesianGrid
-              stroke={isDarkMode ? "#ffffff20" : "#00000020"}
-              strokeDasharray="2 3"
-            />
-            <Tooltip content={ContributionsTooltip} />
-            <Area
-              activeDot
-              aria-label="count"
-              dataKey="contributionCount"
-              dot
-              fill="url(#colorUv)"
-              fillOpacity={1}
-              stroke={isDarkMode ? "#26a641" : "#216e39"}
-              strokeWidth={3}
-              type="monotone"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <AreaChartComponent
+          colors={dataColors}
+          data={contributionsByLast30Days.map((item) => ({
+            ...item,
+            shortDate: format(new Date(item.date), "dd"),
+          }))}
+          gridStroke={gridStroke}
+          showTooltip={true}
+        />
       ) : (
         <>
           <div className="absolute inset-0 z-1 grid place-items-center font-semibold text-muted-foreground sm:text-lg">
             Loading Data...
           </div>
-          <ResponsiveContainer>
-            <AreaChart
-              className="pointer-events-none opacity-50"
-              data={getChartLoadingData()}
-              height={250}
-              margin={{ top: 25, left: -30 }}
-              width={730}
-            >
-              <defs>
-                <linearGradient id="colorUv" x1="0" x2="0" y1="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor={isDarkMode ? "#404040" : "#ababab"}
-                    stopOpacity={0.8}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor={isDarkMode ? "#404040" : "#ababab"}
-                    stopOpacity={0}
-                  />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="shortDate" />
-              <YAxis />
-              <CartesianGrid
-                stroke={isDarkMode ? "#ffffff20" : "#00000020"}
-                strokeDasharray="2 3"
-              />
-              <Area
-                activeDot
-                aria-label="count"
-                dataKey="contributionCount"
-                dot
-                fill="url(#colorUv)"
-                fillOpacity={1}
-                stroke={isDarkMode ? "#404040" : "#ababab"}
-                strokeWidth={3}
-                type="monotone"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+          <AreaChartComponent
+            className="pointer-events-none opacity-50"
+            colors={loadingColors}
+            data={getChartLoadingData()}
+            gridStroke={gridStroke}
+            showTooltip={false}
+          />
         </>
       )}
     </div>
