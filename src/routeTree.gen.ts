@@ -43,6 +43,7 @@ import { Route as DashboardLayoutDashboardProjectsProjectIdEditRouteImport } fro
 import { Route as DashboardLayoutDashboardExperiencesExperienceIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/$experienceId.edit";
 import { Route as DashboardLayoutDashboardBlogArticleIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/blog/$articleId.edit";
 import { ServerRoute as ApiContactIndexServerRouteImport } from "./routes/api/contact/index";
+import { ServerRoute as ApiChatIndexServerRouteImport } from "./routes/api/chat/index";
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from "./routes/api/trpc/$";
 import { ServerRoute as ApiAuthSplatServerRouteImport } from "./routes/api/auth/$";
 import { ServerRoute as ApiStatsGithubIndexServerRouteImport } from "./routes/api/stats/github/index";
@@ -226,6 +227,11 @@ const DashboardLayoutDashboardBlogArticleIdEditRoute =
 const ApiContactIndexServerRoute = ApiContactIndexServerRouteImport.update({
   id: "/api/contact/",
   path: "/api/contact/",
+  getParentRoute: () => rootServerRouteImport,
+} as any);
+const ApiChatIndexServerRoute = ApiChatIndexServerRouteImport.update({
+  id: "/api/chat/",
+  path: "/api/chat/",
   getParentRoute: () => rootServerRouteImport,
 } as any);
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
@@ -449,6 +455,7 @@ export interface RootRouteChildren {
 export interface FileServerRoutesByFullPath {
   "/api/auth/$": typeof ApiAuthSplatServerRoute;
   "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
+  "/api/chat": typeof ApiChatIndexServerRoute;
   "/api/contact": typeof ApiContactIndexServerRoute;
   "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
   "/api/stats/github": typeof ApiStatsGithubIndexServerRoute;
@@ -456,6 +463,7 @@ export interface FileServerRoutesByFullPath {
 export interface FileServerRoutesByTo {
   "/api/auth/$": typeof ApiAuthSplatServerRoute;
   "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
+  "/api/chat": typeof ApiChatIndexServerRoute;
   "/api/contact": typeof ApiContactIndexServerRoute;
   "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
   "/api/stats/github": typeof ApiStatsGithubIndexServerRoute;
@@ -464,6 +472,7 @@ export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport;
   "/api/auth/$": typeof ApiAuthSplatServerRoute;
   "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
+  "/api/chat/": typeof ApiChatIndexServerRoute;
   "/api/contact/": typeof ApiContactIndexServerRoute;
   "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
   "/api/stats/github/": typeof ApiStatsGithubIndexServerRoute;
@@ -473,6 +482,7 @@ export interface FileServerRouteTypes {
   fullPaths:
     | "/api/auth/$"
     | "/api/trpc/$"
+    | "/api/chat"
     | "/api/contact"
     | "/api/stats/github/activity"
     | "/api/stats/github";
@@ -480,6 +490,7 @@ export interface FileServerRouteTypes {
   to:
     | "/api/auth/$"
     | "/api/trpc/$"
+    | "/api/chat"
     | "/api/contact"
     | "/api/stats/github/activity"
     | "/api/stats/github";
@@ -487,6 +498,7 @@ export interface FileServerRouteTypes {
     | "__root__"
     | "/api/auth/$"
     | "/api/trpc/$"
+    | "/api/chat/"
     | "/api/contact/"
     | "/api/stats/github/activity"
     | "/api/stats/github/";
@@ -495,6 +507,7 @@ export interface FileServerRouteTypes {
 export interface RootServerRouteChildren {
   ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute;
   ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute;
+  ApiChatIndexServerRoute: typeof ApiChatIndexServerRoute;
   ApiContactIndexServerRoute: typeof ApiContactIndexServerRoute;
   ApiStatsGithubActivityServerRoute: typeof ApiStatsGithubActivityServerRoute;
   ApiStatsGithubIndexServerRoute: typeof ApiStatsGithubIndexServerRoute;
@@ -730,6 +743,13 @@ declare module "@tanstack/react-start/server" {
       preLoaderRoute: typeof ApiContactIndexServerRouteImport;
       parentRoute: typeof rootServerRouteImport;
     };
+    "/api/chat/": {
+      id: "/api/chat/";
+      path: "/api/chat";
+      fullPath: "/api/chat";
+      preLoaderRoute: typeof ApiChatIndexServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
     "/api/trpc/$": {
       id: "/api/trpc/$";
       path: "/api/trpc/$";
@@ -871,6 +891,7 @@ export const routeTree = rootRouteImport
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
   ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
+  ApiChatIndexServerRoute: ApiChatIndexServerRoute,
   ApiContactIndexServerRoute: ApiContactIndexServerRoute,
   ApiStatsGithubActivityServerRoute: ApiStatsGithubActivityServerRoute,
   ApiStatsGithubIndexServerRoute: ApiStatsGithubIndexServerRoute,

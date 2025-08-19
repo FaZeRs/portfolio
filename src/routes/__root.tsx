@@ -96,7 +96,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         </ThemeProvider>
 
         <ReactQueryDevtools buttonPosition="bottom-left" />
-        <TanStackRouterDevtools position="bottom-right" />
+        <TanStackRouterDevtools position="bottom-left" />
         <SpeedInsights route={router.location.pathname} />
         <Analytics />
 
