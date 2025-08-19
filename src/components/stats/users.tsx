@@ -1,99 +1,19 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  TooltipContentProps,
-  XAxis,
-} from "recharts";
-import {
-  NameType,
-  ValueType,
-} from "recharts/types/component/DefaultTooltipContent";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "~/components/ui/chart";
 import { useTRPC } from "~/trpc/react";
-
-type MonthlyUsers = { month: string; count: number }[];
-
-const TICK_MARGIN_DEFAULT = 8;
-const JS_MONTH_INDEX_BASE = 1; // convert human month to JS month index
-
-const chartConfig = {
-  count: {
-    label: "Users",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig;
+import { StatsChart } from "./stats-chart";
 
 export function UsersStats() {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(
     trpc.stats.monthlyUsers.queryOptions({ months: 6 })
   );
-
-  const chartData = (data ?? []) as MonthlyUsers;
-
-  const formatMonthKeyToShort = (key: string) => {
-    const [year, month] = key.split("-");
-    const date = new Date(
-      Date.UTC(Number(year), Number(month) - JS_MONTH_INDEX_BASE, 1)
-    );
-    return date.toLocaleString(undefined, { month: "short" });
-  };
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Registered Users</CardTitle>
-        <CardDescription>Last 6 months</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              axisLine={false}
-              dataKey="month"
-              tickFormatter={(value: string) => formatMonthKeyToShort(value)}
-              tickLine={false}
-              tickMargin={TICK_MARGIN_DEFAULT}
-            />
-            <ChartTooltip
-              content={(props: TooltipContentProps<ValueType, NameType>) => (
-                <ChartTooltipContent {...props} hideIndicator hideLabel />
-              )}
-              cursor={false}
-            />
-            <Line
-              dataKey="count"
-              dot={false}
-              stroke="var(--color-count)"
-              strokeWidth={2}
-              type="linear"
-            />
-          </LineChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+    <StatsChart
+      chartColor="var(--chart-1)"
+      data={data}
+      description="Last 6 months"
+      label="Users"
+      title="Registered Users"
+    />
   );
 }
