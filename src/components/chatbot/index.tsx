@@ -7,7 +7,6 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from "~/components/ai-elements/conversation";
-
 import { Button } from "~/components/ui/button";
 import { Loader } from "../ai-elements/loader";
 import { Message, MessageContent } from "../ai-elements/message";
@@ -129,7 +128,8 @@ export function Chatbot() {
                           </h4>
                           <p className="text-muted-foreground text-sm">
                             Ask me anything about development, services,
-                            experience, projects, or anything else.
+                            experience, projects, booking a meeting, or anything
+                            else.
                           </p>
                         </div>
                       )}

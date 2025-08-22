@@ -6,6 +6,9 @@ export const ServerRoute = createServerFileRoute("/api/chat/").methods({
   POST: async ({ request }) => {
     const { messages }: { messages: UIMessage[] } = await request.json();
 
+    const calendlyUrl =
+      process.env.CALENDLY_URL ?? "https://calendly.com/naurislinde/30min";
+
     const serviceKnowledge = `
 You are Nauris Linde's AI assistant. Here's information about Nauris's services and background:
 
@@ -34,7 +37,7 @@ You are Nauris Linde's AI assistant. Here's information about Nauris's services 
 8. **Database Design**: PostgreSQL, schema design, optimization
 
 **Meeting Booking:**
-When someone wants to schedule a meeting or consultation, direct them to book via Calendly.
+When someone wants to schedule a meeting or consultation, use Calendly at ${calendlyUrl}.
 
 Always be helpful, professional, and enthusiastic about Nauris's work. If asked about specific projects, refer them to the portfolio website for detailed examples.
 `;
