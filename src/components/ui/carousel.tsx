@@ -7,6 +7,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { Button } from "~/components/ui/button";
@@ -110,23 +111,37 @@ function Carousel({
 
     return () => {
       api?.off("select", onSelect);
+      api?.off("reInit", onSelect);
     };
   }, [api, onSelect]);
 
+  const contextValue = useMemo(
+    () => ({
+      carouselRef,
+      api,
+      opts,
+      orientation:
+        orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+      scrollPrev,
+      scrollNext,
+      canScrollPrev,
+      canScrollNext,
+    }),
+    [
+      carouselRef,
+      api,
+      opts,
+      orientation,
+      scrollPrev,
+      scrollNext,
+      canScrollPrev,
+      canScrollNext,
+    ]
+  );
+
   return (
-    <CarouselContext.Provider
-      value={{
-        carouselRef,
-        api,
-        opts,
-        orientation:
-          orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
-        scrollPrev,
-        scrollNext,
-        canScrollPrev,
-        canScrollNext,
-      }}
-    >
+    <CarouselContext.Provider value={contextValue}>
+      {/** @sonar-ignore */}
       {/** biome-ignore lint/a11y/useSemanticElements: valid use case */}
       <div
         aria-roledescription="carousel"
@@ -138,6 +153,7 @@ function Carousel({
       >
         {children}
       </div>
+      {/* @end */}
     </CarouselContext.Provider>
   );
 }
@@ -167,18 +183,22 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   const { orientation } = useCarousel();
 
   return (
-    // biome-ignore lint/a11y/useSemanticElements: valid use case
-    <div
-      aria-roledescription="slide"
-      className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
-        className
-      )}
-      data-slot="carousel-item"
-      role="group"
-      {...props}
-    />
+    <>
+      {/** @sonar-ignore */}
+      {/* biome-ignore lint/a11y/useSemanticElements: valid use case */}
+      <div
+        aria-roledescription="slide"
+        className={cn(
+          "min-w-0 shrink-0 grow-0 basis-full",
+          orientation === "horizontal" ? "pl-4" : "pt-4",
+          className
+        )}
+        data-slot="carousel-item"
+        role="group"
+        {...props}
+      />
+      {/* @end */}
+    </>
   );
 }
 

@@ -139,31 +139,29 @@ export function Chatbot() {
                           {message.role === "assistant" && (
                             <Sources>
                               {message.parts.map((part, partIndex) => {
-                                switch (part.type) {
-                                  case "source-url":
-                                    return (
-                                      <>
-                                        <SourcesTrigger
-                                          count={
-                                            message.parts.filter(
-                                              (p) => p.type === "source-url"
-                                            ).length
-                                          }
-                                        />
-                                        <SourcesContent
+                                if (part.type === "source-url") {
+                                  return (
+                                    <>
+                                      <SourcesTrigger
+                                        count={
+                                          message.parts.filter(
+                                            (p) => p.type === "source-url"
+                                          ).length
+                                        }
+                                      />
+                                      <SourcesContent
+                                        key={`${message.id}-${partIndex}`}
+                                      >
+                                        <Source
+                                          href={part.url}
                                           key={`${message.id}-${partIndex}`}
-                                        >
-                                          <Source
-                                            href={part.url}
-                                            key={`${message.id}-${partIndex}`}
-                                            title={part.url}
-                                          />
-                                        </SourcesContent>
-                                      </>
-                                    );
-                                  default:
-                                    return null;
+                                          title={part.url}
+                                        />
+                                      </SourcesContent>
+                                    </>
+                                  );
                                 }
+                                return null;
                               })}
                             </Sources>
                           )}

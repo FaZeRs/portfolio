@@ -140,7 +140,7 @@ ${blogPosts
 
 **PROFESSIONAL EXPERIENCE:**
 ${workExperiences
-  .filter((exp) => exp.type === "work")
+  .filter((exp) => exp.type?.toLowerCase() === "work")
   .map((exp) => {
     const duration = exp.isOnGoing
       ? `${exp.startDate} - Present`
@@ -154,7 +154,11 @@ ${workExperiences
 
 **EDUCATION & CERTIFICATIONS:**
 ${workExperiences
-  .filter((exp) => exp.type === "education" || exp.type === "certification")
+  .filter(
+    (exp) =>
+      exp.type?.toLowerCase() === "education" ||
+      exp.type?.toLowerCase() === "certification"
+  )
   .map((exp) => {
     const duration = exp.endDate ? `(${exp.endDate})` : "";
     const institution = exp.institution ? ` - ${exp.institution}` : "";
@@ -223,16 +227,22 @@ ${dynamicContent}
 
 Always be helpful, professional, and enthusiastic about Nauris's work. Provide specific examples from his projects and articles when relevant. Direct users to specific URLs for more detailed information.
 `;
+    try {
+      const result = streamText({
+        model: openai("gpt-5-nano"),
+        system: serviceKnowledge,
+        messages: convertToModelMessages(messages),
+      });
 
-    const result = streamText({
-      model: openai("gpt-5-nano"),
-      system: serviceKnowledge,
-      messages: convertToModelMessages(messages),
-    });
-
-    return result.toUIMessageStreamResponse({
-      sendSources: true,
-      sendReasoning: true,
-    });
+      return result.toUIMessageStreamResponse({
+        sendSources: false,
+        sendReasoning: true,
+      });
+    } catch (error) {
+      return new Response(
+        `Error: ${error instanceof Error ? error.message : "Internal server error"}`,
+        { status: 500 }
+      );
+    }
   },
 });
