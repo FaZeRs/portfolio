@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
@@ -53,16 +52,13 @@ const Intro = () => {
           delay: 0.1,
         }}
       >
-        <Link
+        <a
           className={cn(buttonVariants({ variant: "default" }), "group")}
-          params={{
-            section: "contact",
-          }}
-          to="/"
+          href="#contact"
         >
           Contact me
           <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
-        </Link>
+        </a>
       </motion.div>
     </section>
   );

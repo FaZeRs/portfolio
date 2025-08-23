@@ -111,7 +111,12 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
 
           <CommandGroup heading="Social">
             {socialConfig.map((social) => (
-              <CommandItem key={social.name}>
+              <CommandItem
+                key={social.name}
+                onSelect={() => {
+                  window.open(social.url, "_ blank", "noopener,noreferrer");
+                }}
+              >
                 <Icon className="mr-2 h-4 w-4" icon={social.icon} />
                 {social.name}
               </CommandItem>
