@@ -70,9 +70,22 @@ export default defineConfig({
     }),
   ],
   ssr: {
-    noExternal: ["react-use", "react-markdown"],
+    noExternal: [
+      "react-use",
+      "react-markdown",
+      "katex",
+      "rehype-katex",
+      "streamdown",
+      "micromark-extension-math",
+    ],
   },
   optimizeDeps: {
-    include: ["react-use", "react-markdown"],
+    include: [
+      "react-use",
+      "react-markdown",
+      "katex",
+      "rehype-katex",
+      "streamdown",
+    ],
   },
 });
