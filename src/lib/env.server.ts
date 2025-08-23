@@ -23,6 +23,7 @@ export const env = createEnv({
     KV_REST_API_URL: z.url(),
     KV_REST_API_TOKEN: z.string().min(1),
     RAINDROP_ACCESS_TOKEN: z.string().min(1),
+    OPENAI_API_KEY: z.string().min(1).optional(),
   },
 
   /**
