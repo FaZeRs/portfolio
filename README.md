@@ -2,13 +2,42 @@
 
 ![Cover Image](public/images/cover.avif)
 
-My personal portfolio website
+## Features
 
-- [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler)
-- TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest)
-- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL
-- [Better Auth](https://www.better-auth.com/)
+### 🌟 Portfolio & Content Management
+- **Blog & Articles** - Full-featured blog with markdown support, comments, likes, views, and tagging system
+- **Projects Showcase** - Portfolio projects with tech stack display, GitHub links, demo links, and detailed descriptions
+- **Code Snippets** - Organized code snippets with syntax highlighting and categorization
+- **Experience Timeline** - Experience, education and certificate timeline
+- **Bookmarks** - Curated web bookmarks using [Raindrop](https://raindrop.io/)
+
+### 🤖 AI-Powered Features
+- **AI Chatbot** - Interactive chatbot with portfolio knowledge, reasoning display, and streaming responses
+
+### 📊 Analytics & Statistics
+- **GitHub Integration** - Real-time GitHub stats, contribution graphs, activity charts, and repository metrics
+- **Blog Analytics** - View counts, engagement metrics, and monthly statistics
+- **User Analytics** - User registration and activity tracking with visual charts
+
+### 🔐 Authentication & Administration
+- **OAuth Authentication** - GitHub social sign-in with Better Auth
+- **Admin Dashboard** - Full CRUD operations for all content types
+- **User Management** - Admin interface for managing users
+- **Content Moderation** - Draft/publish workflows for all content types
+
+### 🎨 Modern Tech Stack
+- [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler) - Latest React with performance optimizations
+- TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest) + [Form](https://tanstack.com/form/latest) - Full-stack React framework
+- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) - Modern styling and component library
+- [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL + [Upstash](https://upstash.com/) - Type-safe database operations and caching
+- [Better Auth](https://www.better-auth.com/) - Secure authentication system
+
+### 🛠 Developer Experience
+- **MDX Support** - Rich markdown editing with live preview
+- **Image Management** - Upload and optimization for all media content
+- **SEO Optimization** - Meta tags, sitemap generation, and structured data
+- **Form Validation** - Type-safe forms with real-time validation
+- **Responsive Design** - Mobile-first approach with dark/light theme support
 
 ## Getting Started
 
