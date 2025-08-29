@@ -68,9 +68,14 @@ export function AvatarDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={async () => {
-            await authClient.signOut();
-            await queryClient.invalidateQueries({ queryKey: ["user"] });
-            await router.invalidate();
+            await authClient.signOut({
+              fetchOptions: {
+                onResponse: async () => {
+                  queryClient.setQueryData(["user"], null);
+                  await router.invalidate();
+                },
+              },
+            });
           }}
         >
           Log out
