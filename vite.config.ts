@@ -1,5 +1,6 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
+import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
@@ -27,6 +28,14 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
   },
   plugins: [
+    devtools({
+      eventBusConfig: {
+        debug: false,
+      },
+      enhancedLogs: {
+        enabled: true,
+      },
+    }),
     tsConfigPaths({
       projects: ["./tsconfig.json"],
     }),

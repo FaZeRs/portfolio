@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
+import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -9,7 +10,7 @@ import {
   Scripts,
   useRouterState,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
@@ -95,8 +96,25 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           <Toaster />
         </ThemeProvider>
 
-        <ReactQueryDevtools buttonPosition="bottom-left" />
-        <TanStackRouterDevtools position="bottom-left" />
+        <TanStackDevtools
+          config={{
+            position: "bottom-left",
+          }}
+          eventBusConfig={{
+            debug: false,
+            connectToServerBus: true,
+          }}
+          plugins={[
+            {
+              name: "TanStack Query",
+              render: <ReactQueryDevtoolsPanel />,
+            },
+            {
+              name: "TanStack Router",
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+          ]}
+        />
         <SpeedInsights route={router.location.pathname} />
         <Analytics />
 
