@@ -86,6 +86,7 @@ export default defineConfig({
       "rehype-katex",
       "streamdown",
       "micromark-extension-math",
+      "react-syntax-highlighter",
     ],
   },
   optimizeDeps: {
@@ -95,6 +96,7 @@ export default defineConfig({
       "katex",
       "rehype-katex",
       "streamdown",
+      "react-syntax-highlighter",
     ],
   },
 });
