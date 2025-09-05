@@ -5,10 +5,10 @@ import { Button } from "~/components/ui/button";
 export function ChatHeader({
   status,
   setIsOpen,
-}: {
+}: Readonly<{
   status: ChatStatus;
   setIsOpen: (isOpen: boolean) => void;
-}) {
+}>) {
   return (
     <div className="flex items-center justify-between rounded-t-2xl border-border/50 border-b bg-muted/30 px-6 py-4">
       <div className="flex items-center gap-3">

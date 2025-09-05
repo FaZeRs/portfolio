@@ -12,7 +12,7 @@ import { ToolProject } from "~/lib/ai";
 
 const MAX_STACKS_DISPLAY = 2;
 
-export function ProjectCard({ project }: { project: ToolProject }) {
+export function ProjectCard({ project }: Readonly<{ project: ToolProject }>) {
   const { title, description, stacks, slug, isFeatured } = project;
 
   return (

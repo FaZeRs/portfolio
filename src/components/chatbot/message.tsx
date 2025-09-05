@@ -24,10 +24,10 @@ import { ProjectList } from "./project-list";
 export function ChatMessage({
   message,
   status,
-}: {
+}: Readonly<{
   message: MessageType;
   status: ChatStatus;
-}) {
+}>) {
   return (
     <Message from={message.role} key={message.id}>
       <MessageContent>

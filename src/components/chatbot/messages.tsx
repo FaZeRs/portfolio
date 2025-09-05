@@ -17,10 +17,10 @@ import { ChatMessage } from "./message";
 export function ChatMessages({
   messages,
   status,
-}: {
+}: Readonly<{
   messages: UIMessage[];
   status: ChatStatus;
-}) {
+}>) {
   return (
     <Conversation className="flex-1 px-4 py-2">
       <ConversationContent className="space-y-4">

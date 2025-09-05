@@ -3,9 +3,9 @@ import { ExperienceCard } from "./experience-card";
 
 export function ExperienceList({
   experiences,
-}: {
+}: Readonly<{
   experiences: ToolExperience[];
-}) {
+}>) {
   return (
     <div className="grid grid-cols-1 gap-3">
       {experiences.map((experience) => (

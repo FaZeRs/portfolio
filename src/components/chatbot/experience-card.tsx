@@ -9,7 +9,9 @@ import {
 } from "~/components/ui/card";
 import { ToolExperience } from "~/lib/ai";
 
-export function ExperienceCard({ experience }: { experience: ToolExperience }) {
+export function ExperienceCard({
+  experience,
+}: Readonly<{ experience: ToolExperience }>) {
   const { title, description, institution, type, isOnGoing } = experience;
 
   return (

@@ -13,7 +13,7 @@ import { formatDate } from "~/lib/utils";
 
 const MAX_TAGS_DISPLAY = 2;
 
-export function ArticleCard({ article }: { article: ToolArticle }) {
+export function ArticleCard({ article }: Readonly<{ article: ToolArticle }>) {
   const { title, description, tags, likes, views, createdAt, slug } = article;
 
   return (
