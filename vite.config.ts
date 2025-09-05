@@ -15,17 +15,6 @@ dotenv.config();
 export default defineConfig({
   build: {
     sourcemap: true,
-    minify: "terser",
-    target: "esnext",
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
-    assetsInlineLimit: 4096,
-    cssCodeSplit: true,
-    chunkSizeWarningLimit: 1000,
   },
   plugins: [
     devtools({
@@ -90,6 +79,7 @@ export default defineConfig({
     ],
   },
   optimizeDeps: {
+    entries: ["src/**/*.tsx", "src/**/*.ts"],
     include: [
       "react-use",
       "react-markdown",
@@ -98,5 +88,10 @@ export default defineConfig({
       "streamdown",
       "react-syntax-highlighter",
     ],
+  },
+  server: {
+    warmup: {
+      clientFiles: ["./src/server.tsx"],
+    },
   },
 });
