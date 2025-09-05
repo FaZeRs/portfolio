@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { CalendarIcon, EyeIcon, ThumbsUpIcon } from "lucide-react";
-import { Badge } from "~/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -8,10 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { TagList } from "~/components/ui/tag-list";
 import { ToolArticle } from "~/lib/ai";
 import { formatDate } from "~/lib/utils";
-
-const MAX_TAGS_DISPLAY = 2;
 
 export function ArticleCard({ article }: Readonly<{ article: ToolArticle }>) {
   const { title, description, tags, likes, views, createdAt, slug } = article;
@@ -35,20 +33,7 @@ export function ArticleCard({ article }: Readonly<{ article: ToolArticle }>) {
         </CardHeader>
 
         <CardContent className="pt-0 pb-3">
-          {tags && tags.length > 0 && (
-            <div className="mb-3 flex flex-wrap gap-1">
-              {tags.slice(0, MAX_TAGS_DISPLAY).map((tag) => (
-                <Badge className="text-[10px]" key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
-              {tags.length > MAX_TAGS_DISPLAY && (
-                <Badge className="text-[10px]" variant="outline">
-                  +{tags.length - MAX_TAGS_DISPLAY}
-                </Badge>
-              )}
-            </div>
-          )}
+          <TagList className="mb-3" items={tags || []} />
 
           <div className="flex items-center justify-between gap-2 text-muted-foreground text-xs">
             {createdAt && (

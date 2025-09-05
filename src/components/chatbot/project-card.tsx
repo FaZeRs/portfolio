@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { PinIcon } from "lucide-react";
-import { Badge } from "~/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -8,9 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { TagList } from "~/components/ui/tag-list";
 import { ToolProject } from "~/lib/ai";
-
-const MAX_STACKS_DISPLAY = 2;
 
 export function ProjectCard({ project }: Readonly<{ project: ToolProject }>) {
   const { title, description, stacks, slug, isFeatured } = project;
@@ -41,20 +39,7 @@ export function ProjectCard({ project }: Readonly<{ project: ToolProject }>) {
         </CardHeader>
 
         <CardContent className="pt-0 pb-3">
-          {stacks && stacks.length > 0 && (
-            <div className="mb-3 flex flex-wrap gap-1">
-              {stacks.slice(0, MAX_STACKS_DISPLAY).map((stack) => (
-                <Badge className="text-[10px]" key={stack} variant="secondary">
-                  {stack}
-                </Badge>
-              ))}
-              {stacks.length > MAX_STACKS_DISPLAY && (
-                <Badge className="text-[10px]" variant="outline">
-                  +{stacks.length - MAX_STACKS_DISPLAY}
-                </Badge>
-              )}
-            </div>
-          )}
+          <TagList className="mb-3" items={stacks || []} />
         </CardContent>
       </Link>
     </Card>

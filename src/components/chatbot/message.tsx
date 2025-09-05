@@ -1,4 +1,5 @@
 import { ChatStatus, UIMessage as MessageType } from "ai";
+import { ReactNode } from "react";
 import { Message, MessageContent } from "~/components/ai-elements/message";
 import {
   Reasoning,
@@ -6,13 +7,6 @@ import {
   ReasoningTrigger,
 } from "~/components/ai-elements/reasoning";
 import { Response } from "~/components/ai-elements/response";
-import {
-  Tool,
-  ToolContent,
-  ToolHeader,
-  ToolInput,
-  ToolOutput,
-} from "~/components/ai-elements/tool";
 import { ToolArticle, ToolExperience, ToolProject } from "~/lib/ai";
 import { ArticleCard } from "./article-card";
 import { ArticleList } from "./article-list";
@@ -20,6 +14,37 @@ import { ExperienceCard } from "./experience-card";
 import { ExperienceList } from "./experience-list";
 import { ProjectCard } from "./project-card";
 import { ProjectList } from "./project-list";
+import { ToolHandler } from "./tool-handler";
+
+const toolOutputRenderers = {
+  "tool-getProjects": (output: ToolProject[]) => (
+    <ProjectList projects={output} />
+  ),
+  "tool-searchProjects": (output: ToolProject[]) => (
+    <ProjectList projects={output} />
+  ),
+  "tool-getArticles": (output: ToolArticle[]) => (
+    <ArticleList articles={output} />
+  ),
+  "tool-searchArticles": (output: ToolArticle[]) => (
+    <ArticleList articles={output} />
+  ),
+  "tool-getExperience": (output: ToolExperience[]) => (
+    <ExperienceList experiences={output} />
+  ),
+  "tool-searchExperience": (output: ToolExperience[]) => (
+    <ExperienceList experiences={output} />
+  ),
+  "tool-recommendProject": (output: ToolProject) => (
+    <ProjectCard project={output} />
+  ),
+  "tool-recommendArticle": (output: ToolArticle) => (
+    <ArticleCard article={output} />
+  ),
+  "tool-recommendExperience": (output: ToolExperience) => (
+    <ExperienceCard experience={output} />
+  ),
+} as const;
 
 export function ChatMessage({
   message,
@@ -48,151 +73,38 @@ export function ChatMessage({
                   <ReasoningContent>{part.text}</ReasoningContent>
                 </Reasoning>
               );
-            case "tool-getProjects":
-            case "tool-searchProjects": {
-              const { toolCallId, state } = part;
-
-              return (
-                <Tool defaultOpen={true} key={toolCallId}>
-                  <ToolHeader state={state} type={part.type} />
-                  <ToolContent>
-                    {state === "input-available" && (
-                      <ToolInput input={part.input} />
-                    )}
-                    {state === "output-available" && (
-                      <ToolOutput
-                        errorText={undefined}
-                        output={
-                          <ProjectList
-                            projects={part.output as ToolProject[]}
-                          />
-                        }
-                      />
-                    )}
-                  </ToolContent>
-                </Tool>
-              );
-            }
-            case "tool-getArticles":
-            case "tool-searchArticles": {
-              const { toolCallId, state } = part;
-
-              return (
-                <Tool defaultOpen={true} key={toolCallId}>
-                  <ToolHeader state={state} type={part.type} />
-                  <ToolContent>
-                    {state === "input-available" && (
-                      <ToolInput input={part.input} />
-                    )}
-                    {state === "output-available" && (
-                      <ToolOutput
-                        errorText={undefined}
-                        output={
-                          <ArticleList
-                            articles={part.output as ToolArticle[]}
-                          />
-                        }
-                      />
-                    )}
-                  </ToolContent>
-                </Tool>
-              );
-            }
-            case "tool-getExperience":
-            case "tool-searchExperience": {
-              const { toolCallId, state } = part;
-
-              return (
-                <Tool defaultOpen={true} key={toolCallId}>
-                  <ToolHeader state={state} type={part.type} />
-                  <ToolContent>
-                    {state === "input-available" && (
-                      <ToolInput input={part.input} />
-                    )}
-                    {state === "output-available" && (
-                      <ToolOutput
-                        errorText={undefined}
-                        output={
-                          <ExperienceList
-                            experiences={part.output as ToolExperience[]}
-                          />
-                        }
-                      />
-                    )}
-                  </ToolContent>
-                </Tool>
-              );
-            }
-            case "tool-recommendProject": {
-              const { toolCallId, state } = part;
-
-              return (
-                <Tool defaultOpen={true} key={toolCallId}>
-                  <ToolHeader state={state} type="tool-recommendProject" />
-                  <ToolContent>
-                    {state === "input-available" && (
-                      <ToolInput input={part.input} />
-                    )}
-                    {state === "output-available" && (
-                      <ToolOutput
-                        errorText={undefined}
-                        output={
-                          <ProjectCard project={part.output as ToolProject} />
-                        }
-                      />
-                    )}
-                  </ToolContent>
-                </Tool>
-              );
-            }
-            case "tool-recommendArticle": {
-              const { toolCallId, state } = part;
-
-              return (
-                <Tool defaultOpen={true} key={toolCallId}>
-                  <ToolHeader state={state} type="tool-recommendArticle" />
-                  <ToolContent>
-                    {state === "input-available" && (
-                      <ToolInput input={part.input} />
-                    )}
-                    {state === "output-available" && (
-                      <ToolOutput
-                        errorText={undefined}
-                        output={
-                          <ArticleCard article={part.output as ToolArticle} />
-                        }
-                      />
-                    )}
-                  </ToolContent>
-                </Tool>
-              );
-            }
-            case "tool-recommendExperience": {
-              const { toolCallId, state } = part;
-
-              return (
-                <Tool defaultOpen={true} key={toolCallId}>
-                  <ToolHeader state={state} type="tool-recommendExperience" />
-                  <ToolContent>
-                    {state === "input-available" && (
-                      <ToolInput input={part.input} />
-                    )}
-                    {state === "output-available" && (
-                      <ToolOutput
-                        errorText={undefined}
-                        output={
-                          <ExperienceCard
-                            experience={part.output as ToolExperience}
-                          />
-                        }
-                      />
-                    )}
-                  </ToolContent>
-                </Tool>
-              );
-            }
-            default:
+            default: {
+              // Handle all tool cases uniformly
+              if (
+                part.type.startsWith("tool-") &&
+                part.type in toolOutputRenderers &&
+                "toolCallId" in part &&
+                "state" in part
+              ) {
+                const renderer =
+                  toolOutputRenderers[
+                    part.type as keyof typeof toolOutputRenderers
+                  ];
+                return (
+                  <ToolHandler
+                    key={part.toolCallId}
+                    outputRenderer={renderer}
+                    part={{
+                      toolCallId: part.toolCallId,
+                      state: part.state,
+                      type: part.type,
+                      input: ("input" in part
+                        ? part.input
+                        : undefined) as ReactNode,
+                      output: ("output" in part
+                        ? part.output
+                        : undefined) as ReactNode,
+                    }}
+                  />
+                );
+              }
               return null;
+            }
           }
         })}
       </MessageContent>
