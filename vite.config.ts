@@ -37,7 +37,7 @@ export default defineConfig({
       },
 
       // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
-      // target: "node-server",
+      target: "bun",
 
       customViteReactPlugin: true,
     }),

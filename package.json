@@ -17,7 +17,7 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "vite build",
-    "start": "node .output/server/index.mjs",
+    "start": "bun run .output/server/index.mjs",
     "serve": "vite preview",
     "lint": "biome lint",
     "format": "biome format --write .",
