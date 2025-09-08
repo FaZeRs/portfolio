@@ -1,13 +1,14 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 import { env } from "~/lib/env.server";
 // biome-ignore lint/performance/noNamespaceImport: valid import
 import * as schema from "./schema";
 
-const driver = neon(env.DATABASE_URL);
-
+const pool = new Pool({
+  connectionString: env.DATABASE_URL,
+});
 export const db = drizzle({
-  client: driver,
+  client: pool,
   schema,
   casing: "snake_case",
 });
