@@ -8,14 +8,11 @@ import {
   HeadContent,
   Outlet,
   Scripts,
-  useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import { Toaster } from "~/components/ui/sonner";
 import { ThemeProvider } from "~/components/ui/theme";
@@ -77,8 +74,6 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { readonly children: React.ReactNode }) {
-  const router = useRouterState();
-
   return (
     // suppress since we're updating the "dark" class in a custom script below
     <html className="scroll-smooth" lang="en" suppressHydrationWarning>
@@ -115,9 +110,12 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
             },
           ]}
         />
-        <SpeedInsights route={router.location.pathname} />
-        <Analytics />
 
+        <script
+          data-website-id="9e635ab0-e961-43c7-8f88-0b6e2a7c40ae"
+          defer
+          src="https://analytics.naurislinde.dev/script.js"
+        />
         <Scripts />
       </body>
     </html>
