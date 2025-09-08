@@ -112,9 +112,9 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         />
 
         <script
-          data-website-id="9e635ab0-e961-43c7-8f88-0b6e2a7c40ae"
+          data-site-id="1"
           defer
-          src="https://analytics.naurislinde.dev/script.js"
+          src="https://analytics.naurislinde.dev/api/script.js"
         />
         <Scripts />
       </body>
