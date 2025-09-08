@@ -65,6 +65,9 @@ export default defineConfig({
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
       telemetry: false,
+      sourcemaps: {
+        disable: true,
+      },
     }),
   ],
   ssr: {
