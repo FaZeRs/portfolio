@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.railpack.com",
   "deploy": {
-    "startCommand": "node .output/server/index.mjs"
+    "startCommand": "bun run .output/server/index.mjs"
   }
 }
