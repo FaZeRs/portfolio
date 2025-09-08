@@ -1,7 +1,7 @@
-import { neon } from "@neondatabase/serverless";
 import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 import { Sitemap } from "tanstack-router-sitemap";
 
 dotenv.config();
@@ -16,12 +16,14 @@ import { type FileRouteTypes } from "../../routeTree.gen";
 export type TRoutes = FileRouteTypes["fullPaths"];
 
 // biome-ignore lint/style/noNonNullAssertion: this is valid
-const driver = neon(process.env.DATABASE_URL!);
+const driver = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 const db = drizzle({ client: driver, schema, casing: "snake_case" });
 
 export const sitemap: Sitemap<TRoutes> = {
-  siteUrl: "https://naurislinde.dev",
+  siteUrl: process.env.VITE_BASE_URL ?? "http://localhost:3000",
   defaultPriority: 0.5,
   routes: {
     "/": { priority: 1, changeFrequency: "daily" },
