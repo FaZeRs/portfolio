@@ -20,6 +20,7 @@ const Intro = () => {
             <img
               alt="Nauris Linde"
               className="h-56 w-56 rounded-full border-[0.35rem] border-secondary object-cover shadow-xl saturate-0 filter sm:h-80 sm:w-80"
+              fetchPriority="high"
               height="320"
               src="/images/avatar.avif"
               width="320"
