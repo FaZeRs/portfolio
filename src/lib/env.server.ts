@@ -22,6 +22,11 @@ export const env = createEnv({
     IP_ADDRESS_SALT: z.string().min(1).optional(),
     RAINDROP_ACCESS_TOKEN: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1).optional(),
+    S3_REGION: z.string().min(1),
+    S3_ENDPOINT: z.string().min(1),
+    S3_ACCESS_KEY_ID: z.string().min(1),
+    S3_SECRET_ACCESS_KEY: z.string().min(1),
+    S3_STORAGE_BUCKET: z.string().min(1),
   },
 
   /**

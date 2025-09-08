@@ -17,6 +17,7 @@ export const Experience = pgTable("experience", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   title: t.varchar({ length: 255 }).notNull(),
   description: t.varchar({ length: 255 }),
+  imagePath: t.varchar({ length: 255 }),
   imageUrl: t.varchar({ length: 255 }),
   startDate: t.date({ mode: "string" }),
   endDate: t.date({ mode: "string" }),

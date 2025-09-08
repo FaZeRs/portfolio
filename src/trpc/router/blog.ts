@@ -4,13 +4,14 @@ import { desc, eq, sql } from "drizzle-orm";
 import { z } from "zod/v4";
 
 import { env } from "~/lib/env.server";
+import { deleteFile, getPublicUrlForObject, uploadImage } from "~/lib/s3";
 import {
   articleLikes,
   articles,
   CreateArticleSchema,
   UpdateArticleSchema,
 } from "~/lib/server/schema";
-import { deleteFile, getTOC, uploadImage } from "~/lib/utils";
+import { getTOC } from "~/lib/utils";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const blogRouter = {
@@ -73,11 +74,13 @@ export const blogRouter = {
 
       if (thumbnail) {
         try {
-          articleData.imageUrl = await uploadImage(
+          const imagePath = await uploadImage(
             "articles",
             thumbnail,
             input.slug
           );
+          articleData.imagePath = imagePath;
+          articleData.imageUrl = getPublicUrlForObject(imagePath);
         } catch (error) {
           // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
@@ -97,16 +100,18 @@ export const blogRouter = {
           const existingArticle = await ctx.db.query.articles.findFirst({
             where: eq(articles.id, id),
           });
-          const oldImageUrl = existingArticle?.imageUrl;
+          const oldImagePath = existingArticle?.imagePath;
 
-          articleData.imageUrl = await uploadImage(
+          const imagePath = await uploadImage(
             "articles",
             thumbnail,
             input.slug ?? id
           );
+          articleData.imagePath = imagePath;
+          articleData.imageUrl = getPublicUrlForObject(imagePath);
 
-          if (oldImageUrl) {
-            await deleteFile(oldImageUrl);
+          if (oldImagePath) {
+            await deleteFile(oldImagePath);
           }
         } catch (error) {
           // biome-ignore lint/suspicious/noConsole: log error
@@ -127,8 +132,8 @@ export const blogRouter = {
         where: eq(articles.id, input),
       });
 
-      if (articleToDelete?.imageUrl) {
-        await deleteFile(articleToDelete.imageUrl);
+      if (articleToDelete?.imagePath) {
+        await deleteFile(articleToDelete.imagePath);
       }
 
       return ctx.db.delete(articles).where(eq(articles.id, input));

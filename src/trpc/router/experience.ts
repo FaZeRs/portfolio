@@ -1,13 +1,12 @@
 import { TRPCRouterRecord } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod/v4";
-
+import { deleteFile, getPublicUrlForObject, uploadImage } from "~/lib/s3";
 import {
   CreateExperienceSchema,
   Experience,
   UpdateExperienceSchema,
 } from "~/lib/server/schema";
-import { deleteFile, uploadImage } from "~/lib/utils";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const experienceRouter = {
@@ -45,11 +44,13 @@ export const experienceRouter = {
 
       if (thumbnail) {
         try {
-          dataToInsert.imageUrl = await uploadImage(
+          const imagePath = await uploadImage(
             "experiences",
             thumbnail,
             input.title
           );
+          dataToInsert.imagePath = imagePath;
+          dataToInsert.imageUrl = getPublicUrlForObject(imagePath);
         } catch (error) {
           // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
@@ -75,16 +76,14 @@ export const experienceRouter = {
           const existingExperience = await ctx.db.query.Experience.findFirst({
             where: eq(Experience.id, id),
           });
-          const oldImageUrl = existingExperience?.imageUrl;
+          const oldImagePath = existingExperience?.imagePath;
 
-          dataToUpdate.imageUrl = await uploadImage(
-            "experiences",
-            thumbnail,
-            id
-          );
+          const imagePath = await uploadImage("experiences", thumbnail, id);
+          dataToUpdate.imagePath = imagePath;
+          dataToUpdate.imageUrl = getPublicUrlForObject(imagePath);
 
-          if (oldImageUrl) {
-            await deleteFile(oldImageUrl);
+          if (oldImagePath) {
+            await deleteFile(oldImagePath);
           }
         } catch (error) {
           // biome-ignore lint/suspicious/noConsole: log error
@@ -105,8 +104,8 @@ export const experienceRouter = {
         where: eq(Experience.id, input),
       });
 
-      if (experienceToDelete?.imageUrl) {
-        await deleteFile(experienceToDelete.imageUrl);
+      if (experienceToDelete?.imagePath) {
+        await deleteFile(experienceToDelete.imagePath);
       }
 
       return ctx.db.delete(Experience).where(eq(Experience.id, input));
