@@ -14,7 +14,7 @@ dotenv.config();
 
 export default defineConfig({
   build: {
-    sourcemap: true,
+    sourcemap: false,
   },
   plugins: [
     devtools({
