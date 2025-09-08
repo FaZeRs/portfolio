@@ -14,3 +14,5 @@ export function ExperienceList({
     </div>
   );
 }
+
+export default ExperienceList;

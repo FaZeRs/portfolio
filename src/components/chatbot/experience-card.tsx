@@ -54,3 +54,5 @@ export function ExperienceCard({
     </Card>
   );
 }
+
+export default ExperienceCard;

@@ -12,3 +12,5 @@ export function ArticleList({
     </div>
   );
 }
+
+export default ArticleList;

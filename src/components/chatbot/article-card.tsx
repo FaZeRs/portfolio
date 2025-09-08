@@ -60,3 +60,5 @@ export function ArticleCard({ article }: Readonly<{ article: ToolArticle }>) {
     </Card>
   );
 }
+
+export default ArticleCard;

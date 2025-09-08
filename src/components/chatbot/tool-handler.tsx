@@ -3,7 +3,6 @@ import {
   Tool,
   ToolContent,
   ToolHeader,
-  ToolInput,
   ToolOutput,
 } from "~/components/ai-elements/tool";
 
@@ -21,18 +20,17 @@ type ToolHandlerProps = {
   outputRenderer: (output: any) => ReactNode;
 };
 
-export function ToolHandler({ part, outputRenderer }: ToolHandlerProps) {
-  const { toolCallId, state, type, input, output } = part;
+export function ToolHandler({
+  part,
+  outputRenderer,
+}: Readonly<ToolHandlerProps>) {
+  const { toolCallId, state, type, output } = part;
 
   return (
     <Tool defaultOpen={true} key={toolCallId}>
       {/* biome-ignore lint/suspicious/noExplicitAny: AI library types */}
       <ToolHeader state={state as any} type={type as any} />
       <ToolContent>
-        {state === "input-available" && input && (
-          // biome-ignore lint/suspicious/noExplicitAny: AI library types
-          <ToolInput input={input as any} />
-        )}
         {state === "output-available" && output && (
           <ToolOutput errorText={undefined} output={outputRenderer(output)} />
         )}
@@ -40,3 +38,5 @@ export function ToolHandler({ part, outputRenderer }: ToolHandlerProps) {
     </Tool>
   );
 }
+
+export default ToolHandler;

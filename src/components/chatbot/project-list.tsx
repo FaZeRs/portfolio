@@ -12,3 +12,5 @@ export function ProjectList({
     </div>
   );
 }
+
+export default ProjectList;

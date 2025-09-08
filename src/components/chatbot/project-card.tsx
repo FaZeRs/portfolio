@@ -45,3 +45,5 @@ export function ProjectCard({ project }: Readonly<{ project: ToolProject }>) {
     </Card>
   );
 }
+
+export default ProjectCard;

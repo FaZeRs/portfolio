@@ -1,7 +1,12 @@
-import { type AnchorHTMLAttributes, type HTMLAttributes, lazy } from "react";
+import {
+  type AnchorHTMLAttributes,
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  type HTMLAttributes,
+  type ImgHTMLAttributes,
+  lazy,
+} from "react";
 
-import CodeBlock from "~/components/ui/code-block";
-import CodeBlockHeader from "~/components/ui/code-block-header";
 import { File, Files, Folder } from "~/components/ui/files";
 import { cn } from "~/lib/utils";
 
@@ -106,21 +111,17 @@ export const components = {
       {...props}
     />
   ),
-  img: ({
-    className,
-    alt,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  img: ({ className, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) => (
     // biome-ignore lint/nursery/useImageSize: props.width and props.height are used
     <img alt={alt} className={cn("rounded-md border", className)} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
-  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
+  table: ({ className, ...props }: HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 w-full overflow-y-auto">
       <table className={cn("w-full", className)} {...props} /> {/* NOSONAR */}
     </div>
   ),
-  tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
+  tr: ({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) => (
     <tr
       className={cn("m-0 border-t p-0 even:bg-muted", className)}
       {...props}
@@ -144,12 +145,9 @@ export const components = {
       {...props}
     />
   ),
-  pre: CodeBlock,
-  figcaption: CodeBlockHeader,
-  code: ({
-    className,
-    ...props
-  }: React.ComponentPropsWithoutRef<typeof CodeBlockHeader>) => (
+  pre: lazy(() => import("~/components/ui/code-block")),
+  figcaption: lazy(() => import("~/components/ui/code-block-header")),
+  code: ({ className, ...props }: ComponentPropsWithoutRef<"code">) => (
     <code
       className={cn(
         "relative rounded border bg-muted px-[0.3rem] py-0.5 font-mono text-[0.95em]",
@@ -164,7 +162,7 @@ export const components = {
       {...props}
     />
   ),
-  Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
+  Step: ({ className, ...props }: ComponentProps<"h3">) => (
     // @sonar-ignore
     <h3
       className={cn(
