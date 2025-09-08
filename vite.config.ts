@@ -14,7 +14,7 @@ dotenv.config();
 
 export default defineConfig({
   build: {
-    sourcemap: true,
+    sourcemap: false,
   },
   plugins: [
     devtools({
@@ -66,6 +66,9 @@ export default defineConfig({
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
       telemetry: false,
+      sourcemaps: {
+        disable: true,
+      },
     }),
   ],
   ssr: {
