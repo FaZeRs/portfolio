@@ -1,4 +1,3 @@
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import {
   init,
   sentryGlobalServerMiddlewareHandler,
@@ -17,10 +16,11 @@ import { createRouter } from "./router";
 
 init({
   dsn: env.VITE_SENTRY_DSN,
-  integrations: [nodeProfilingIntegration()],
+  integrations: [],
   tracesSampleRate: 1.0,
   profileSessionSampleRate: 1.0,
   profileLifecycle: "trace",
+  sendDefaultPii: true,
 });
 
 registerGlobalMiddleware({
