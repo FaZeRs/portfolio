@@ -1,5 +1,5 @@
 import { ChatStatus, UIMessage as MessageType } from "ai";
-import { lazy, ReactNode } from "react";
+import { ReactNode } from "react";
 import { Message, MessageContent } from "~/components/ai-elements/message";
 import {
   Reasoning,
@@ -8,14 +8,13 @@ import {
 } from "~/components/ai-elements/reasoning";
 import { Response } from "~/components/ai-elements/response";
 import { ToolArticle, ToolExperience, ToolProject } from "~/lib/ai";
-
-const ToolHandler = lazy(() => import("./tool-handler"));
-const ProjectList = lazy(() => import("./project-list"));
-const ProjectCard = lazy(() => import("./project-card"));
-const ArticleList = lazy(() => import("./article-list"));
-const ArticleCard = lazy(() => import("./article-card"));
-const ExperienceList = lazy(() => import("./experience-list"));
-const ExperienceCard = lazy(() => import("./experience-card"));
+import { ArticleCard } from "./article-card";
+import { ArticleList } from "./article-list";
+import { ExperienceCard } from "./experience-card";
+import { ExperienceList } from "./experience-list";
+import { ProjectCard } from "./project-card";
+import { ProjectList } from "./project-list";
+import { ToolHandler } from "./tool-handler";
 
 const toolOutputRenderers = {
   "tool-getProjects": (output: ToolProject[]) => (
