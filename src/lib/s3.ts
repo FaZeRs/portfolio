@@ -32,6 +32,9 @@ export async function uploadObject(key: string, body: Buffer) {
       Bucket: env.S3_STORAGE_BUCKET,
       Key: key,
       Body: body,
+      Metadata: {
+        "Cache-Control": "max-age=3600",
+      },
     })
   );
   return res;
