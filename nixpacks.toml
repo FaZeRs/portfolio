@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ['nodejs', 'bun']
+
+[phases.build]
+cmds = ['export NODE_OPTIONS=--max_old_space_size=8192', 'bun run build']
+
+[start]
+cmd = 'bun run start'

@@ -1,0 +1,50 @@
+# Dependencies
+node_modules
+
+# Build output
+.output
+.nitro
+.tanstack
+build
+_dist
+out
+dist
+
+# VCS
+.git
+.gitignore
+.gitattributes
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.bun
+
+# Editor/OS
+.vscode
+.idea
+*.swp
+.DS_Store
+
+# Tests, local env, dev files
+coverage
+!.env.example
+**/*.test.*
+**/*.spec.*
+**/__tests__/**
+**/__mocks__/**
+
+# Docker
+Dockerfile*
+.dockerignore
+
+# Husky, lint caches
+.husky
+.eslintcache
+
+# Cache
+.cache
+.tmp
+.temp
