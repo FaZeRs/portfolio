@@ -32,6 +32,7 @@ export default defineConfig({
       tsr: {
         quoteStyle: "double",
         semicolons: true,
+        routeToken: "layout",
         // verboseFileRoutes: false,
       },
 

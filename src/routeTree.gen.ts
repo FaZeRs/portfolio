@@ -11,37 +11,37 @@
 import { createServerRootRoute } from "@tanstack/react-start/server";
 
 import { Route as rootRouteImport } from "./routes/__root";
-import { Route as DefaultLayoutRouteImport } from "./routes/_defaultLayout";
-import { Route as DashboardLayoutRouteImport } from "./routes/_dashboardLayout";
-import { Route as AuthLayoutRouteImport } from "./routes/_authLayout";
-import { Route as DefaultLayoutIndexRouteImport } from "./routes/_defaultLayout/index";
-import { Route as DefaultLayoutUsesRouteImport } from "./routes/_defaultLayout/uses";
-import { Route as DefaultLayoutStatsRouteImport } from "./routes/_defaultLayout/stats";
-import { Route as DefaultLayoutProfileRouteImport } from "./routes/_defaultLayout/profile";
-import { Route as DefaultLayoutAboutRouteImport } from "./routes/_defaultLayout/about";
-import { Route as AuthLayoutSigninRouteImport } from "./routes/_authLayout/signin";
-import { Route as DefaultLayoutSnippetsIndexRouteImport } from "./routes/_defaultLayout/snippets/index";
-import { Route as DefaultLayoutProjectsIndexRouteImport } from "./routes/_defaultLayout/projects/index";
-import { Route as DefaultLayoutBookmarksIndexRouteImport } from "./routes/_defaultLayout/bookmarks/index";
-import { Route as DefaultLayoutBlogIndexRouteImport } from "./routes/_defaultLayout/blog/index";
-import { Route as DashboardLayoutDashboardIndexRouteImport } from "./routes/_dashboardLayout/dashboard/index";
-import { Route as DefaultLayoutSnippetsSnippetIdRouteImport } from "./routes/_defaultLayout/snippets/$snippetId";
-import { Route as DefaultLayoutProjectsProjectIdRouteImport } from "./routes/_defaultLayout/projects/$projectId";
-import { Route as DefaultLayoutBookmarksBookmarkIdRouteImport } from "./routes/_defaultLayout/bookmarks/$bookmarkId";
-import { Route as DefaultLayoutBlogArticleIdRouteImport } from "./routes/_defaultLayout/blog/$articleId";
-import { Route as DashboardLayoutDashboardUsersIndexRouteImport } from "./routes/_dashboardLayout/dashboard/users/index";
-import { Route as DashboardLayoutDashboardSnippetsIndexRouteImport } from "./routes/_dashboardLayout/dashboard/snippets/index";
-import { Route as DashboardLayoutDashboardProjectsIndexRouteImport } from "./routes/_dashboardLayout/dashboard/projects/index";
-import { Route as DashboardLayoutDashboardExperiencesIndexRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/index";
-import { Route as DashboardLayoutDashboardBlogIndexRouteImport } from "./routes/_dashboardLayout/dashboard/blog/index";
-import { Route as DashboardLayoutDashboardSnippetsCreateRouteImport } from "./routes/_dashboardLayout/dashboard/snippets/create";
-import { Route as DashboardLayoutDashboardProjectsCreateRouteImport } from "./routes/_dashboardLayout/dashboard/projects/create";
-import { Route as DashboardLayoutDashboardExperiencesCreateRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/create";
-import { Route as DashboardLayoutDashboardBlogCreateRouteImport } from "./routes/_dashboardLayout/dashboard/blog/create";
-import { Route as DashboardLayoutDashboardSnippetsSnippetIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/snippets/$snippetId.edit";
-import { Route as DashboardLayoutDashboardProjectsProjectIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/projects/$projectId.edit";
-import { Route as DashboardLayoutDashboardExperiencesExperienceIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/experiences/$experienceId.edit";
-import { Route as DashboardLayoutDashboardBlogArticleIdEditRouteImport } from "./routes/_dashboardLayout/dashboard/blog/$articleId.edit";
+import { Route as DashboardLayoutRouteImport } from "./routes/dashboard/layout";
+import { Route as publicLayoutRouteImport } from "./routes/(public)/layout";
+import { Route as authLayoutRouteImport } from "./routes/(auth)/layout";
+import { Route as DashboardIndexRouteImport } from "./routes/dashboard/index";
+import { Route as publicIndexRouteImport } from "./routes/(public)/index";
+import { Route as publicUsesRouteImport } from "./routes/(public)/uses";
+import { Route as publicStatsRouteImport } from "./routes/(public)/stats";
+import { Route as publicProfileRouteImport } from "./routes/(public)/profile";
+import { Route as publicAboutRouteImport } from "./routes/(public)/about";
+import { Route as authSigninRouteImport } from "./routes/(auth)/signin";
+import { Route as DashboardUsersIndexRouteImport } from "./routes/dashboard/users/index";
+import { Route as DashboardSnippetsIndexRouteImport } from "./routes/dashboard/snippets/index";
+import { Route as DashboardProjectsIndexRouteImport } from "./routes/dashboard/projects/index";
+import { Route as DashboardExperiencesIndexRouteImport } from "./routes/dashboard/experiences/index";
+import { Route as DashboardBlogIndexRouteImport } from "./routes/dashboard/blog/index";
+import { Route as publicSnippetsIndexRouteImport } from "./routes/(public)/snippets/index";
+import { Route as publicProjectsIndexRouteImport } from "./routes/(public)/projects/index";
+import { Route as publicBookmarksIndexRouteImport } from "./routes/(public)/bookmarks/index";
+import { Route as publicBlogIndexRouteImport } from "./routes/(public)/blog/index";
+import { Route as DashboardSnippetsCreateRouteImport } from "./routes/dashboard/snippets/create";
+import { Route as DashboardProjectsCreateRouteImport } from "./routes/dashboard/projects/create";
+import { Route as DashboardExperiencesCreateRouteImport } from "./routes/dashboard/experiences/create";
+import { Route as DashboardBlogCreateRouteImport } from "./routes/dashboard/blog/create";
+import { Route as publicSnippetsSnippetIdRouteImport } from "./routes/(public)/snippets/$snippetId";
+import { Route as publicProjectsProjectIdRouteImport } from "./routes/(public)/projects/$projectId";
+import { Route as publicBookmarksBookmarkIdRouteImport } from "./routes/(public)/bookmarks/$bookmarkId";
+import { Route as publicBlogArticleIdRouteImport } from "./routes/(public)/blog/$articleId";
+import { Route as DashboardSnippetsSnippetIdEditRouteImport } from "./routes/dashboard/snippets/$snippetId.edit";
+import { Route as DashboardProjectsProjectIdEditRouteImport } from "./routes/dashboard/projects/$projectId.edit";
+import { Route as DashboardExperiencesExperienceIdEditRouteImport } from "./routes/dashboard/experiences/$experienceId.edit";
+import { Route as DashboardBlogArticleIdEditRouteImport } from "./routes/dashboard/blog/$articleId.edit";
 import { ServerRoute as ApiContactIndexServerRouteImport } from "./routes/api/contact/index";
 import { ServerRoute as ApiChatIndexServerRouteImport } from "./routes/api/chat/index";
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from "./routes/api/trpc/$";
@@ -51,177 +51,164 @@ import { ServerRoute as ApiStatsGithubActivityServerRouteImport } from "./routes
 
 const rootServerRouteImport = createServerRootRoute();
 
-const DefaultLayoutRoute = DefaultLayoutRouteImport.update({
-  id: "/_defaultLayout",
-  getParentRoute: () => rootRouteImport,
-} as any);
 const DashboardLayoutRoute = DashboardLayoutRouteImport.update({
-  id: "/_dashboardLayout",
+  id: "/dashboard",
+  path: "/dashboard",
   getParentRoute: () => rootRouteImport,
 } as any);
-const AuthLayoutRoute = AuthLayoutRouteImport.update({
-  id: "/_authLayout",
+const publicLayoutRoute = publicLayoutRouteImport.update({
+  id: "/(public)",
   getParentRoute: () => rootRouteImport,
 } as any);
-const DefaultLayoutIndexRoute = DefaultLayoutIndexRouteImport.update({
+const authLayoutRoute = authLayoutRouteImport.update({
+  id: "/(auth)",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: "/",
   path: "/",
-  getParentRoute: () => DefaultLayoutRoute,
+  getParentRoute: () => DashboardLayoutRoute,
 } as any);
-const DefaultLayoutUsesRoute = DefaultLayoutUsesRouteImport.update({
+const publicIndexRoute = publicIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const publicUsesRoute = publicUsesRouteImport.update({
   id: "/uses",
   path: "/uses",
-  getParentRoute: () => DefaultLayoutRoute,
+  getParentRoute: () => publicLayoutRoute,
 } as any);
-const DefaultLayoutStatsRoute = DefaultLayoutStatsRouteImport.update({
+const publicStatsRoute = publicStatsRouteImport.update({
   id: "/stats",
   path: "/stats",
-  getParentRoute: () => DefaultLayoutRoute,
+  getParentRoute: () => publicLayoutRoute,
 } as any);
-const DefaultLayoutProfileRoute = DefaultLayoutProfileRouteImport.update({
+const publicProfileRoute = publicProfileRouteImport.update({
   id: "/profile",
   path: "/profile",
-  getParentRoute: () => DefaultLayoutRoute,
+  getParentRoute: () => publicLayoutRoute,
 } as any);
-const DefaultLayoutAboutRoute = DefaultLayoutAboutRouteImport.update({
+const publicAboutRoute = publicAboutRouteImport.update({
   id: "/about",
   path: "/about",
-  getParentRoute: () => DefaultLayoutRoute,
+  getParentRoute: () => publicLayoutRoute,
 } as any);
-const AuthLayoutSigninRoute = AuthLayoutSigninRouteImport.update({
+const authSigninRoute = authSigninRouteImport.update({
   id: "/signin",
   path: "/signin",
-  getParentRoute: () => AuthLayoutRoute,
+  getParentRoute: () => authLayoutRoute,
 } as any);
-const DefaultLayoutSnippetsIndexRoute =
-  DefaultLayoutSnippetsIndexRouteImport.update({
-    id: "/snippets/",
-    path: "/snippets/",
-    getParentRoute: () => DefaultLayoutRoute,
+const DashboardUsersIndexRoute = DashboardUsersIndexRouteImport.update({
+  id: "/users/",
+  path: "/users/",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
+const DashboardSnippetsIndexRoute = DashboardSnippetsIndexRouteImport.update({
+  id: "/snippets/",
+  path: "/snippets/",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
+const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
+  id: "/projects/",
+  path: "/projects/",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
+const DashboardExperiencesIndexRoute =
+  DashboardExperiencesIndexRouteImport.update({
+    id: "/experiences/",
+    path: "/experiences/",
+    getParentRoute: () => DashboardLayoutRoute,
   } as any);
-const DefaultLayoutProjectsIndexRoute =
-  DefaultLayoutProjectsIndexRouteImport.update({
-    id: "/projects/",
-    path: "/projects/",
-    getParentRoute: () => DefaultLayoutRoute,
-  } as any);
-const DefaultLayoutBookmarksIndexRoute =
-  DefaultLayoutBookmarksIndexRouteImport.update({
-    id: "/bookmarks/",
-    path: "/bookmarks/",
-    getParentRoute: () => DefaultLayoutRoute,
-  } as any);
-const DefaultLayoutBlogIndexRoute = DefaultLayoutBlogIndexRouteImport.update({
+const DashboardBlogIndexRoute = DashboardBlogIndexRouteImport.update({
   id: "/blog/",
   path: "/blog/",
-  getParentRoute: () => DefaultLayoutRoute,
+  getParentRoute: () => DashboardLayoutRoute,
 } as any);
-const DashboardLayoutDashboardIndexRoute =
-  DashboardLayoutDashboardIndexRouteImport.update({
-    id: "/dashboard/",
-    path: "/dashboard/",
+const publicSnippetsIndexRoute = publicSnippetsIndexRouteImport.update({
+  id: "/snippets/",
+  path: "/snippets/",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const publicProjectsIndexRoute = publicProjectsIndexRouteImport.update({
+  id: "/projects/",
+  path: "/projects/",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const publicBookmarksIndexRoute = publicBookmarksIndexRouteImport.update({
+  id: "/bookmarks/",
+  path: "/bookmarks/",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const publicBlogIndexRoute = publicBlogIndexRouteImport.update({
+  id: "/blog/",
+  path: "/blog/",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const DashboardSnippetsCreateRoute = DashboardSnippetsCreateRouteImport.update({
+  id: "/snippets/create",
+  path: "/snippets/create",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
+const DashboardProjectsCreateRoute = DashboardProjectsCreateRouteImport.update({
+  id: "/projects/create",
+  path: "/projects/create",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
+const DashboardExperiencesCreateRoute =
+  DashboardExperiencesCreateRouteImport.update({
+    id: "/experiences/create",
+    path: "/experiences/create",
     getParentRoute: () => DashboardLayoutRoute,
   } as any);
-const DefaultLayoutSnippetsSnippetIdRoute =
-  DefaultLayoutSnippetsSnippetIdRouteImport.update({
-    id: "/snippets/$snippetId",
-    path: "/snippets/$snippetId",
-    getParentRoute: () => DefaultLayoutRoute,
-  } as any);
-const DefaultLayoutProjectsProjectIdRoute =
-  DefaultLayoutProjectsProjectIdRouteImport.update({
-    id: "/projects/$projectId",
-    path: "/projects/$projectId",
-    getParentRoute: () => DefaultLayoutRoute,
-  } as any);
-const DefaultLayoutBookmarksBookmarkIdRoute =
-  DefaultLayoutBookmarksBookmarkIdRouteImport.update({
+const DashboardBlogCreateRoute = DashboardBlogCreateRouteImport.update({
+  id: "/blog/create",
+  path: "/blog/create",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
+const publicSnippetsSnippetIdRoute = publicSnippetsSnippetIdRouteImport.update({
+  id: "/snippets/$snippetId",
+  path: "/snippets/$snippetId",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const publicProjectsProjectIdRoute = publicProjectsProjectIdRouteImport.update({
+  id: "/projects/$projectId",
+  path: "/projects/$projectId",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const publicBookmarksBookmarkIdRoute =
+  publicBookmarksBookmarkIdRouteImport.update({
     id: "/bookmarks/$bookmarkId",
     path: "/bookmarks/$bookmarkId",
-    getParentRoute: () => DefaultLayoutRoute,
+    getParentRoute: () => publicLayoutRoute,
   } as any);
-const DefaultLayoutBlogArticleIdRoute =
-  DefaultLayoutBlogArticleIdRouteImport.update({
-    id: "/blog/$articleId",
-    path: "/blog/$articleId",
-    getParentRoute: () => DefaultLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardUsersIndexRoute =
-  DashboardLayoutDashboardUsersIndexRouteImport.update({
-    id: "/dashboard/users/",
-    path: "/dashboard/users/",
+const publicBlogArticleIdRoute = publicBlogArticleIdRouteImport.update({
+  id: "/blog/$articleId",
+  path: "/blog/$articleId",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const DashboardSnippetsSnippetIdEditRoute =
+  DashboardSnippetsSnippetIdEditRouteImport.update({
+    id: "/snippets/$snippetId/edit",
+    path: "/snippets/$snippetId/edit",
     getParentRoute: () => DashboardLayoutRoute,
   } as any);
-const DashboardLayoutDashboardSnippetsIndexRoute =
-  DashboardLayoutDashboardSnippetsIndexRouteImport.update({
-    id: "/dashboard/snippets/",
-    path: "/dashboard/snippets/",
+const DashboardProjectsProjectIdEditRoute =
+  DashboardProjectsProjectIdEditRouteImport.update({
+    id: "/projects/$projectId/edit",
+    path: "/projects/$projectId/edit",
     getParentRoute: () => DashboardLayoutRoute,
   } as any);
-const DashboardLayoutDashboardProjectsIndexRoute =
-  DashboardLayoutDashboardProjectsIndexRouteImport.update({
-    id: "/dashboard/projects/",
-    path: "/dashboard/projects/",
+const DashboardExperiencesExperienceIdEditRoute =
+  DashboardExperiencesExperienceIdEditRouteImport.update({
+    id: "/experiences/$experienceId/edit",
+    path: "/experiences/$experienceId/edit",
     getParentRoute: () => DashboardLayoutRoute,
   } as any);
-const DashboardLayoutDashboardExperiencesIndexRoute =
-  DashboardLayoutDashboardExperiencesIndexRouteImport.update({
-    id: "/dashboard/experiences/",
-    path: "/dashboard/experiences/",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardBlogIndexRoute =
-  DashboardLayoutDashboardBlogIndexRouteImport.update({
-    id: "/dashboard/blog/",
-    path: "/dashboard/blog/",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardSnippetsCreateRoute =
-  DashboardLayoutDashboardSnippetsCreateRouteImport.update({
-    id: "/dashboard/snippets/create",
-    path: "/dashboard/snippets/create",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardProjectsCreateRoute =
-  DashboardLayoutDashboardProjectsCreateRouteImport.update({
-    id: "/dashboard/projects/create",
-    path: "/dashboard/projects/create",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardExperiencesCreateRoute =
-  DashboardLayoutDashboardExperiencesCreateRouteImport.update({
-    id: "/dashboard/experiences/create",
-    path: "/dashboard/experiences/create",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardBlogCreateRoute =
-  DashboardLayoutDashboardBlogCreateRouteImport.update({
-    id: "/dashboard/blog/create",
-    path: "/dashboard/blog/create",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardSnippetsSnippetIdEditRoute =
-  DashboardLayoutDashboardSnippetsSnippetIdEditRouteImport.update({
-    id: "/dashboard/snippets/$snippetId/edit",
-    path: "/dashboard/snippets/$snippetId/edit",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardProjectsProjectIdEditRoute =
-  DashboardLayoutDashboardProjectsProjectIdEditRouteImport.update({
-    id: "/dashboard/projects/$projectId/edit",
-    path: "/dashboard/projects/$projectId/edit",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardExperiencesExperienceIdEditRoute =
-  DashboardLayoutDashboardExperiencesExperienceIdEditRouteImport.update({
-    id: "/dashboard/experiences/$experienceId/edit",
-    path: "/dashboard/experiences/$experienceId/edit",
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any);
-const DashboardLayoutDashboardBlogArticleIdEditRoute =
-  DashboardLayoutDashboardBlogArticleIdEditRouteImport.update({
-    id: "/dashboard/blog/$articleId/edit",
-    path: "/dashboard/blog/$articleId/edit",
+const DashboardBlogArticleIdEditRoute =
+  DashboardBlogArticleIdEditRouteImport.update({
+    id: "/blog/$articleId/edit",
+    path: "/blog/$articleId/edit",
     getParentRoute: () => DashboardLayoutRoute,
   } as any);
 const ApiContactIndexServerRoute = ApiContactIndexServerRouteImport.update({
@@ -258,121 +245,123 @@ const ApiStatsGithubActivityServerRoute =
   } as any);
 
 export interface FileRoutesByFullPath {
-  "/signin": typeof AuthLayoutSigninRoute;
-  "/about": typeof DefaultLayoutAboutRoute;
-  "/profile": typeof DefaultLayoutProfileRoute;
-  "/stats": typeof DefaultLayoutStatsRoute;
-  "/uses": typeof DefaultLayoutUsesRoute;
-  "/": typeof DefaultLayoutIndexRoute;
-  "/blog/$articleId": typeof DefaultLayoutBlogArticleIdRoute;
-  "/bookmarks/$bookmarkId": typeof DefaultLayoutBookmarksBookmarkIdRoute;
-  "/projects/$projectId": typeof DefaultLayoutProjectsProjectIdRoute;
-  "/snippets/$snippetId": typeof DefaultLayoutSnippetsSnippetIdRoute;
-  "/dashboard": typeof DashboardLayoutDashboardIndexRoute;
-  "/blog": typeof DefaultLayoutBlogIndexRoute;
-  "/bookmarks": typeof DefaultLayoutBookmarksIndexRoute;
-  "/projects": typeof DefaultLayoutProjectsIndexRoute;
-  "/snippets": typeof DefaultLayoutSnippetsIndexRoute;
-  "/dashboard/blog/create": typeof DashboardLayoutDashboardBlogCreateRoute;
-  "/dashboard/experiences/create": typeof DashboardLayoutDashboardExperiencesCreateRoute;
-  "/dashboard/projects/create": typeof DashboardLayoutDashboardProjectsCreateRoute;
-  "/dashboard/snippets/create": typeof DashboardLayoutDashboardSnippetsCreateRoute;
-  "/dashboard/blog": typeof DashboardLayoutDashboardBlogIndexRoute;
-  "/dashboard/experiences": typeof DashboardLayoutDashboardExperiencesIndexRoute;
-  "/dashboard/projects": typeof DashboardLayoutDashboardProjectsIndexRoute;
-  "/dashboard/snippets": typeof DashboardLayoutDashboardSnippetsIndexRoute;
-  "/dashboard/users": typeof DashboardLayoutDashboardUsersIndexRoute;
-  "/dashboard/blog/$articleId/edit": typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
-  "/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
-  "/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
-  "/dashboard/snippets/$snippetId/edit": typeof DashboardLayoutDashboardSnippetsSnippetIdEditRoute;
+  "/": typeof publicIndexRoute;
+  "/dashboard": typeof DashboardLayoutRouteWithChildren;
+  "/signin": typeof authSigninRoute;
+  "/about": typeof publicAboutRoute;
+  "/profile": typeof publicProfileRoute;
+  "/stats": typeof publicStatsRoute;
+  "/uses": typeof publicUsesRoute;
+  "/dashboard/": typeof DashboardIndexRoute;
+  "/blog/$articleId": typeof publicBlogArticleIdRoute;
+  "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
+  "/projects/$projectId": typeof publicProjectsProjectIdRoute;
+  "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
+  "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
+  "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
+  "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
+  "/dashboard/snippets/create": typeof DashboardSnippetsCreateRoute;
+  "/blog": typeof publicBlogIndexRoute;
+  "/bookmarks": typeof publicBookmarksIndexRoute;
+  "/projects": typeof publicProjectsIndexRoute;
+  "/snippets": typeof publicSnippetsIndexRoute;
+  "/dashboard/blog": typeof DashboardBlogIndexRoute;
+  "/dashboard/experiences": typeof DashboardExperiencesIndexRoute;
+  "/dashboard/projects": typeof DashboardProjectsIndexRoute;
+  "/dashboard/snippets": typeof DashboardSnippetsIndexRoute;
+  "/dashboard/users": typeof DashboardUsersIndexRoute;
+  "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
+  "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
+  "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
+  "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
 }
 export interface FileRoutesByTo {
-  "/signin": typeof AuthLayoutSigninRoute;
-  "/about": typeof DefaultLayoutAboutRoute;
-  "/profile": typeof DefaultLayoutProfileRoute;
-  "/stats": typeof DefaultLayoutStatsRoute;
-  "/uses": typeof DefaultLayoutUsesRoute;
-  "/": typeof DefaultLayoutIndexRoute;
-  "/blog/$articleId": typeof DefaultLayoutBlogArticleIdRoute;
-  "/bookmarks/$bookmarkId": typeof DefaultLayoutBookmarksBookmarkIdRoute;
-  "/projects/$projectId": typeof DefaultLayoutProjectsProjectIdRoute;
-  "/snippets/$snippetId": typeof DefaultLayoutSnippetsSnippetIdRoute;
-  "/dashboard": typeof DashboardLayoutDashboardIndexRoute;
-  "/blog": typeof DefaultLayoutBlogIndexRoute;
-  "/bookmarks": typeof DefaultLayoutBookmarksIndexRoute;
-  "/projects": typeof DefaultLayoutProjectsIndexRoute;
-  "/snippets": typeof DefaultLayoutSnippetsIndexRoute;
-  "/dashboard/blog/create": typeof DashboardLayoutDashboardBlogCreateRoute;
-  "/dashboard/experiences/create": typeof DashboardLayoutDashboardExperiencesCreateRoute;
-  "/dashboard/projects/create": typeof DashboardLayoutDashboardProjectsCreateRoute;
-  "/dashboard/snippets/create": typeof DashboardLayoutDashboardSnippetsCreateRoute;
-  "/dashboard/blog": typeof DashboardLayoutDashboardBlogIndexRoute;
-  "/dashboard/experiences": typeof DashboardLayoutDashboardExperiencesIndexRoute;
-  "/dashboard/projects": typeof DashboardLayoutDashboardProjectsIndexRoute;
-  "/dashboard/snippets": typeof DashboardLayoutDashboardSnippetsIndexRoute;
-  "/dashboard/users": typeof DashboardLayoutDashboardUsersIndexRoute;
-  "/dashboard/blog/$articleId/edit": typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
-  "/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
-  "/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
-  "/dashboard/snippets/$snippetId/edit": typeof DashboardLayoutDashboardSnippetsSnippetIdEditRoute;
+  "/": typeof publicIndexRoute;
+  "/signin": typeof authSigninRoute;
+  "/about": typeof publicAboutRoute;
+  "/profile": typeof publicProfileRoute;
+  "/stats": typeof publicStatsRoute;
+  "/uses": typeof publicUsesRoute;
+  "/dashboard": typeof DashboardIndexRoute;
+  "/blog/$articleId": typeof publicBlogArticleIdRoute;
+  "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
+  "/projects/$projectId": typeof publicProjectsProjectIdRoute;
+  "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
+  "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
+  "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
+  "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
+  "/dashboard/snippets/create": typeof DashboardSnippetsCreateRoute;
+  "/blog": typeof publicBlogIndexRoute;
+  "/bookmarks": typeof publicBookmarksIndexRoute;
+  "/projects": typeof publicProjectsIndexRoute;
+  "/snippets": typeof publicSnippetsIndexRoute;
+  "/dashboard/blog": typeof DashboardBlogIndexRoute;
+  "/dashboard/experiences": typeof DashboardExperiencesIndexRoute;
+  "/dashboard/projects": typeof DashboardProjectsIndexRoute;
+  "/dashboard/snippets": typeof DashboardSnippetsIndexRoute;
+  "/dashboard/users": typeof DashboardUsersIndexRoute;
+  "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
+  "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
+  "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
+  "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
-  "/_authLayout": typeof AuthLayoutRouteWithChildren;
-  "/_dashboardLayout": typeof DashboardLayoutRouteWithChildren;
-  "/_defaultLayout": typeof DefaultLayoutRouteWithChildren;
-  "/_authLayout/signin": typeof AuthLayoutSigninRoute;
-  "/_defaultLayout/about": typeof DefaultLayoutAboutRoute;
-  "/_defaultLayout/profile": typeof DefaultLayoutProfileRoute;
-  "/_defaultLayout/stats": typeof DefaultLayoutStatsRoute;
-  "/_defaultLayout/uses": typeof DefaultLayoutUsesRoute;
-  "/_defaultLayout/": typeof DefaultLayoutIndexRoute;
-  "/_defaultLayout/blog/$articleId": typeof DefaultLayoutBlogArticleIdRoute;
-  "/_defaultLayout/bookmarks/$bookmarkId": typeof DefaultLayoutBookmarksBookmarkIdRoute;
-  "/_defaultLayout/projects/$projectId": typeof DefaultLayoutProjectsProjectIdRoute;
-  "/_defaultLayout/snippets/$snippetId": typeof DefaultLayoutSnippetsSnippetIdRoute;
-  "/_dashboardLayout/dashboard/": typeof DashboardLayoutDashboardIndexRoute;
-  "/_defaultLayout/blog/": typeof DefaultLayoutBlogIndexRoute;
-  "/_defaultLayout/bookmarks/": typeof DefaultLayoutBookmarksIndexRoute;
-  "/_defaultLayout/projects/": typeof DefaultLayoutProjectsIndexRoute;
-  "/_defaultLayout/snippets/": typeof DefaultLayoutSnippetsIndexRoute;
-  "/_dashboardLayout/dashboard/blog/create": typeof DashboardLayoutDashboardBlogCreateRoute;
-  "/_dashboardLayout/dashboard/experiences/create": typeof DashboardLayoutDashboardExperiencesCreateRoute;
-  "/_dashboardLayout/dashboard/projects/create": typeof DashboardLayoutDashboardProjectsCreateRoute;
-  "/_dashboardLayout/dashboard/snippets/create": typeof DashboardLayoutDashboardSnippetsCreateRoute;
-  "/_dashboardLayout/dashboard/blog/": typeof DashboardLayoutDashboardBlogIndexRoute;
-  "/_dashboardLayout/dashboard/experiences/": typeof DashboardLayoutDashboardExperiencesIndexRoute;
-  "/_dashboardLayout/dashboard/projects/": typeof DashboardLayoutDashboardProjectsIndexRoute;
-  "/_dashboardLayout/dashboard/snippets/": typeof DashboardLayoutDashboardSnippetsIndexRoute;
-  "/_dashboardLayout/dashboard/users/": typeof DashboardLayoutDashboardUsersIndexRoute;
-  "/_dashboardLayout/dashboard/blog/$articleId/edit": typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
-  "/_dashboardLayout/dashboard/experiences/$experienceId/edit": typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
-  "/_dashboardLayout/dashboard/projects/$projectId/edit": typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
-  "/_dashboardLayout/dashboard/snippets/$snippetId/edit": typeof DashboardLayoutDashboardSnippetsSnippetIdEditRoute;
+  "/(auth)": typeof authLayoutRouteWithChildren;
+  "/(public)": typeof publicLayoutRouteWithChildren;
+  "/dashboard": typeof DashboardLayoutRouteWithChildren;
+  "/(auth)/signin": typeof authSigninRoute;
+  "/(public)/about": typeof publicAboutRoute;
+  "/(public)/profile": typeof publicProfileRoute;
+  "/(public)/stats": typeof publicStatsRoute;
+  "/(public)/uses": typeof publicUsesRoute;
+  "/(public)/": typeof publicIndexRoute;
+  "/dashboard/": typeof DashboardIndexRoute;
+  "/(public)/blog/$articleId": typeof publicBlogArticleIdRoute;
+  "/(public)/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
+  "/(public)/projects/$projectId": typeof publicProjectsProjectIdRoute;
+  "/(public)/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
+  "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
+  "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
+  "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
+  "/dashboard/snippets/create": typeof DashboardSnippetsCreateRoute;
+  "/(public)/blog/": typeof publicBlogIndexRoute;
+  "/(public)/bookmarks/": typeof publicBookmarksIndexRoute;
+  "/(public)/projects/": typeof publicProjectsIndexRoute;
+  "/(public)/snippets/": typeof publicSnippetsIndexRoute;
+  "/dashboard/blog/": typeof DashboardBlogIndexRoute;
+  "/dashboard/experiences/": typeof DashboardExperiencesIndexRoute;
+  "/dashboard/projects/": typeof DashboardProjectsIndexRoute;
+  "/dashboard/snippets/": typeof DashboardSnippetsIndexRoute;
+  "/dashboard/users/": typeof DashboardUsersIndexRoute;
+  "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
+  "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
+  "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
+  "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
+    | "/"
+    | "/dashboard"
     | "/signin"
     | "/about"
     | "/profile"
     | "/stats"
     | "/uses"
-    | "/"
+    | "/dashboard/"
     | "/blog/$articleId"
     | "/bookmarks/$bookmarkId"
     | "/projects/$projectId"
     | "/snippets/$snippetId"
-    | "/dashboard"
-    | "/blog"
-    | "/bookmarks"
-    | "/projects"
-    | "/snippets"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
     | "/dashboard/snippets/create"
+    | "/blog"
+    | "/bookmarks"
+    | "/projects"
+    | "/snippets"
     | "/dashboard/blog"
     | "/dashboard/experiences"
     | "/dashboard/projects"
@@ -384,25 +373,25 @@ export interface FileRouteTypes {
     | "/dashboard/snippets/$snippetId/edit";
   fileRoutesByTo: FileRoutesByTo;
   to:
+    | "/"
     | "/signin"
     | "/about"
     | "/profile"
     | "/stats"
     | "/uses"
-    | "/"
+    | "/dashboard"
     | "/blog/$articleId"
     | "/bookmarks/$bookmarkId"
     | "/projects/$projectId"
     | "/snippets/$snippetId"
-    | "/dashboard"
-    | "/blog"
-    | "/bookmarks"
-    | "/projects"
-    | "/snippets"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
     | "/dashboard/snippets/create"
+    | "/blog"
+    | "/bookmarks"
+    | "/projects"
+    | "/snippets"
     | "/dashboard/blog"
     | "/dashboard/experiences"
     | "/dashboard/projects"
@@ -414,43 +403,43 @@ export interface FileRouteTypes {
     | "/dashboard/snippets/$snippetId/edit";
   id:
     | "__root__"
-    | "/_authLayout"
-    | "/_dashboardLayout"
-    | "/_defaultLayout"
-    | "/_authLayout/signin"
-    | "/_defaultLayout/about"
-    | "/_defaultLayout/profile"
-    | "/_defaultLayout/stats"
-    | "/_defaultLayout/uses"
-    | "/_defaultLayout/"
-    | "/_defaultLayout/blog/$articleId"
-    | "/_defaultLayout/bookmarks/$bookmarkId"
-    | "/_defaultLayout/projects/$projectId"
-    | "/_defaultLayout/snippets/$snippetId"
-    | "/_dashboardLayout/dashboard/"
-    | "/_defaultLayout/blog/"
-    | "/_defaultLayout/bookmarks/"
-    | "/_defaultLayout/projects/"
-    | "/_defaultLayout/snippets/"
-    | "/_dashboardLayout/dashboard/blog/create"
-    | "/_dashboardLayout/dashboard/experiences/create"
-    | "/_dashboardLayout/dashboard/projects/create"
-    | "/_dashboardLayout/dashboard/snippets/create"
-    | "/_dashboardLayout/dashboard/blog/"
-    | "/_dashboardLayout/dashboard/experiences/"
-    | "/_dashboardLayout/dashboard/projects/"
-    | "/_dashboardLayout/dashboard/snippets/"
-    | "/_dashboardLayout/dashboard/users/"
-    | "/_dashboardLayout/dashboard/blog/$articleId/edit"
-    | "/_dashboardLayout/dashboard/experiences/$experienceId/edit"
-    | "/_dashboardLayout/dashboard/projects/$projectId/edit"
-    | "/_dashboardLayout/dashboard/snippets/$snippetId/edit";
+    | "/(auth)"
+    | "/(public)"
+    | "/dashboard"
+    | "/(auth)/signin"
+    | "/(public)/about"
+    | "/(public)/profile"
+    | "/(public)/stats"
+    | "/(public)/uses"
+    | "/(public)/"
+    | "/dashboard/"
+    | "/(public)/blog/$articleId"
+    | "/(public)/bookmarks/$bookmarkId"
+    | "/(public)/projects/$projectId"
+    | "/(public)/snippets/$snippetId"
+    | "/dashboard/blog/create"
+    | "/dashboard/experiences/create"
+    | "/dashboard/projects/create"
+    | "/dashboard/snippets/create"
+    | "/(public)/blog/"
+    | "/(public)/bookmarks/"
+    | "/(public)/projects/"
+    | "/(public)/snippets/"
+    | "/dashboard/blog/"
+    | "/dashboard/experiences/"
+    | "/dashboard/projects/"
+    | "/dashboard/snippets/"
+    | "/dashboard/users/"
+    | "/dashboard/blog/$articleId/edit"
+    | "/dashboard/experiences/$experienceId/edit"
+    | "/dashboard/projects/$projectId/edit"
+    | "/dashboard/snippets/$snippetId/edit";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  AuthLayoutRoute: typeof AuthLayoutRouteWithChildren;
+  authLayoutRoute: typeof authLayoutRouteWithChildren;
+  publicLayoutRoute: typeof publicLayoutRouteWithChildren;
   DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren;
-  DefaultLayoutRoute: typeof DefaultLayoutRouteWithChildren;
 }
 export interface FileServerRoutesByFullPath {
   "/api/auth/$": typeof ApiAuthSplatServerRoute;
@@ -515,221 +504,221 @@ export interface RootServerRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    "/_defaultLayout": {
-      id: "/_defaultLayout";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof DefaultLayoutRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_dashboardLayout": {
-      id: "/_dashboardLayout";
-      path: "";
-      fullPath: "";
+    "/dashboard": {
+      id: "/dashboard";
+      path: "/dashboard";
+      fullPath: "/dashboard";
       preLoaderRoute: typeof DashboardLayoutRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/_authLayout": {
-      id: "/_authLayout";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof AuthLayoutRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_defaultLayout/": {
-      id: "/_defaultLayout/";
+    "/(public)": {
+      id: "/(public)";
       path: "/";
       fullPath: "/";
-      preLoaderRoute: typeof DefaultLayoutIndexRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicLayoutRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/_defaultLayout/uses": {
-      id: "/_defaultLayout/uses";
+    "/(auth)": {
+      id: "/(auth)";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof authLayoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/dashboard/": {
+      id: "/dashboard/";
+      path: "/";
+      fullPath: "/dashboard/";
+      preLoaderRoute: typeof DashboardIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/(public)/": {
+      id: "/(public)/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof publicIndexRouteImport;
+      parentRoute: typeof publicLayoutRoute;
+    };
+    "/(public)/uses": {
+      id: "/(public)/uses";
       path: "/uses";
       fullPath: "/uses";
-      preLoaderRoute: typeof DefaultLayoutUsesRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicUsesRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/stats": {
-      id: "/_defaultLayout/stats";
+    "/(public)/stats": {
+      id: "/(public)/stats";
       path: "/stats";
       fullPath: "/stats";
-      preLoaderRoute: typeof DefaultLayoutStatsRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicStatsRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/profile": {
-      id: "/_defaultLayout/profile";
+    "/(public)/profile": {
+      id: "/(public)/profile";
       path: "/profile";
       fullPath: "/profile";
-      preLoaderRoute: typeof DefaultLayoutProfileRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicProfileRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/about": {
-      id: "/_defaultLayout/about";
+    "/(public)/about": {
+      id: "/(public)/about";
       path: "/about";
       fullPath: "/about";
-      preLoaderRoute: typeof DefaultLayoutAboutRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicAboutRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_authLayout/signin": {
-      id: "/_authLayout/signin";
+    "/(auth)/signin": {
+      id: "/(auth)/signin";
       path: "/signin";
       fullPath: "/signin";
-      preLoaderRoute: typeof AuthLayoutSigninRouteImport;
-      parentRoute: typeof AuthLayoutRoute;
+      preLoaderRoute: typeof authSigninRouteImport;
+      parentRoute: typeof authLayoutRoute;
     };
-    "/_defaultLayout/snippets/": {
-      id: "/_defaultLayout/snippets/";
+    "/dashboard/users/": {
+      id: "/dashboard/users/";
+      path: "/users";
+      fullPath: "/dashboard/users";
+      preLoaderRoute: typeof DashboardUsersIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/dashboard/snippets/": {
+      id: "/dashboard/snippets/";
+      path: "/snippets";
+      fullPath: "/dashboard/snippets";
+      preLoaderRoute: typeof DashboardSnippetsIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/dashboard/projects/": {
+      id: "/dashboard/projects/";
+      path: "/projects";
+      fullPath: "/dashboard/projects";
+      preLoaderRoute: typeof DashboardProjectsIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/dashboard/experiences/": {
+      id: "/dashboard/experiences/";
+      path: "/experiences";
+      fullPath: "/dashboard/experiences";
+      preLoaderRoute: typeof DashboardExperiencesIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/dashboard/blog/": {
+      id: "/dashboard/blog/";
+      path: "/blog";
+      fullPath: "/dashboard/blog";
+      preLoaderRoute: typeof DashboardBlogIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/(public)/snippets/": {
+      id: "/(public)/snippets/";
       path: "/snippets";
       fullPath: "/snippets";
-      preLoaderRoute: typeof DefaultLayoutSnippetsIndexRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicSnippetsIndexRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/projects/": {
-      id: "/_defaultLayout/projects/";
+    "/(public)/projects/": {
+      id: "/(public)/projects/";
       path: "/projects";
       fullPath: "/projects";
-      preLoaderRoute: typeof DefaultLayoutProjectsIndexRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicProjectsIndexRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/bookmarks/": {
-      id: "/_defaultLayout/bookmarks/";
+    "/(public)/bookmarks/": {
+      id: "/(public)/bookmarks/";
       path: "/bookmarks";
       fullPath: "/bookmarks";
-      preLoaderRoute: typeof DefaultLayoutBookmarksIndexRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicBookmarksIndexRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/blog/": {
-      id: "/_defaultLayout/blog/";
+    "/(public)/blog/": {
+      id: "/(public)/blog/";
       path: "/blog";
       fullPath: "/blog";
-      preLoaderRoute: typeof DefaultLayoutBlogIndexRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicBlogIndexRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_dashboardLayout/dashboard/": {
-      id: "/_dashboardLayout/dashboard/";
-      path: "/dashboard";
-      fullPath: "/dashboard";
-      preLoaderRoute: typeof DashboardLayoutDashboardIndexRouteImport;
+    "/dashboard/snippets/create": {
+      id: "/dashboard/snippets/create";
+      path: "/snippets/create";
+      fullPath: "/dashboard/snippets/create";
+      preLoaderRoute: typeof DashboardSnippetsCreateRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
-    "/_defaultLayout/snippets/$snippetId": {
-      id: "/_defaultLayout/snippets/$snippetId";
+    "/dashboard/projects/create": {
+      id: "/dashboard/projects/create";
+      path: "/projects/create";
+      fullPath: "/dashboard/projects/create";
+      preLoaderRoute: typeof DashboardProjectsCreateRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/dashboard/experiences/create": {
+      id: "/dashboard/experiences/create";
+      path: "/experiences/create";
+      fullPath: "/dashboard/experiences/create";
+      preLoaderRoute: typeof DashboardExperiencesCreateRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/dashboard/blog/create": {
+      id: "/dashboard/blog/create";
+      path: "/blog/create";
+      fullPath: "/dashboard/blog/create";
+      preLoaderRoute: typeof DashboardBlogCreateRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/(public)/snippets/$snippetId": {
+      id: "/(public)/snippets/$snippetId";
       path: "/snippets/$snippetId";
       fullPath: "/snippets/$snippetId";
-      preLoaderRoute: typeof DefaultLayoutSnippetsSnippetIdRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicSnippetsSnippetIdRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/projects/$projectId": {
-      id: "/_defaultLayout/projects/$projectId";
+    "/(public)/projects/$projectId": {
+      id: "/(public)/projects/$projectId";
       path: "/projects/$projectId";
       fullPath: "/projects/$projectId";
-      preLoaderRoute: typeof DefaultLayoutProjectsProjectIdRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicProjectsProjectIdRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/bookmarks/$bookmarkId": {
-      id: "/_defaultLayout/bookmarks/$bookmarkId";
+    "/(public)/bookmarks/$bookmarkId": {
+      id: "/(public)/bookmarks/$bookmarkId";
       path: "/bookmarks/$bookmarkId";
       fullPath: "/bookmarks/$bookmarkId";
-      preLoaderRoute: typeof DefaultLayoutBookmarksBookmarkIdRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicBookmarksBookmarkIdRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_defaultLayout/blog/$articleId": {
-      id: "/_defaultLayout/blog/$articleId";
+    "/(public)/blog/$articleId": {
+      id: "/(public)/blog/$articleId";
       path: "/blog/$articleId";
       fullPath: "/blog/$articleId";
-      preLoaderRoute: typeof DefaultLayoutBlogArticleIdRouteImport;
-      parentRoute: typeof DefaultLayoutRoute;
+      preLoaderRoute: typeof publicBlogArticleIdRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
-    "/_dashboardLayout/dashboard/users/": {
-      id: "/_dashboardLayout/dashboard/users/";
-      path: "/dashboard/users";
-      fullPath: "/dashboard/users";
-      preLoaderRoute: typeof DashboardLayoutDashboardUsersIndexRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/snippets/": {
-      id: "/_dashboardLayout/dashboard/snippets/";
-      path: "/dashboard/snippets";
-      fullPath: "/dashboard/snippets";
-      preLoaderRoute: typeof DashboardLayoutDashboardSnippetsIndexRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/projects/": {
-      id: "/_dashboardLayout/dashboard/projects/";
-      path: "/dashboard/projects";
-      fullPath: "/dashboard/projects";
-      preLoaderRoute: typeof DashboardLayoutDashboardProjectsIndexRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/experiences/": {
-      id: "/_dashboardLayout/dashboard/experiences/";
-      path: "/dashboard/experiences";
-      fullPath: "/dashboard/experiences";
-      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesIndexRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/blog/": {
-      id: "/_dashboardLayout/dashboard/blog/";
-      path: "/dashboard/blog";
-      fullPath: "/dashboard/blog";
-      preLoaderRoute: typeof DashboardLayoutDashboardBlogIndexRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/snippets/create": {
-      id: "/_dashboardLayout/dashboard/snippets/create";
-      path: "/dashboard/snippets/create";
-      fullPath: "/dashboard/snippets/create";
-      preLoaderRoute: typeof DashboardLayoutDashboardSnippetsCreateRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/projects/create": {
-      id: "/_dashboardLayout/dashboard/projects/create";
-      path: "/dashboard/projects/create";
-      fullPath: "/dashboard/projects/create";
-      preLoaderRoute: typeof DashboardLayoutDashboardProjectsCreateRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/experiences/create": {
-      id: "/_dashboardLayout/dashboard/experiences/create";
-      path: "/dashboard/experiences/create";
-      fullPath: "/dashboard/experiences/create";
-      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesCreateRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/blog/create": {
-      id: "/_dashboardLayout/dashboard/blog/create";
-      path: "/dashboard/blog/create";
-      fullPath: "/dashboard/blog/create";
-      preLoaderRoute: typeof DashboardLayoutDashboardBlogCreateRouteImport;
-      parentRoute: typeof DashboardLayoutRoute;
-    };
-    "/_dashboardLayout/dashboard/snippets/$snippetId/edit": {
-      id: "/_dashboardLayout/dashboard/snippets/$snippetId/edit";
-      path: "/dashboard/snippets/$snippetId/edit";
+    "/dashboard/snippets/$snippetId/edit": {
+      id: "/dashboard/snippets/$snippetId/edit";
+      path: "/snippets/$snippetId/edit";
       fullPath: "/dashboard/snippets/$snippetId/edit";
-      preLoaderRoute: typeof DashboardLayoutDashboardSnippetsSnippetIdEditRouteImport;
+      preLoaderRoute: typeof DashboardSnippetsSnippetIdEditRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
-    "/_dashboardLayout/dashboard/projects/$projectId/edit": {
-      id: "/_dashboardLayout/dashboard/projects/$projectId/edit";
-      path: "/dashboard/projects/$projectId/edit";
+    "/dashboard/projects/$projectId/edit": {
+      id: "/dashboard/projects/$projectId/edit";
+      path: "/projects/$projectId/edit";
       fullPath: "/dashboard/projects/$projectId/edit";
-      preLoaderRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRouteImport;
+      preLoaderRoute: typeof DashboardProjectsProjectIdEditRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
-    "/_dashboardLayout/dashboard/experiences/$experienceId/edit": {
-      id: "/_dashboardLayout/dashboard/experiences/$experienceId/edit";
-      path: "/dashboard/experiences/$experienceId/edit";
+    "/dashboard/experiences/$experienceId/edit": {
+      id: "/dashboard/experiences/$experienceId/edit";
+      path: "/experiences/$experienceId/edit";
       fullPath: "/dashboard/experiences/$experienceId/edit";
-      preLoaderRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditRouteImport;
+      preLoaderRoute: typeof DashboardExperiencesExperienceIdEditRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
-    "/_dashboardLayout/dashboard/blog/$articleId/edit": {
-      id: "/_dashboardLayout/dashboard/blog/$articleId/edit";
-      path: "/dashboard/blog/$articleId/edit";
+    "/dashboard/blog/$articleId/edit": {
+      id: "/dashboard/blog/$articleId/edit";
+      path: "/blog/$articleId/edit";
       fullPath: "/dashboard/blog/$articleId/edit";
-      preLoaderRoute: typeof DashboardLayoutDashboardBlogArticleIdEditRouteImport;
+      preLoaderRoute: typeof DashboardBlogArticleIdEditRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
   }
@@ -781,109 +770,97 @@ declare module "@tanstack/react-start/server" {
   }
 }
 
-interface AuthLayoutRouteChildren {
-  AuthLayoutSigninRoute: typeof AuthLayoutSigninRoute;
+interface authLayoutRouteChildren {
+  authSigninRoute: typeof authSigninRoute;
 }
 
-const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
-  AuthLayoutSigninRoute: AuthLayoutSigninRoute,
+const authLayoutRouteChildren: authLayoutRouteChildren = {
+  authSigninRoute: authSigninRoute,
 };
 
-const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
-  AuthLayoutRouteChildren,
+const authLayoutRouteWithChildren = authLayoutRoute._addFileChildren(
+  authLayoutRouteChildren,
+);
+
+interface publicLayoutRouteChildren {
+  publicAboutRoute: typeof publicAboutRoute;
+  publicProfileRoute: typeof publicProfileRoute;
+  publicStatsRoute: typeof publicStatsRoute;
+  publicUsesRoute: typeof publicUsesRoute;
+  publicIndexRoute: typeof publicIndexRoute;
+  publicBlogArticleIdRoute: typeof publicBlogArticleIdRoute;
+  publicBookmarksBookmarkIdRoute: typeof publicBookmarksBookmarkIdRoute;
+  publicProjectsProjectIdRoute: typeof publicProjectsProjectIdRoute;
+  publicSnippetsSnippetIdRoute: typeof publicSnippetsSnippetIdRoute;
+  publicBlogIndexRoute: typeof publicBlogIndexRoute;
+  publicBookmarksIndexRoute: typeof publicBookmarksIndexRoute;
+  publicProjectsIndexRoute: typeof publicProjectsIndexRoute;
+  publicSnippetsIndexRoute: typeof publicSnippetsIndexRoute;
+}
+
+const publicLayoutRouteChildren: publicLayoutRouteChildren = {
+  publicAboutRoute: publicAboutRoute,
+  publicProfileRoute: publicProfileRoute,
+  publicStatsRoute: publicStatsRoute,
+  publicUsesRoute: publicUsesRoute,
+  publicIndexRoute: publicIndexRoute,
+  publicBlogArticleIdRoute: publicBlogArticleIdRoute,
+  publicBookmarksBookmarkIdRoute: publicBookmarksBookmarkIdRoute,
+  publicProjectsProjectIdRoute: publicProjectsProjectIdRoute,
+  publicSnippetsSnippetIdRoute: publicSnippetsSnippetIdRoute,
+  publicBlogIndexRoute: publicBlogIndexRoute,
+  publicBookmarksIndexRoute: publicBookmarksIndexRoute,
+  publicProjectsIndexRoute: publicProjectsIndexRoute,
+  publicSnippetsIndexRoute: publicSnippetsIndexRoute,
+};
+
+const publicLayoutRouteWithChildren = publicLayoutRoute._addFileChildren(
+  publicLayoutRouteChildren,
 );
 
 interface DashboardLayoutRouteChildren {
-  DashboardLayoutDashboardIndexRoute: typeof DashboardLayoutDashboardIndexRoute;
-  DashboardLayoutDashboardBlogCreateRoute: typeof DashboardLayoutDashboardBlogCreateRoute;
-  DashboardLayoutDashboardExperiencesCreateRoute: typeof DashboardLayoutDashboardExperiencesCreateRoute;
-  DashboardLayoutDashboardProjectsCreateRoute: typeof DashboardLayoutDashboardProjectsCreateRoute;
-  DashboardLayoutDashboardSnippetsCreateRoute: typeof DashboardLayoutDashboardSnippetsCreateRoute;
-  DashboardLayoutDashboardBlogIndexRoute: typeof DashboardLayoutDashboardBlogIndexRoute;
-  DashboardLayoutDashboardExperiencesIndexRoute: typeof DashboardLayoutDashboardExperiencesIndexRoute;
-  DashboardLayoutDashboardProjectsIndexRoute: typeof DashboardLayoutDashboardProjectsIndexRoute;
-  DashboardLayoutDashboardSnippetsIndexRoute: typeof DashboardLayoutDashboardSnippetsIndexRoute;
-  DashboardLayoutDashboardUsersIndexRoute: typeof DashboardLayoutDashboardUsersIndexRoute;
-  DashboardLayoutDashboardBlogArticleIdEditRoute: typeof DashboardLayoutDashboardBlogArticleIdEditRoute;
-  DashboardLayoutDashboardExperiencesExperienceIdEditRoute: typeof DashboardLayoutDashboardExperiencesExperienceIdEditRoute;
-  DashboardLayoutDashboardProjectsProjectIdEditRoute: typeof DashboardLayoutDashboardProjectsProjectIdEditRoute;
-  DashboardLayoutDashboardSnippetsSnippetIdEditRoute: typeof DashboardLayoutDashboardSnippetsSnippetIdEditRoute;
+  DashboardIndexRoute: typeof DashboardIndexRoute;
+  DashboardBlogCreateRoute: typeof DashboardBlogCreateRoute;
+  DashboardExperiencesCreateRoute: typeof DashboardExperiencesCreateRoute;
+  DashboardProjectsCreateRoute: typeof DashboardProjectsCreateRoute;
+  DashboardSnippetsCreateRoute: typeof DashboardSnippetsCreateRoute;
+  DashboardBlogIndexRoute: typeof DashboardBlogIndexRoute;
+  DashboardExperiencesIndexRoute: typeof DashboardExperiencesIndexRoute;
+  DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute;
+  DashboardSnippetsIndexRoute: typeof DashboardSnippetsIndexRoute;
+  DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute;
+  DashboardBlogArticleIdEditRoute: typeof DashboardBlogArticleIdEditRoute;
+  DashboardExperiencesExperienceIdEditRoute: typeof DashboardExperiencesExperienceIdEditRoute;
+  DashboardProjectsProjectIdEditRoute: typeof DashboardProjectsProjectIdEditRoute;
+  DashboardSnippetsSnippetIdEditRoute: typeof DashboardSnippetsSnippetIdEditRoute;
 }
 
 const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
-  DashboardLayoutDashboardIndexRoute: DashboardLayoutDashboardIndexRoute,
-  DashboardLayoutDashboardBlogCreateRoute:
-    DashboardLayoutDashboardBlogCreateRoute,
-  DashboardLayoutDashboardExperiencesCreateRoute:
-    DashboardLayoutDashboardExperiencesCreateRoute,
-  DashboardLayoutDashboardProjectsCreateRoute:
-    DashboardLayoutDashboardProjectsCreateRoute,
-  DashboardLayoutDashboardSnippetsCreateRoute:
-    DashboardLayoutDashboardSnippetsCreateRoute,
-  DashboardLayoutDashboardBlogIndexRoute:
-    DashboardLayoutDashboardBlogIndexRoute,
-  DashboardLayoutDashboardExperiencesIndexRoute:
-    DashboardLayoutDashboardExperiencesIndexRoute,
-  DashboardLayoutDashboardProjectsIndexRoute:
-    DashboardLayoutDashboardProjectsIndexRoute,
-  DashboardLayoutDashboardSnippetsIndexRoute:
-    DashboardLayoutDashboardSnippetsIndexRoute,
-  DashboardLayoutDashboardUsersIndexRoute:
-    DashboardLayoutDashboardUsersIndexRoute,
-  DashboardLayoutDashboardBlogArticleIdEditRoute:
-    DashboardLayoutDashboardBlogArticleIdEditRoute,
-  DashboardLayoutDashboardExperiencesExperienceIdEditRoute:
-    DashboardLayoutDashboardExperiencesExperienceIdEditRoute,
-  DashboardLayoutDashboardProjectsProjectIdEditRoute:
-    DashboardLayoutDashboardProjectsProjectIdEditRoute,
-  DashboardLayoutDashboardSnippetsSnippetIdEditRoute:
-    DashboardLayoutDashboardSnippetsSnippetIdEditRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+  DashboardBlogCreateRoute: DashboardBlogCreateRoute,
+  DashboardExperiencesCreateRoute: DashboardExperiencesCreateRoute,
+  DashboardProjectsCreateRoute: DashboardProjectsCreateRoute,
+  DashboardSnippetsCreateRoute: DashboardSnippetsCreateRoute,
+  DashboardBlogIndexRoute: DashboardBlogIndexRoute,
+  DashboardExperiencesIndexRoute: DashboardExperiencesIndexRoute,
+  DashboardProjectsIndexRoute: DashboardProjectsIndexRoute,
+  DashboardSnippetsIndexRoute: DashboardSnippetsIndexRoute,
+  DashboardUsersIndexRoute: DashboardUsersIndexRoute,
+  DashboardBlogArticleIdEditRoute: DashboardBlogArticleIdEditRoute,
+  DashboardExperiencesExperienceIdEditRoute:
+    DashboardExperiencesExperienceIdEditRoute,
+  DashboardProjectsProjectIdEditRoute: DashboardProjectsProjectIdEditRoute,
+  DashboardSnippetsSnippetIdEditRoute: DashboardSnippetsSnippetIdEditRoute,
 };
 
 const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
   DashboardLayoutRouteChildren,
 );
 
-interface DefaultLayoutRouteChildren {
-  DefaultLayoutAboutRoute: typeof DefaultLayoutAboutRoute;
-  DefaultLayoutProfileRoute: typeof DefaultLayoutProfileRoute;
-  DefaultLayoutStatsRoute: typeof DefaultLayoutStatsRoute;
-  DefaultLayoutUsesRoute: typeof DefaultLayoutUsesRoute;
-  DefaultLayoutIndexRoute: typeof DefaultLayoutIndexRoute;
-  DefaultLayoutBlogArticleIdRoute: typeof DefaultLayoutBlogArticleIdRoute;
-  DefaultLayoutBookmarksBookmarkIdRoute: typeof DefaultLayoutBookmarksBookmarkIdRoute;
-  DefaultLayoutProjectsProjectIdRoute: typeof DefaultLayoutProjectsProjectIdRoute;
-  DefaultLayoutSnippetsSnippetIdRoute: typeof DefaultLayoutSnippetsSnippetIdRoute;
-  DefaultLayoutBlogIndexRoute: typeof DefaultLayoutBlogIndexRoute;
-  DefaultLayoutBookmarksIndexRoute: typeof DefaultLayoutBookmarksIndexRoute;
-  DefaultLayoutProjectsIndexRoute: typeof DefaultLayoutProjectsIndexRoute;
-  DefaultLayoutSnippetsIndexRoute: typeof DefaultLayoutSnippetsIndexRoute;
-}
-
-const DefaultLayoutRouteChildren: DefaultLayoutRouteChildren = {
-  DefaultLayoutAboutRoute: DefaultLayoutAboutRoute,
-  DefaultLayoutProfileRoute: DefaultLayoutProfileRoute,
-  DefaultLayoutStatsRoute: DefaultLayoutStatsRoute,
-  DefaultLayoutUsesRoute: DefaultLayoutUsesRoute,
-  DefaultLayoutIndexRoute: DefaultLayoutIndexRoute,
-  DefaultLayoutBlogArticleIdRoute: DefaultLayoutBlogArticleIdRoute,
-  DefaultLayoutBookmarksBookmarkIdRoute: DefaultLayoutBookmarksBookmarkIdRoute,
-  DefaultLayoutProjectsProjectIdRoute: DefaultLayoutProjectsProjectIdRoute,
-  DefaultLayoutSnippetsSnippetIdRoute: DefaultLayoutSnippetsSnippetIdRoute,
-  DefaultLayoutBlogIndexRoute: DefaultLayoutBlogIndexRoute,
-  DefaultLayoutBookmarksIndexRoute: DefaultLayoutBookmarksIndexRoute,
-  DefaultLayoutProjectsIndexRoute: DefaultLayoutProjectsIndexRoute,
-  DefaultLayoutSnippetsIndexRoute: DefaultLayoutSnippetsIndexRoute,
-};
-
-const DefaultLayoutRouteWithChildren = DefaultLayoutRoute._addFileChildren(
-  DefaultLayoutRouteChildren,
-);
-
 const rootRouteChildren: RootRouteChildren = {
-  AuthLayoutRoute: AuthLayoutRouteWithChildren,
+  authLayoutRoute: authLayoutRouteWithChildren,
+  publicLayoutRoute: publicLayoutRouteWithChildren,
   DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
-  DefaultLayoutRoute: DefaultLayoutRouteWithChildren,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
