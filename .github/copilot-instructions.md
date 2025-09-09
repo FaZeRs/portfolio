@@ -294,12 +294,6 @@ Ultracite enforces strict type safety, accessibility standards, and consistent c
 - Make sure to use the digits argument with Number#toFixed().
 - Make sure to use the "use strict" directive in script files.
 
-### Next.js Specific Rules
-- Don't use `<img>` elements in Next.js projects.
-- Don't use `<head>` elements in Next.js projects.
-- Don't import next/document outside of pages/_document.jsx in Next.js projects.
-- Don't use the next/head module in pages/_document.js on Next.js projects.
-
 ### Testing Best Practices
 - Don't use export or module.exports in test files.
 - Don't use focused tests.
