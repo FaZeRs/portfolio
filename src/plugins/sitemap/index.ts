@@ -15,7 +15,6 @@ import { type FileRouteTypes } from "../../routeTree.gen";
 
 export type TRoutes = FileRouteTypes["fullPaths"];
 
-// biome-ignore lint/style/noNonNullAssertion: this is valid
 const driver = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
