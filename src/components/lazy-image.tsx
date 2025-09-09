@@ -128,6 +128,7 @@ export function LazyImage({
               isLoading || !isInView ? "opacity-0" : "opacity-100",
               imageClassName
             )}
+            fetchPriority={priority ? "high" : "auto"}
             height={height}
             loading={loadingStrategy}
             onError={handleError}
