@@ -2,6 +2,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { formatDate } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 import { ExperienceType } from "~/types";
+import { LazyImage } from "../lazy-image";
 import SectionHeading from "../section-heading";
 
 type ExperienceItemProps = {
@@ -21,10 +22,12 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
           rel="noreferrer noopener"
           target="_blank"
         >
-          <img
+          <LazyImage
             alt={title}
-            className="object-cover duration-300"
+            className="h-14 w-14"
             height={50}
+            imageClassName="object-cover duration-300"
+            sizes="50px"
             src={imageUrl}
             width={50}
           />
@@ -32,10 +35,12 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
       ) : (
         imageUrl && (
           <div className="relative grid min-h-[80px] min-w-[80px] place-items-center overflow-clip rounded-md border border-zinc-200 bg-secondary-bg p-2 dark:border-zinc-800 dark:bg-primary-bg">
-            <img
+            <LazyImage
               alt={title}
-              className="object-cover duration-300"
+              className="h-14 w-14"
               height={50}
+              imageClassName="object-cover duration-300"
+              sizes="50px"
               src={imageUrl}
               width={50}
             />

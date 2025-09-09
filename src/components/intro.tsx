@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
+import { LazyImage } from "./lazy-image";
 
 const Intro = () => {
   return (
@@ -17,13 +18,13 @@ const Intro = () => {
               duration: 0.2,
             }}
           >
-            <img
+            <LazyImage
               alt="Nauris Linde"
-              className="h-56 w-56 rounded-full border-[0.35rem] border-secondary object-cover shadow-xl saturate-0 filter sm:h-80 sm:w-80"
-              fetchPriority="high"
-              height="320"
+              height={320}
+              imageClassName="h-56 w-56 rounded-full border-[0.35rem] border-secondary object-cover shadow-xl saturate-0 filter sm:h-80 sm:w-80"
+              priority={true}
               src="/images/avatar.avif"
-              width="320"
+              width={320}
             />
           </motion.div>
         </div>

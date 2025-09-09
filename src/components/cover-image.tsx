@@ -1,4 +1,5 @@
 import { Info, LocateIcon } from "lucide-react";
+import { LazyImage } from "./lazy-image";
 
 type CoverImageProps = {
   src: string;
@@ -9,22 +10,23 @@ export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
   return (
     <figure>
       <div className="relative mb-12 w-full">
-        <img
+        <LazyImage
           alt={alt}
-          className="aspect-[16/9] animate-reveal rounded-8 rounded-xl object-cover shadow-xl saturate-0 filter"
-          height={1080}
+          height={620}
+          imageClassName="aspect-[16/9] animate-reveal rounded-8 rounded-xl object-cover shadow-xl saturate-0 filter"
           src={src}
-          width={1920}
+          width={1090}
         />
 
         <div className="absolute right-0 bottom-0 left-0 flex gap-4 rounded-b-xl p-3">
           <div className="h-28 w-28">
-            <img
+            <LazyImage
               alt="Avatar"
-              className="!m-0 h-full rounded-full bg-gradient-to-tl from-purple-700/60 to-rose-400/60 object-cover p-[3px] shadow-lg ring-[5px] ring-purple-500/10"
-              height={933}
+              className="h-full rounded-full bg-gradient-to-tl from-purple-700/60 to-rose-400/60 p-[3px] shadow-lg ring-[5px] ring-purple-500/10"
+              height={120}
+              imageClassName="!m-0 rounded-full object-cover"
               src="/images/avatar.avif"
-              width={933}
+              width={120}
             />
           </div>
 

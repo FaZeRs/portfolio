@@ -16,6 +16,7 @@ import ArticleMetrics from "~/components/blog/article-metrics";
 import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
+import { LazyImage } from "~/components/lazy-image";
 import CustomMDX from "~/components/mdx/mdx";
 import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
@@ -132,10 +133,13 @@ function RouteComponent() {
             {article.author ? (
               <div className="mt-4 flex items-center gap-3 sm:gap-4">
                 {article.author.image && (
-                  <img
+                  <LazyImage
                     alt={article.author.name}
-                    className="rounded-full bg-white"
+                    className="h-10 w-10"
                     height={40}
+                    imageClassName="rounded-full bg-white"
+                    priority={true}
+                    sizes="40px"
                     src={article.author.image}
                     width={40}
                   />
@@ -149,10 +153,13 @@ function RouteComponent() {
             ) : null}
 
             {article.imageUrl && (
-              <img
+              <LazyImage
                 alt={article.title}
-                className="my-6 w-full rounded-md border bg-muted transition-colors sm:my-8"
+                className="my-6 w-full"
                 height={405}
+                imageClassName="rounded-md border bg-muted transition-colors sm:my-8"
+                priority={true}
+                sizes="(max-width: 832px) 100vw, (max-width: 1280px) 50vw, 33vw"
                 src={article.imageUrl}
                 width={832}
               />

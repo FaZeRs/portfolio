@@ -1,5 +1,6 @@
 import { Link2Icon } from "lucide-react";
 import { Bookmark } from "~/types";
+import { LazyImage } from "../lazy-image";
 
 type BookmarkCardProps = {
   bookmark: Bookmark;
@@ -15,12 +16,13 @@ export default function BookmarkCard({
       target="_blank"
     >
       <span className="aspect-[1200/630] overflow-hidden rounded-lg">
-        <img
+        <LazyImage
           alt={bookmark.title}
-          className="aspect-[1200/630] animate-reveal rounded-lg border bg-[url('/images/fallback.webp')] bg-center bg-cover bg-no-repeat object-cover"
-          height={630}
+          className="aspect-[1200/630] animate-reveal rounded-lg"
+          height={260}
+          imageClassName="rounded-lg object-cover border bg-[url('/images/fallback.webp')] bg-center bg-cover bg-no-repeat"
           src={bookmark.cover}
-          width={1200}
+          width={500}
         />
       </span>
 

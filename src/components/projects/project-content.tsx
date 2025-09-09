@@ -5,7 +5,7 @@ import { siGithub } from "simple-icons";
 import Icon from "~/components/ui/icon";
 
 import type { ProjectType } from "~/types";
-
+import ZoomImage from "../zoom-image";
 import ProjectLink from "./project-link";
 import ProjectStacks from "./project-stacks";
 
@@ -64,7 +64,7 @@ export default function ProjectContent({
       </div>
 
       <div className="relative aspect-[16/9] overflow-hidden">
-        <img
+        <ZoomImage
           alt={title}
           className="scale-100 rounded-lg border object-cover blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"
           height={600}

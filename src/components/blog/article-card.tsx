@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { EyeIcon, ThumbsUpIcon } from "lucide-react";
+import { LazyImage } from "~/components/lazy-image";
 import { formatDate } from "~/lib/utils";
 import { ArticleType } from "~/types";
 
@@ -11,15 +12,15 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
   return (
     <article className="group relative flex flex-col space-y-2 rounded-2xl border bg-background p-3">
       {article.imageUrl && (
-        <div className="relative w-full">
-          <img
-            alt={article.title}
-            className="my-auto aspect-[2/1] h-auto animate-reveal rounded-xl border bg-muted object-cover transition-colors"
-            height={630}
-            src={article.imageUrl}
-            width={1200}
-          />
-        </div>
+        <LazyImage
+          alt={article.title}
+          className="rounded-xl border bg-muted transition-colors"
+          height={250}
+          imageClassName="aspect-[2/1] object-cover rounded-xl"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          src={article.imageUrl}
+          width={500}
+        />
       )}
 
       <div className="mt-2 flex h-full w-full flex-col gap-2">
