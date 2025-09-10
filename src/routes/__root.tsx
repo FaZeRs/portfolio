@@ -1,9 +1,11 @@
 /// <reference types="vite/client" />
+
 import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import {
+  ClientOnly,
   createRootRouteWithContext,
   HeadContent,
   Outlet,
@@ -13,10 +15,11 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
-
+import { OpenPanelComponent } from "~/components/open-panel";
 import { Toaster } from "~/components/ui/sonner";
 import { ThemeProvider } from "~/components/ui/theme";
 import { siteConfig } from "~/lib/config/site";
+import { env } from "~/lib/env.client";
 import { seo } from "~/lib/seo";
 import { auth } from "~/lib/server/auth";
 import appCss from "~/lib/styles/app.css?url";
@@ -111,11 +114,15 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           ]}
         />
 
-        <script
-          data-site-id="1"
-          defer
-          src="https://analytics.naurislinde.dev/api/script.js"
-        />
+        <ClientOnly>
+          <OpenPanelComponent
+            apiUrl={env.VITE_OPENPANEL_API_URL}
+            clientId={env.VITE_OPENPANEL_CLIENT_ID ?? ""}
+            trackAttributes={true}
+            trackOutgoingLinks={true}
+            trackScreenViews={true}
+          />
+        </ClientOnly>
         <Scripts />
       </body>
     </html>
