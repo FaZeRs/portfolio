@@ -1,7 +1,7 @@
 import { TRPCError, TRPCRouterRecord } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod/v4";
-import { deleteFile, getPublicUrlForObject, uploadImage } from "~/lib/s3";
+import { deleteFile, uploadImage } from "~/lib/s3";
 import {
   CreateProjectSchema,
   Project,
@@ -63,13 +63,8 @@ export const projectRouter = {
 
       if (thumbnail) {
         try {
-          const imagePath = await uploadImage(
-            "projects",
-            thumbnail,
-            input.slug
-          );
-          projectData.imagePath = imagePath;
-          projectData.imageUrl = getPublicUrlForObject(imagePath);
+          const imageUrl = await uploadImage("projects", thumbnail, input.slug);
+          projectData.imageUrl = imageUrl;
         } catch (error) {
           // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
@@ -89,18 +84,17 @@ export const projectRouter = {
           const existingProject = await ctx.db.query.Project.findFirst({
             where: eq(Project.id, id),
           });
-          const oldImagePath = existingProject?.imagePath;
+          const oldImageUrl = existingProject?.imageUrl;
 
-          const imagePath = await uploadImage(
+          const imageUrl = await uploadImage(
             "projects",
             thumbnail,
             input.slug ?? id
           );
-          projectData.imagePath = imagePath;
-          projectData.imageUrl = getPublicUrlForObject(imagePath);
+          projectData.imageUrl = imageUrl;
 
-          if (oldImagePath) {
-            await deleteFile(oldImagePath);
+          if (oldImageUrl) {
+            await deleteFile(oldImageUrl);
           }
         } catch (error) {
           // biome-ignore lint/suspicious/noConsole: log error
@@ -118,8 +112,8 @@ export const projectRouter = {
         where: eq(Project.id, input),
       });
 
-      if (projectToDelete?.imagePath) {
-        await deleteFile(projectToDelete.imagePath);
+      if (projectToDelete?.imageUrl) {
+        await deleteFile(projectToDelete.imageUrl);
       }
 
       return ctx.db.delete(Project).where(eq(Project.id, input));

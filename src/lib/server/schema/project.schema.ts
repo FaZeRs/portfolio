@@ -9,7 +9,6 @@ export const Project = pgTable("project", (t) => ({
   slug: t.varchar({ length: 255 }).notNull().unique(),
   description: t.varchar({ length: 255 }),
   content: t.text(),
-  imagePath: t.varchar({ length: 255 }),
   imageUrl: t.varchar({ length: 255 }),
   isFeatured: t.boolean().notNull().default(false),
   githubUrl: t.varchar({ length: 255 }),

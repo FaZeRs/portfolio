@@ -1,14 +1,22 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import { neon } from "@neondatabase/serverless";
+import { upstashCache } from "drizzle-orm/cache/upstash";
+import { drizzle } from "drizzle-orm/neon-http";
 import { env } from "~/lib/env.server";
 // biome-ignore lint/performance/noNamespaceImport: valid import
 import * as schema from "./schema";
 
-const pool = new Pool({
-  connectionString: env.DATABASE_URL,
+const driver = neon(env.DATABASE_URL);
+
+const cache = upstashCache({
+  url: env.KV_REST_API_URL,
+  token: env.KV_REST_API_TOKEN,
+  global: true,
+  config: { ex: 60 },
 });
+
 export const db = drizzle({
-  client: pool,
+  client: driver,
   schema,
   casing: "snake_case",
+  cache,
 });

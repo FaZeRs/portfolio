@@ -89,11 +89,12 @@ export function LazyImage({
         return;
       }
 
+      const separator = baseSrc.includes("?") ? "&" : "?";
       const srcSets = [
-        `${baseSrc}?w=${Math.round(width * SCALE_HALF)}&q=${quality} 0.5x`,
-        `${baseSrc}?w=${width}&q=${quality} 1x`,
-        `${baseSrc}?w=${Math.round(width * SCALE_HIGH)}&q=${quality} 1.5x`,
-        `${baseSrc}?w=${Math.round(width * SCALE_RETINA)}&q=${quality} 2x`,
+        `${baseSrc}${separator}w=${Math.round(width * SCALE_HALF)}&q=${quality} 0.5x`,
+        `${baseSrc}${separator}w=${width}&q=${quality} 1x`,
+        `${baseSrc}${separator}w=${Math.round(width * SCALE_HIGH)}&q=${quality} 1.5x`,
+        `${baseSrc}${separator}w=${Math.round(width * SCALE_RETINA)}&q=${quality} 2x`,
       ];
 
       return srcSets.join(", ");

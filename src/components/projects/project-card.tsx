@@ -29,17 +29,16 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         </div>
       )}
 
-      <div className="relative aspect-[2/1] w-full overflow-hidden rounded-md border">
+      <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl border">
         <LazyImage
           alt={description ?? ""}
-          className="rounded-xl border bg-muted transition-colors"
           height={320}
-          imageClassName="aspect-[2/1] object-cover rounded-xl"
+          imageClassName="object-cover rounded-xl transition-colors"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           src={thumbnailUrl}
           width={500}
         />
-        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center gap-1 rounded-md bg-black font-medium text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-80">
+        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center gap-1 rounded-xl bg-black font-medium text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-80">
           <span>View Project</span>
           <ArrowRight size={20} />
         </div>

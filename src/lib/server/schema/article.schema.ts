@@ -11,7 +11,6 @@ export const articles = pgTable("articles", (t) => ({
   slug: t.varchar({ length: 255 }).notNull().unique(),
   description: t.varchar({ length: 255 }),
   content: t.text(),
-  imagePath: t.varchar({ length: 255 }),
   imageUrl: t.varchar({ length: 255 }),
   isDraft: t.boolean().notNull().default(false),
   tags: t.text().array(),

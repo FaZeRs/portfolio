@@ -1,7 +1,7 @@
+import { neon } from "@neondatabase/serverless";
 import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import { drizzle } from "drizzle-orm/neon-http";
 import { Sitemap } from "tanstack-router-sitemap";
 
 dotenv.config();
@@ -15,9 +15,8 @@ import { type FileRouteTypes } from "../../routeTree.gen";
 
 export type TRoutes = FileRouteTypes["fullPaths"];
 
-const driver = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+// biome-ignore lint/style/noNonNullAssertion: valid constant
+const driver = neon(process.env.DATABASE_URL!);
 
 const db = drizzle({ client: driver, schema, casing: "snake_case" });
 

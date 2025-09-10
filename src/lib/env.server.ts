@@ -20,13 +20,10 @@ export const env = createEnv({
     SENTRY_PROJECT: z.string().optional(),
     BLOB_READ_WRITE_TOKEN: z.string().optional(),
     IP_ADDRESS_SALT: z.string().min(1).optional(),
+    KV_REST_API_URL: z.url(),
+    KV_REST_API_TOKEN: z.string().min(1),
     RAINDROP_ACCESS_TOKEN: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1).optional(),
-    S3_REGION: z.string().min(1),
-    S3_ENDPOINT: z.string().min(1),
-    S3_ACCESS_KEY_ID: z.string().min(1),
-    S3_SECRET_ACCESS_KEY: z.string().min(1),
-    S3_STORAGE_BUCKET: z.string().min(1),
   },
 
   /**
