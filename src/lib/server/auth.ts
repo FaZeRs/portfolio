@@ -46,5 +46,11 @@ export const auth = betterAuth({
     deleteUser: {
       enabled: true,
     },
+    additionalFields: {
+      twitterHandle: {
+        type: "string",
+        required: false,
+      },
+    },
   },
 });

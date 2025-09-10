@@ -11,6 +11,7 @@ import {
   ShieldIcon,
   TrashIcon,
   UserIcon,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -48,8 +49,6 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
-import { Skeleton } from "~/components/ui/skeleton";
-import { useCurrentUser } from "~/hooks/use-current-user";
 import authClient from "~/lib/auth-client";
 import { auth } from "~/lib/server/auth";
 
@@ -105,19 +104,21 @@ const getInitials = (name: string) => {
   );
 };
 
+const AT_SYMBOL_REGEX = /^@/;
+
 function ProfilePage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { user, isAuthenticated, isPending } = useCurrentUser();
+
+  const { user } = Route.useLoaderData();
+  const isAuthenticated = Boolean(user);
+
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [editForm, setEditForm] = useState({
     name: user?.name || "",
+    twitterHandle: user?.twitterHandle || "",
   });
-
-  if (isPending) {
-    return <ProfileSkeleton />;
-  }
 
   if (!(isAuthenticated && user)) {
     return (
@@ -138,13 +139,20 @@ function ProfilePage() {
   const handleEditSubmit = async () => {
     try {
       const newName = editForm.name.trim();
-      if (!newName || newName === user.name) {
+      const newTwitterHandle = editForm.twitterHandle.trim();
+
+      if (
+        (!newName || newName === user.name) &&
+        (!newTwitterHandle || newTwitterHandle === (user.twitterHandle || ""))
+      ) {
         toast.info("No changes to save");
         setIsEditing(false);
         return;
       }
+
       await authClient.updateUser({
         name: newName,
+        twitterHandle: newTwitterHandle || null,
       });
       await queryClient.invalidateQueries({ queryKey: ["user"] });
       await router.invalidate();
@@ -258,6 +266,23 @@ function ProfilePage() {
                   </p>
                 </div>
               </div>
+
+              {user.twitterHandle && (
+                <div className="flex items-center gap-3">
+                  <X className="h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p className="font-medium text-sm">Twitter</p>
+                    <a
+                      className="text-blue-600 text-sm underline hover:text-blue-800"
+                      href={`https://twitter.com/${user.twitterHandle}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      @{user.twitterHandle}
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -274,7 +299,10 @@ function ProfilePage() {
               onOpenChange={(open) => {
                 setIsEditing(open);
                 if (open) {
-                  setEditForm({ name: user.name });
+                  setEditForm({
+                    name: user.name,
+                    twitterHandle: user.twitterHandle || "",
+                  });
                 }
               }}
               open={isEditing}
@@ -307,6 +335,26 @@ function ProfilePage() {
                       value={editForm.name}
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="twitterHandle">Twitter Handle</Label>
+                    <Input
+                      id="twitterHandle"
+                      onChange={(e) =>
+                        setEditForm((prev) => ({
+                          ...prev,
+                          twitterHandle: e.target.value.replace(
+                            AT_SYMBOL_REGEX,
+                            ""
+                          ),
+                        }))
+                      }
+                      placeholder="Enter your Twitter handle (without @)"
+                      value={editForm.twitterHandle}
+                    />
+                    <p className="text-muted-foreground text-xs">
+                      Enter your Twitter handle without the @ symbol
+                    </p>
+                  </div>
                 </div>
                 <DialogFooter>
                   <Button onClick={() => setIsEditing(false)} variant="outline">
@@ -315,7 +363,9 @@ function ProfilePage() {
                   <Button
                     disabled={
                       editForm.name.trim().length === 0 ||
-                      editForm.name.trim() === user.name.trim()
+                      (editForm.name.trim() === user.name.trim() &&
+                        editForm.twitterHandle.trim() ===
+                          (user.twitterHandle || "").trim())
                     }
                     onClick={handleEditSubmit}
                   >
@@ -362,61 +412,6 @@ function ProfilePage() {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
-}
-
-function ProfileSkeleton() {
-  return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <Skeleton className="h-8 w-48" />
-        <Skeleton className="h-4 w-96" />
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
-            <Skeleton className="h-4 w-64" />
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center space-x-4">
-              <Skeleton className="h-16 w-16 rounded-full" />
-              <div className="space-y-2">
-                <Skeleton className="h-5 w-32" />
-                <Skeleton className="h-4 w-20" />
-              </div>
-            </div>
-            <Separator />
-            <div className="space-y-4">
-              {/** biome-ignore lint/style/noMagicNumbers: valid constant */}
-              {[1, 2, 3].map((i) => (
-                <div className="flex items-center gap-3" key={i}>
-                  <Skeleton className="h-4 w-4" />
-                  <div className="space-y-1">
-                    <Skeleton className="h-4 w-16" />
-                    <Skeleton className="h-3 w-32" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
-            <Skeleton className="h-4 w-64" />
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/** biome-ignore lint/style/noMagicNumbers: valid constant */}
-            {[1, 2, 3].map((i) => (
-              <Skeleton className="h-10 w-full" key={i} />
-            ))}
           </CardContent>
         </Card>
       </div>

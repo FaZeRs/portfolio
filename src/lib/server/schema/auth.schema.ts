@@ -12,6 +12,7 @@ export const user = pgTable("user", {
   banned: boolean("banned"),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
+  twitterHandle: text("twitter_handle"),
 });
 
 export const session = pgTable("session", {

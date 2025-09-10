@@ -13,6 +13,7 @@ import { useEffect, useRef } from "react";
 import SignInModal from "~/components/auth/sign-in-modal";
 import ArticleComment from "~/components/blog/article-comment";
 import ArticleMetrics from "~/components/blog/article-metrics";
+import ArticleAuthor from "~/components/blog/author";
 import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
@@ -130,27 +131,7 @@ function RouteComponent() {
 
             <ArticleMetrics article={article} />
 
-            {article.author ? (
-              <div className="mt-4 flex items-center gap-3 sm:gap-4">
-                {article.author.image && (
-                  <LazyImage
-                    alt={article.author.name}
-                    className="h-10 w-10"
-                    height={40}
-                    imageClassName="rounded-full bg-white"
-                    priority={true}
-                    sizes="40px"
-                    src={article.author.image}
-                    width={40}
-                  />
-                )}
-                <div className="flex-1 text-left leading-tight">
-                  <p className="font-medium text-sm sm:text-base">
-                    {article.author.name}
-                  </p>
-                </div>
-              </div>
-            ) : null}
+            <ArticleAuthor article={article} />
 
             {article.imageUrl && (
               <LazyImage
