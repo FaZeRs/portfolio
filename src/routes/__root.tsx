@@ -1,20 +1,18 @@
 /// <reference types="vite/client" />
 
 import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
-import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { Analytics } from "@vercel/analytics/react";
+import { DevtoolsComponent } from "~/components/dev-tools";
 import { Toaster } from "~/components/ui/sonner";
 import { ThemeProvider } from "~/components/ui/theme";
 import { siteConfig } from "~/lib/config/site";
@@ -91,25 +89,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           <Toaster />
         </ThemeProvider>
 
-        <TanStackDevtools
-          config={{
-            position: "bottom-left",
-          }}
-          eventBusConfig={{
-            debug: false,
-            connectToServerBus: true,
-          }}
-          plugins={[
-            {
-              name: "TanStack Query",
-              render: <ReactQueryDevtoolsPanel />,
-            },
-            {
-              name: "TanStack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        {import.meta.env.DEV && <DevtoolsComponent />}
         <Analytics />
         <Scripts />
       </body>

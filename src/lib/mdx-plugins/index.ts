@@ -47,6 +47,7 @@ export const rehypePlugins: PluggableList = [
       defaultLang: {
         block: "plaintext",
       },
+      langs: ["tsx", "ts", "js", "jsx", "json", "css", "html", "bash"],
       // biome-ignore lint/suspicious/noExplicitAny: any is used for markdown
       onVisitLine(node: any) {
         if (node.children.length === 0) {

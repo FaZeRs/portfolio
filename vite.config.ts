@@ -15,6 +15,13 @@ dotenv.config();
 export default defineConfig({
   build: {
     sourcemap: true,
+    target: "esnext",
+    minify: "esbuild",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
   },
   plugins: [
     devtools({
@@ -68,25 +75,8 @@ export default defineConfig({
       telemetry: false,
     }),
   ],
-  ssr: {
-    noExternal: [
-      "react-use",
-      "react-markdown",
-      "katex",
-      "rehype-katex",
-      "streamdown",
-      "micromark-extension-math",
-    ],
-  },
   optimizeDeps: {
     entries: ["src/**/*.tsx", "src/**/*.ts"],
-    include: [
-      "react-use",
-      "react-markdown",
-      "katex",
-      "rehype-katex",
-      "streamdown",
-    ],
   },
   server: {
     warmup: {
