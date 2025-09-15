@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Header } from "~/components/header";
 import { dashboardNavbarLinks } from "~/lib/config/navbar";
+import { UserType } from "~/types";
 
 export const Route = createFileRoute("/dashboard")({
   component: LayoutComponent,
@@ -17,12 +18,16 @@ export const Route = createFileRoute("/dashboard")({
     // https://tanstack.com/start/latest/docs/framework/react/examples/start-basic-react-query
     // https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading
   },
+  loader: ({ context }) => {
+    return { user: context.user };
+  },
 });
 
 function LayoutComponent() {
+  const { user } = Route.useLoaderData();
   return (
     <>
-      <Header links={dashboardNavbarLinks} />
+      <Header links={dashboardNavbarLinks} user={user as UserType} />
       <main className="container mx-auto flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
         <Outlet />
       </main>
