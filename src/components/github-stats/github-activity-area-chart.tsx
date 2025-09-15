@@ -1,5 +1,4 @@
 import { format, subDays } from "date-fns";
-import { useTheme } from "next-themes";
 import {
   Area,
   AreaChart,
@@ -11,6 +10,7 @@ import {
 } from "recharts";
 
 import ContributionsTooltip from "~/components/github-stats/contributions-tooltip";
+import { useTheme } from "~/components/ui/theme-provider";
 import { ContributionsDay } from "~/types";
 
 type GithubActivityAreaChartProps = {

@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes";
 import {
   Bar,
   BarChart,
@@ -10,6 +9,7 @@ import {
 } from "recharts";
 
 import ContributionCountByDayOfWeekToolTip from "~/components/github-stats/contribution-count-by-day-of-week-tooltip";
+import { useTheme } from "~/components/ui/theme-provider";
 import { ContributionCountByDayOfWeek } from "~/lib/github";
 
 type GithubActivityBarChartProps = {

@@ -14,7 +14,7 @@ import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { DevtoolsComponent } from "~/components/dev-tools";
 import { Toaster } from "~/components/ui/sonner";
-import { ThemeProvider } from "~/components/ui/theme";
+import { ThemeProvider } from "~/components/ui/theme-provider";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { auth } from "~/lib/server/auth";
@@ -65,9 +65,11 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
 
 function RootComponent() {
   return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
+    <ThemeProvider>
+      <RootDocument>
+        <Outlet />
+      </RootDocument>
+    </ThemeProvider>
   );
 }
 
@@ -79,15 +81,8 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          disableTransitionOnChange
-          enableSystem
-        >
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        {children}
+        <Toaster />
 
         {import.meta.env.DEV && <DevtoolsComponent />}
         <Analytics />

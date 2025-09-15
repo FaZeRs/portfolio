@@ -1,7 +1,6 @@
 import type { DialogProps } from "@radix-ui/react-dialog";
 import { useNavigate } from "@tanstack/react-router";
 import { Code, CommandIcon, File, Laptop, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 
 import { Button } from "~/components/ui/button";
@@ -15,7 +14,7 @@ import {
   CommandSeparator,
 } from "~/components/ui/command";
 import Icon from "~/components/ui/icon";
-
+import { useTheme } from "~/components/ui/theme-provider";
 import { navbarLinks } from "~/lib/config/navbar";
 import { siteConfig, socialConfig } from "~/lib/config/site";
 

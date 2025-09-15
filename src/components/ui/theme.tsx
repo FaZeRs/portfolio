@@ -1,5 +1,4 @@
 import { Laptop, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -8,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { useTheme } from "./theme-provider";
 
 function ThemeToggle() {
   const { setTheme } = useTheme();
@@ -40,5 +40,3 @@ function ThemeToggle() {
 }
 
 export { ThemeToggle };
-/** biome-ignore lint/performance/noBarrelFile: this is a barrel file */
-export { ThemeProvider } from "next-themes";
