@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Loader, Menu, X } from "lucide-react";
+import { Suspense, useState } from "react";
 
 import {
   NavigationMenu,
@@ -14,7 +14,7 @@ import {
 import { ThemeToggle } from "~/components/ui/theme";
 import { navbarLinks } from "~/lib/config/navbar";
 import { cn } from "~/lib/utils";
-import { NavItem } from "~/types";
+import { NavItem, UserType } from "~/types";
 
 import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
@@ -22,9 +22,10 @@ import MobileNav from "./mobile-nav";
 
 type MainNavbarProps = {
   links: NavItem[];
+  user: UserType;
 };
 
-const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
+const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const { location } = useRouterState();
   const pathSegments = location.pathname.split("/").filter(Boolean);
@@ -74,11 +75,15 @@ const NavBar = ({ links }: Readonly<MainNavbarProps>) => {
       </NavigationMenu>
 
       <div className="hidden items-center gap-4 lg:flex">
-        <AvatarDropdown />
+        {user && <AvatarDropdown user={user as UserType} />}
         <div className="flex-1 sm:grow-0">
-          <SearchCommand />
+          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+            <SearchCommand />
+          </Suspense>
         </div>
-        <ThemeToggle />
+        <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+          <ThemeToggle />
+        </Suspense>
       </div>
 
       <button

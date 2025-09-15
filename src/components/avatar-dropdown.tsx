@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { Loader } from "lucide-react";
+import { Suspense } from "react";
+import { UserType } from "~/types";
 import authClient from "../lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -22,14 +23,9 @@ const getInitials = (name: string) => {
     .toUpperCase();
 };
 
-export function AvatarDropdown() {
+export function AvatarDropdown({ user }: { user: UserType }) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { user, isAuthenticated, isPending } = useCurrentUser();
-
-  if (isPending || !isAuthenticated) {
-    return null;
-  }
 
   const initials = getInitials(user?.name ?? "");
 
@@ -37,10 +33,12 @@ export function AvatarDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="relative h-8 w-8 rounded-full" variant="ghost">
-          <Avatar className="h-8 w-8">
-            <AvatarImage alt={user?.name ?? ""} src={user?.image ?? ""} />
-            <AvatarFallback>{initials}</AvatarFallback>
-          </Avatar>
+          <Suspense fallback={<Loader className="size-8 animate-spin" />}>
+            <Avatar className="h-8 w-8">
+              <AvatarImage alt={user?.name ?? ""} src={user?.image ?? ""} />
+              <AvatarFallback>{initials}</AvatarFallback>
+            </Avatar>
+          </Suspense>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56" forceMount>
