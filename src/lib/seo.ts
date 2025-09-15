@@ -27,6 +27,7 @@ export function seo({
       : []),
     { name: "twitter:creator", content: siteConfig.author.handle },
     { name: "twitter:site", content: siteConfig.author.handle },
+    { name: "twitter:widgets:new-embed-design", content: "on" },
     { name: "og:type", content: type },
     { name: "og:site_name", content: siteConfig.title },
     { name: "og:title", content: title },
@@ -34,7 +35,7 @@ export function seo({
     { name: "og:locale", content: "en_US" },
     ...(image
       ? [
-          { name: "twitter:image", content: image },
+          { name: "twitter:image::src", content: image },
           { name: "twitter:card", content: "summary_large_image" },
           { name: "og:image", content: image },
         ]
