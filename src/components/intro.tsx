@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 
 import { buttonVariants } from "~/components/ui/button";
+import { siteConfig } from "~/lib/config/site";
 import { cn } from "~/lib/utils";
 import { LazyImage } from "./lazy-image";
 
@@ -60,6 +61,14 @@ const Intro = () => {
         >
           Contact me
           <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+        </a>
+        <a
+          className={cn(buttonVariants({ variant: "secondary" }), "group")}
+          href={siteConfig.calendlyUrl}
+          target="_blank"
+        >
+          Book a call
+          <Calendar className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </motion.div>
     </section>

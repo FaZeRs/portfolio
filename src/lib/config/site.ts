@@ -21,6 +21,7 @@ export const siteConfig: SiteConfig = {
     url: "https://naurislinde.dev",
     handle: "@naurislinde",
   },
+  calendlyUrl: "https://calendly.com/naurislinde/30min",
 };
 
 export const socialConfig: Social[] = [

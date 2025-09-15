@@ -27,6 +27,7 @@ export type SiteConfig = {
     url: string;
     handle: string;
   };
+  calendlyUrl: string;
 };
 
 export type NavItem = {
