@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
 import { ScrollArea } from "~/components/ui/scroll-area";
+import { siteConfig } from "~/lib/config/site";
 import { getCollections } from "~/lib/raindrop";
+import { seo } from "~/lib/seo";
 import { Collection } from "~/types";
 
 export const Route = createFileRoute("/(public)/bookmarks/")({
@@ -10,6 +12,14 @@ export const Route = createFileRoute("/(public)/bookmarks/")({
     return { collections: result.items };
   },
   component: RouteComponent,
+  head: () => ({
+    meta: seo({
+      title: `Bookmarks | ${siteConfig.title}`,
+      description: "Discoveries from the World Wide Web",
+      keywords: siteConfig.keywords,
+      url: "/bookmarks",
+    }),
+  }),
 });
 
 function RouteComponent() {

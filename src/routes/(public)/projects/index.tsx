@@ -17,6 +17,7 @@ export const Route = createFileRoute("/(public)/projects/")({
       description:
         "Several projects that I have worked on, both private and open source.",
       keywords: siteConfig.keywords,
+      url: "/projects",
     }),
   }),
 });

@@ -11,6 +11,7 @@ export const Route = createFileRoute("/(public)/stats")({
       title: `Stats | ${siteConfig.title}`,
       description: "Insights into my digital life",
       keywords: siteConfig.keywords,
+      url: "/stats",
     }),
   }),
 });

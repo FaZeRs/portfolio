@@ -12,6 +12,7 @@ export const Route = createFileRoute("/(public)/uses")({
       description:
         "These are the tools I use to get my work done. Links marked with",
       keywords: siteConfig.keywords,
+      url: "/uses",
     }),
   }),
 });

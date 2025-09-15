@@ -16,6 +16,7 @@ export const Route = createFileRoute("/(public)/snippets/")({
       title: `Snippets | ${siteConfig.title}`,
       description: "A collection of code snippets that I use in my projects.",
       keywords: siteConfig.keywords,
+      url: "/snippets",
     }),
   }),
 });

@@ -21,6 +21,7 @@ export const Route = createFileRoute("/(public)/snippets/$snippetId")({
       return {
         title: data?.title,
         description: data?.description,
+        slug: data?.slug,
       };
     } catch (error) {
       if (
@@ -37,6 +38,7 @@ export const Route = createFileRoute("/(public)/snippets/$snippetId")({
       title: `${loaderData?.title} | ${siteConfig.title}`,
       description: loaderData?.description,
       keywords: siteConfig.keywords,
+      url: `/snippets/${loaderData?.slug}`,
     }),
   }),
   component: RouteComponent,

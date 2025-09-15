@@ -12,6 +12,7 @@ export const Route = createFileRoute("/(public)/about")({
       title: `About | ${siteConfig.title}`,
       description: "About me and my journey.",
       keywords: siteConfig.keywords,
+      url: "/about",
     }),
   }),
 });

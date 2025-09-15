@@ -22,6 +22,7 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
         title: data?.title,
         description: data?.description,
         image: data?.imageUrl,
+        slug: data?.slug,
       };
     } catch (error) {
       if (
@@ -39,6 +40,7 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
       description: loaderData?.description,
       keywords: siteConfig.keywords,
       image: loaderData?.image,
+      url: `/projects/${loaderData?.slug}`,
     }),
   }),
   component: RouteComponent,

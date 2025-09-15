@@ -17,6 +17,7 @@ export const Route = createFileRoute("/(public)/blog/")({
       description:
         "I write about my experiences and learnings in the software development world.",
       keywords: siteConfig.keywords,
+      url: "/blog",
     }),
   }),
 });

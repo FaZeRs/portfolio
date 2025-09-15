@@ -8,7 +8,7 @@ export function seo({
   image = `${getBaseUrl()}/images/cover.avif`,
   author,
   type = "website",
-  url = getBaseUrl(),
+  url,
 }: {
   title: string;
   description?: string | null;
@@ -16,7 +16,7 @@ export function seo({
   keywords?: string | null;
   author?: string | null;
   type?: "website" | "article" | "video" | "book" | "profile";
-  url?: string | null;
+  url?: string;
 }) {
   const tags = [
     { title },
@@ -30,13 +30,13 @@ export function seo({
     { name: "twitter:creator", content: siteConfig.author.handle },
     { name: "twitter:site", content: siteConfig.author.handle },
     { name: "twitter:widgets:new-embed-design", content: "on" },
-    { name: "twitter:url", content: url },
+    { name: "twitter:url", content: `${getBaseUrl()}${url}` },
     { name: "og:type", content: type },
     { name: "og:site_name", content: siteConfig.title },
     { name: "og:title", content: title },
     ...(description ? [{ name: "og:description", content: description }] : []),
     { name: "og:locale", content: "en_US" },
-    { name: "og:url", content: url },
+    { name: "og:url", content: `${getBaseUrl()}${url}` },
     ...(image
       ? [
           { name: "twitter:image", content: image },

@@ -42,6 +42,7 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
         description: data?.description,
         image: data?.imageUrl,
         author: data?.author?.name,
+        slug: data?.slug,
       };
     } catch (error) {
       if (
@@ -61,6 +62,7 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
       image: loaderData?.image,
       author: loaderData?.author,
       type: "article",
+      url: `/blog/${loaderData?.slug}`,
     }),
   }),
   component: RouteComponent,

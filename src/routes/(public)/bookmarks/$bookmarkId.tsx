@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import BookmarkList from "~/components/bookmarks/bookmark-list";
 import PageHeading from "~/components/page-heading";
+import { siteConfig } from "~/lib/config/site";
 import {
   getBookmarksByCollectionId,
   getCollection,
   getCollections,
 } from "~/lib/raindrop";
+import { seo } from "~/lib/seo";
 import { Collection } from "~/types";
 
 export const Route = createFileRoute("/(public)/bookmarks/$bookmarkId")({
@@ -34,6 +36,14 @@ export const Route = createFileRoute("/(public)/bookmarks/$bookmarkId")({
 
     return { collection, bookmarks };
   },
+  head: ({ loaderData }) => ({
+    meta: seo({
+      title: `${loaderData?.collection.item.title} | ${siteConfig.title}`,
+      description: "Discoveries from the World Wide Web",
+      keywords: siteConfig.keywords,
+      url: `/bookmarks/${loaderData?.collection.slug}`,
+    }),
+  }),
 });
 
 function RouteComponent() {
