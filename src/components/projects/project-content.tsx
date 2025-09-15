@@ -1,4 +1,4 @@
-import { Share } from "lucide-react";
+import { Loader, Share } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { siGithub } from "simple-icons";
 
@@ -75,7 +75,7 @@ export default function ProjectContent({
 
       {content && (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
             <CustomMDX source={content} />
           </Suspense>
         </div>

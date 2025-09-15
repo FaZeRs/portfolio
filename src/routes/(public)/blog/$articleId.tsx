@@ -9,7 +9,8 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { useEffect, useRef } from "react";
+import { Loader } from "lucide-react";
+import { Suspense, useEffect, useRef } from "react";
 import SignInModal from "~/components/auth/sign-in-modal";
 import ArticleComment from "~/components/blog/article-comment";
 import ArticleMetrics from "~/components/blog/article-metrics";
@@ -147,7 +148,9 @@ function RouteComponent() {
             )}
           </div>
 
-          {article.content && <CustomMDX source={article.content} />}
+          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+            <CustomMDX source={article.content ?? ""} />
+          </Suspense>
 
           <hr className="my-4" />
 
