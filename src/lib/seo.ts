@@ -35,7 +35,7 @@ export function seo({
     { name: "og:locale", content: "en_US" },
     ...(image
       ? [
-          { name: "twitter:image::src", content: image },
+          { name: "twitter:image:src", content: image },
           { name: "twitter:card", content: "summary_large_image" },
           { name: "og:image", content: image },
         ]
