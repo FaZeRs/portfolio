@@ -133,7 +133,7 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
               <Moon className="mr-2 h-4 w-4" />
               Dark
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
+            <CommandItem onSelect={() => runCommand(() => setTheme("auto"))}>
               <Laptop className="mr-2 h-4 w-4" />
               System
             </CommandItem>

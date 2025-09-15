@@ -93,8 +93,8 @@ function AreaChartComponent({
 export default function GithubActivityAreaChart({
   contributionsByLast30Days,
 }: Readonly<GithubActivityAreaChartProps>) {
-  const { theme } = useTheme();
-  const isDarkMode = theme === "dark";
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === "dark";
 
   function getChartLoadingData() {
     const dates = Array.from({ length: 30 }, (_, i) => {

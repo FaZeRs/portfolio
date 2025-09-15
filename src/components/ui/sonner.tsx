@@ -5,12 +5,12 @@ import { useTheme } from "~/components/ui/theme-provider";
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <Sonner
       className="toaster group"
-      theme={theme as ToasterProps["theme"]}
+      theme={resolvedTheme as ToasterProps["theme"]}
       toastOptions={{
         classNames: {
           toast:

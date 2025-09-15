@@ -19,8 +19,8 @@ type GithubActivityBarChartProps = {
 export default function GithubActivityBarChart({
   contributionCountByDayOfWeek,
 }: Readonly<GithubActivityBarChartProps>) {
-  const { theme } = useTheme();
-  const isDarkMode = theme === "dark";
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === "dark";
 
   const barGraphLoadingData = [
     { day: "Monday", count: 16 },

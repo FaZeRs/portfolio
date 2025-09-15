@@ -5,7 +5,7 @@ import GithubActivityGraph from "~/components/github-stats/github-activity-graph
 import { useTheme } from "~/components/ui/theme-provider";
 
 export default function GithubContributor() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -26,7 +26,7 @@ export default function GithubContributor() {
           <ClientOnly>
             <div className="min-w-full">
               <GitHubCalendar
-                colorScheme={theme === "dark" ? "dark" : "light"}
+                colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
                 style={{
                   width: "100%",
                 }}
