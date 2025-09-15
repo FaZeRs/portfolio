@@ -1,5 +1,3 @@
-"use client";
-
 import { Root } from "@radix-ui/react-separator";
 import { ComponentProps } from "react";
 
