@@ -4,17 +4,23 @@ import CoverImage from "~/components/cover-image";
 import Icon from "~/components/ui/icon";
 import { siteConfig, socialConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
+import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/about")({
   component: RouteComponent,
-  head: () => ({
-    meta: seo({
+  head: () => {
+    const seoData = seo({
       title: `About | ${siteConfig.title}`,
       description: "About me and my journey.",
       keywords: siteConfig.keywords,
-      url: "/about",
-    }),
-  }),
+      url: `${getBaseUrl()}/about`,
+      canonical: `${getBaseUrl()}/about`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
 });
 
 function RouteComponent() {

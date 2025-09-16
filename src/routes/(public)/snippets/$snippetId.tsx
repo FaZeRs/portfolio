@@ -9,7 +9,7 @@ import CustomMDX from "~/components/mdx/mdx";
 import { NotFound } from "~/components/not-found";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
-import { formatDate } from "~/lib/utils";
+import { formatDate, getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/(public)/snippets/$snippetId")({
@@ -33,14 +33,19 @@ export const Route = createFileRoute("/(public)/snippets/$snippetId")({
       throw error;
     }
   },
-  head: ({ loaderData }) => ({
-    meta: seo({
+  head: ({ loaderData }) => {
+    const seoData = seo({
       title: `${loaderData?.title} | ${siteConfig.title}`,
       description: loaderData?.description,
       keywords: siteConfig.keywords,
-      url: `/snippets/${loaderData?.slug}`,
-    }),
-  }),
+      url: `${getBaseUrl()}/snippets/${loaderData?.slug}`,
+      canonical: `${getBaseUrl()}/snippets/${loaderData?.slug}`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {

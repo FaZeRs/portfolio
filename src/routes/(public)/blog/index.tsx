@@ -5,21 +5,27 @@ import PageHeading from "~/components/page-heading";
 import { Skeleton } from "~/components/ui/skeleton";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
+import { getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/(public)/blog/")({
   component: RouteComponent,
   loader: async ({ context: { trpc, queryClient } }) =>
     await queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions()),
-  head: () => ({
-    meta: seo({
+  head: () => {
+    const seoData = seo({
       title: `Blog | ${siteConfig.title}`,
       description:
         "I write about my experiences and learnings in the software development world.",
       keywords: siteConfig.keywords,
-      url: "/blog",
-    }),
-  }),
+      url: `${getBaseUrl()}/blog`,
+      canonical: `${getBaseUrl()}/blog`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
 });
 
 function BlogSkeleton() {

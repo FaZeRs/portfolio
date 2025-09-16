@@ -18,6 +18,10 @@ import { ThemeProvider } from "~/components/ui/theme-provider";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { auth } from "~/lib/server/auth";
+import {
+  createWebSiteSchema,
+  generateStructuredData,
+} from "~/lib/structured-data";
 import appCss from "~/lib/styles/app.css?url";
 import { AppRouter } from "~/trpc/router";
 import "unfonts.css";
@@ -43,23 +47,36 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
     }); // we're using react-query for caching, see router.tsx
     return { user };
   },
-  head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      ...seo({
-        title: siteConfig.title,
-        description: siteConfig.description,
-        keywords: siteConfig.keywords,
-      }),
-    ],
-    links: [{ rel: "stylesheet", href: appCss, as: "style", type: "text/css" }],
-  }),
+  head: () => {
+    const seoData = seo({
+      title: siteConfig.title,
+      description: siteConfig.description,
+      keywords: siteConfig.keywords,
+    });
+    const websiteSchema = generateStructuredData(createWebSiteSchema());
+
+    return {
+      meta: [
+        {
+          charSet: "utf-8",
+        },
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1",
+        },
+        ...seoData.meta,
+      ],
+      links: [
+        { rel: "stylesheet", href: appCss, as: "style", type: "text/css" },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: websiteSchema,
+        },
+      ],
+    };
+  },
   component: RootComponent,
 });
 

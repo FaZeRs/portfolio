@@ -24,6 +24,11 @@ import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
+import {
+  createArticleSchema,
+  generateStructuredData,
+} from "~/lib/structured-data";
+import { getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/(public)/blog/$articleId")({
@@ -43,6 +48,8 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
         image: data?.imageUrl,
         author: data?.author?.name,
         slug: data?.slug,
+        createdAt: data?.createdAt,
+        updatedAt: data?.updatedAt,
       };
     } catch (error) {
       if (
@@ -54,17 +61,46 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
       throw error;
     }
   },
-  head: ({ loaderData }) => ({
-    meta: seo({
+  head: ({ loaderData }) => {
+    const seoData = seo({
       title: `${loaderData?.title} | ${siteConfig.title}`,
       description: loaderData?.description,
       keywords: siteConfig.keywords,
       image: loaderData?.image,
       author: loaderData?.author,
       type: "article",
-      url: `/blog/${loaderData?.slug}`,
-    }),
-  }),
+      url: `${getBaseUrl()}/blog/${loaderData?.slug}`,
+      canonical: `${getBaseUrl()}/blog/${loaderData?.slug}`,
+    });
+
+    const articleSchema = loaderData?.title
+      ? generateStructuredData(
+          createArticleSchema({
+            title: loaderData.title,
+            description: loaderData.description || "",
+            image: loaderData.image || `${getBaseUrl()}/images/cover.avif`,
+            datePublished:
+              loaderData.createdAt?.toISOString() || new Date().toISOString(),
+            dateModified:
+              loaderData.updatedAt?.toISOString() || new Date().toISOString(),
+            url: `/blog/${loaderData.slug}`,
+          })
+        )
+      : null;
+
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+      scripts: articleSchema
+        ? [
+            {
+              type: "application/ld+json",
+              children: articleSchema,
+            },
+          ]
+        : [],
+    };
+  },
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {

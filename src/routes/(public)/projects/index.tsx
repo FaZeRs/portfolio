@@ -5,21 +5,27 @@ import Projects from "~/components/projects/projects";
 import { Skeleton } from "~/components/ui/skeleton";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
+import { getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/(public)/projects/")({
   component: RouteComponent,
   loader: async ({ context: { trpc, queryClient } }) =>
     await queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
-  head: () => ({
-    meta: seo({
+  head: () => {
+    const seoData = seo({
       title: `Projects | ${siteConfig.title}`,
       description:
         "Several projects that I have worked on, both private and open source.",
       keywords: siteConfig.keywords,
-      url: "/projects",
-    }),
-  }),
+      url: `${getBaseUrl()}/projects`,
+      canonical: `${getBaseUrl()}/projects`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
 });
 
 function ProjectsSkeleton() {

@@ -8,6 +8,7 @@ import {
   getCollections,
 } from "~/lib/raindrop";
 import { seo } from "~/lib/seo";
+import { getBaseUrl } from "~/lib/utils";
 import { Collection } from "~/types";
 
 export const Route = createFileRoute("/(public)/bookmarks/$bookmarkId")({
@@ -36,14 +37,19 @@ export const Route = createFileRoute("/(public)/bookmarks/$bookmarkId")({
 
     return { collection, bookmarks };
   },
-  head: ({ loaderData }) => ({
-    meta: seo({
+  head: ({ loaderData }) => {
+    const seoData = seo({
       title: `${loaderData?.collection.item.title} | ${siteConfig.title}`,
       description: "Discoveries from the World Wide Web",
       keywords: siteConfig.keywords,
-      url: `/bookmarks/${loaderData?.collection.slug}`,
-    }),
-  }),
+      url: `${getBaseUrl()}/bookmarks/${loaderData?.collection.item.slug}`,
+      canonical: `${getBaseUrl()}/bookmarks/${loaderData?.collection.item.slug}`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
 });
 
 function RouteComponent() {

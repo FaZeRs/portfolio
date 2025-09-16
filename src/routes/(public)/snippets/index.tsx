@@ -5,20 +5,26 @@ import Snippets from "~/components/snippets";
 import { Skeleton } from "~/components/ui/skeleton";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
+import { getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/(public)/snippets/")({
   component: RouteComponent,
   loader: async ({ context: { trpc, queryClient } }) =>
     await queryClient.prefetchQuery(trpc.snippet.allPublic.queryOptions()),
-  head: () => ({
-    meta: seo({
+  head: () => {
+    const seoData = seo({
       title: `Snippets | ${siteConfig.title}`,
       description: "A collection of code snippets that I use in my projects.",
       keywords: siteConfig.keywords,
-      url: "/snippets",
-    }),
-  }),
+      url: `${getBaseUrl()}/snippets`,
+      canonical: `${getBaseUrl()}/snippets`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
 });
 
 function SnippetsSkeleton() {

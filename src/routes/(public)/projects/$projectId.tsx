@@ -10,6 +10,7 @@ import PageHeading from "~/components/page-heading";
 import ProjectContent from "~/components/projects/project-content";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
+import { getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/(public)/projects/$projectId")({
@@ -34,15 +35,20 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
       throw error;
     }
   },
-  head: ({ loaderData }) => ({
-    meta: seo({
+  head: ({ loaderData }) => {
+    const seoData = seo({
       title: `${loaderData?.title} | ${siteConfig.title}`,
       description: loaderData?.description,
       keywords: siteConfig.keywords,
       image: loaderData?.image,
-      url: `/projects/${loaderData?.slug}`,
-    }),
-  }),
+      url: `${getBaseUrl()}/projects/${loaderData?.slug}`,
+      canonical: `${getBaseUrl()}/projects/${loaderData?.slug}`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {

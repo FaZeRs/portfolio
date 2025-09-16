@@ -4,6 +4,7 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { siteConfig } from "~/lib/config/site";
 import { getCollections } from "~/lib/raindrop";
 import { seo } from "~/lib/seo";
+import { getBaseUrl } from "~/lib/utils";
 import { Collection } from "~/types";
 
 export const Route = createFileRoute("/(public)/bookmarks/")({
@@ -12,14 +13,19 @@ export const Route = createFileRoute("/(public)/bookmarks/")({
     return { collections: result.items };
   },
   component: RouteComponent,
-  head: () => ({
-    meta: seo({
+  head: () => {
+    const seoData = seo({
       title: `Bookmarks | ${siteConfig.title}`,
       description: "Discoveries from the World Wide Web",
       keywords: siteConfig.keywords,
-      url: "/bookmarks",
-    }),
-  }),
+      url: `${getBaseUrl()}/bookmarks`,
+      canonical: `${getBaseUrl()}/bookmarks`,
+    });
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+    };
+  },
 });
 
 function RouteComponent() {
