@@ -37,7 +37,7 @@ function GuestbookSkeleton() {
   return (
     <div className="mt-10 flex flex-col gap-6">
       {Array.from({ length: 5 }).map((_, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: valid
+        // biome-ignore lint/suspicious/noArrayIndexKey: valid use case
         <div className="flex gap-3 px-3" key={i}>
           <Skeleton className="size-10 rounded-full" />
 

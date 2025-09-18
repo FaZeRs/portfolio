@@ -9,7 +9,12 @@ export const guestbookRouter = {
   create: protectedProcedure
     .input(
       z.object({
-        message: z.string(),
+        message: z
+          .string()
+          .trim()
+          .min(1, "Message cannot be empty")
+          // biome-ignore lint/style/noMagicNumbers: valid use case
+          .max(500, "Message is too long"),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -22,7 +27,14 @@ export const guestbookRouter = {
     return ctx.db.query.guestbook.findMany({
       orderBy: desc(guestbook.id),
       with: {
-        user: true,
+        user: {
+          columns: {
+            id: true,
+            name: true,
+            image: true,
+            role: true,
+          },
+        },
       },
     });
   }),

@@ -13,11 +13,11 @@ type MessageFormProps = {
   user: UserType;
 };
 
-export default function MessageForm({ user }: MessageFormProps) {
+export default function MessageForm({ user }: Readonly<MessageFormProps>) {
   const formRef = useRef<HTMLFormElement>(null);
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     ...trpc.guestbook.create.mutationOptions(),
     onSuccess: () => {
       formRef.current?.reset();
@@ -34,11 +34,18 @@ export default function MessageForm({ user }: MessageFormProps) {
   });
 
   const createMessageHandler = async (formData: FormData) => {
+    const raw = (formData.get("message") as string) ?? "";
+    const message = raw.trim();
+    if (!message) {
+      toast.error("Please enter a message.");
+      return;
+    }
     const toastId = toast.loading("Sending your message ...");
-    await mutate({
-      message: formData.get("message") as string,
-    });
-    toast.dismiss(toastId);
+    try {
+      await mutateAsync({ message });
+    } finally {
+      toast.dismiss(toastId);
+    }
   };
 
   return (
@@ -72,7 +79,11 @@ export default function MessageForm({ user }: MessageFormProps) {
               type="submit"
             >
               Send
-              <SendHorizonal className="size-4" />
+              <SendHorizonal
+                aria-hidden="true"
+                className="size-4"
+                title="Send"
+              />
             </Button>
           </div>
         </div>

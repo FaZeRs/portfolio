@@ -10,7 +10,7 @@ type MessageProps = {
   message: GuestbookType & { user: UserType };
 };
 
-export default function Message({ message }: MessageProps) {
+export default function Message({ message }: Readonly<MessageProps>) {
   const { id, message: body, user, createdAt } = message;
 
   const isAuthor = user.email === siteConfig.author.email;

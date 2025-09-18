@@ -8,7 +8,7 @@ export const guestbook = pgTable("guestbook", (t) => ({
     .text()
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
-  message: t.json().notNull(),
+  message: t.text().notNull(),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t.timestamp().defaultNow().notNull(),
 }));

@@ -22,10 +22,10 @@ type DeleteMessageButtonProps = {
 
 export default function DeleteMessageButton({
   messageId,
-}: DeleteMessageButtonProps) {
+}: Readonly<DeleteMessageButtonProps>) {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     ...trpc.guestbook.delete.mutationOptions(),
     onSuccess: () => toast.success("Deleted a message"),
     onError: (error) => toast.error(error.message),
@@ -35,8 +35,11 @@ export default function DeleteMessageButton({
 
   const handleDeleteMessage = async (id: string) => {
     const toastId = toast.loading("Deleting your message ...");
-    await mutate({ id });
-    toast.dismiss(toastId);
+    try {
+      await mutateAsync({ id });
+    } finally {
+      toast.dismiss(toastId);
+    }
   };
 
   return (
@@ -44,12 +47,14 @@ export default function DeleteMessageButton({
       <AlertDialogTrigger asChild>
         <Button
           aria-disabled={isPending}
+          aria-label="Delete message"
           className="hidden size-8 group-hover:flex"
           disabled={isPending}
           size="icon"
+          type="button"
           variant="destructive"
         >
-          <Trash2Icon className="size-4" />
+          <Trash2Icon aria-hidden="true" className="size-4" />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
