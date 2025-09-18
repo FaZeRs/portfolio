@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SendHorizonal } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -54,7 +54,7 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
         <div className="mb-2 flex items-center gap-3">
           <Avatar>
             <AvatarImage
-              alt={user.name as string}
+              alt={user.name}
               className="size-10"
               height={40}
               src={user.image as string}
@@ -79,7 +79,7 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
               type="submit"
             >
               Send
-              <SendHorizonal
+              <SendHorizontal
                 aria-hidden="true"
                 aria-label="Send"
                 className="size-4"
