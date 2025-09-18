@@ -19,6 +19,7 @@ import { Route as publicIndexRouteImport } from "./routes/(public)/index";
 import { Route as publicUsesRouteImport } from "./routes/(public)/uses";
 import { Route as publicStatsRouteImport } from "./routes/(public)/stats";
 import { Route as publicProfileRouteImport } from "./routes/(public)/profile";
+import { Route as publicGuestbookRouteImport } from "./routes/(public)/guestbook";
 import { Route as publicAboutRouteImport } from "./routes/(public)/about";
 import { Route as authSigninRouteImport } from "./routes/(auth)/signin";
 import { Route as DashboardUsersIndexRouteImport } from "./routes/dashboard/users/index";
@@ -87,6 +88,11 @@ const publicStatsRoute = publicStatsRouteImport.update({
 const publicProfileRoute = publicProfileRouteImport.update({
   id: "/profile",
   path: "/profile",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
+const publicGuestbookRoute = publicGuestbookRouteImport.update({
+  id: "/guestbook",
+  path: "/guestbook",
   getParentRoute: () => publicLayoutRoute,
 } as any);
 const publicAboutRoute = publicAboutRouteImport.update({
@@ -249,6 +255,7 @@ export interface FileRoutesByFullPath {
   "/dashboard": typeof DashboardLayoutRouteWithChildren;
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
+  "/guestbook": typeof publicGuestbookRoute;
   "/profile": typeof publicProfileRoute;
   "/stats": typeof publicStatsRoute;
   "/uses": typeof publicUsesRoute;
@@ -279,6 +286,7 @@ export interface FileRoutesByTo {
   "/": typeof publicIndexRoute;
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
+  "/guestbook": typeof publicGuestbookRoute;
   "/profile": typeof publicProfileRoute;
   "/stats": typeof publicStatsRoute;
   "/uses": typeof publicUsesRoute;
@@ -312,6 +320,7 @@ export interface FileRoutesById {
   "/dashboard": typeof DashboardLayoutRouteWithChildren;
   "/(auth)/signin": typeof authSigninRoute;
   "/(public)/about": typeof publicAboutRoute;
+  "/(public)/guestbook": typeof publicGuestbookRoute;
   "/(public)/profile": typeof publicProfileRoute;
   "/(public)/stats": typeof publicStatsRoute;
   "/(public)/uses": typeof publicUsesRoute;
@@ -346,6 +355,7 @@ export interface FileRouteTypes {
     | "/dashboard"
     | "/signin"
     | "/about"
+    | "/guestbook"
     | "/profile"
     | "/stats"
     | "/uses"
@@ -376,6 +386,7 @@ export interface FileRouteTypes {
     | "/"
     | "/signin"
     | "/about"
+    | "/guestbook"
     | "/profile"
     | "/stats"
     | "/uses"
@@ -408,6 +419,7 @@ export interface FileRouteTypes {
     | "/dashboard"
     | "/(auth)/signin"
     | "/(public)/about"
+    | "/(public)/guestbook"
     | "/(public)/profile"
     | "/(public)/stats"
     | "/(public)/uses"
@@ -558,6 +570,13 @@ declare module "@tanstack/react-router" {
       path: "/profile";
       fullPath: "/profile";
       preLoaderRoute: typeof publicProfileRouteImport;
+      parentRoute: typeof publicLayoutRoute;
+    };
+    "/(public)/guestbook": {
+      id: "/(public)/guestbook";
+      path: "/guestbook";
+      fullPath: "/guestbook";
+      preLoaderRoute: typeof publicGuestbookRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
     "/(public)/about": {
@@ -784,6 +803,7 @@ const authLayoutRouteWithChildren = authLayoutRoute._addFileChildren(
 
 interface publicLayoutRouteChildren {
   publicAboutRoute: typeof publicAboutRoute;
+  publicGuestbookRoute: typeof publicGuestbookRoute;
   publicProfileRoute: typeof publicProfileRoute;
   publicStatsRoute: typeof publicStatsRoute;
   publicUsesRoute: typeof publicUsesRoute;
@@ -800,6 +820,7 @@ interface publicLayoutRouteChildren {
 
 const publicLayoutRouteChildren: publicLayoutRouteChildren = {
   publicAboutRoute: publicAboutRoute,
+  publicGuestbookRoute: publicGuestbookRoute,
   publicProfileRoute: publicProfileRoute,
   publicStatsRoute: publicStatsRoute,
   publicUsesRoute: publicUsesRoute,
