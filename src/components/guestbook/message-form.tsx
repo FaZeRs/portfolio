@@ -81,8 +81,8 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
               Send
               <SendHorizonal
                 aria-hidden="true"
+                aria-label="Send"
                 className="size-4"
-                title="Send"
               />
             </Button>
           </div>

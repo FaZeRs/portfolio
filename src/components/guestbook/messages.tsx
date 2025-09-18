@@ -2,7 +2,9 @@ import { GuestbookType, UserType } from "~/types";
 import Message from "./message";
 
 type MessageProps = {
-  messages: (GuestbookType & { user: UserType })[];
+  messages: (GuestbookType & {
+    user: Pick<UserType, "id" | "name" | "image">;
+  })[];
 };
 export default function Messages({ messages }: Readonly<MessageProps>) {
   return (

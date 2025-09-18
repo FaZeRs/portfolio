@@ -32,7 +32,6 @@ export const guestbookRouter = {
             id: true,
             name: true,
             image: true,
-            role: true,
           },
         },
       },
