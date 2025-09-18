@@ -20,7 +20,8 @@ This is a modern full-stack portfolio website built with React 19, TanStack Star
 
 - `bun dev` - Start development server on port 3000
 - `bun build` - Build for production
-- `bun start` - Start production server
+- `bun start` - Start production server on port 3000
+- `bun serve` - Preview production build
 - `bun lint` - Run Biome linter
 - `bun format` - Format code with Biome
 - `bun check` - Run Biome check (lint + format)
@@ -28,6 +29,8 @@ This is a modern full-stack portfolio website built with React 19, TanStack Star
 - `bun db` - Run Drizzle Kit commands (e.g., `bun db generate`, `bun db push`)
 - `bun ui` - shadcn/ui CLI (e.g., `bun ui add button`)
 - `bun auth:generate` - Regenerate Better Auth database schema
+- `bun deps` - Update dependencies to latest versions
+- `bun auth` - Better Auth CLI for additional auth operations
 
 ## Architecture
 
@@ -39,7 +42,7 @@ src/
 │   ├── server/          # Server-side code
 │   │   ├── auth.ts      # Better Auth configuration
 │   │   ├── db.ts        # Drizzle database setup with Upstash cache
-│   │   └── schema/      # Database schemas
+│   │   └── schema/      # Database schemas (snake_case naming)
 │   ├── config/          # Configuration files (site, navbar)
 │   ├── constants/       # Static data and constants
 │   ├── utils/           # Utility functions
@@ -48,11 +51,14 @@ src/
 │   └── mdx-plugins/     # Custom MDX processing plugins
 ├── routes/             # File-based routing (TanStack Start)
 │   ├── api/            # API routes
-│   ├── (public)/       # Public pages
-│   ├── (auth)/         # Auth-related pages
-│   └── dashboard/      # Admin dashboard
+│   ├── (public)/       # Public pages (blogs, projects, snippets)
+│   ├── (auth)/         # Auth-related pages (signin)
+│   └── dashboard/      # Admin dashboard with CRUD operations
 ├── trpc/              # tRPC routers and initialization
-├── contexts/          # React contexts
+├── contexts/          # React contexts (theme, auth)
+├── components/        # Reusable UI components
+├── hooks/             # Custom React hooks
+├── types/             # TypeScript type definitions
 └── plugins/           # Build plugins (sitemap, etc.)
 ```
 
@@ -130,6 +136,7 @@ TanStack Start file-based routing:
 - Husky pre-commit hooks with lint-staged
 - Ultracite formatting integration
 - Always run `bun typecheck` before committing
+- No test framework currently configured
 
 ## Environment Setup
 
@@ -146,3 +153,36 @@ TanStack Start file-based routing:
 - Using shadcn/ui canary for Tailwind v4 support
 - Sentry integration for error monitoring
 - Path aliases configured (`~/` maps to `src/`)
+- Biome configured with Ultracite formatting rules
+- Pre-commit hooks with lint-staged for automated code quality
+- Environment variables required for full functionality (see .env.example)
+
+## Key Integration Points
+
+### tRPC Configuration
+- Located in `src/trpc/` directory
+- Server and client setup with TanStack Query integration
+- Type-safe API calls throughout the application
+
+### Authentication Flow
+- Better Auth with GitHub OAuth provider
+- Auto-generated database schema in `src/lib/server/schema/auth.schema.ts`
+- Protected routes use `auth-guard.ts` middleware
+- Session management handled automatically
+
+### Database Integration
+- Drizzle ORM with PostgreSQL backend
+- Upstash Redis for caching layer
+- Schema files use snake_case naming convention
+- Migrations managed via `bun db generate` and `bun db push`
+
+### Content Management
+- MDX support with custom plugins in `src/lib/mdx-plugins/`
+- Image uploads via Vercel Blob storage
+- Rich text editing with live preview capabilities
+- Content types: articles, projects, code snippets
+
+### AI Features
+- Vercel AI SDK integration with OpenAI
+- Streaming responses and reasoning display
+- Portfolio knowledge embedded for contextual responses
