@@ -1,12 +1,14 @@
 import { useLocation } from "@tanstack/react-router";
-import { siGithub, siGoogle, siX } from "simple-icons";
+import { siFacebook, siGithub, siGoogle, siX } from "simple-icons";
 import { Button } from "~/components/ui/button";
 import Icon from "~/components/ui/icon";
 import authClient from "~/lib/auth-client";
 
 export default function SocialSignInButton() {
   const location = useLocation();
-  const handleClick = (provider: "github" | "twitter" | "google") => {
+  const handleClick = (
+    provider: "github" | "twitter" | "google" | "facebook"
+  ) => {
     authClient.signIn.social({
       provider,
       callbackURL: location.pathname,
@@ -41,6 +43,15 @@ export default function SocialSignInButton() {
       >
         <Icon className="size-5" icon={siGoogle} />
         Continue with Google
+      </Button>
+      <Button
+        className="flex w-full gap-2"
+        onClick={() => handleClick("facebook")}
+        size="lg"
+        variant="outline"
+      >
+        <Icon className="size-5" icon={siFacebook} />
+        Continue with Facebook
       </Button>
     </div>
   );

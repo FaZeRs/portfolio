@@ -17,6 +17,8 @@ export const env = createEnv({
     TWITTER_CLIENT_SECRET: z.string().min(1).optional(),
     GOOGLE_CLIENT_ID: z.string().min(1).optional(),
     GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
+    FACEBOOK_CLIENT_ID: z.string().min(1).optional(),
+    FACEBOOK_CLIENT_SECRET: z.string().min(1).optional(),
     RESEND_FROM_EMAIL: z.email().optional(),
     RESEND_API_KEY: z.string().min(1).optional(),
     SENTRY_AUTH_TOKEN: z.string().optional(),

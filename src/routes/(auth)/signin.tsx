@@ -1,6 +1,12 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import type { ComponentProps } from "react";
-import { type SimpleIcon, siGithub, siGoogle, siX } from "simple-icons";
+import {
+  type SimpleIcon,
+  siFacebook,
+  siGithub,
+  siGoogle,
+  siX,
+} from "simple-icons";
 import Logo from "~/components/logo";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -49,6 +55,11 @@ function AuthPage() {
                     label="Google"
                     provider="google"
                   />
+                  <SignInButton
+                    icon={siFacebook}
+                    label="Facebook"
+                    provider="facebook"
+                  />
                 </div>
               </div>
             </CardContent>
@@ -60,7 +71,7 @@ function AuthPage() {
 }
 
 interface SignInButtonProps extends ComponentProps<typeof Button> {
-  provider: "discord" | "google" | "github" | "twitter";
+  provider: "discord" | "google" | "github" | "twitter" | "facebook";
   label: string;
   icon: SimpleIcon;
 }
