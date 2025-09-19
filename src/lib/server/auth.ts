@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin } from "better-auth/plugins";
+import { admin, oneTap } from "better-auth/plugins";
 import { reactStartCookies } from "better-auth/react-start";
 
 import { env } from "~/lib/env.server";
@@ -17,7 +17,7 @@ export const auth = betterAuth({
   }),
 
   // https://www.better-auth.com/docs/integrations/tanstack#usage-tips
-  plugins: [admin(), reactStartCookies()],
+  plugins: [admin(), reactStartCookies(), oneTap()],
 
   // https://www.better-auth.com/docs/concepts/session-management#session-caching
   session: {
@@ -32,6 +32,15 @@ export const auth = betterAuth({
     github: {
       clientId: env.GITHUB_CLIENT_ID ?? "",
       clientSecret: env.GITHUB_CLIENT_SECRET ?? "",
+    },
+    twitter: {
+      clientId: env.TWITTER_CLIENT_ID ?? "",
+      clientSecret: env.TWITTER_CLIENT_SECRET ?? "",
+    },
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID ?? "",
+      clientSecret: env.GOOGLE_CLIENT_SECRET ?? "",
+      prompt: "select_account consent",
     },
   },
 

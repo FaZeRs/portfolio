@@ -4,16 +4,20 @@ import { z } from "zod/v4";
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]).default("development"),
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.url(),
     BETTER_AUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string().min(1)
         : z.string().min(1).optional(),
-    BETTER_AUTH_URL: z.string().url().optional(),
+    BETTER_AUTH_URL: z.url().optional(),
     GITHUB_CLIENT_ID: z.string().min(1).optional(),
     GITHUB_CLIENT_SECRET: z.string().min(1).optional(),
     GITHUB_ACCESS_TOKEN: z.string().min(1).optional(),
-    RESEND_FROM_EMAIL: z.string().email().optional(),
+    TWITTER_CLIENT_ID: z.string().min(1).optional(),
+    TWITTER_CLIENT_SECRET: z.string().min(1).optional(),
+    GOOGLE_CLIENT_ID: z.string().min(1).optional(),
+    GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
+    RESEND_FROM_EMAIL: z.email().optional(),
     RESEND_API_KEY: z.string().min(1).optional(),
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),

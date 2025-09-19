@@ -13,8 +13,7 @@ export const env = createEnv({
   client: {
     VITE_APP_TITLE: z.string().min(1).optional(),
     VITE_SENTRY_DSN: z.string().min(1).optional(),
-    VITE_OPENPANEL_API_URL: z.string().min(1).optional(),
-    VITE_OPENPANEL_CLIENT_ID: z.string().min(1).optional(),
+    VITE_GOOGLE_CLIENT_ID: z.string().min(1).optional(),
   },
 
   /**
