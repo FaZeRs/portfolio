@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Loader, Menu, X } from "lucide-react";
 import { Suspense, useState } from "react";
 
@@ -27,9 +27,13 @@ type MainNavbarProps = {
 
 const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
-  const { location } = useRouterState();
-  const pathSegments = location.pathname.split("/").filter(Boolean);
-  const lastSegment = pathSegments.length > 0 ? pathSegments.at(-1) : "";
+  const activeLink = useLocation({
+    select: (location) => {
+      return links.find((link) => {
+        return location.pathname.endsWith(link.href ?? "");
+      });
+    },
+  });
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
@@ -59,8 +63,8 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
                   asChild
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    lastSegment &&
-                      link.href?.endsWith(`/${lastSegment}`) &&
+                    activeLink &&
+                      link.href === activeLink.href &&
                       "bg-accent font-semibold",
                     link.disabled && "cursor-not-allowed opacity-80"
                   )}
