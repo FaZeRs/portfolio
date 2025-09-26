@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ArticleForm } from "~/components/blog/form";
 import { useAppForm } from "~/components/ui/form";
-import authClient from "~/lib/auth-client";
-import { ArticleBaseSchema } from "~/lib/server/schema";
+import authClient from "~/lib/auth/auth-client";
+import { ArticleBaseSchema } from "~/lib/db/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/dashboard/blog/create")({

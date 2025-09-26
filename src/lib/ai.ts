@@ -1,8 +1,8 @@
 import { tool } from "ai";
 import { and, arrayContains, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
-import { db } from "~/lib/server/db";
-import { articles, Experience, Project } from "~/lib/server/schema";
+import { db } from "~/lib/db";
+import { articles, Experience, Project } from "~/lib/db/schema";
 
 export type ToolProject = {
   id: string;

@@ -3,14 +3,15 @@ import {
   init,
   tanstackRouterBrowserTracingIntegration,
 } from "@sentry/tanstackstart-react";
-import { StartClient } from "@tanstack/react-start";
-import { StrictMode } from "react";
+import { StartClient } from "@tanstack/react-start/client";
+import { StrictMode, startTransition } from "react";
 import { hydrateRoot } from "react-dom/client";
 
-import { env } from "~/lib/env.client";
-import { createRouter } from "./router";
+import { env } from "~/lib/env/client";
 
-const router = createRouter();
+import { getRouter } from "./router";
+
+const router = getRouter();
 
 init({
   dsn: env.VITE_SENTRY_DSN,
@@ -22,9 +23,11 @@ init({
   profilesSampleRate: 1.0,
 });
 
-hydrateRoot(
-  document,
-  <StrictMode>
-    <StartClient router={router} />
-  </StrictMode>
-);
+startTransition(() => {
+  hydrateRoot(
+    document,
+    <StrictMode>
+      <StartClient />
+    </StrictMode>
+  );
+});

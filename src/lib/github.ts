@@ -5,7 +5,7 @@ import {
   ContributionsDay,
   GitHubUser,
 } from "~/types";
-import { env } from "./env.server";
+import { env } from "./env/server";
 
 const GITHUB_API_URL = "https://api.github.com/users/fazers" as const;
 const DAYS_TO_FETCH = 30 as const;

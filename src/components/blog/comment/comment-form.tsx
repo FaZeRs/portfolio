@@ -1,11 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { ClientOnly } from "@tanstack/react-router";
 import { SendIcon } from "lucide-react";
 import { FormEvent } from "react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
-import { useCurrentUser } from "~/hooks/use-current-user";
 import { useSignInModal } from "~/hooks/use-sign-in-modal";
+import { authQueryOptions } from "~/lib/auth/queries";
 import { useTRPC } from "~/trpc/react";
 import CommentEditor, { useCommentEditor } from "./comment-editor";
 
@@ -16,7 +20,8 @@ type CommentFormProps = {
 export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
   const [editor, setEditor] = useCommentEditor();
 
-  const { isAuthenticated, isPending: isSessionPending } = useCurrentUser();
+  const { data: currentUser } = useSuspenseQuery(authQueryOptions());
+  const isAuthenticated = Boolean(currentUser);
 
   const { setOpen } = useSignInModal();
   const trpc = useTRPC();
@@ -83,7 +88,7 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
         </Button>
 
         <ClientOnly>
-          {isAuthenticated || isSessionPending ? null : (
+          {isAuthenticated ? null : (
             <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/5 backdrop-blur-[0.8px]">
               <Button onClick={() => setOpen(true)} type="button">
                 Please sign in to comment

@@ -1,5 +1,5 @@
 import { ScriptOnce } from "@tanstack/react-router";
-import { clientOnly, createIsomorphicFn } from "@tanstack/react-start";
+import { createClientOnlyFn, createIsomorphicFn } from "@tanstack/react-start";
 
 import {
   createContext,
@@ -28,7 +28,7 @@ const getStoredThemeMode = createIsomorphicFn()
     }
   });
 
-const setStoredThemeMode = clientOnly((theme: ThemeMode) => {
+const setStoredThemeMode = createClientOnlyFn((theme: ThemeMode) => {
   try {
     const parsedTheme = themeModeSchema.parse(theme);
     localStorage.setItem(themeKey, parsedTheme);
@@ -46,7 +46,7 @@ const getSystemTheme = createIsomorphicFn()
       : "light";
   });
 
-const updateThemeClass = clientOnly((themeMode: ThemeMode) => {
+const updateThemeClass = createClientOnlyFn((themeMode: ThemeMode) => {
   const root = document.documentElement;
   root.classList.remove("light", "dark", "auto");
   const newTheme = themeMode === "auto" ? getSystemTheme() : themeMode;
@@ -57,14 +57,14 @@ const updateThemeClass = clientOnly((themeMode: ThemeMode) => {
   }
 });
 
-const setupPreferredListener = clientOnly(() => {
+const setupPreferredListener = createClientOnlyFn(() => {
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const handler = () => updateThemeClass("auto");
   mediaQuery.addEventListener("change", handler);
   return () => mediaQuery.removeEventListener("change", handler);
 });
 
-const getNextTheme = clientOnly((current: ThemeMode): ThemeMode => {
+const getNextTheme = createClientOnlyFn((current: ThemeMode): ThemeMode => {
   const themes: ThemeMode[] =
     getSystemTheme() === "dark"
       ? ["auto", "light", "dark"]

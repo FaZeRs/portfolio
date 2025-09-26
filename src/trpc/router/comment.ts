@@ -2,7 +2,7 @@ import { TRPCError, TRPCRouterRecord } from "@trpc/server";
 import { and, eq, isNull, sql } from "drizzle-orm";
 import { z } from "zod/v4";
 
-import { commentReactions, comments, user } from "~/lib/server/schema";
+import { commentReactions, comments, user } from "~/lib/db/schema";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 const baseJSONContent = z.object({

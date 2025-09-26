@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod/v4";
-import { env } from "./env.server";
+import { env } from "./env/server";
 
 const RAINDROP_API_URL = "https://api.raindrop.io/rest/v1";
 export const PAGE_SIZE = 4;
@@ -29,7 +29,7 @@ export const getCollections = createServerFn({ method: "GET" }).handler(
 );
 
 export const getCollection = createServerFn({ method: "GET" })
-  .validator(
+  .inputValidator(
     z.object({
       id: z.number(),
     })
@@ -49,7 +49,7 @@ export const getCollection = createServerFn({ method: "GET" })
   });
 
 export const getBookmarksByCollectionId = createServerFn({ method: "GET" })
-  .validator(
+  .inputValidator(
     z.object({
       collectionId: z.number(),
       pageIndex: z.number().optional(),
