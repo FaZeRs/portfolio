@@ -6,7 +6,7 @@ import {
   CreateSnippetSchema,
   Snippet,
   UpdateSnippetSchema,
-} from "~/lib/server/schema";
+} from "~/lib/db/schema";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const snippetRouter = {

@@ -1,16 +1,21 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { FormEvent } from "react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { useCommentContext } from "~/contexts/comment";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { authQueryOptions } from "~/lib/auth/queries";
 import { useTRPC } from "~/trpc/react";
 import CommentEditor, { useCommentEditor } from "./comment-editor";
 
 export default function CommentReply() {
   const [editor, setEditor] = useCommentEditor();
   const { comment, setIsReplying } = useCommentContext();
-  const { isAuthenticated } = useCurrentUser();
+  const { data: currentUser } = useSuspenseQuery(authQueryOptions());
+  const isAuthenticated = Boolean(currentUser);
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();

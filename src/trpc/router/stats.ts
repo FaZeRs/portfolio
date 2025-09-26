@@ -1,7 +1,7 @@
 import { TRPCRouterRecord } from "@trpc/server";
 import { sql } from "drizzle-orm";
 import { z } from "zod/v4";
-import { articles, user } from "~/lib/server/schema";
+import { articles, user } from "~/lib/db/schema";
 
 import { protectedProcedure } from "~/trpc/init";
 

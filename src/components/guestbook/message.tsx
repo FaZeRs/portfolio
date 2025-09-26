@@ -1,4 +1,5 @@
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { authQueryOptions } from "~/lib/auth/queries";
 import { GuestbookType, UserType } from "~/types";
 import Timestamp from "../timestamp";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -11,7 +12,7 @@ type MessageProps = {
 
 export default function Message({ message }: Readonly<MessageProps>) {
   const { id, message: body, user, createdAt } = message;
-  const { user: currentUser } = useCurrentUser();
+  const { data: currentUser } = useSuspenseQuery(authQueryOptions());
 
   return (
     <div className="flex gap-3 px-3 text-sm">

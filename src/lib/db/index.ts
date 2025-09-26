@@ -1,7 +1,8 @@
 import { neon } from "@neondatabase/serverless";
+import { createServerOnlyFn } from "@tanstack/react-start";
 import { upstashCache } from "drizzle-orm/cache/upstash";
 import { drizzle } from "drizzle-orm/neon-http";
-import { env } from "~/lib/env.server";
+import { env } from "~/lib/env/server";
 // biome-ignore lint/performance/noNamespaceImport: valid import
 import * as schema from "./schema";
 
@@ -14,9 +15,13 @@ const cache = upstashCache({
   config: { ex: 60 },
 });
 
-export const db = drizzle({
-  client: driver,
-  schema,
-  casing: "snake_case",
-  cache,
-});
+const getDatabase = createServerOnlyFn(() =>
+  drizzle({
+    client: driver,
+    schema,
+    casing: "snake_case",
+    cache,
+  })
+);
+
+export const db = getDatabase();

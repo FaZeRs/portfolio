@@ -13,7 +13,7 @@ import { z } from "zod/v4";
 import { NotFound } from "~/components/not-found";
 import { ProjectsForm } from "~/components/projects/form";
 import { useAppForm } from "~/components/ui/form";
-import { ProjectBaseSchema } from "~/lib/server/schema";
+import { ProjectBaseSchema } from "~/lib/db/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/dashboard/projects/$projectId/edit")({

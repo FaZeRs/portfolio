@@ -1,7 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
 import {
   CalendarIcon,
   ClockIcon,
@@ -49,36 +47,22 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
-import authClient from "~/lib/auth-client";
-import { auth } from "~/lib/server/auth";
-
-const getCurrentUser = createServerFn({ method: "GET" }).handler(async () => {
-  const { headers } = getWebRequest();
-
-  const session = await auth.api.getSession({
-    headers,
-    query: {
-      disableCookieCache: true,
-    },
-  });
-
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
-
-  return { user: session.user };
-});
+import authClient from "~/lib/auth/auth-client";
+import { authQueryOptions } from "~/lib/auth/queries";
 
 export const Route = createFileRoute("/(public)/profile")({
   component: ProfilePage,
-  beforeLoad: ({ context }) => {
-    if (!context.user) {
+  beforeLoad: async ({ context }) => {
+    const user = await context.queryClient.ensureQueryData({
+      ...authQueryOptions(),
+      revalidateIfStale: true,
+    });
+    if (!user) {
       throw redirect({ to: "/signin" });
     }
-  },
-  loader: async () => {
-    const result = await getCurrentUser();
-    return result;
+
+    // re-return to update type as non-null for child routes
+    return { user };
   },
   head: () => ({
     meta: [
@@ -109,9 +93,7 @@ const AT_SYMBOL_REGEX = /^@/;
 function ProfilePage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const { user } = Route.useLoaderData();
-  const isAuthenticated = Boolean(user);
+  const { user } = Route.useRouteContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -119,22 +101,6 @@ function ProfilePage() {
     name: user?.name || "",
     twitterHandle: user?.twitterHandle || "",
   });
-
-  if (!(isAuthenticated && user)) {
-    return (
-      <div className="flex min-h-[400px] flex-col items-center justify-center space-y-4">
-        <div className="space-y-2 text-center">
-          <h1 className="font-semibold text-2xl">Access Denied</h1>
-          <p className="text-muted-foreground">
-            You need to be logged in to view your profile.
-          </p>
-        </div>
-        <Button onClick={() => router.navigate({ to: "/signin" })}>
-          Sign In
-        </Button>
-      </div>
-    );
-  }
 
   const handleEditSubmit = async () => {
     try {

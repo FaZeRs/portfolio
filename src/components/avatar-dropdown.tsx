@@ -2,8 +2,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { Loader } from "lucide-react";
 import { Suspense } from "react";
+import authClient from "~/lib/auth/auth-client";
 import { UserType } from "~/types";
-import authClient from "../lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {

@@ -11,7 +11,7 @@ import Logo from "~/components/logo";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import Icon from "~/components/ui/icon";
-import authClient from "~/lib/auth-client";
+import authClient from "~/lib/auth/auth-client";
 import { cn } from "~/lib/utils";
 
 const REDIRECT_URL = "/dashboard";

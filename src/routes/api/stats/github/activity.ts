@@ -1,16 +1,18 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { json } from "@tanstack/react-start";
-import { createServerFileRoute } from "@tanstack/react-start/server";
 import { getGithubActivities } from "~/lib/github";
 
-export const ServerRoute = createServerFileRoute(
-  "/api/stats/github/activity"
-).methods({
-  GET: async () => {
-    try {
-      const contributions = await getGithubActivities();
-      return json(contributions);
-    } catch (error) {
-      return json({ error }, { status: 500 });
-    }
+export const Route = createFileRoute("/api/stats/github/activity")({
+  server: {
+    handlers: {
+      GET: async () => {
+        try {
+          const contributions = await getGithubActivities();
+          return json(contributions);
+        } catch (error) {
+          return json({ error }, { status: 500 });
+        }
+      },
+    },
   },
 });

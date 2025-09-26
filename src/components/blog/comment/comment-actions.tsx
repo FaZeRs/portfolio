@@ -1,13 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { useCommentContext } from "~/contexts/comment";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { authQueryOptions } from "~/lib/auth/queries";
 import { useTRPC } from "~/trpc/react";
 
 export default function CommentActions() {
-  const { isAuthenticated } = useCurrentUser();
+  const { data: currentUser } = useSuspenseQuery(authQueryOptions());
+  const isAuthenticated = Boolean(currentUser);
   const { comment, setIsReplying } = useCommentContext();
   const trpc = useTRPC();
   const { mutate: reactMutation } = useMutation({

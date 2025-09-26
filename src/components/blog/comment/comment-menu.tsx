@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { Loader2Icon, MoreVerticalIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -19,7 +23,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { authQueryOptions } from "~/lib/auth/queries";
 import { useTRPC } from "~/trpc/react";
 import { CommentType } from "~/types";
 
@@ -28,7 +32,8 @@ type CommentMenuProps = {
 };
 
 export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
-  const { user, isAuthenticated } = useCurrentUser();
+  const { data: currentUser } = useSuspenseQuery(authQueryOptions());
+  const isAuthenticated = Boolean(currentUser);
   const { id, userId, articleId } = comment;
 
   const trpc = useTRPC();
@@ -66,7 +71,7 @@ export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
           */}
           <DialogTrigger asChild>
             {isAuthenticated &&
-            (user?.id === userId || user?.role === "admin") ? (
+            (currentUser?.id === userId || currentUser?.role === "admin") ? (
               <DropdownMenuItem
                 aria-disabled={isPending}
                 className="text-red-600 focus:text-red-500"

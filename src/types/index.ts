@@ -8,7 +8,7 @@ import {
   type Project,
   type Snippet,
   user,
-} from "~/lib/server/schema";
+} from "~/lib/db/schema";
 
 export type SiteConfig = {
   title: string;

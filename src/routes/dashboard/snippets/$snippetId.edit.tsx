@@ -13,7 +13,7 @@ import { z } from "zod/v4";
 import { NotFound } from "~/components/not-found";
 import { SnippetsForm } from "~/components/snippets/form";
 import { useAppForm } from "~/components/ui/form";
-import { SnippetBaseSchema } from "~/lib/server/schema";
+import { SnippetBaseSchema } from "~/lib/db/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/dashboard/snippets/$snippetId/edit")({

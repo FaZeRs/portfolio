@@ -2,15 +2,14 @@ import { createHash } from "node:crypto";
 import { TRPCError, TRPCRouterRecord } from "@trpc/server";
 import { desc, eq, sql } from "drizzle-orm";
 import { z } from "zod/v4";
-
-import { env } from "~/lib/env.server";
-import { deleteFile, uploadImage } from "~/lib/s3";
 import {
   articleLikes,
   articles,
   CreateArticleSchema,
   UpdateArticleSchema,
-} from "~/lib/server/schema";
+} from "~/lib/db/schema";
+import { env } from "~/lib/env/server";
+import { deleteFile, uploadImage } from "~/lib/s3";
 import { getTOC } from "~/lib/utils";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 

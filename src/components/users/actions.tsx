@@ -22,7 +22,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import authClient from "~/lib/auth-client";
+import authClient from "~/lib/auth/auth-client";
 import { UserType } from "~/types";
 
 type DataTableRowActionsProps = {

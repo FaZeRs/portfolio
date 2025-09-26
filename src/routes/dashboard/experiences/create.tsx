@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ExperiencesForm } from "~/components/experiences/form";
 import { useAppForm } from "~/components/ui/form";
-import { ExperienceBaseSchema, ExperienceType } from "~/lib/server/schema";
+import { ExperienceBaseSchema, ExperienceType } from "~/lib/db/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/dashboard/experiences/create")({

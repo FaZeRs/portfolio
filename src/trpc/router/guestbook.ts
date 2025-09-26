@@ -2,7 +2,7 @@ import { TRPCError, TRPCRouterRecord } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod/v4";
 
-import { guestbook } from "~/lib/server/schema";
+import { guestbook } from "~/lib/db/schema";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const guestbookRouter = {

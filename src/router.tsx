@@ -1,8 +1,8 @@
-import { QueryClient } from "@tanstack/react-query";
+import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
+import { createIsomorphicFn, createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 import {
   createTRPCClient,
   httpBatchStreamLink,
@@ -19,25 +19,28 @@ import { AppRouter } from "~/trpc/router";
 import { routeTree } from "./routeTree.gen";
 
 const getRequestHeaders = createServerFn({ method: "GET" }).handler(() => {
-  const request = getWebRequest();
-  const headers = new Headers(request.headers);
+  const request = getRequest();
+  const headers = new Headers(request?.headers);
 
   return Object.fromEntries(headers);
 });
 
-// biome-ignore lint/style/noMagicNumbers: valid constant
-const STALE_TIME = 1000 * 60; // 1 minute
+const headers = createIsomorphicFn()
+  .client(() => ({}))
+  .server(() => getRequestHeaders());
 
-export function createRouter() {
+export function getRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        staleTime: STALE_TIME,
+        // biome-ignore lint/style/noMagicNumbers: valid
+        staleTime: 1000 * 60,
       },
       dehydrate: { serializeData: superjson.serialize },
       hydrate: { deserializeData: superjson.deserialize },
     },
+    queryCache: new QueryCache(),
   });
 
   const trpcClient = createTRPCClient<AppRouter>({
@@ -50,9 +53,7 @@ export function createRouter() {
       httpBatchStreamLink({
         transformer: superjson,
         url: `${getBaseUrl()}/api/trpc`,
-        async headers() {
-          return await getRequestHeaders();
-        },
+        headers,
       }),
     ],
   });
@@ -88,11 +89,4 @@ export function createRouter() {
   });
 
   return router;
-}
-
-declare module "@tanstack/react-router" {
-  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
-  interface Register {
-    router: ReturnType<typeof createRouter>;
-  }
 }
