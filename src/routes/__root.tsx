@@ -8,43 +8,33 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { DevtoolsComponent } from "~/components/dev-tools";
 import { Toaster } from "~/components/ui/sonner";
 import { ThemeProvider } from "~/components/ui/theme-provider";
+import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
-import { auth } from "~/lib/server/auth";
 import {
   createWebSiteSchema,
   generateStructuredData,
 } from "~/lib/structured-data";
 import appCss from "~/lib/styles/app.css?url";
 import { AppRouter } from "~/trpc/router";
+
 import "unfonts.css";
-
-const getUser = createServerFn({ method: "GET" }).handler(async () => {
-  // biome-ignore lint: getWebRequest is not undefined
-  const { headers } = getWebRequest()!;
-  const session = await auth.api.getSession({ headers });
-
-  return session?.user ?? null;
-});
 
 export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
   queryClient: QueryClient;
   trpc: TRPCOptionsProxy<AppRouter>;
-  user: Awaited<ReturnType<typeof getUser>>;
+  user: AuthQueryResult;
 }>()({
   beforeLoad: async ({ context }) => {
     const user = await context.queryClient.ensureQueryData({
-      queryKey: ["user"],
-      queryFn: ({ signal }) => getUser({ signal }),
+      ...authQueryOptions(),
       revalidateIfStale: true,
-    }); // we're using react-query for caching, see router.tsx
+    });
     return { user };
   },
   head: () => {

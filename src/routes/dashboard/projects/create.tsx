@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ProjectsForm } from "~/components/projects/form";
 import { useAppForm } from "~/components/ui/form";
-import { ProjectBaseSchema } from "~/lib/server/schema";
+import { ProjectBaseSchema } from "~/lib/db/schema";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/dashboard/projects/create")({

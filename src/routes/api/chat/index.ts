@@ -1,16 +1,18 @@
 import { openai } from "@ai-sdk/openai";
-import { createServerFileRoute } from "@tanstack/react-start/server";
+import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, UIMessage } from "ai";
 import getTools from "~/lib/ai";
 
-export const ServerRoute = createServerFileRoute("/api/chat/").methods({
-  POST: async ({ request }) => {
-    const { messages }: { messages: UIMessage[] } = await request.json();
+export const Route = createFileRoute("/api/chat/")({
+  server: {
+    handlers: {
+      POST: async ({ request }) => {
+        const { messages }: { messages: UIMessage[] } = await request.json();
 
-    const calendlyUrl =
-      process.env.CALENDLY_URL ?? "https://calendly.com/naurislinde/30min";
+        const calendlyUrl =
+          process.env.CALENDLY_URL ?? "https://calendly.com/naurislinde/30min";
 
-    const serviceKnowledge = `
+        const serviceKnowledge = `
 You are Nauris Linde's AI assistant. Here's information about Nauris's services and background:
 
 **About Nauris Linde:**
@@ -65,25 +67,27 @@ When someone wants to schedule a meeting or consultation, use Calendly at ${cale
 
 Always be helpful, professional, and enthusiastic about Nauris's work. Provide specific examples from his projects and articles when relevant. Direct users to specific URLs for more detailed information.
 `;
-    try {
-      const tools = getTools();
+        try {
+          const tools = getTools();
 
-      const result = streamText({
-        model: openai("gpt-5-nano"),
-        system: serviceKnowledge,
-        messages: convertToModelMessages(messages),
-        tools,
-      });
+          const result = streamText({
+            model: openai("gpt-5-nano"),
+            system: serviceKnowledge,
+            messages: convertToModelMessages(messages),
+            tools,
+          });
 
-      return result.toUIMessageStreamResponse({
-        sendSources: false,
-        sendReasoning: true,
-      });
-    } catch (error) {
-      return new Response(
-        `Error: ${error instanceof Error ? error.message : "Internal server error"}`,
-        { status: 500 }
-      );
-    }
+          return result.toUIMessageStreamResponse({
+            sendSources: false,
+            sendReasoning: true,
+          });
+        } catch (error) {
+          return new Response(
+            `Error: ${error instanceof Error ? error.message : "Internal server error"}`,
+            { status: 500 }
+          );
+        }
+      },
+    },
   },
 });

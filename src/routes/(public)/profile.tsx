@@ -1,7 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
 import {
   CalendarIcon,
   ClockIcon,
@@ -49,25 +47,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
-import authClient from "~/lib/auth-client";
-import { auth } from "~/lib/server/auth";
-
-const getCurrentUser = createServerFn({ method: "GET" }).handler(async () => {
-  const { headers } = getWebRequest();
-
-  const session = await auth.api.getSession({
-    headers,
-    query: {
-      disableCookieCache: true,
-    },
-  });
-
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
-
-  return { user: session.user };
-});
+import authClient from "~/lib/auth/auth-client";
 
 export const Route = createFileRoute("/(public)/profile")({
   component: ProfilePage,
@@ -75,10 +55,6 @@ export const Route = createFileRoute("/(public)/profile")({
     if (!context.user) {
       throw redirect({ to: "/signin" });
     }
-  },
-  loader: async () => {
-    const result = await getCurrentUser();
-    return result;
   },
   head: () => ({
     meta: [
@@ -109,9 +85,7 @@ const AT_SYMBOL_REGEX = /^@/;
 function ProfilePage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const { user } = Route.useLoaderData();
-  const isAuthenticated = Boolean(user);
+  const { user } = Route.useRouteContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -120,7 +94,7 @@ function ProfilePage() {
     twitterHandle: user?.twitterHandle || "",
   });
 
-  if (!(isAuthenticated && user)) {
+  if (!user) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center space-y-4">
         <div className="space-y-2 text-center">

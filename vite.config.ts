@@ -1,6 +1,7 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
+import { nitroV2Plugin } from "@tanstack/nitro-v2-vite-plugin";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
@@ -15,13 +16,6 @@ dotenv.config();
 export default defineConfig({
   build: {
     sourcemap: true,
-    target: "esnext",
-    minify: "esbuild",
-    terserOptions: {
-      compress: {
-        drop_console: true,
-      },
-    },
   },
   plugins: [
     devtools({
@@ -36,17 +30,17 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
     tanstackStart({
-      tsr: {
+      srcDirectory: "./src",
+      start: { entry: "./start.tsx" },
+      server: { entry: "./server.ts" },
+      router: {
         quoteStyle: "double",
         semicolons: true,
         routeToken: "layout",
-        // verboseFileRoutes: false,
       },
-
-      // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
-      target: process.env.DEPLOY_TARGET ?? "node-server",
-
-      customViteReactPlugin: true,
+    }),
+    nitroV2Plugin({
+      compatibilityDate: "latest",
     }),
     viteReact({
       // https://react.dev/learn/react-compiler
@@ -80,7 +74,7 @@ export default defineConfig({
   },
   server: {
     warmup: {
-      clientFiles: ["./src/server.tsx"],
+      clientFiles: ["./src/server.ts"],
     },
   },
 });

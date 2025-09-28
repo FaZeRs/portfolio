@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from "@tanstack/react-start/server";
-
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as DashboardLayoutRouteImport } from "./routes/dashboard/layout";
 import { Route as publicLayoutRouteImport } from "./routes/(public)/layout";
@@ -27,6 +25,8 @@ import { Route as DashboardSnippetsIndexRouteImport } from "./routes/dashboard/s
 import { Route as DashboardProjectsIndexRouteImport } from "./routes/dashboard/projects/index";
 import { Route as DashboardExperiencesIndexRouteImport } from "./routes/dashboard/experiences/index";
 import { Route as DashboardBlogIndexRouteImport } from "./routes/dashboard/blog/index";
+import { Route as ApiContactIndexRouteImport } from "./routes/api/contact/index";
+import { Route as ApiChatIndexRouteImport } from "./routes/api/chat/index";
 import { Route as publicSnippetsIndexRouteImport } from "./routes/(public)/snippets/index";
 import { Route as publicProjectsIndexRouteImport } from "./routes/(public)/projects/index";
 import { Route as publicBookmarksIndexRouteImport } from "./routes/(public)/bookmarks/index";
@@ -35,22 +35,18 @@ import { Route as DashboardSnippetsCreateRouteImport } from "./routes/dashboard/
 import { Route as DashboardProjectsCreateRouteImport } from "./routes/dashboard/projects/create";
 import { Route as DashboardExperiencesCreateRouteImport } from "./routes/dashboard/experiences/create";
 import { Route as DashboardBlogCreateRouteImport } from "./routes/dashboard/blog/create";
+import { Route as ApiTrpcSplatRouteImport } from "./routes/api/trpc/$";
+import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 import { Route as publicSnippetsSnippetIdRouteImport } from "./routes/(public)/snippets/$snippetId";
 import { Route as publicProjectsProjectIdRouteImport } from "./routes/(public)/projects/$projectId";
 import { Route as publicBookmarksBookmarkIdRouteImport } from "./routes/(public)/bookmarks/$bookmarkId";
 import { Route as publicBlogArticleIdRouteImport } from "./routes/(public)/blog/$articleId";
+import { Route as ApiStatsGithubIndexRouteImport } from "./routes/api/stats/github/index";
 import { Route as DashboardSnippetsSnippetIdEditRouteImport } from "./routes/dashboard/snippets/$snippetId.edit";
 import { Route as DashboardProjectsProjectIdEditRouteImport } from "./routes/dashboard/projects/$projectId.edit";
 import { Route as DashboardExperiencesExperienceIdEditRouteImport } from "./routes/dashboard/experiences/$experienceId.edit";
 import { Route as DashboardBlogArticleIdEditRouteImport } from "./routes/dashboard/blog/$articleId.edit";
-import { ServerRoute as ApiContactIndexServerRouteImport } from "./routes/api/contact/index";
-import { ServerRoute as ApiChatIndexServerRouteImport } from "./routes/api/chat/index";
-import { ServerRoute as ApiTrpcSplatServerRouteImport } from "./routes/api/trpc/$";
-import { ServerRoute as ApiAuthSplatServerRouteImport } from "./routes/api/auth/$";
-import { ServerRoute as ApiStatsGithubIndexServerRouteImport } from "./routes/api/stats/github/index";
-import { ServerRoute as ApiStatsGithubActivityServerRouteImport } from "./routes/api/stats/github/activity";
-
-const rootServerRouteImport = createServerRootRoute();
+import { Route as ApiStatsGithubActivityRouteImport } from "./routes/api/stats/github/activity";
 
 const DashboardLayoutRoute = DashboardLayoutRouteImport.update({
   id: "/dashboard",
@@ -131,6 +127,16 @@ const DashboardBlogIndexRoute = DashboardBlogIndexRouteImport.update({
   path: "/blog/",
   getParentRoute: () => DashboardLayoutRoute,
 } as any);
+const ApiContactIndexRoute = ApiContactIndexRouteImport.update({
+  id: "/api/contact/",
+  path: "/api/contact/",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ApiChatIndexRoute = ApiChatIndexRouteImport.update({
+  id: "/api/chat/",
+  path: "/api/chat/",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const publicSnippetsIndexRoute = publicSnippetsIndexRouteImport.update({
   id: "/snippets/",
   path: "/snippets/",
@@ -172,6 +178,16 @@ const DashboardBlogCreateRoute = DashboardBlogCreateRouteImport.update({
   path: "/blog/create",
   getParentRoute: () => DashboardLayoutRoute,
 } as any);
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
+  id: "/api/trpc/$",
+  path: "/api/trpc/$",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: "/api/auth/$",
+  path: "/api/auth/$",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const publicSnippetsSnippetIdRoute = publicSnippetsSnippetIdRouteImport.update({
   id: "/snippets/$snippetId",
   path: "/snippets/$snippetId",
@@ -192,6 +208,11 @@ const publicBlogArticleIdRoute = publicBlogArticleIdRouteImport.update({
   id: "/blog/$articleId",
   path: "/blog/$articleId",
   getParentRoute: () => publicLayoutRoute,
+} as any);
+const ApiStatsGithubIndexRoute = ApiStatsGithubIndexRouteImport.update({
+  id: "/api/stats/github/",
+  path: "/api/stats/github/",
+  getParentRoute: () => rootRouteImport,
 } as any);
 const DashboardSnippetsSnippetIdEditRoute =
   DashboardSnippetsSnippetIdEditRouteImport.update({
@@ -217,38 +238,11 @@ const DashboardBlogArticleIdEditRoute =
     path: "/blog/$articleId/edit",
     getParentRoute: () => DashboardLayoutRoute,
   } as any);
-const ApiContactIndexServerRoute = ApiContactIndexServerRouteImport.update({
-  id: "/api/contact/",
-  path: "/api/contact/",
-  getParentRoute: () => rootServerRouteImport,
+const ApiStatsGithubActivityRoute = ApiStatsGithubActivityRouteImport.update({
+  id: "/api/stats/github/activity",
+  path: "/api/stats/github/activity",
+  getParentRoute: () => rootRouteImport,
 } as any);
-const ApiChatIndexServerRoute = ApiChatIndexServerRouteImport.update({
-  id: "/api/chat/",
-  path: "/api/chat/",
-  getParentRoute: () => rootServerRouteImport,
-} as any);
-const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
-  id: "/api/trpc/$",
-  path: "/api/trpc/$",
-  getParentRoute: () => rootServerRouteImport,
-} as any);
-const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
-  id: "/api/auth/$",
-  path: "/api/auth/$",
-  getParentRoute: () => rootServerRouteImport,
-} as any);
-const ApiStatsGithubIndexServerRoute =
-  ApiStatsGithubIndexServerRouteImport.update({
-    id: "/api/stats/github/",
-    path: "/api/stats/github/",
-    getParentRoute: () => rootServerRouteImport,
-  } as any);
-const ApiStatsGithubActivityServerRoute =
-  ApiStatsGithubActivityServerRouteImport.update({
-    id: "/api/stats/github/activity",
-    path: "/api/stats/github/activity",
-    getParentRoute: () => rootServerRouteImport,
-  } as any);
 
 export interface FileRoutesByFullPath {
   "/": typeof publicIndexRoute;
@@ -264,6 +258,8 @@ export interface FileRoutesByFullPath {
   "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
   "/projects/$projectId": typeof publicProjectsProjectIdRoute;
   "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
+  "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
   "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
   "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
@@ -272,15 +268,19 @@ export interface FileRoutesByFullPath {
   "/bookmarks": typeof publicBookmarksIndexRoute;
   "/projects": typeof publicProjectsIndexRoute;
   "/snippets": typeof publicSnippetsIndexRoute;
+  "/api/chat": typeof ApiChatIndexRoute;
+  "/api/contact": typeof ApiContactIndexRoute;
   "/dashboard/blog": typeof DashboardBlogIndexRoute;
   "/dashboard/experiences": typeof DashboardExperiencesIndexRoute;
   "/dashboard/projects": typeof DashboardProjectsIndexRoute;
   "/dashboard/snippets": typeof DashboardSnippetsIndexRoute;
   "/dashboard/users": typeof DashboardUsersIndexRoute;
+  "/api/stats/github/activity": typeof ApiStatsGithubActivityRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
+  "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof publicIndexRoute;
@@ -295,6 +295,8 @@ export interface FileRoutesByTo {
   "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
   "/projects/$projectId": typeof publicProjectsProjectIdRoute;
   "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
+  "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
   "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
   "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
@@ -303,15 +305,19 @@ export interface FileRoutesByTo {
   "/bookmarks": typeof publicBookmarksIndexRoute;
   "/projects": typeof publicProjectsIndexRoute;
   "/snippets": typeof publicSnippetsIndexRoute;
+  "/api/chat": typeof ApiChatIndexRoute;
+  "/api/contact": typeof ApiContactIndexRoute;
   "/dashboard/blog": typeof DashboardBlogIndexRoute;
   "/dashboard/experiences": typeof DashboardExperiencesIndexRoute;
   "/dashboard/projects": typeof DashboardProjectsIndexRoute;
   "/dashboard/snippets": typeof DashboardSnippetsIndexRoute;
   "/dashboard/users": typeof DashboardUsersIndexRoute;
+  "/api/stats/github/activity": typeof ApiStatsGithubActivityRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
+  "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
@@ -330,6 +336,8 @@ export interface FileRoutesById {
   "/(public)/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
   "/(public)/projects/$projectId": typeof publicProjectsProjectIdRoute;
   "/(public)/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
+  "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
   "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
   "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
@@ -338,15 +346,19 @@ export interface FileRoutesById {
   "/(public)/bookmarks/": typeof publicBookmarksIndexRoute;
   "/(public)/projects/": typeof publicProjectsIndexRoute;
   "/(public)/snippets/": typeof publicSnippetsIndexRoute;
+  "/api/chat/": typeof ApiChatIndexRoute;
+  "/api/contact/": typeof ApiContactIndexRoute;
   "/dashboard/blog/": typeof DashboardBlogIndexRoute;
   "/dashboard/experiences/": typeof DashboardExperiencesIndexRoute;
   "/dashboard/projects/": typeof DashboardProjectsIndexRoute;
   "/dashboard/snippets/": typeof DashboardSnippetsIndexRoute;
   "/dashboard/users/": typeof DashboardUsersIndexRoute;
+  "/api/stats/github/activity": typeof ApiStatsGithubActivityRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
+  "/api/stats/github/": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
@@ -364,6 +376,8 @@ export interface FileRouteTypes {
     | "/bookmarks/$bookmarkId"
     | "/projects/$projectId"
     | "/snippets/$snippetId"
+    | "/api/auth/$"
+    | "/api/trpc/$"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
@@ -372,15 +386,19 @@ export interface FileRouteTypes {
     | "/bookmarks"
     | "/projects"
     | "/snippets"
+    | "/api/chat"
+    | "/api/contact"
     | "/dashboard/blog"
     | "/dashboard/experiences"
     | "/dashboard/projects"
     | "/dashboard/snippets"
     | "/dashboard/users"
+    | "/api/stats/github/activity"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
-    | "/dashboard/snippets/$snippetId/edit";
+    | "/dashboard/snippets/$snippetId/edit"
+    | "/api/stats/github";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/"
@@ -395,6 +413,8 @@ export interface FileRouteTypes {
     | "/bookmarks/$bookmarkId"
     | "/projects/$projectId"
     | "/snippets/$snippetId"
+    | "/api/auth/$"
+    | "/api/trpc/$"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
@@ -403,15 +423,19 @@ export interface FileRouteTypes {
     | "/bookmarks"
     | "/projects"
     | "/snippets"
+    | "/api/chat"
+    | "/api/contact"
     | "/dashboard/blog"
     | "/dashboard/experiences"
     | "/dashboard/projects"
     | "/dashboard/snippets"
     | "/dashboard/users"
+    | "/api/stats/github/activity"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
-    | "/dashboard/snippets/$snippetId/edit";
+    | "/dashboard/snippets/$snippetId/edit"
+    | "/api/stats/github";
   id:
     | "__root__"
     | "/(auth)"
@@ -429,6 +453,8 @@ export interface FileRouteTypes {
     | "/(public)/bookmarks/$bookmarkId"
     | "/(public)/projects/$projectId"
     | "/(public)/snippets/$snippetId"
+    | "/api/auth/$"
+    | "/api/trpc/$"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
@@ -437,81 +463,31 @@ export interface FileRouteTypes {
     | "/(public)/bookmarks/"
     | "/(public)/projects/"
     | "/(public)/snippets/"
+    | "/api/chat/"
+    | "/api/contact/"
     | "/dashboard/blog/"
     | "/dashboard/experiences/"
     | "/dashboard/projects/"
     | "/dashboard/snippets/"
     | "/dashboard/users/"
+    | "/api/stats/github/activity"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
-    | "/dashboard/snippets/$snippetId/edit";
+    | "/dashboard/snippets/$snippetId/edit"
+    | "/api/stats/github/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   authLayoutRoute: typeof authLayoutRouteWithChildren;
   publicLayoutRoute: typeof publicLayoutRouteWithChildren;
   DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren;
-}
-export interface FileServerRoutesByFullPath {
-  "/api/auth/$": typeof ApiAuthSplatServerRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
-  "/api/chat": typeof ApiChatIndexServerRoute;
-  "/api/contact": typeof ApiContactIndexServerRoute;
-  "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
-  "/api/stats/github": typeof ApiStatsGithubIndexServerRoute;
-}
-export interface FileServerRoutesByTo {
-  "/api/auth/$": typeof ApiAuthSplatServerRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
-  "/api/chat": typeof ApiChatIndexServerRoute;
-  "/api/contact": typeof ApiContactIndexServerRoute;
-  "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
-  "/api/stats/github": typeof ApiStatsGithubIndexServerRoute;
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport;
-  "/api/auth/$": typeof ApiAuthSplatServerRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatServerRoute;
-  "/api/chat/": typeof ApiChatIndexServerRoute;
-  "/api/contact/": typeof ApiContactIndexServerRoute;
-  "/api/stats/github/activity": typeof ApiStatsGithubActivityServerRoute;
-  "/api/stats/github/": typeof ApiStatsGithubIndexServerRoute;
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath;
-  fullPaths:
-    | "/api/auth/$"
-    | "/api/trpc/$"
-    | "/api/chat"
-    | "/api/contact"
-    | "/api/stats/github/activity"
-    | "/api/stats/github";
-  fileServerRoutesByTo: FileServerRoutesByTo;
-  to:
-    | "/api/auth/$"
-    | "/api/trpc/$"
-    | "/api/chat"
-    | "/api/contact"
-    | "/api/stats/github/activity"
-    | "/api/stats/github";
-  id:
-    | "__root__"
-    | "/api/auth/$"
-    | "/api/trpc/$"
-    | "/api/chat/"
-    | "/api/contact/"
-    | "/api/stats/github/activity"
-    | "/api/stats/github/";
-  fileServerRoutesById: FileServerRoutesById;
-}
-export interface RootServerRouteChildren {
-  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute;
-  ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute;
-  ApiChatIndexServerRoute: typeof ApiChatIndexServerRoute;
-  ApiContactIndexServerRoute: typeof ApiContactIndexServerRoute;
-  ApiStatsGithubActivityServerRoute: typeof ApiStatsGithubActivityServerRoute;
-  ApiStatsGithubIndexServerRoute: typeof ApiStatsGithubIndexServerRoute;
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
+  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute;
+  ApiChatIndexRoute: typeof ApiChatIndexRoute;
+  ApiContactIndexRoute: typeof ApiContactIndexRoute;
+  ApiStatsGithubActivityRoute: typeof ApiStatsGithubActivityRoute;
+  ApiStatsGithubIndexRoute: typeof ApiStatsGithubIndexRoute;
 }
 
 declare module "@tanstack/react-router" {
@@ -628,6 +604,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardBlogIndexRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
+    "/api/contact/": {
+      id: "/api/contact/";
+      path: "/api/contact";
+      fullPath: "/api/contact";
+      preLoaderRoute: typeof ApiContactIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/api/chat/": {
+      id: "/api/chat/";
+      path: "/api/chat";
+      fullPath: "/api/chat";
+      preLoaderRoute: typeof ApiChatIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/(public)/snippets/": {
       id: "/(public)/snippets/";
       path: "/snippets";
@@ -684,6 +674,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardBlogCreateRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
+    "/api/trpc/$": {
+      id: "/api/trpc/$";
+      path: "/api/trpc/$";
+      fullPath: "/api/trpc/$";
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/api/auth/$": {
+      id: "/api/auth/$";
+      path: "/api/auth/$";
+      fullPath: "/api/auth/$";
+      preLoaderRoute: typeof ApiAuthSplatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/(public)/snippets/$snippetId": {
       id: "/(public)/snippets/$snippetId";
       path: "/snippets/$snippetId";
@@ -711,6 +715,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/blog/$articleId";
       preLoaderRoute: typeof publicBlogArticleIdRouteImport;
       parentRoute: typeof publicLayoutRoute;
+    };
+    "/api/stats/github/": {
+      id: "/api/stats/github/";
+      path: "/api/stats/github";
+      fullPath: "/api/stats/github";
+      preLoaderRoute: typeof ApiStatsGithubIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
     "/dashboard/snippets/$snippetId/edit": {
       id: "/dashboard/snippets/$snippetId/edit";
@@ -740,51 +751,12 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardBlogArticleIdEditRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
-  }
-}
-declare module "@tanstack/react-start/server" {
-  interface ServerFileRoutesByPath {
-    "/api/contact/": {
-      id: "/api/contact/";
-      path: "/api/contact";
-      fullPath: "/api/contact";
-      preLoaderRoute: typeof ApiContactIndexServerRouteImport;
-      parentRoute: typeof rootServerRouteImport;
-    };
-    "/api/chat/": {
-      id: "/api/chat/";
-      path: "/api/chat";
-      fullPath: "/api/chat";
-      preLoaderRoute: typeof ApiChatIndexServerRouteImport;
-      parentRoute: typeof rootServerRouteImport;
-    };
-    "/api/trpc/$": {
-      id: "/api/trpc/$";
-      path: "/api/trpc/$";
-      fullPath: "/api/trpc/$";
-      preLoaderRoute: typeof ApiTrpcSplatServerRouteImport;
-      parentRoute: typeof rootServerRouteImport;
-    };
-    "/api/auth/$": {
-      id: "/api/auth/$";
-      path: "/api/auth/$";
-      fullPath: "/api/auth/$";
-      preLoaderRoute: typeof ApiAuthSplatServerRouteImport;
-      parentRoute: typeof rootServerRouteImport;
-    };
-    "/api/stats/github/": {
-      id: "/api/stats/github/";
-      path: "/api/stats/github";
-      fullPath: "/api/stats/github";
-      preLoaderRoute: typeof ApiStatsGithubIndexServerRouteImport;
-      parentRoute: typeof rootServerRouteImport;
-    };
     "/api/stats/github/activity": {
       id: "/api/stats/github/activity";
       path: "/api/stats/github/activity";
       fullPath: "/api/stats/github/activity";
-      preLoaderRoute: typeof ApiStatsGithubActivityServerRouteImport;
-      parentRoute: typeof rootServerRouteImport;
+      preLoaderRoute: typeof ApiStatsGithubActivityRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
   }
 }
@@ -882,18 +854,23 @@ const rootRouteChildren: RootRouteChildren = {
   authLayoutRoute: authLayoutRouteWithChildren,
   publicLayoutRoute: publicLayoutRouteWithChildren,
   DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
+  ApiChatIndexRoute: ApiChatIndexRoute,
+  ApiContactIndexRoute: ApiContactIndexRoute,
+  ApiStatsGithubActivityRoute: ApiStatsGithubActivityRoute,
+  ApiStatsGithubIndexRoute: ApiStatsGithubIndexRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>();
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
-  ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
-  ApiChatIndexServerRoute: ApiChatIndexServerRoute,
-  ApiContactIndexServerRoute: ApiContactIndexServerRoute,
-  ApiStatsGithubActivityServerRoute: ApiStatsGithubActivityServerRoute,
-  ApiStatsGithubIndexServerRoute: ApiStatsGithubIndexServerRoute,
-};
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>();
+
+import type { getRouter } from "./router.tsx";
+import type { startInstance } from "./start.tsx";
+declare module "@tanstack/react-start" {
+  interface Register {
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>;
+  }
+}

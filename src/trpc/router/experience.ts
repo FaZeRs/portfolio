@@ -1,12 +1,12 @@
 import { TRPCRouterRecord } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod/v4";
-import { deleteFile, uploadImage } from "~/lib/s3";
 import {
   CreateExperienceSchema,
   Experience,
   UpdateExperienceSchema,
-} from "~/lib/server/schema";
+} from "~/lib/db/schema";
+import { deleteFile, uploadImage } from "~/lib/s3";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const experienceRouter = {

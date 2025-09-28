@@ -7,10 +7,10 @@ import { Sitemap } from "tanstack-router-sitemap";
 dotenv.config();
 
 // biome-ignore lint/performance/noNamespaceImport: valid import
-import * as schema from "../../lib/server/schema";
-import { articles } from "../../lib/server/schema/article.schema";
-import { Project } from "../../lib/server/schema/project.schema";
-import { Snippet } from "../../lib/server/schema/snippet.schema";
+import * as schema from "../../lib/db/schema";
+import { articles } from "../../lib/db/schema/article.schema";
+import { Project } from "../../lib/db/schema/project.schema";
+import { Snippet } from "../../lib/db/schema/snippet.schema";
 import { type FileRouteTypes } from "../../routeTree.gen";
 
 export type TRoutes = FileRouteTypes["fullPaths"];

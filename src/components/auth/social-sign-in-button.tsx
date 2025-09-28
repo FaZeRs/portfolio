@@ -2,7 +2,7 @@ import { useLocation } from "@tanstack/react-router";
 import { siFacebook, siGithub, siGoogle, siX } from "simple-icons";
 import { Button } from "~/components/ui/button";
 import Icon from "~/components/ui/icon";
-import authClient from "~/lib/auth-client";
+import authClient from "~/lib/auth/auth-client";
 
 export default function SocialSignInButton() {
   const location = useLocation();
