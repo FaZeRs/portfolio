@@ -94,6 +94,22 @@ function ProfilePage() {
     twitterHandle: user?.twitterHandle || "",
   });
 
+  if (!user) {
+    return (
+      <div className="flex min-h-[400px] flex-col items-center justify-center space-y-4">
+        <div className="space-y-2 text-center">
+          <h1 className="font-semibold text-2xl">Access Denied</h1>
+          <p className="text-muted-foreground">
+            You need to be logged in to view your profile.
+          </p>
+        </div>
+        <Button onClick={() => router.navigate({ to: "/signin" })}>
+          Sign In
+        </Button>
+      </div>
+    );
+  }
+
   const handleEditSubmit = async () => {
     try {
       const newName = editForm.name.trim();
