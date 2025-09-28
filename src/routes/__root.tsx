@@ -13,6 +13,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { DevtoolsComponent } from "~/components/dev-tools";
 import { Toaster } from "~/components/ui/sonner";
 import { ThemeProvider } from "~/components/ui/theme-provider";
+import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import {
@@ -21,8 +22,8 @@ import {
 } from "~/lib/structured-data";
 import appCss from "~/lib/styles/app.css?url";
 import { AppRouter } from "~/trpc/router";
+
 import "unfonts.css";
-import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
 
 export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
   queryClient: QueryClient;

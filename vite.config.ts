@@ -1,10 +1,10 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
+import { nitroV2Plugin } from "@tanstack/nitro-v2-vite-plugin";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
-import { nitro } from "nitro/vite";
 import { generateSitemap } from "tanstack-router-sitemap";
 import unfonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
@@ -14,6 +14,9 @@ import sitemap from "./src/plugins/sitemap";
 dotenv.config();
 
 export default defineConfig({
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     devtools({
       eventBusConfig: {
@@ -36,7 +39,9 @@ export default defineConfig({
         routeToken: "layout",
       },
     }),
-    nitro(),
+    nitroV2Plugin({
+      compatibilityDate: "latest",
+    }),
     viteReact({
       // https://react.dev/learn/react-compiler
       babel: {
@@ -62,9 +67,6 @@ export default defineConfig({
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
       telemetry: false,
-      sourcemaps: {
-        disable: true,
-      },
     }),
   ],
   optimizeDeps: {
