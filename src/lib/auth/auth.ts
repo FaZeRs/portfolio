@@ -12,7 +12,8 @@ const MAX_AGE = 5 * 60; // 5 minutes
 
 const getAuthConfig = createServerOnlyFn(() =>
   betterAuth({
-    baseURL: getBaseUrl(),
+    baseURL: env.BETTER_AUTH_URL ?? getBaseUrl(),
+    secret: env.BETTER_AUTH_SECRET,
     telemetry: {
       enabled: false,
     },
@@ -33,23 +34,35 @@ const getAuthConfig = createServerOnlyFn(() =>
 
     // https://www.better-auth.com/docs/concepts/oauth
     socialProviders: {
-      github: {
-        clientId: env.GITHUB_CLIENT_ID ?? "",
-        clientSecret: env.GITHUB_CLIENT_SECRET ?? "",
-      },
-      twitter: {
-        clientId: env.TWITTER_CLIENT_ID ?? "",
-        clientSecret: env.TWITTER_CLIENT_SECRET ?? "",
-      },
-      google: {
-        clientId: env.GOOGLE_CLIENT_ID ?? "",
-        clientSecret: env.GOOGLE_CLIENT_SECRET ?? "",
-        prompt: "select_account consent",
-      },
-      facebook: {
-        clientId: env.FACEBOOK_CLIENT_ID ?? "",
-        clientSecret: env.FACEBOOK_CLIENT_SECRET ?? "",
-      },
+      ...(env.GITHUB_CLIENT_ID &&
+        env.GITHUB_CLIENT_SECRET && {
+          github: {
+            clientId: env.GITHUB_CLIENT_ID,
+            clientSecret: env.GITHUB_CLIENT_SECRET,
+          },
+        }),
+      ...(env.TWITTER_CLIENT_ID &&
+        env.TWITTER_CLIENT_SECRET && {
+          twitter: {
+            clientId: env.TWITTER_CLIENT_ID,
+            clientSecret: env.TWITTER_CLIENT_SECRET,
+          },
+        }),
+      ...(env.GOOGLE_CLIENT_ID &&
+        env.GOOGLE_CLIENT_SECRET && {
+          google: {
+            clientId: env.GOOGLE_CLIENT_ID,
+            clientSecret: env.GOOGLE_CLIENT_SECRET,
+            prompt: "select_account consent",
+          },
+        }),
+      ...(env.FACEBOOK_CLIENT_ID &&
+        env.FACEBOOK_CLIENT_SECRET && {
+          facebook: {
+            clientId: env.FACEBOOK_CLIENT_ID,
+            clientSecret: env.FACEBOOK_CLIENT_SECRET,
+          },
+        }),
     },
 
     trustedOrigins: [getBaseUrl()],

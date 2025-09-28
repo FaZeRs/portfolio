@@ -48,21 +48,13 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import authClient from "~/lib/auth/auth-client";
-import { authQueryOptions } from "~/lib/auth/queries";
 
 export const Route = createFileRoute("/(public)/profile")({
   component: ProfilePage,
-  beforeLoad: async ({ context }) => {
-    const user = await context.queryClient.ensureQueryData({
-      ...authQueryOptions(),
-      revalidateIfStale: true,
-    });
-    if (!user) {
+  beforeLoad: ({ context }) => {
+    if (!context.user) {
       throw redirect({ to: "/signin" });
     }
-
-    // re-return to update type as non-null for child routes
-    return { user };
   },
   head: () => ({
     meta: [

@@ -31,7 +31,11 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
   user: AuthQueryResult;
 }>()({
   beforeLoad: async ({ context }) => {
-    await context.queryClient.prefetchQuery(authQueryOptions());
+    const user = await context.queryClient.ensureQueryData({
+      ...authQueryOptions(),
+      revalidateIfStale: true,
+    });
+    return { user };
   },
   head: () => {
     const seoData = seo({

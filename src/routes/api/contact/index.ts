@@ -9,6 +9,13 @@ export const Route = createFileRoute("/api/contact/")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        if (!(env.RESEND_API_KEY && env.RESEND_FROM_EMAIL)) {
+          return Response.json(
+            { error: "Email service is not configured" },
+            { status: 500 }
+          );
+        }
+
         const body = (await request.json()) as {
           email?: string;
           message?: string;
