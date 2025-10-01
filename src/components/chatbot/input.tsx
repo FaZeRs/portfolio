@@ -10,7 +10,7 @@ import {
   SparklesIcon,
   UserIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import {
   PromptInput,
   PromptInputSubmit,
@@ -51,7 +51,7 @@ const suggestions = [
   ...discoverySuggestions,
 ];
 
-export function ChatInput({
+export const ChatInput = memo(function ChatInputComponent({
   sendMessage,
   status,
 }: Readonly<{
@@ -60,20 +60,26 @@ export function ChatInput({
 }>) {
   const [input, setInput] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
 
-    if (!input.trim()) {
-      return;
-    }
-    sendMessage({ text: input.trim() });
-    setInput("");
-  };
+      if (!input.trim()) {
+        return;
+      }
+      sendMessage({ text: input.trim() });
+      setInput("");
+    },
+    [input, sendMessage]
+  );
 
-  const handleSuggestionClick = (suggestion: string) => {
-    sendMessage({ text: suggestion });
-    setInput("");
-  };
+  const handleSuggestionClick = useCallback(
+    (suggestion: string) => {
+      sendMessage({ text: suggestion });
+      setInput("");
+    },
+    [sendMessage]
+  );
 
   return (
     <div className="grid shrink-0 gap-4 p-4">
@@ -120,4 +126,4 @@ export function ChatInput({
       </Suggestions>
     </div>
   );
-}
+});

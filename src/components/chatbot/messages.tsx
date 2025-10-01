@@ -1,5 +1,6 @@
 import { ChatStatus, UIMessage } from "ai";
 import { Bot } from "lucide-react";
+import { memo } from "react";
 import {
   Conversation,
   ConversationContent,
@@ -14,7 +15,7 @@ import {
 } from "~/components/ai-elements/source";
 import { ChatMessage } from "./message";
 
-export function ChatMessages({
+export const ChatMessages = memo(function ChatMessagesComponent({
   messages,
   status,
 }: Readonly<{
@@ -75,4 +76,4 @@ export function ChatMessages({
       <ConversationScrollButton />
     </Conversation>
   );
-}
+});

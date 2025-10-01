@@ -1,7 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
-import { remark } from "remark";
+import { marked, Tokens } from "marked";
 import { twMerge } from "tailwind-merge";
-import { remarkHeading } from "~/lib/mdx-plugins/remark/remark-heading";
 import { TOC } from "~/types";
 
 export function cn(...inputs: ClassValue[]) {
@@ -47,12 +46,43 @@ export const calculateReadingTime = (content: string) => {
   return Math.ceil(numberOfWords / wordsPerMinute);
 };
 
-export const getTOC = async (content: string) => {
-  const result = await remark().use(remarkHeading).process(content);
+export const stripMarkdown = (text: string): string => {
+  return (
+    text
+      // Remove links [text](url) -> text
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      // Remove inline code `code` -> code
+      .replace(/`([^`]+)`/g, "$1")
+      // Remove bold/italic **text** or *text* -> text
+      .replace(/\*{1,2}([^*]+)\*{1,2}/g, "$1")
+      // Remove strikethrough ~~text~~ -> text
+      .replace(/~~([^~]+)~~/g, "$1")
+      // Remove HTML tags
+      .replace(/<[^>]*>/g, "")
+      // Clean up extra whitespace
+      .replace(/\s+/g, " ")
+      .trim()
+  );
+};
 
-  if ("toc" in result.data) {
-    return result.data.toc as TOC[];
+export const getTOC = (content: string): TOC[] => {
+  const toc: TOC[] = [];
+
+  const tokens = marked.lexer(content, {});
+  const headings = tokens.filter(
+    (token) => token.type === "heading"
+  ) as Tokens.Heading[];
+
+  for (const heading of headings) {
+    const level = heading.depth;
+    const title = stripMarkdown(heading.text);
+    const id = generateSlug(title);
+    toc.push({
+      title,
+      url: id,
+      depth: level,
+    });
   }
 
-  return [];
+  return toc;
 };

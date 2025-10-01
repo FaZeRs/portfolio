@@ -1,9 +1,8 @@
+import { ClientOnly } from "@tanstack/react-router";
 import { Loader, Share } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { siGithub } from "simple-icons";
-
 import Icon from "~/components/ui/icon";
-
 import type { ProjectType } from "~/types";
 import ZoomImage from "../zoom-image";
 import ProjectLink from "./project-link";
@@ -75,9 +74,13 @@ export default function ProjectContent({
 
       {content && (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
-          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
-            <CustomMDX source={content} />
-          </Suspense>
+          <ClientOnly>
+            <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+              <article className="prose prose-slate dark:prose-invert !max-w-none">
+                <CustomMDX source={content} />
+              </article>
+            </Suspense>
+          </ClientOnly>
         </div>
       )}
     </div>
