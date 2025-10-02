@@ -1,5 +1,5 @@
 import { ChatStatus, UIMessage as MessageType } from "ai";
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { Message, MessageContent } from "~/components/ai-elements/message";
 import {
   Reasoning,
@@ -46,7 +46,7 @@ const toolOutputRenderers = {
   ),
 } as const;
 
-export function ChatMessage({
+export const ChatMessage = memo(function ChatMessageComponent({
   message,
   status,
 }: Readonly<{
@@ -110,4 +110,4 @@ export function ChatMessage({
       </MessageContent>
     </Message>
   );
-}
+});

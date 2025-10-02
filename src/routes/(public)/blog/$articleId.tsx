@@ -4,13 +4,14 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import {
+  ClientOnly,
   createFileRoute,
   ErrorComponent,
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
 import { Loader } from "lucide-react";
-import { Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import SignInModal from "~/components/auth/sign-in-modal";
 import ArticleComment from "~/components/blog/article-comment";
 import ArticleMetrics from "~/components/blog/article-metrics";
@@ -19,7 +20,6 @@ import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
 import { LazyImage } from "~/components/lazy-image";
-import CustomMDX from "~/components/mdx/mdx";
 import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
 import { siteConfig } from "~/lib/config/site";
@@ -30,6 +30,8 @@ import {
 } from "~/lib/structured-data";
 import { getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
+
+const CustomMDX = lazy(() => import("~/components/mdx/mdx"));
 
 export const Route = createFileRoute("/(public)/blog/$articleId")({
   loader: async ({ params: { articleId }, context: { trpc, queryClient } }) => {
@@ -186,9 +188,13 @@ function RouteComponent() {
             )}
           </div>
 
-          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
-            <CustomMDX source={article.content ?? ""} />
-          </Suspense>
+          <ClientOnly>
+            <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+              <article className="prose prose-slate dark:prose-invert !max-w-none">
+                <CustomMDX source={article.content ?? ""} />
+              </article>
+            </Suspense>
+          </ClientOnly>
 
           <hr className="my-4" />
 

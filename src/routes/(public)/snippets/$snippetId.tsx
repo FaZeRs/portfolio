@@ -1,16 +1,20 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
+  ClientOnly,
   createFileRoute,
   ErrorComponent,
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import CustomMDX from "~/components/mdx/mdx";
+import { Loader } from "lucide-react";
+import { lazy, Suspense } from "react";
 import { NotFound } from "~/components/not-found";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { formatDate, getBaseUrl } from "~/lib/utils";
 import { useTRPC } from "~/trpc/react";
+
+const CustomMDX = lazy(() => import("~/components/mdx/mdx"));
 
 export const Route = createFileRoute("/(public)/snippets/$snippetId")({
   loader: async ({ params: { snippetId }, context: { trpc, queryClient } }) => {
@@ -77,7 +81,13 @@ function RouteComponent() {
           </div>
         </div>
 
-        {snippet.data?.code && <CustomMDX source={snippet.data?.code} />}
+        <ClientOnly>
+          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+            <article className="prose prose-slate dark:prose-invert !max-w-none">
+              <CustomMDX source={snippet.data?.code ?? ""} />
+            </article>
+          </Suspense>
+        </ClientOnly>
       </div>
     </article>
   );

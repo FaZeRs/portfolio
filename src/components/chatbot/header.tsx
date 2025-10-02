@@ -1,8 +1,9 @@
 import { ChatStatus } from "ai";
 import { Bot, X } from "lucide-react";
+import { memo } from "react";
 import { Button } from "~/components/ui/button";
 
-export function ChatHeader({
+export const ChatHeader = memo(function ChatHeaderComponent({
   status,
   setIsOpen,
 }: Readonly<{
@@ -34,4 +35,4 @@ export function ChatHeader({
       </Button>
     </div>
   );
-}
+});

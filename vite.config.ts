@@ -16,6 +16,7 @@ dotenv.config();
 export default defineConfig({
   build: {
     sourcemap: true,
+    target: "es2022",
   },
   plugins: [
     devtools({
@@ -41,6 +42,11 @@ export default defineConfig({
     }),
     nitroV2Plugin({
       compatibilityDate: "latest",
+      esbuild: {
+        options: {
+          target: "es2022",
+        },
+      },
     }),
     viteReact({
       // https://react.dev/learn/react-compiler
@@ -67,6 +73,9 @@ export default defineConfig({
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
       telemetry: false,
+      sourcemaps: {
+        disable: false,
+      },
     }),
   ],
   optimizeDeps: {

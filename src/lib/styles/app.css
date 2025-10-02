@@ -2,6 +2,11 @@
 
 @import "tw-animate-css";
 
+/* @sonar-ignore */
+/* biome-ignore lint/suspicious/noUnknownAtRules: @plugin is a valid CSS at-rule */
+@plugin "@tailwindcss/typography";
+/* @end */
+
 /* biome-ignore lint/suspicious/noUnknownAtRules: @custom-variant is a valid CSS at-rule */
 @custom-variant dark (&:is(.dark *));
 

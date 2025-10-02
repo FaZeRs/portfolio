@@ -1,4 +1,6 @@
 import { init, wrapStreamHandlerWithSentry } from "@sentry/tanstackstart-react";
+import type { Register } from "@tanstack/react-router";
+import type { RequestHandler } from "@tanstack/react-start/server";
 import {
   createStartHandler,
   defaultStreamHandler,
@@ -19,5 +21,5 @@ const fetch = createStartHandler(
 );
 
 export default {
-  fetch,
+  fetch: fetch as RequestHandler<Register>,
 };
