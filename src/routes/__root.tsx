@@ -23,8 +23,6 @@ import {
 import appCss from "~/lib/styles/app.css?url";
 import { AppRouter } from "~/trpc/router";
 
-import "unfonts.css";
-
 export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
   queryClient: QueryClient;
   trpc: TRPCOptionsProxy<AppRouter>;

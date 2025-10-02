@@ -1,4 +1,5 @@
 import { ValidationErrorMap } from "@tanstack/react-form";
+import { Image } from "@unpic/react";
 import { useState } from "react";
 import { MAX_IMAGE_SIZE, VALID_IMAGE_TYPES } from "~/lib/constants";
 import { Button } from "../ui/button";
@@ -119,7 +120,7 @@ export function FormImageUpload({
         {previewImage && (
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <div className="relative h-32 w-full max-w-md overflow-hidden rounded-md border border-input">
-              <img
+              <Image
                 alt="Preview"
                 className="h-full w-full object-cover"
                 height={128}

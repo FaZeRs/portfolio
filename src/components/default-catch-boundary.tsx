@@ -1,7 +1,9 @@
+import { Image } from "@unpic/react";
+
 export function DefaultCatchBoundary() {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center">
-      <img
+      <Image
         alt="Yellow duck searching"
         height={80}
         src="/images/searching-duck.gif"

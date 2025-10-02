@@ -1,6 +1,9 @@
 @import "tailwindcss";
-
 @import "tw-animate-css";
+
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/roboto-mono";
+@import "@fontsource/cal-sans";
 
 /* @sonar-ignore */
 /* biome-ignore lint/suspicious/noUnknownAtRules: @plugin is a valid CSS at-rule */
@@ -46,12 +49,9 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
-  --font-sans:
-    "GeistSans", "GeistSans Fallback", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono:
-    "Geist Mono", ui-monospace, "SFMono-Regular", "Roboto Mono", "Menlo",
-    "Monaco", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace;
+  --font-sans: "Inter Variable", sans-serif;
+  --font-mono: "Roboto Mono Variable", monospace;
+  --font-heading: "Cal Sans", sans-serif;
 
   @keyframes accordion-down {
     from {

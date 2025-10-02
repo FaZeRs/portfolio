@@ -1,3 +1,5 @@
+import { Image } from "@unpic/react";
+
 export function NotFound(
   props: Readonly<{
     children?: React.ReactNode;
@@ -5,7 +7,7 @@ export function NotFound(
 ) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center">
-      <img
+      <Image
         alt="Yellow duck searching"
         height={80}
         src="/images/searching-duck.gif"

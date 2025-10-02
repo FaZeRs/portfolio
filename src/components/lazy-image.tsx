@@ -1,3 +1,4 @@
+import { Image } from "@unpic/react";
 import type { HTMLAttributes } from "react";
 import { useCallback, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -121,8 +122,7 @@ export function LazyImage({
         </div>
       ) : (
         <>
-          {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Image load/error handlers are necessary for functionality */}
-          <img
+          <Image
             alt={alt}
             className={cn(
               "h-full w-full object-cover transition-opacity duration-500",

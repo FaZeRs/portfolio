@@ -1,3 +1,4 @@
+import { Image } from "@unpic/react";
 import {
   type AnchorHTMLAttributes,
   ComponentProps,
@@ -115,12 +116,18 @@ export const components: Record<string, React.ComponentType<any> | undefined> =
     img: ({
       className,
       alt,
+      src,
+      width,
+      height,
       ...props
     }: ImgHTMLAttributes<HTMLImageElement>) => (
-      // biome-ignore lint/nursery/useImageSize: props.width and props.height are used
-      <img
+      <Image
         alt={alt}
         className={cn("rounded-md border", className)}
+        height={height as number}
+        layout="constrained"
+        src={src as string}
+        width={width as number}
         {...props}
       />
     ),

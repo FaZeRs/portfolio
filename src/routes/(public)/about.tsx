@@ -27,15 +27,15 @@ function RouteComponent() {
   return (
     <>
       <CoverImage alt="About" src="/images/about.avif" />
-      <p className="prose prose-slate">
+      <p className="prose prose-slate dark:prose-invert !max-w-none">
         Hello World! I'm <strong>Nauris Linde</strong>, a{" "}
         <strong>software engineer</strong> from Liepaja Latvia, with over a
         decade of programming experience. My journey began as a Backend Web
         Developer, where I specialized in Laravel framework while working at a
         digital agency, delivering multiple successful web projects.
       </p>
-      <p className="prose prose-slate mt-4">
-        Currently, I serve as a <strong>Tech Lead</strong> overseeing the
+      <p className="prose prose-slate dark:prose-invert !max-w-none mt-4">
+        Currently, I serve as a <strong>R&D Engineer</strong> overseeing the
         technical aspects of our Floorplan team. My work focuses on developing
         desktop applications using the Qt Framework for floor plan editing. I'm
         also deeply involved in writing C++ algorithms and implementing them in
