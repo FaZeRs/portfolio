@@ -6,7 +6,6 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import { generateSitemap } from "tanstack-router-sitemap";
-import unfonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import sitemap from "./src/plugins/sitemap";
@@ -62,11 +61,6 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    unfonts({
-      google: {
-        families: ["Geist", "Geist Mono"],
-      },
-    }),
     generateSitemap(sitemap),
     sentryVitePlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN,
