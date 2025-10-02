@@ -1,3 +1,4 @@
+import { Token, Tokens } from "marked";
 import { generateSlug, stripMarkdown } from "../utils";
 
 export function gfmHeadingId() {
@@ -5,17 +6,22 @@ export function gfmHeadingId() {
     headerIds: false,
     useNewRenderer: true,
     renderer: {
-      // biome-ignore lint/suspicious/noExplicitAny: any is used to avoid type errors
-      heading({ tokens, depth }: { tokens: any; depth: any }): string {
-        const text = tokens
-          // biome-ignore lint/suspicious/noExplicitAny: any is used to avoid type errors
-          .map((token: any) => token.raw || token.text || "")
+      heading(
+        // biome-ignore lint/suspicious/noExplicitAny: any is used to avoid type errors
+        this: any,
+        { tokens, depth }: { tokens: Token[]; depth: number }
+      ): string {
+        // Preserve inline formatting inside headings by rendering the inline tokens
+        // with the built-in parser, while generating a stable slug from raw text.
+        const rawText = (tokens as Tokens.Heading[])
+          .map((token: Tokens.Heading) => token.raw || token.text || "")
           .join("");
-        const raw = stripMarkdown(text);
-        const level = depth;
-        const id = generateSlug(raw.toLowerCase());
 
-        return `<h${level} id="${id}">${text}</h${level}>\n`;
+        const id = generateSlug(stripMarkdown(rawText).toLowerCase());
+        const innerHtml = this.parser.parseInline(tokens);
+        const level = depth;
+
+        return `<h${level} id="${id}">${innerHtml}</h${level}>\n`;
       },
     },
   };
