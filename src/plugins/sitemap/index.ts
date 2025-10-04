@@ -10,6 +10,7 @@ dotenv.config();
 import * as schema from "../../lib/db/schema";
 import { articles } from "../../lib/db/schema/article.schema";
 import { Project } from "../../lib/db/schema/project.schema";
+import { Service } from "../../lib/db/schema/service.schema";
 import { Snippet } from "../../lib/db/schema/snippet.schema";
 import { type FileRouteTypes } from "../../routeTree.gen";
 
@@ -86,6 +87,25 @@ export const sitemap: Sitemap<TRoutes> = {
       }
     },
     "/uses": { priority: 1, changeFrequency: "daily" },
+    "/guestbook": { priority: 1, changeFrequency: "daily" },
+    "/services/$serviceId": async () => {
+      try {
+        // Fetch all published projects
+        const services = await db
+          .select({ slug: Service.slug, updatedAt: Service.updatedAt })
+          .from(Service)
+          .where(eq(Service.isDraft, false));
+
+        return services.map((service) => ({
+          path: `/services/${service.slug}`,
+          priority: 0.8,
+          changeFrequency: "weekly" as const,
+          lastModified: service.updatedAt || new Date(),
+        }));
+      } catch (_error) {
+        return [];
+      }
+    },
   },
 };
 
