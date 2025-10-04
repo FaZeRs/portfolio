@@ -52,7 +52,7 @@ export const Route = createFileRoute("/(public)/services/$serviceId")({
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
   notFoundComponent: () => {
-    return <NotFound>Project not found</NotFound>;
+    return <NotFound>Service not found</NotFound>;
   },
 });
 
