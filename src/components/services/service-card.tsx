@@ -17,7 +17,7 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
 
   return (
     <Link
-      className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4 dark:bg-white/10"
+      className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4"
       params={{
         serviceId: slug,
       }}
