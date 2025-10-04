@@ -22,6 +22,7 @@ import { Route as publicAboutRouteImport } from "./routes/(public)/about";
 import { Route as authSigninRouteImport } from "./routes/(auth)/signin";
 import { Route as DashboardUsersIndexRouteImport } from "./routes/dashboard/users/index";
 import { Route as DashboardSnippetsIndexRouteImport } from "./routes/dashboard/snippets/index";
+import { Route as DashboardServicesIndexRouteImport } from "./routes/dashboard/services/index";
 import { Route as DashboardProjectsIndexRouteImport } from "./routes/dashboard/projects/index";
 import { Route as DashboardExperiencesIndexRouteImport } from "./routes/dashboard/experiences/index";
 import { Route as DashboardBlogIndexRouteImport } from "./routes/dashboard/blog/index";
@@ -32,17 +33,20 @@ import { Route as publicProjectsIndexRouteImport } from "./routes/(public)/proje
 import { Route as publicBookmarksIndexRouteImport } from "./routes/(public)/bookmarks/index";
 import { Route as publicBlogIndexRouteImport } from "./routes/(public)/blog/index";
 import { Route as DashboardSnippetsCreateRouteImport } from "./routes/dashboard/snippets/create";
+import { Route as DashboardServicesCreateRouteImport } from "./routes/dashboard/services/create";
 import { Route as DashboardProjectsCreateRouteImport } from "./routes/dashboard/projects/create";
 import { Route as DashboardExperiencesCreateRouteImport } from "./routes/dashboard/experiences/create";
 import { Route as DashboardBlogCreateRouteImport } from "./routes/dashboard/blog/create";
 import { Route as ApiTrpcSplatRouteImport } from "./routes/api/trpc/$";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 import { Route as publicSnippetsSnippetIdRouteImport } from "./routes/(public)/snippets/$snippetId";
+import { Route as publicServicesServiceIdRouteImport } from "./routes/(public)/services/$serviceId";
 import { Route as publicProjectsProjectIdRouteImport } from "./routes/(public)/projects/$projectId";
 import { Route as publicBookmarksBookmarkIdRouteImport } from "./routes/(public)/bookmarks/$bookmarkId";
 import { Route as publicBlogArticleIdRouteImport } from "./routes/(public)/blog/$articleId";
 import { Route as ApiStatsGithubIndexRouteImport } from "./routes/api/stats/github/index";
 import { Route as DashboardSnippetsSnippetIdEditRouteImport } from "./routes/dashboard/snippets/$snippetId.edit";
+import { Route as DashboardServicesServiceIdEditRouteImport } from "./routes/dashboard/services/$serviceId.edit";
 import { Route as DashboardProjectsProjectIdEditRouteImport } from "./routes/dashboard/projects/$projectId.edit";
 import { Route as DashboardExperiencesExperienceIdEditRouteImport } from "./routes/dashboard/experiences/$experienceId.edit";
 import { Route as DashboardBlogArticleIdEditRouteImport } from "./routes/dashboard/blog/$articleId.edit";
@@ -111,6 +115,11 @@ const DashboardSnippetsIndexRoute = DashboardSnippetsIndexRouteImport.update({
   path: "/snippets/",
   getParentRoute: () => DashboardLayoutRoute,
 } as any);
+const DashboardServicesIndexRoute = DashboardServicesIndexRouteImport.update({
+  id: "/services/",
+  path: "/services/",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
 const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
   id: "/projects/",
   path: "/projects/",
@@ -162,6 +171,11 @@ const DashboardSnippetsCreateRoute = DashboardSnippetsCreateRouteImport.update({
   path: "/snippets/create",
   getParentRoute: () => DashboardLayoutRoute,
 } as any);
+const DashboardServicesCreateRoute = DashboardServicesCreateRouteImport.update({
+  id: "/services/create",
+  path: "/services/create",
+  getParentRoute: () => DashboardLayoutRoute,
+} as any);
 const DashboardProjectsCreateRoute = DashboardProjectsCreateRouteImport.update({
   id: "/projects/create",
   path: "/projects/create",
@@ -193,6 +207,11 @@ const publicSnippetsSnippetIdRoute = publicSnippetsSnippetIdRouteImport.update({
   path: "/snippets/$snippetId",
   getParentRoute: () => publicLayoutRoute,
 } as any);
+const publicServicesServiceIdRoute = publicServicesServiceIdRouteImport.update({
+  id: "/services/$serviceId",
+  path: "/services/$serviceId",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
 const publicProjectsProjectIdRoute = publicProjectsProjectIdRouteImport.update({
   id: "/projects/$projectId",
   path: "/projects/$projectId",
@@ -218,6 +237,12 @@ const DashboardSnippetsSnippetIdEditRoute =
   DashboardSnippetsSnippetIdEditRouteImport.update({
     id: "/snippets/$snippetId/edit",
     path: "/snippets/$snippetId/edit",
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any);
+const DashboardServicesServiceIdEditRoute =
+  DashboardServicesServiceIdEditRouteImport.update({
+    id: "/services/$serviceId/edit",
+    path: "/services/$serviceId/edit",
     getParentRoute: () => DashboardLayoutRoute,
   } as any);
 const DashboardProjectsProjectIdEditRoute =
@@ -257,12 +282,14 @@ export interface FileRoutesByFullPath {
   "/blog/$articleId": typeof publicBlogArticleIdRoute;
   "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
   "/projects/$projectId": typeof publicProjectsProjectIdRoute;
+  "/services/$serviceId": typeof publicServicesServiceIdRoute;
   "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
   "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
   "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
+  "/dashboard/services/create": typeof DashboardServicesCreateRoute;
   "/dashboard/snippets/create": typeof DashboardSnippetsCreateRoute;
   "/blog": typeof publicBlogIndexRoute;
   "/bookmarks": typeof publicBookmarksIndexRoute;
@@ -273,12 +300,14 @@ export interface FileRoutesByFullPath {
   "/dashboard/blog": typeof DashboardBlogIndexRoute;
   "/dashboard/experiences": typeof DashboardExperiencesIndexRoute;
   "/dashboard/projects": typeof DashboardProjectsIndexRoute;
+  "/dashboard/services": typeof DashboardServicesIndexRoute;
   "/dashboard/snippets": typeof DashboardSnippetsIndexRoute;
   "/dashboard/users": typeof DashboardUsersIndexRoute;
   "/api/stats/github/activity": typeof ApiStatsGithubActivityRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
+  "/dashboard/services/$serviceId/edit": typeof DashboardServicesServiceIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
   "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
@@ -294,12 +323,14 @@ export interface FileRoutesByTo {
   "/blog/$articleId": typeof publicBlogArticleIdRoute;
   "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
   "/projects/$projectId": typeof publicProjectsProjectIdRoute;
+  "/services/$serviceId": typeof publicServicesServiceIdRoute;
   "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
   "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
   "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
+  "/dashboard/services/create": typeof DashboardServicesCreateRoute;
   "/dashboard/snippets/create": typeof DashboardSnippetsCreateRoute;
   "/blog": typeof publicBlogIndexRoute;
   "/bookmarks": typeof publicBookmarksIndexRoute;
@@ -310,12 +341,14 @@ export interface FileRoutesByTo {
   "/dashboard/blog": typeof DashboardBlogIndexRoute;
   "/dashboard/experiences": typeof DashboardExperiencesIndexRoute;
   "/dashboard/projects": typeof DashboardProjectsIndexRoute;
+  "/dashboard/services": typeof DashboardServicesIndexRoute;
   "/dashboard/snippets": typeof DashboardSnippetsIndexRoute;
   "/dashboard/users": typeof DashboardUsersIndexRoute;
   "/api/stats/github/activity": typeof ApiStatsGithubActivityRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
+  "/dashboard/services/$serviceId/edit": typeof DashboardServicesServiceIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
   "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
@@ -335,12 +368,14 @@ export interface FileRoutesById {
   "/(public)/blog/$articleId": typeof publicBlogArticleIdRoute;
   "/(public)/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
   "/(public)/projects/$projectId": typeof publicProjectsProjectIdRoute;
+  "/(public)/services/$serviceId": typeof publicServicesServiceIdRoute;
   "/(public)/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/dashboard/blog/create": typeof DashboardBlogCreateRoute;
   "/dashboard/experiences/create": typeof DashboardExperiencesCreateRoute;
   "/dashboard/projects/create": typeof DashboardProjectsCreateRoute;
+  "/dashboard/services/create": typeof DashboardServicesCreateRoute;
   "/dashboard/snippets/create": typeof DashboardSnippetsCreateRoute;
   "/(public)/blog/": typeof publicBlogIndexRoute;
   "/(public)/bookmarks/": typeof publicBookmarksIndexRoute;
@@ -351,12 +386,14 @@ export interface FileRoutesById {
   "/dashboard/blog/": typeof DashboardBlogIndexRoute;
   "/dashboard/experiences/": typeof DashboardExperiencesIndexRoute;
   "/dashboard/projects/": typeof DashboardProjectsIndexRoute;
+  "/dashboard/services/": typeof DashboardServicesIndexRoute;
   "/dashboard/snippets/": typeof DashboardSnippetsIndexRoute;
   "/dashboard/users/": typeof DashboardUsersIndexRoute;
   "/api/stats/github/activity": typeof ApiStatsGithubActivityRoute;
   "/dashboard/blog/$articleId/edit": typeof DashboardBlogArticleIdEditRoute;
   "/dashboard/experiences/$experienceId/edit": typeof DashboardExperiencesExperienceIdEditRoute;
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
+  "/dashboard/services/$serviceId/edit": typeof DashboardServicesServiceIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
   "/api/stats/github/": typeof ApiStatsGithubIndexRoute;
 }
@@ -375,12 +412,14 @@ export interface FileRouteTypes {
     | "/blog/$articleId"
     | "/bookmarks/$bookmarkId"
     | "/projects/$projectId"
+    | "/services/$serviceId"
     | "/snippets/$snippetId"
     | "/api/auth/$"
     | "/api/trpc/$"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
+    | "/dashboard/services/create"
     | "/dashboard/snippets/create"
     | "/blog"
     | "/bookmarks"
@@ -391,12 +430,14 @@ export interface FileRouteTypes {
     | "/dashboard/blog"
     | "/dashboard/experiences"
     | "/dashboard/projects"
+    | "/dashboard/services"
     | "/dashboard/snippets"
     | "/dashboard/users"
     | "/api/stats/github/activity"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
+    | "/dashboard/services/$serviceId/edit"
     | "/dashboard/snippets/$snippetId/edit"
     | "/api/stats/github";
   fileRoutesByTo: FileRoutesByTo;
@@ -412,12 +453,14 @@ export interface FileRouteTypes {
     | "/blog/$articleId"
     | "/bookmarks/$bookmarkId"
     | "/projects/$projectId"
+    | "/services/$serviceId"
     | "/snippets/$snippetId"
     | "/api/auth/$"
     | "/api/trpc/$"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
+    | "/dashboard/services/create"
     | "/dashboard/snippets/create"
     | "/blog"
     | "/bookmarks"
@@ -428,12 +471,14 @@ export interface FileRouteTypes {
     | "/dashboard/blog"
     | "/dashboard/experiences"
     | "/dashboard/projects"
+    | "/dashboard/services"
     | "/dashboard/snippets"
     | "/dashboard/users"
     | "/api/stats/github/activity"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
+    | "/dashboard/services/$serviceId/edit"
     | "/dashboard/snippets/$snippetId/edit"
     | "/api/stats/github";
   id:
@@ -452,12 +497,14 @@ export interface FileRouteTypes {
     | "/(public)/blog/$articleId"
     | "/(public)/bookmarks/$bookmarkId"
     | "/(public)/projects/$projectId"
+    | "/(public)/services/$serviceId"
     | "/(public)/snippets/$snippetId"
     | "/api/auth/$"
     | "/api/trpc/$"
     | "/dashboard/blog/create"
     | "/dashboard/experiences/create"
     | "/dashboard/projects/create"
+    | "/dashboard/services/create"
     | "/dashboard/snippets/create"
     | "/(public)/blog/"
     | "/(public)/bookmarks/"
@@ -468,12 +515,14 @@ export interface FileRouteTypes {
     | "/dashboard/blog/"
     | "/dashboard/experiences/"
     | "/dashboard/projects/"
+    | "/dashboard/services/"
     | "/dashboard/snippets/"
     | "/dashboard/users/"
     | "/api/stats/github/activity"
     | "/dashboard/blog/$articleId/edit"
     | "/dashboard/experiences/$experienceId/edit"
     | "/dashboard/projects/$projectId/edit"
+    | "/dashboard/services/$serviceId/edit"
     | "/dashboard/snippets/$snippetId/edit"
     | "/api/stats/github/";
   fileRoutesById: FileRoutesById;
@@ -583,6 +632,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardSnippetsIndexRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
+    "/dashboard/services/": {
+      id: "/dashboard/services/";
+      path: "/services";
+      fullPath: "/dashboard/services";
+      preLoaderRoute: typeof DashboardServicesIndexRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
     "/dashboard/projects/": {
       id: "/dashboard/projects/";
       path: "/projects";
@@ -653,6 +709,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardSnippetsCreateRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
+    "/dashboard/services/create": {
+      id: "/dashboard/services/create";
+      path: "/services/create";
+      fullPath: "/dashboard/services/create";
+      preLoaderRoute: typeof DashboardServicesCreateRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
     "/dashboard/projects/create": {
       id: "/dashboard/projects/create";
       path: "/projects/create";
@@ -695,6 +758,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof publicSnippetsSnippetIdRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
+    "/(public)/services/$serviceId": {
+      id: "/(public)/services/$serviceId";
+      path: "/services/$serviceId";
+      fullPath: "/services/$serviceId";
+      preLoaderRoute: typeof publicServicesServiceIdRouteImport;
+      parentRoute: typeof publicLayoutRoute;
+    };
     "/(public)/projects/$projectId": {
       id: "/(public)/projects/$projectId";
       path: "/projects/$projectId";
@@ -728,6 +798,13 @@ declare module "@tanstack/react-router" {
       path: "/snippets/$snippetId/edit";
       fullPath: "/dashboard/snippets/$snippetId/edit";
       preLoaderRoute: typeof DashboardSnippetsSnippetIdEditRouteImport;
+      parentRoute: typeof DashboardLayoutRoute;
+    };
+    "/dashboard/services/$serviceId/edit": {
+      id: "/dashboard/services/$serviceId/edit";
+      path: "/services/$serviceId/edit";
+      fullPath: "/dashboard/services/$serviceId/edit";
+      preLoaderRoute: typeof DashboardServicesServiceIdEditRouteImport;
       parentRoute: typeof DashboardLayoutRoute;
     };
     "/dashboard/projects/$projectId/edit": {
@@ -783,6 +860,7 @@ interface publicLayoutRouteChildren {
   publicBlogArticleIdRoute: typeof publicBlogArticleIdRoute;
   publicBookmarksBookmarkIdRoute: typeof publicBookmarksBookmarkIdRoute;
   publicProjectsProjectIdRoute: typeof publicProjectsProjectIdRoute;
+  publicServicesServiceIdRoute: typeof publicServicesServiceIdRoute;
   publicSnippetsSnippetIdRoute: typeof publicSnippetsSnippetIdRoute;
   publicBlogIndexRoute: typeof publicBlogIndexRoute;
   publicBookmarksIndexRoute: typeof publicBookmarksIndexRoute;
@@ -800,6 +878,7 @@ const publicLayoutRouteChildren: publicLayoutRouteChildren = {
   publicBlogArticleIdRoute: publicBlogArticleIdRoute,
   publicBookmarksBookmarkIdRoute: publicBookmarksBookmarkIdRoute,
   publicProjectsProjectIdRoute: publicProjectsProjectIdRoute,
+  publicServicesServiceIdRoute: publicServicesServiceIdRoute,
   publicSnippetsSnippetIdRoute: publicSnippetsSnippetIdRoute,
   publicBlogIndexRoute: publicBlogIndexRoute,
   publicBookmarksIndexRoute: publicBookmarksIndexRoute,
@@ -816,15 +895,18 @@ interface DashboardLayoutRouteChildren {
   DashboardBlogCreateRoute: typeof DashboardBlogCreateRoute;
   DashboardExperiencesCreateRoute: typeof DashboardExperiencesCreateRoute;
   DashboardProjectsCreateRoute: typeof DashboardProjectsCreateRoute;
+  DashboardServicesCreateRoute: typeof DashboardServicesCreateRoute;
   DashboardSnippetsCreateRoute: typeof DashboardSnippetsCreateRoute;
   DashboardBlogIndexRoute: typeof DashboardBlogIndexRoute;
   DashboardExperiencesIndexRoute: typeof DashboardExperiencesIndexRoute;
   DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute;
+  DashboardServicesIndexRoute: typeof DashboardServicesIndexRoute;
   DashboardSnippetsIndexRoute: typeof DashboardSnippetsIndexRoute;
   DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute;
   DashboardBlogArticleIdEditRoute: typeof DashboardBlogArticleIdEditRoute;
   DashboardExperiencesExperienceIdEditRoute: typeof DashboardExperiencesExperienceIdEditRoute;
   DashboardProjectsProjectIdEditRoute: typeof DashboardProjectsProjectIdEditRoute;
+  DashboardServicesServiceIdEditRoute: typeof DashboardServicesServiceIdEditRoute;
   DashboardSnippetsSnippetIdEditRoute: typeof DashboardSnippetsSnippetIdEditRoute;
 }
 
@@ -833,16 +915,19 @@ const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
   DashboardBlogCreateRoute: DashboardBlogCreateRoute,
   DashboardExperiencesCreateRoute: DashboardExperiencesCreateRoute,
   DashboardProjectsCreateRoute: DashboardProjectsCreateRoute,
+  DashboardServicesCreateRoute: DashboardServicesCreateRoute,
   DashboardSnippetsCreateRoute: DashboardSnippetsCreateRoute,
   DashboardBlogIndexRoute: DashboardBlogIndexRoute,
   DashboardExperiencesIndexRoute: DashboardExperiencesIndexRoute,
   DashboardProjectsIndexRoute: DashboardProjectsIndexRoute,
+  DashboardServicesIndexRoute: DashboardServicesIndexRoute,
   DashboardSnippetsIndexRoute: DashboardSnippetsIndexRoute,
   DashboardUsersIndexRoute: DashboardUsersIndexRoute,
   DashboardBlogArticleIdEditRoute: DashboardBlogArticleIdEditRoute,
   DashboardExperiencesExperienceIdEditRoute:
     DashboardExperiencesExperienceIdEditRoute,
   DashboardProjectsProjectIdEditRoute: DashboardProjectsProjectIdEditRoute,
+  DashboardServicesServiceIdEditRoute: DashboardServicesServiceIdEditRoute,
   DashboardSnippetsSnippetIdEditRoute: DashboardSnippetsSnippetIdEditRoute,
 };
 
