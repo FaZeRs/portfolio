@@ -9,13 +9,13 @@ import {
 import { STACKS } from "~/lib/constants/stack";
 
 type StackProps = {
-  projectStack: string[] | null;
+  techStack: string[] | null;
 };
 
-export default function ProjectStacks({ projectStack }: Readonly<StackProps>) {
+export default function TechStacks({ techStack }: Readonly<StackProps>) {
   return (
     <div className="flex items-center gap-3">
-      {projectStack?.map((stack) => (
+      {techStack?.map((stack) => (
         <TooltipProvider delayDuration={200} key={stack}>
           <Tooltip>
             <TooltipTrigger>

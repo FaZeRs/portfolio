@@ -6,6 +6,7 @@ import {
   type Experience,
   guestbook,
   type Project,
+  type Service,
   type Snippet,
   user,
 } from "~/lib/db/schema";
@@ -58,6 +59,7 @@ export type CommentType = typeof comments.$inferSelect;
 export type UserType = typeof user.$inferSelect;
 export type CommentReactionType = typeof commentReactions.$inferSelect;
 export type GuestbookType = typeof guestbook.$inferSelect;
+export type ServiceType = typeof Service.$inferSelect;
 
 export type ContributionCalendar = {
   weeks: ContributionWeeks[];

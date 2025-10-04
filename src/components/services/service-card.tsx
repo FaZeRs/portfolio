@@ -1,34 +1,28 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, PinIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { ProjectType } from "~/types";
+import { ServiceType } from "~/types";
 import { LazyImage } from "../lazy-image";
 import TechStacks from "../tech-stacks";
 
-type ProjectCardProps = {
-  project: ProjectType;
+type ServiceCardProps = {
+  service: ServiceType;
 };
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { title, description, slug, imageUrl, isFeatured, stacks } = project;
+const ServiceCard = ({ service }: ServiceCardProps) => {
+  const { title, description, slug, imageUrl, stacks } = service;
   const thumbnailUrl =
     imageUrl ??
     `https://placehold.co/500x320/darkgray/white/png?text=${encodeURIComponent(title)}`;
+
   return (
     <Link
-      className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4 dark:bg-white/10"
+      className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4"
       params={{
-        projectId: slug,
+        serviceId: slug,
       }}
-      to="/projects/$projectId"
+      to="/services/$serviceId"
     >
-      {isFeatured && (
-        <div className="absolute top-0 right-0 z-[2] flex items-center gap-1 rounded-tr-lg rounded-bl-lg bg-lime-300 px-2 py-1 font-medium text-[13px] text-emerald-950">
-          <PinIcon size={15} />
-          <span>Featured</span>
-        </div>
-      )}
-
       <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl border">
         <LazyImage
           alt={description ?? ""}
@@ -39,7 +33,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           width={500}
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center gap-1 rounded-xl bg-black font-medium text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-80">
-          <span>View Project</span>
+          <span>View Service</span>
           <ArrowRight size={20} />
         </div>
       </div>
@@ -58,4 +52,4 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   );
 };
 
-export default ProjectCard;
+export default ServiceCard;

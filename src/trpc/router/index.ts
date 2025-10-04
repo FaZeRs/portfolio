@@ -4,6 +4,7 @@ import { commentRouter } from "~/trpc/router/comment";
 import { experienceRouter } from "~/trpc/router/experience";
 import { guestbookRouter } from "~/trpc/router/guestbook";
 import { projectRouter } from "~/trpc/router/project";
+import { serviceRouter } from "~/trpc/router/service";
 import { snippetRouter } from "~/trpc/router/snippet";
 import { statsRouter } from "~/trpc/router/stats";
 import { userRouter } from "~/trpc/router/user";
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   comment: commentRouter,
   stats: statsRouter,
   guestbook: guestbookRouter,
+  service: serviceRouter,
 });
 
 export type AppRouter = typeof appRouter;

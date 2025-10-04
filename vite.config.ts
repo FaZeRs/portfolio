@@ -1,10 +1,10 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
-import { nitroV2Plugin } from "@tanstack/nitro-v2-vite-plugin";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
+import { nitro } from "nitro/vite";
 import { generateSitemap } from "tanstack-router-sitemap";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
@@ -39,11 +39,13 @@ export default defineConfig({
         routeToken: "layout",
       },
     }),
-    nitroV2Plugin({
-      compatibilityDate: "latest",
-      esbuild: {
-        options: {
-          target: "es2022",
+    nitro({
+      config: {
+        compatibilityDate: "latest",
+        esbuild: {
+          options: {
+            target: "es2022",
+          },
         },
       },
     }),

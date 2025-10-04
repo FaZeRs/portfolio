@@ -4,6 +4,7 @@ import BlogSection from "~/components/blog/articles";
 import Contact from "~/components/contact";
 import ExperienceSection from "~/components/experiences/experience";
 import Intro from "~/components/intro";
+import ServicesSection from "~/components/services/services";
 import SkillSection from "~/components/skills";
 
 export const Route = createFileRoute("/(public)/")({
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/(public)/")({
   loader: async ({ context: { trpc, queryClient } }) => {
     await queryClient.prefetchQuery(trpc.experience.allPublic.queryOptions());
     await queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions());
+    await queryClient.prefetchQuery(trpc.service.allPublic.queryOptions());
   },
 });
 
@@ -20,6 +22,7 @@ function Home() {
       <Intro />
       <div className="mb-20 flex flex-col items-center space-y-40">
         <BlogSection />
+        <ServicesSection />
         <SkillSection />
         <ExperienceSection />
         <Contact />
