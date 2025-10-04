@@ -3,7 +3,7 @@ import { ArrowRight, PinIcon } from "lucide-react";
 
 import { ProjectType } from "~/types";
 import { LazyImage } from "../lazy-image";
-import ProjectStacks from "./project-stacks";
+import TechStacks from "../tech-stacks";
 
 type ProjectCardProps = {
   project: ProjectType;
@@ -52,7 +52,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           {description}
         </p>
 
-        <ProjectStacks projectStack={stacks} />
+        <TechStacks techStack={stacks} />
       </div>
     </Link>
   );
