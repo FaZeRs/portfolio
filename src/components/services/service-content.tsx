@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import type { ServiceType } from "~/types";
 import TechStacks from "../tech-stacks";
 import ZoomImage from "../zoom-image";
+import ServiceContact from "./service-contact";
 
 const CustomMDX = lazy(() => import("../mdx/mdx"));
 
@@ -55,6 +56,10 @@ export default function ServiceContent({
           </ClientOnly>
         </div>
       )}
+
+      <div className="mt-8">
+        <ServiceContact />
+      </div>
     </div>
   );
 }
