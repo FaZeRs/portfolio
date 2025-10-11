@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar } from "lucide-react";
+import { Calendar, MessageSquare } from "lucide-react";
+import { useState } from "react";
 
-import { buttonVariants } from "~/components/ui/button";
 import { siteConfig } from "~/lib/config/site";
-import { cn } from "~/lib/utils";
+import ContactModal from "./contact-modal";
 import { LazyImage } from "./lazy-image";
+import { Button } from "./ui/button";
 
 const Intro = () => {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <section className="-mt-10 flex min-h-[calc(100vh-80px)] scroll-mt-[100rem] flex-col justify-center space-y-4 text-center sm:mb-0">
       <div className="flex items-center justify-center">
@@ -49,28 +52,42 @@ const Intro = () => {
 
       <motion.div
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col items-center justify-center gap-2 px-4 font-medium text-lg sm:flex-row"
+        className="flex flex-col items-center justify-center gap-3 px-4 font-medium text-lg sm:flex-row"
         initial={{ opacity: 0, y: 100 }}
         transition={{
           delay: 0.1,
         }}
       >
-        <a
-          className={cn(buttonVariants({ variant: "default" }), "group")}
-          href="#contact"
+        <Button
+          className="group min-w-[200px]"
+          onClick={() => setIsContactModalOpen(true)}
+          size="lg"
+          variant="default"
         >
+          <MessageSquare className="mr-2 h-5 w-5" />
           Contact me
-          <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
-        </a>
-        <a
-          className={cn(buttonVariants({ variant: "secondary" }), "group")}
-          href={siteConfig.calendlyUrl}
-          target="_blank"
+        </Button>
+        <Button
+          asChild
+          className="group min-w-[200px]"
+          size="lg"
+          variant="secondary"
         >
-          Book a call
-          <Calendar className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
-        </a>
+          <a
+            href={siteConfig.calendlyUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Calendar className="mr-2 h-5 w-5" />
+            Book a call
+          </a>
+        </Button>
       </motion.div>
+
+      <ContactModal
+        onOpenChange={setIsContactModalOpen}
+        open={isContactModalOpen}
+      />
     </section>
   );
 };

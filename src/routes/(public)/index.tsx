@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import BlogSection from "~/components/blog/articles";
-
-import Contact from "~/components/contact";
+import CTASection from "~/components/cta-section";
 import ExperienceSection from "~/components/experiences/experience";
 import Intro from "~/components/intro";
 import ServicesSection from "~/components/services/services";
@@ -25,7 +24,7 @@ function Home() {
         <ServicesSection />
         <SkillSection />
         <ExperienceSection />
-        <Contact />
+        <CTASection />
       </div>
     </>
   );
