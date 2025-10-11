@@ -38,9 +38,9 @@ export default function ServiceContent({
         <ZoomImage
           alt={title}
           className="scale-100 rounded-lg border object-cover blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"
-          height={600}
+          height={700}
           src={thumbnailUrl}
-          width={1000}
+          width={1200}
         />
       </div>
 
