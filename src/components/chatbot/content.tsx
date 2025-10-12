@@ -1,5 +1,7 @@
 import { useChat } from "@ai-sdk/react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useChatHistory } from "~/hooks/use-chat-history";
 import { ChatHeader } from "./header";
 import { ChatInput } from "./input";
 import { ChatMessages } from "./messages";
@@ -9,7 +11,24 @@ export function ChatbotContent({
 }: Readonly<{
   setIsOpen: (isOpen: boolean) => void;
 }>) {
-  const { messages, sendMessage, status } = useChat();
+  const {
+    messages: storedMessages,
+    setMessages: setStoredMessages,
+    clearHistory: clearStoredHistory,
+  } = useChatHistory();
+
+  const { messages, sendMessage, status, setMessages } = useChat({
+    messages: storedMessages,
+  });
+
+  useEffect(() => {
+    setStoredMessages(messages);
+  }, [messages, setStoredMessages]);
+
+  const clearHistory = () => {
+    setMessages([]);
+    clearStoredHistory();
+  };
 
   return (
     <>
@@ -34,7 +53,11 @@ export function ChatbotContent({
         }}
       >
         <div className="flex h-full flex-col rounded-2xl border border-border/50 bg-background/95 shadow-2xl ring-1 ring-black/5 backdrop-blur-xl">
-          <ChatHeader setIsOpen={setIsOpen} status={status} />
+          <ChatHeader
+            clearHistory={clearHistory}
+            setIsOpen={setIsOpen}
+            status={status}
+          />
           <div className="flex min-h-0 flex-1 flex-col">
             <ChatMessages messages={messages} status={status} />
             <ChatInput sendMessage={sendMessage} status={status} />
