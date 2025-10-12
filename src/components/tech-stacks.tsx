@@ -14,7 +14,7 @@ type StackProps = {
 
 export default function TechStacks({ techStack }: Readonly<StackProps>) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex flex-wrap items-center gap-3">
       {techStack?.map((stack) => (
         <TooltipProvider delayDuration={200} key={stack}>
           <Tooltip>

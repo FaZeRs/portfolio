@@ -22,17 +22,17 @@ export default function ServiceContact() {
         <CardContent>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button
-              className="group flex-1"
+              className="group w-full sm:flex-1"
               onClick={() => setIsContactModalOpen(true)}
               size="lg"
               variant="default"
             >
-              <MessageSquare className="mr-2 h-4 w-4" />
+              <MessageSquare className="mr-2 h-4 w-4 shrink-0" />
               Send a Message
             </Button>
             <Button
               asChild
-              className="group flex-1"
+              className="group w-full sm:flex-1"
               size="lg"
               variant="secondary"
             >
@@ -41,7 +41,7 @@ export default function ServiceContact() {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <Calendar className="mr-2 h-4 w-4" />
+                <Calendar className="mr-2 h-4 w-4 shrink-0" />
                 Book a Meeting
               </a>
             </Button>
