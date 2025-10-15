@@ -1,6 +1,6 @@
 import { ErrorBoundary } from "@sentry/tanstackstart-react";
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerOnlyFn } from "@tanstack/react-start";
+import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 import { Suspense } from "react";
 
@@ -11,7 +11,7 @@ import { userColumns } from "~/components/users/columns";
 import { auth } from "~/lib/auth/auth";
 import { UserType } from "~/types";
 
-const getUsers = createServerOnlyFn(async () => {
+const getUsers = createServerFn({ method: "GET" }).handler(async () => {
   const { headers } = getRequest();
 
   const data = await auth.api.listUsers({
