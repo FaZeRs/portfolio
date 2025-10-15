@@ -6,7 +6,7 @@ import { Label } from "~/components/ui/label";
 import { ArticleType } from "~/types";
 
 type FilteredArticlesProps = {
-  articles: ArticleType[];
+  articles: (ArticleType & { viewCount: number })[];
 };
 
 export default function FilteredArticles({

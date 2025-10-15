@@ -5,7 +5,7 @@ import { formatDate } from "~/lib/utils";
 import { ArticleType } from "~/types";
 
 type ArticleCardProps = {
-  article: ArticleType;
+  article: ArticleType & { viewCount: number };
 };
 
 const ArticleCard = ({ article }: ArticleCardProps) => {
@@ -39,7 +39,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
               <EyeIcon className="size-4" />
-              <span>{article.views} views</span>
+              <span>{article.viewCount} views</span>
             </div>
 
             <div className="flex items-center gap-1">

@@ -19,7 +19,6 @@ export const articles = pgTable("articles", (t) => ({
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
   likes: t.integer().notNull().default(0),
-  views: t.integer().notNull().default(0),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t
     .timestamp({ mode: "date", withTimezone: true })
@@ -28,6 +27,7 @@ export const articles = pgTable("articles", (t) => ({
 
 export const articleRelations = relations(articles, (t) => ({
   comments: t.many(comments),
+  views: t.many(articleViews),
   author: t.one(user, {
     fields: [articles.authorId],
     references: [user.id],
@@ -84,6 +84,22 @@ export const commentRelations = relations(comments, (t) => ({
 export const articleLikes = pgTable("article_likes", (t) => ({
   id: t.text().notNull().primaryKey(),
   createdAt: t.timestamp().defaultNow().notNull(),
+}));
+
+export const articleViews = pgTable("article_views", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  articleId: t
+    .uuid()
+    .references(() => articles.id, { onDelete: "cascade" })
+    .notNull(),
+  createdAt: t.timestamp().defaultNow().notNull(),
+}));
+
+export const articleViewRelations = relations(articleViews, (t) => ({
+  article: t.one(articles, {
+    fields: [articleViews.articleId],
+    references: [articles.id],
+  }),
 }));
 
 const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

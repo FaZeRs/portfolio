@@ -1,7 +1,7 @@
 import { TRPCRouterRecord } from "@trpc/server";
 import { sql } from "drizzle-orm";
 import { z } from "zod/v4";
-import { articles, user } from "~/lib/db/schema";
+import { articleViews, user } from "~/lib/db/schema";
 
 import { protectedProcedure } from "~/trpc/init";
 
@@ -81,13 +81,13 @@ export const statsRouter = {
       const months = input?.months ?? DEFAULT_MONTHS;
       const start = calculateStartDate(months);
 
-      // Fetch monthly aggregated views from DB by article publish month
+      // Fetch monthly aggregated views from DB by actual view timestamp
       const result = await ctx.db.execute(
         sql<{ month: string; count: number }>`
-          SELECT to_char(date_trunc('month', ${articles.createdAt}), 'YYYY-MM') AS month,
-                 SUM(${articles.views})::int AS count
-          FROM ${articles}
-          WHERE ${articles.createdAt} >= ${start}
+          SELECT to_char(date_trunc('month', ${articleViews.createdAt}), 'YYYY-MM') AS month,
+                 COUNT(*)::int AS count
+          FROM ${articleViews}
+          WHERE ${articleViews.createdAt} >= ${start}
           GROUP BY 1
           ORDER BY 1
         `

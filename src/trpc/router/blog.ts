@@ -5,6 +5,7 @@ import { z } from "zod/v4";
 import {
   articleLikes,
   articles,
+  articleViews,
   CreateArticleSchema,
   UpdateArticleSchema,
 } from "~/lib/db/schema";
@@ -20,11 +21,30 @@ export const blogRouter = {
     });
   }),
 
-  allPublic: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.articles.findMany({
-      orderBy: desc(articles.createdAt),
-      where: eq(articles.isDraft, false),
-    });
+  allPublic: publicProcedure.query(async ({ ctx }) => {
+    const result = await ctx.db
+      .select({
+        id: articles.id,
+        title: articles.title,
+        slug: articles.slug,
+        description: articles.description,
+        imageUrl: articles.imageUrl,
+        createdAt: articles.createdAt,
+        updatedAt: articles.updatedAt,
+        isDraft: articles.isDraft,
+        likes: articles.likes,
+        authorId: articles.authorId,
+        content: articles.content,
+        tags: articles.tags,
+        viewCount: sql<number>`count(${articleViews.id})`.as("view_count"),
+      })
+      .from(articles)
+      .leftJoin(articleViews, eq(articles.id, articleViews.articleId))
+      .where(eq(articles.isDraft, false))
+      .groupBy(articles.id)
+      .orderBy(desc(articles.createdAt));
+
+    return result;
   }),
 
   bySlug: publicProcedure
@@ -53,9 +73,15 @@ export const blogRouter = {
         });
       }
 
+      // Get view count separately
+      const viewCount = await ctx.db
+        .select({ count: sql<number>`count(*)` })
+        .from(articleViews)
+        .where(eq(articleViews.articleId, article.id));
+
       const toc = await getTOC(article.content ?? "");
 
-      return { ...article, toc };
+      return { ...article, toc, viewCount: viewCount[0]?.count ?? 0 };
     }),
 
   byId: protectedProcedure
@@ -246,11 +272,9 @@ export const blogRouter = {
         });
       }
 
-      return ctx.db
-        .update(articles)
-        .set({
-          views: article.views + 1,
-        })
-        .where(eq(articles.slug, input.slug));
+      // Insert view record with timestamp
+      return ctx.db.insert(articleViews).values({
+        articleId: article.id,
+      });
     }),
 } satisfies TRPCRouterRecord;

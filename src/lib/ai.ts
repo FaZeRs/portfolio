@@ -146,7 +146,6 @@ const getArticles = tool({
         description: true,
         tags: true,
         likes: true,
-        views: true,
         createdAt: true,
       },
     });
@@ -185,7 +184,6 @@ const searchArticles = tool({
         description: true,
         tags: true,
         likes: true,
-        views: true,
         createdAt: true,
       },
     });
@@ -210,7 +208,6 @@ const recommendArticle = tool({
         description: true,
         tags: true,
         likes: true,
-        views: true,
         createdAt: true,
       },
     });

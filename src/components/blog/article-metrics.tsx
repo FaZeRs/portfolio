@@ -3,7 +3,7 @@ import { calculateReadingTime, formatDate } from "~/lib/utils";
 import { ArticleType, CommentType } from "~/types";
 
 type ArticleMetricsProps = {
-  article: ArticleType & { comments: CommentType[] };
+  article: ArticleType & { comments: CommentType[]; viewCount: number };
 };
 
 const ArticleMetrics = ({ article }: ArticleMetricsProps) => {
@@ -23,7 +23,7 @@ const ArticleMetrics = ({ article }: ArticleMetricsProps) => {
         </div>
         <div className="flex items-center gap-1">
           <EyeIcon className="size-4" />
-          <span>{article.views} views</span>
+          <span>{article.viewCount} views</span>
         </div>
 
         <div className="flex items-center gap-1">
