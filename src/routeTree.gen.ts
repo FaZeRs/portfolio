@@ -270,6 +270,7 @@ const ApiStatsGithubActivityRoute = ApiStatsGithubActivityRouteImport.update({
 } as any);
 
 export interface FileRoutesByFullPath {
+  "/": typeof publicIndexRoute;
   "/dashboard": typeof DashboardLayoutRouteWithChildren;
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
@@ -277,7 +278,6 @@ export interface FileRoutesByFullPath {
   "/profile": typeof publicProfileRoute;
   "/stats": typeof publicStatsRoute;
   "/uses": typeof publicUsesRoute;
-  "/": typeof publicIndexRoute;
   "/dashboard/": typeof DashboardIndexRoute;
   "/blog/$articleId": typeof publicBlogArticleIdRoute;
   "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
@@ -312,13 +312,13 @@ export interface FileRoutesByFullPath {
   "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRoutesByTo {
+  "/": typeof publicIndexRoute;
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
   "/guestbook": typeof publicGuestbookRoute;
   "/profile": typeof publicProfileRoute;
   "/stats": typeof publicStatsRoute;
   "/uses": typeof publicUsesRoute;
-  "/": typeof publicIndexRoute;
   "/dashboard": typeof DashboardIndexRoute;
   "/blog/$articleId": typeof publicBlogArticleIdRoute;
   "/bookmarks/$bookmarkId": typeof publicBookmarksBookmarkIdRoute;
@@ -400,6 +400,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
+    | "/"
     | "/dashboard"
     | "/signin"
     | "/about"
@@ -407,7 +408,6 @@ export interface FileRouteTypes {
     | "/profile"
     | "/stats"
     | "/uses"
-    | "/"
     | "/dashboard/"
     | "/blog/$articleId"
     | "/bookmarks/$bookmarkId"
@@ -442,13 +442,13 @@ export interface FileRouteTypes {
     | "/api/stats/github";
   fileRoutesByTo: FileRoutesByTo;
   to:
+    | "/"
     | "/signin"
     | "/about"
     | "/guestbook"
     | "/profile"
     | "/stats"
     | "/uses"
-    | "/"
     | "/dashboard"
     | "/blog/$articleId"
     | "/bookmarks/$bookmarkId"
@@ -550,15 +550,15 @@ declare module "@tanstack/react-router" {
     };
     "/(public)": {
       id: "/(public)";
-      path: "";
-      fullPath: "";
+      path: "/";
+      fullPath: "/";
       preLoaderRoute: typeof publicLayoutRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/(auth)": {
       id: "/(auth)";
-      path: "";
-      fullPath: "";
+      path: "/";
+      fullPath: "/";
       preLoaderRoute: typeof authLayoutRouteImport;
       parentRoute: typeof rootRouteImport;
     };
