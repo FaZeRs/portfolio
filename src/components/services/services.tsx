@@ -16,7 +16,7 @@ export default function Services() {
   return (
     <div>
       <SectionHeading>Services</SectionHeading>
-      <div className="grid gap-10 sm:grid-cols-2">
+      <div className="flex flex-col gap-8">
         {services.map((service) => (
           <ServiceCard key={service.slug} service={service} />
         ))}
