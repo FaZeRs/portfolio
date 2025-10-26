@@ -5,12 +5,15 @@ import { createIsomorphicFn, createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 import {
   createTRPCClient,
-  httpBatchStreamLink,
+  httpBatchLink,
+  httpLink,
+  isNonJsonSerializable,
   loggerLink,
+  splitLink,
 } from "@trpc/client";
+import { TRPCCombinedDataTransformer } from "@trpc/server";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import superjson from "superjson";
-
+import superjson, { SuperJSON } from "superjson";
 import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
 import { getBaseUrl } from "~/lib/utils";
@@ -28,6 +31,28 @@ const getRequestHeaders = createServerFn({ method: "GET" }).handler(() => {
 const headers = createIsomorphicFn()
   .client(() => ({}))
   .server(() => getRequestHeaders());
+
+function getUrl() {
+  return `${getBaseUrl()}/api/trpc`;
+}
+
+export const transformer: TRPCCombinedDataTransformer = {
+  input: {
+    serialize: (obj) => {
+      if (isNonJsonSerializable(obj)) {
+        return obj;
+      }
+      return SuperJSON.serialize(obj);
+    },
+    deserialize: (obj) => {
+      if (isNonJsonSerializable(obj)) {
+        return obj;
+      }
+      return SuperJSON.deserialize(obj);
+    },
+  },
+  output: SuperJSON,
+};
 
 export function getRouter() {
   const queryClient = new QueryClient({
@@ -50,10 +75,30 @@ export function getRouter() {
           process.env.NODE_ENV === "development" ||
           (op.direction === "down" && op.result instanceof Error),
       }),
-      httpBatchStreamLink({
-        transformer: superjson,
-        url: `${getBaseUrl()}/api/trpc`,
-        headers,
+      splitLink({
+        condition: (op) => isNonJsonSerializable(op.input),
+        true: httpLink({
+          url: getUrl(),
+          transformer,
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
+          headers,
+        }),
+        false: httpBatchLink({
+          url: getUrl(),
+          transformer,
+          headers,
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
+        }),
       }),
     ],
   });
