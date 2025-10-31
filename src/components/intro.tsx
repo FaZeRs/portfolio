@@ -11,7 +11,7 @@ const Intro = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
-    <section className="-mt-10 flex min-h-[calc(100vh-80px)] scroll-mt-[100rem] flex-col justify-center space-y-4 text-center sm:mb-0">
+    <section className="flex min-h-[calc(100vh-80px)] scroll-mt-[100rem] flex-col justify-center space-y-4 text-center sm:mb-0">
       <div className="flex items-center justify-center">
         <div className="relative">
           <motion.div
