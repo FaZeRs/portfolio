@@ -40,14 +40,7 @@ export default defineConfig({
       },
     }),
     nitro({
-      config: {
-        compatibilityDate: "latest",
-        esbuild: {
-          options: {
-            target: "es2022",
-          },
-        },
-      },
+      compatibilityDate: "latest",
     }),
     viteReact({
       // https://react.dev/learn/react-compiler
