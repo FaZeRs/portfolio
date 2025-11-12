@@ -1,7 +1,7 @@
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { createIsomorphicFn, createServerFn } from "@tanstack/react-start";
+import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 import {
   createTRPCClient,
@@ -16,25 +16,20 @@ import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import superjson, { SuperJSON } from "superjson";
 import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
-import { getBaseUrl } from "~/lib/utils";
 import { TRPCProvider } from "~/trpc/react";
 import { AppRouter } from "~/trpc/router";
 import { routeTree } from "./routeTree.gen";
 
-const getRequestHeaders = createServerFn({ method: "GET" }).handler(() => {
-  const request = getRequest();
-  const headers = new Headers(request?.headers);
-
-  return Object.fromEntries(headers);
-});
-
 const headers = createIsomorphicFn()
   .client(() => ({}))
-  .server(() => getRequestHeaders());
-
-function getUrl() {
-  return `${getBaseUrl()}/api/trpc`;
-}
+  .server(() => {
+    const request = getRequest();
+    if (!request) {
+      return {};
+    }
+    const requestHeaders = new Headers(request.headers);
+    return Object.fromEntries(requestHeaders);
+  });
 
 export const transformer: TRPCCombinedDataTransformer = {
   input: {
@@ -78,7 +73,7 @@ export function getRouter() {
       splitLink({
         condition: (op) => isNonJsonSerializable(op.input),
         true: httpLink({
-          url: getUrl(),
+          url: "/api/trpc",
           transformer,
           fetch(url, options) {
             return fetch(url, {
@@ -89,7 +84,7 @@ export function getRouter() {
           headers,
         }),
         false: httpBatchLink({
-          url: getUrl(),
+          url: "/api/trpc",
           transformer,
           headers,
           fetch(url, options) {
