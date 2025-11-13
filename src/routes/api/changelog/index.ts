@@ -1,16 +1,13 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { createFileRoute } from "@tanstack/react-router";
 import { getTOC } from "~/lib/utils";
+import changelogContent from "../../../../CHANGELOG.md?raw";
 
 export const Route = createFileRoute("/api/changelog/")({
   server: {
     handlers: {
       GET: () => {
         try {
-          // Read CHANGELOG.md from the project root
-          const changelogPath = join(process.cwd(), "CHANGELOG.md");
-          const content = readFileSync(changelogPath, "utf-8");
+          const content = changelogContent as string;
           const toc = getTOC(content ?? "");
 
           return new Response(JSON.stringify({ content, toc }), {
