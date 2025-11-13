@@ -14,6 +14,7 @@ import {
 } from "../form";
 import { withForm } from "../ui/form";
 import Icon from "../ui/icon";
+import { AIAssistDialog } from "./ai-assist-dialog";
 
 export const articleFormOpts = formOptions({
   defaultValues: {
@@ -51,12 +52,34 @@ export const ArticleForm = withForm({
           name="title"
         >
           {(field) => (
-            <FormInput
-              field={field}
-              label="Title"
-              placeholder="Article Title"
-              required
-            />
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Title
+                  <span className="ml-1 text-destructive">*</span>
+                </span>
+                <AIAssistDialog
+                  buttonSize="sm"
+                  buttonVariant="ghost"
+                  context={{
+                    topic: form.getFieldValue("description") || "",
+                    currentContent: form.getFieldValue("content") || "",
+                  }}
+                  description="Get AI-generated title suggestions for your blog post"
+                  label="AI Suggest"
+                  onApply={(content) => {
+                    field.handleChange(content);
+                  }}
+                  type="title"
+                />
+              </div>
+              <FormInput
+                field={field}
+                label=""
+                placeholder="Article Title"
+                required
+              />
+            </div>
           )}
         </form.AppField>
 
@@ -73,23 +96,81 @@ export const ArticleForm = withForm({
 
         <form.AppField name="description">
           {(field) => (
-            <FormTextarea
-              field={field}
-              label="Description"
-              placeholder="A brief description of your article"
-            />
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Description
+                </span>
+                <AIAssistDialog
+                  buttonSize="sm"
+                  buttonVariant="ghost"
+                  context={{
+                    title: form.getFieldValue("title") || "",
+                    currentContent: form.getFieldValue("content") || "",
+                  }}
+                  description="Generate a compelling description for your blog post"
+                  label="AI Suggest"
+                  onApply={(content) => {
+                    field.handleChange(content.trim());
+                  }}
+                  type="description"
+                />
+              </div>
+              <FormTextarea
+                field={field}
+                label=""
+                placeholder="A brief description of your article"
+              />
+            </div>
           )}
         </form.AppField>
 
         <form.AppField name="content">
           {(field) => (
-            <FormMDXEditor
-              field={field}
-              label="Content"
-              placeholder="# Article Details
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Content
+                </span>
+                <div className="flex gap-2">
+                  <AIAssistDialog
+                    buttonSize="sm"
+                    buttonVariant="ghost"
+                    context={{
+                      title: form.getFieldValue("title") || "",
+                      description: form.getFieldValue("description") || "",
+                    }}
+                    description="Create a detailed outline for your blog post"
+                    label="Create Outline"
+                    onApply={(content) => {
+                      field.handleChange(content.trim());
+                    }}
+                    type="outline"
+                  />
+                  <AIAssistDialog
+                    buttonSize="sm"
+                    buttonVariant="ghost"
+                    context={{
+                      title: form.getFieldValue("title") || "",
+                      description: form.getFieldValue("description") || "",
+                    }}
+                    description="Generate complete blog post content"
+                    label="Generate Content"
+                    onApply={(content) => {
+                      field.handleChange(content.trim());
+                    }}
+                    type="content"
+                  />
+                </div>
+              </div>
+              <FormMDXEditor
+                field={field}
+                label=""
+                placeholder="# Article Details
 ## Overview
 A brief overview of your article."
-            />
+              />
+            </div>
           )}
         </form.AppField>
 

@@ -47,6 +47,7 @@ import { Route as publicProjectsProjectIdRouteImport } from "./routes/(public)/p
 import { Route as publicBookmarksBookmarkIdRouteImport } from "./routes/(public)/bookmarks/$bookmarkId";
 import { Route as publicBlogArticleIdRouteImport } from "./routes/(public)/blog/$articleId";
 import { Route as ApiStatsGithubIndexRouteImport } from "./routes/api/stats/github/index";
+import { Route as ApiAiBlogAssistIndexRouteImport } from "./routes/api/ai/blog-assist/index";
 import { Route as DashboardSnippetsSnippetIdEditRouteImport } from "./routes/dashboard/snippets/$snippetId.edit";
 import { Route as DashboardServicesServiceIdEditRouteImport } from "./routes/dashboard/services/$serviceId.edit";
 import { Route as DashboardProjectsProjectIdEditRouteImport } from "./routes/dashboard/projects/$projectId.edit";
@@ -245,6 +246,11 @@ const ApiStatsGithubIndexRoute = ApiStatsGithubIndexRouteImport.update({
   path: "/api/stats/github/",
   getParentRoute: () => rootRouteImport,
 } as any);
+const ApiAiBlogAssistIndexRoute = ApiAiBlogAssistIndexRouteImport.update({
+  id: "/api/ai/blog-assist/",
+  path: "/api/ai/blog-assist/",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const DashboardSnippetsSnippetIdEditRoute =
   DashboardSnippetsSnippetIdEditRouteImport.update({
     id: "/snippets/$snippetId/edit",
@@ -323,6 +329,7 @@ export interface FileRoutesByFullPath {
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
   "/dashboard/services/$serviceId/edit": typeof DashboardServicesServiceIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
+  "/api/ai/blog-assist": typeof ApiAiBlogAssistIndexRoute;
   "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRoutesByTo {
@@ -366,6 +373,7 @@ export interface FileRoutesByTo {
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
   "/dashboard/services/$serviceId/edit": typeof DashboardServicesServiceIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
+  "/api/ai/blog-assist": typeof ApiAiBlogAssistIndexRoute;
   "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRoutesById {
@@ -413,6 +421,7 @@ export interface FileRoutesById {
   "/dashboard/projects/$projectId/edit": typeof DashboardProjectsProjectIdEditRoute;
   "/dashboard/services/$serviceId/edit": typeof DashboardServicesServiceIdEditRoute;
   "/dashboard/snippets/$snippetId/edit": typeof DashboardSnippetsSnippetIdEditRoute;
+  "/api/ai/blog-assist/": typeof ApiAiBlogAssistIndexRoute;
   "/api/stats/github/": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRouteTypes {
@@ -459,6 +468,7 @@ export interface FileRouteTypes {
     | "/dashboard/projects/$projectId/edit"
     | "/dashboard/services/$serviceId/edit"
     | "/dashboard/snippets/$snippetId/edit"
+    | "/api/ai/blog-assist"
     | "/api/stats/github";
   fileRoutesByTo: FileRoutesByTo;
   to:
@@ -502,6 +512,7 @@ export interface FileRouteTypes {
     | "/dashboard/projects/$projectId/edit"
     | "/dashboard/services/$serviceId/edit"
     | "/dashboard/snippets/$snippetId/edit"
+    | "/api/ai/blog-assist"
     | "/api/stats/github";
   id:
     | "__root__"
@@ -548,6 +559,7 @@ export interface FileRouteTypes {
     | "/dashboard/projects/$projectId/edit"
     | "/dashboard/services/$serviceId/edit"
     | "/dashboard/snippets/$snippetId/edit"
+    | "/api/ai/blog-assist/"
     | "/api/stats/github/";
   fileRoutesById: FileRoutesById;
 }
@@ -561,6 +573,7 @@ export interface RootRouteChildren {
   ApiChatIndexRoute: typeof ApiChatIndexRoute;
   ApiContactIndexRoute: typeof ApiContactIndexRoute;
   ApiStatsGithubActivityRoute: typeof ApiStatsGithubActivityRoute;
+  ApiAiBlogAssistIndexRoute: typeof ApiAiBlogAssistIndexRoute;
   ApiStatsGithubIndexRoute: typeof ApiStatsGithubIndexRoute;
 }
 
@@ -832,6 +845,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ApiStatsGithubIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/api/ai/blog-assist/": {
+      id: "/api/ai/blog-assist/";
+      path: "/api/ai/blog-assist";
+      fullPath: "/api/ai/blog-assist";
+      preLoaderRoute: typeof ApiAiBlogAssistIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/dashboard/snippets/$snippetId/edit": {
       id: "/dashboard/snippets/$snippetId/edit";
       path: "/snippets/$snippetId/edit";
@@ -986,6 +1006,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiChatIndexRoute: ApiChatIndexRoute,
   ApiContactIndexRoute: ApiContactIndexRoute,
   ApiStatsGithubActivityRoute: ApiStatsGithubActivityRoute,
+  ApiAiBlogAssistIndexRoute: ApiAiBlogAssistIndexRoute,
   ApiStatsGithubIndexRoute: ApiStatsGithubIndexRoute,
 };
 export const routeTree = rootRouteImport
