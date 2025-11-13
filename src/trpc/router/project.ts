@@ -38,7 +38,7 @@ export const projectRouter = {
       }
 
       // if project is draft, throw an error unless user is admin
-      if (project.isDraft && ctx.session?.user.role !== "ADMIN") {
+      if (project.isDraft && ctx.session?.user.role !== "admin") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Project is not public",

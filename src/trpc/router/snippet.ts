@@ -46,7 +46,7 @@ export const snippetRouter = {
       }
 
       // if project is draft, throw an error unless user is admin
-      if (snippet.isDraft && ctx.session?.user.role !== "ADMIN") {
+      if (snippet.isDraft && ctx.session?.user.role !== "admin") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Snippet is not public",

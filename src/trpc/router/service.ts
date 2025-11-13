@@ -37,7 +37,7 @@ export const serviceRouter = {
       }
 
       // if project is draft, throw an error unless user is admin
-      if (service.isDraft && ctx.session?.user.role !== "ADMIN") {
+      if (service.isDraft && ctx.session?.user.role !== "admin") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Service is not public",

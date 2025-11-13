@@ -66,7 +66,7 @@ export const blogRouter = {
       }
 
       // if project is draft, throw an error unless user is admin
-      if (article.isDraft && ctx.session?.user.role !== "ADMIN") {
+      if (article.isDraft && ctx.session?.user.role !== "admin") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Article is not public",
@@ -173,7 +173,7 @@ export const blogRouter = {
       }
 
       // if article is draft, throw an error unless user is admin
-      if (article.isDraft && ctx.session?.user.role !== "ADMIN") {
+      if (article.isDraft && ctx.session?.user.role !== "admin") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Article is not public",
