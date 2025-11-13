@@ -35,5 +35,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - TypeScript with strict mode
 - Biome for linting and formatting
 
-[Unreleased]: https://github.com/yourusername/portfolio/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourusername/portfolio/releases/tag/v1.0.0
+[Unreleased]: https://github.com/fazers/portfolio/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/fazers/portfolio/releases/tag/v1.0.0
