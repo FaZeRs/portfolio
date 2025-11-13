@@ -26,6 +26,7 @@ const highlighterPromise = createHighlighterCore({
     import("@shikijs/langs/json"),
     import("@shikijs/langs/html"),
     import("@shikijs/langs/css"),
+    import("@shikijs/langs/cpp"),
   ],
   engine: createJavaScriptRegexEngine(),
 });
