@@ -18,6 +18,7 @@ import { Route as publicUsesRouteImport } from "./routes/(public)/uses";
 import { Route as publicStatsRouteImport } from "./routes/(public)/stats";
 import { Route as publicProfileRouteImport } from "./routes/(public)/profile";
 import { Route as publicGuestbookRouteImport } from "./routes/(public)/guestbook";
+import { Route as publicChangelogRouteImport } from "./routes/(public)/changelog";
 import { Route as publicAboutRouteImport } from "./routes/(public)/about";
 import { Route as authSigninRouteImport } from "./routes/(auth)/signin";
 import { Route as DashboardUsersIndexRouteImport } from "./routes/dashboard/users/index";
@@ -28,6 +29,7 @@ import { Route as DashboardExperiencesIndexRouteImport } from "./routes/dashboar
 import { Route as DashboardBlogIndexRouteImport } from "./routes/dashboard/blog/index";
 import { Route as ApiContactIndexRouteImport } from "./routes/api/contact/index";
 import { Route as ApiChatIndexRouteImport } from "./routes/api/chat/index";
+import { Route as ApiChangelogIndexRouteImport } from "./routes/api/changelog/index";
 import { Route as publicSnippetsIndexRouteImport } from "./routes/(public)/snippets/index";
 import { Route as publicProjectsIndexRouteImport } from "./routes/(public)/projects/index";
 import { Route as publicBookmarksIndexRouteImport } from "./routes/(public)/bookmarks/index";
@@ -95,6 +97,11 @@ const publicGuestbookRoute = publicGuestbookRouteImport.update({
   path: "/guestbook",
   getParentRoute: () => publicLayoutRoute,
 } as any);
+const publicChangelogRoute = publicChangelogRouteImport.update({
+  id: "/changelog",
+  path: "/changelog",
+  getParentRoute: () => publicLayoutRoute,
+} as any);
 const publicAboutRoute = publicAboutRouteImport.update({
   id: "/about",
   path: "/about",
@@ -144,6 +151,11 @@ const ApiContactIndexRoute = ApiContactIndexRouteImport.update({
 const ApiChatIndexRoute = ApiChatIndexRouteImport.update({
   id: "/api/chat/",
   path: "/api/chat/",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ApiChangelogIndexRoute = ApiChangelogIndexRouteImport.update({
+  id: "/api/changelog/",
+  path: "/api/changelog/",
   getParentRoute: () => rootRouteImport,
 } as any);
 const publicSnippetsIndexRoute = publicSnippetsIndexRouteImport.update({
@@ -273,6 +285,7 @@ export interface FileRoutesByFullPath {
   "/dashboard": typeof DashboardLayoutRouteWithChildren;
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
+  "/changelog": typeof publicChangelogRoute;
   "/guestbook": typeof publicGuestbookRoute;
   "/profile": typeof publicProfileRoute;
   "/stats": typeof publicStatsRoute;
@@ -295,6 +308,7 @@ export interface FileRoutesByFullPath {
   "/bookmarks": typeof publicBookmarksIndexRoute;
   "/projects": typeof publicProjectsIndexRoute;
   "/snippets": typeof publicSnippetsIndexRoute;
+  "/api/changelog": typeof ApiChangelogIndexRoute;
   "/api/chat": typeof ApiChatIndexRoute;
   "/api/contact": typeof ApiContactIndexRoute;
   "/dashboard/blog": typeof DashboardBlogIndexRoute;
@@ -314,6 +328,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
+  "/changelog": typeof publicChangelogRoute;
   "/guestbook": typeof publicGuestbookRoute;
   "/profile": typeof publicProfileRoute;
   "/stats": typeof publicStatsRoute;
@@ -336,6 +351,7 @@ export interface FileRoutesByTo {
   "/bookmarks": typeof publicBookmarksIndexRoute;
   "/projects": typeof publicProjectsIndexRoute;
   "/snippets": typeof publicSnippetsIndexRoute;
+  "/api/changelog": typeof ApiChangelogIndexRoute;
   "/api/chat": typeof ApiChatIndexRoute;
   "/api/contact": typeof ApiContactIndexRoute;
   "/dashboard/blog": typeof DashboardBlogIndexRoute;
@@ -359,6 +375,7 @@ export interface FileRoutesById {
   "/dashboard": typeof DashboardLayoutRouteWithChildren;
   "/(auth)/signin": typeof authSigninRoute;
   "/(public)/about": typeof publicAboutRoute;
+  "/(public)/changelog": typeof publicChangelogRoute;
   "/(public)/guestbook": typeof publicGuestbookRoute;
   "/(public)/profile": typeof publicProfileRoute;
   "/(public)/stats": typeof publicStatsRoute;
@@ -381,6 +398,7 @@ export interface FileRoutesById {
   "/(public)/bookmarks/": typeof publicBookmarksIndexRoute;
   "/(public)/projects/": typeof publicProjectsIndexRoute;
   "/(public)/snippets/": typeof publicSnippetsIndexRoute;
+  "/api/changelog/": typeof ApiChangelogIndexRoute;
   "/api/chat/": typeof ApiChatIndexRoute;
   "/api/contact/": typeof ApiContactIndexRoute;
   "/dashboard/blog/": typeof DashboardBlogIndexRoute;
@@ -403,6 +421,7 @@ export interface FileRouteTypes {
     | "/dashboard"
     | "/signin"
     | "/about"
+    | "/changelog"
     | "/guestbook"
     | "/profile"
     | "/stats"
@@ -425,6 +444,7 @@ export interface FileRouteTypes {
     | "/bookmarks"
     | "/projects"
     | "/snippets"
+    | "/api/changelog"
     | "/api/chat"
     | "/api/contact"
     | "/dashboard/blog"
@@ -444,6 +464,7 @@ export interface FileRouteTypes {
   to:
     | "/signin"
     | "/about"
+    | "/changelog"
     | "/guestbook"
     | "/profile"
     | "/stats"
@@ -466,6 +487,7 @@ export interface FileRouteTypes {
     | "/bookmarks"
     | "/projects"
     | "/snippets"
+    | "/api/changelog"
     | "/api/chat"
     | "/api/contact"
     | "/dashboard/blog"
@@ -488,6 +510,7 @@ export interface FileRouteTypes {
     | "/dashboard"
     | "/(auth)/signin"
     | "/(public)/about"
+    | "/(public)/changelog"
     | "/(public)/guestbook"
     | "/(public)/profile"
     | "/(public)/stats"
@@ -510,6 +533,7 @@ export interface FileRouteTypes {
     | "/(public)/bookmarks/"
     | "/(public)/projects/"
     | "/(public)/snippets/"
+    | "/api/changelog/"
     | "/api/chat/"
     | "/api/contact/"
     | "/dashboard/blog/"
@@ -533,6 +557,7 @@ export interface RootRouteChildren {
   DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren;
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute;
+  ApiChangelogIndexRoute: typeof ApiChangelogIndexRoute;
   ApiChatIndexRoute: typeof ApiChatIndexRoute;
   ApiContactIndexRoute: typeof ApiContactIndexRoute;
   ApiStatsGithubActivityRoute: typeof ApiStatsGithubActivityRoute;
@@ -604,6 +629,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof publicGuestbookRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
+    "/(public)/changelog": {
+      id: "/(public)/changelog";
+      path: "/changelog";
+      fullPath: "/changelog";
+      preLoaderRoute: typeof publicChangelogRouteImport;
+      parentRoute: typeof publicLayoutRoute;
+    };
     "/(public)/about": {
       id: "/(public)/about";
       path: "/about";
@@ -672,6 +704,13 @@ declare module "@tanstack/react-router" {
       path: "/api/chat";
       fullPath: "/api/chat";
       preLoaderRoute: typeof ApiChatIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/api/changelog/": {
+      id: "/api/changelog/";
+      path: "/api/changelog";
+      fullPath: "/api/changelog";
+      preLoaderRoute: typeof ApiChangelogIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/(public)/snippets/": {
@@ -852,6 +891,7 @@ const authLayoutRouteWithChildren = authLayoutRoute._addFileChildren(
 
 interface publicLayoutRouteChildren {
   publicAboutRoute: typeof publicAboutRoute;
+  publicChangelogRoute: typeof publicChangelogRoute;
   publicGuestbookRoute: typeof publicGuestbookRoute;
   publicProfileRoute: typeof publicProfileRoute;
   publicStatsRoute: typeof publicStatsRoute;
@@ -870,6 +910,7 @@ interface publicLayoutRouteChildren {
 
 const publicLayoutRouteChildren: publicLayoutRouteChildren = {
   publicAboutRoute: publicAboutRoute,
+  publicChangelogRoute: publicChangelogRoute,
   publicGuestbookRoute: publicGuestbookRoute,
   publicProfileRoute: publicProfileRoute,
   publicStatsRoute: publicStatsRoute,
@@ -941,6 +982,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
+  ApiChangelogIndexRoute: ApiChangelogIndexRoute,
   ApiChatIndexRoute: ApiChatIndexRoute,
   ApiContactIndexRoute: ApiContactIndexRoute,
   ApiStatsGithubActivityRoute: ApiStatsGithubActivityRoute,

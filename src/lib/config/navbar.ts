@@ -42,6 +42,11 @@ export const navbarLinks: NavItem[] = [
         href: "/guestbook",
         description: "A place for you to leave your comments and feedback.",
       },
+      {
+        title: "Changelog",
+        href: "/changelog",
+        description: "All notable changes and updates to this website.",
+      },
     ],
   },
 ];
