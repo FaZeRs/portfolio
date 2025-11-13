@@ -8,23 +8,21 @@ import { auth } from "~/lib/auth/auth";
 /**
  * Middleware to force authentication on a server function, and add the user to the context.
  */
-export const authMiddleware = createMiddleware({ type: "function" }).server(
-  async ({ next }) => {
-    const session = await auth.api.getSession({
-      headers: getRequest().headers,
-      query: {
-        // ensure session is fresh
-        // https://www.better-auth.com/docs/concepts/session-management#session-caching
-        disableCookieCache: true,
-      },
-    });
+export const authMiddleware = createMiddleware().server(async ({ next }) => {
+  const session = await auth.api.getSession({
+    headers: getRequest().headers,
+    query: {
+      // ensure session is fresh
+      // https://www.better-auth.com/docs/concepts/session-management#session-caching
+      disableCookieCache: true,
+    },
+  });
 
-    if (!session) {
-      // biome-ignore lint/style/noMagicNumbers: valid constant
-      setResponseStatus(401);
-      throw new Error("Unauthorized");
-    }
-
-    return next({ context: { user: session.user } });
+  if (!session) {
+    // biome-ignore lint/style/noMagicNumbers: valid constant
+    setResponseStatus(401);
+    throw new Error("Unauthorized");
   }
-);
+
+  return next({ context: { user: session.user } });
+});
