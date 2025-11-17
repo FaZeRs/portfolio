@@ -7,7 +7,6 @@ import { db } from "~/lib/db";
 import { env } from "~/lib/env/server";
 import { getBaseUrl } from "~/lib/utils";
 
-// biome-ignore lint/style/noMagicNumbers: valid constant
 const MAX_AGE = 5 * 60; // 5 minutes
 
 const getAuthConfig = createServerOnlyFn(() =>

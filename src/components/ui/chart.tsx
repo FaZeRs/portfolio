@@ -93,9 +93,7 @@ function ChartContainer({
   const uniqueId = useId();
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
 
-  const chartConfig = useMemo(() => {
-    return { config };
-  }, [config]);
+  const chartConfig = useMemo(() => ({ config }), [config]);
 
   return (
     <ChartContext.Provider value={chartConfig}>

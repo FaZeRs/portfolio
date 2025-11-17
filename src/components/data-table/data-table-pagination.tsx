@@ -18,7 +18,6 @@ type DataTablePaginationProps<TData> = {
   table: Table<TData>;
 };
 
-// biome-ignore lint/style/noMagicNumbers: Magic numbers are used for page sizes
 const PAGE_SIZES = [10, 20, 30, 40, 50] as const;
 
 export function DataTablePagination<TData>({

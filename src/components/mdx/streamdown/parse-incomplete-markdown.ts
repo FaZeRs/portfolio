@@ -226,7 +226,7 @@ const isWithinMathBlock = (text: string, position: number): boolean => {
   for (let i = 0; i < text.length && i < position; i++) {
     // Skip escaped dollar signs
     if (text[i] === "\\" && text[i + 1] === "$") {
-      i++; // Skip the next character
+      i += 1; // Skip the next character
       continue;
     }
 
@@ -234,7 +234,7 @@ const isWithinMathBlock = (text: string, position: number): boolean => {
       // Check for block math ($$)
       if (text[i + 1] === "$") {
         inBlockMath = !inBlockMath;
-        i++; // Skip the second $
+        i += 1; // Skip the second $
         inInlineMath = false; // Block math takes precedence
       } else if (!inBlockMath) {
         // Only toggle inline math if not in block math
@@ -243,7 +243,6 @@ const isWithinMathBlock = (text: string, position: number): boolean => {
     }
   }
 
-  // biome-ignore lint/nursery/noUnnecessaryConditions: valid code
   return inInlineMath || inBlockMath;
 };
 
@@ -361,7 +360,6 @@ const handleIncompleteSingleUnderscoreItalic = (text: string): string => {
 
 // Checks if a backtick at position i is part of a triple backtick sequence
 const isPartOfTripleBacktick = (text: string, i: number): boolean => {
-  // biome-ignore lint/style/noMagicNumbers: valid code
   const isTripleStart = text.substring(i, i + 3) === "```";
   const isTripleMiddle = i > 0 && text.substring(i - 1, i + 2) === "```";
   const isTripleEnd = i > 1 && text.substring(i - 2, i + 1) === "```";
@@ -374,7 +372,7 @@ const countSingleBackticks = (text: string): number => {
   let count = 0;
   for (let i = 0; i < text.length; i++) {
     if (text[i] === "`" && !isPartOfTripleBacktick(text, i)) {
-      count++;
+      count += 1;
     }
   }
   return count;
@@ -517,10 +515,8 @@ const countTripleAsterisks = (text: string): number => {
   for (const match of matches) {
     // Count how many complete triple asterisks are in this sequence
     const asteriskCount = match.length;
-    // biome-ignore lint/style/noMagicNumbers: valid code
     if (asteriskCount >= 3) {
       // Each group of exactly 3 asterisks counts as one triple asterisk marker
-      // biome-ignore lint/style/noMagicNumbers: valid code
       count += Math.floor(asteriskCount / 3);
     }
   }

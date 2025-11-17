@@ -54,7 +54,6 @@ export function getRouter() {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        // biome-ignore lint/style/noMagicNumbers: valid
         staleTime: 1000 * 60,
       },
       dehydrate: { serializeData: superjson.serialize },
@@ -75,6 +74,7 @@ export function getRouter() {
         true: httpLink({
           url: "/api/trpc",
           transformer,
+          // biome-ignore lint/nursery/noParametersOnlyUsedInRecursion: valid function
           fetch(url, options) {
             return fetch(url, {
               ...options,
@@ -87,6 +87,7 @@ export function getRouter() {
           url: "/api/trpc",
           transformer,
           headers,
+          // biome-ignore lint/nursery/noParametersOnlyUsedInRecursion: valid function
           fetch(url, options) {
             return fetch(url, {
               ...options,
@@ -112,13 +113,11 @@ export function getRouter() {
     defaultNotFoundComponent: () => <NotFound />,
     scrollRestoration: true,
     defaultStructuralSharing: true,
-    Wrap: (props) => {
-      return (
-        <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>
-          {props.children}
-        </TRPCProvider>
-      );
-    },
+    Wrap: (props) => (
+      <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>
+        {props.children}
+      </TRPCProvider>
+    ),
   });
 
   setupRouterSsrQueryIntegration({

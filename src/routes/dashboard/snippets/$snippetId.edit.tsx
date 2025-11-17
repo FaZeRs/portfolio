@@ -29,9 +29,7 @@ export const Route = createFileRoute("/dashboard/snippets/$snippetId/edit")({
     meta: [{ title: `Edit Snippet: ${loaderData?.title} | Dashboard` }],
   }),
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
-  notFoundComponent: () => {
-    return <NotFound>Snippet not found</NotFound>;
-  },
+  notFoundComponent: () => <NotFound>Snippet not found</NotFound>,
 });
 
 function SnippetsEditPage() {

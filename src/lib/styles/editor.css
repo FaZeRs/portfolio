@@ -1,5 +1,4 @@
 /* @sonar-ignore */
-/* biome-ignore lint/suspicious/noUnknownAtRules: @reference is a valid CSS at-rule */
 @reference "./app.css";
 /* @end */
 
@@ -8,6 +7,5 @@
   float: left;
   height: 0;
   pointer-events: none;
-  /* biome-ignore lint/suspicious/noUnknownAtRules: @apply is a valid CSS at-rule */
   @apply text-muted-foreground;
 }

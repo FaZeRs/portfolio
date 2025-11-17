@@ -7,9 +7,7 @@ import { UserType } from "~/types";
 
 export const Route = createFileRoute("/(public)")({
   component: LayoutComponent,
-  loader: ({ context: { user } }) => {
-    return { user };
-  },
+  loader: ({ context: { user } }) => ({ user }),
 });
 
 function LayoutComponent() {

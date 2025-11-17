@@ -53,9 +53,9 @@ export function FormDatePicker({
         </PopoverTrigger>
         <PopoverContent align="start" className="w-auto p-0">
           <Calendar
-            captionLayout="dropdown-buttons"
-            fromYear={2010}
-            initialFocus
+            autoFocus
+            captionLayout="dropdown"
+            endMonth={new Date(2030, 0)}
             mode="single"
             onSelect={(value) => {
               if (value) {
@@ -65,7 +65,7 @@ export function FormDatePicker({
             selected={
               field.state.value ? new Date(field.state.value) : undefined
             }
-            toYear={2030}
+            startMonth={new Date(2010, 0)}
           />
         </PopoverContent>
       </Popover>

@@ -10,26 +10,26 @@ import {
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const snippetRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.Snippet.findMany({
+  all: protectedProcedure.query(({ ctx }) =>
+    ctx.db.query.Snippet.findMany({
       orderBy: desc(Snippet.id),
-    });
-  }),
+    })
+  ),
 
-  allPublic: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.Snippet.findMany({
+  allPublic: publicProcedure.query(({ ctx }) =>
+    ctx.db.query.Snippet.findMany({
       orderBy: desc(Snippet.id),
       where: eq(Snippet.isDraft, false),
-    });
-  }),
+    })
+  ),
 
   byId: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.Snippet.findFirst({
+    .query(({ ctx, input }) =>
+      ctx.db.query.Snippet.findFirst({
         where: eq(Snippet.id, input.id),
-      });
-    }),
+      })
+    ),
 
   bySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
@@ -58,17 +58,17 @@ export const snippetRouter = {
 
   create: protectedProcedure
     .input(CreateSnippetSchema)
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(Snippet).values(input);
-    }),
+    .mutation(({ ctx, input }) => ctx.db.insert(Snippet).values(input)),
 
   update: protectedProcedure
     .input(UpdateSnippetSchema)
-    .mutation(({ ctx, input }) => {
-      return ctx.db.update(Snippet).set(input).where(eq(Snippet.id, input.id));
-    }),
+    .mutation(({ ctx, input }) =>
+      ctx.db.update(Snippet).set(input).where(eq(Snippet.id, input.id))
+    ),
 
-  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(Snippet).where(eq(Snippet.id, input));
-  }),
+  delete: protectedProcedure
+    .input(z.string())
+    .mutation(({ ctx, input }) =>
+      ctx.db.delete(Snippet).where(eq(Snippet.id, input))
+    ),
 } satisfies TRPCRouterRecord;

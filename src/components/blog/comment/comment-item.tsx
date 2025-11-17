@@ -39,8 +39,8 @@ export default function CommentItem({
   const [isEditing, setIsEditing] = useState(false);
   const [isOpenReplies, setIsOpenReplies] = useState(false);
 
-  const context = useMemo<CommentContext>(() => {
-    return {
+  const context = useMemo<CommentContext>(
+    () => ({
       isEditing,
       isReplying,
       isOpenReplies,
@@ -48,8 +48,9 @@ export default function CommentItem({
       setIsReplying,
       setIsOpenReplies,
       comment,
-    };
-  }, [comment, isEditing, isOpenReplies, isReplying]);
+    }),
+    [comment, isEditing, isOpenReplies, isReplying]
+  );
 
   return (
     <CommentProvider value={context}>

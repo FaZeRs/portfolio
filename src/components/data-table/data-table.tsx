@@ -29,11 +29,11 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 
 declare module "@tanstack/react-table" {
-  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
+  // biome-ignore lint/style/useConsistentTypeDefinitions: valid interface
   interface FilterFns {
     fuzzy: FilterFn<unknown>;
   }
-  // biome-ignore lint/nursery/useConsistentTypeDefinitions: valid interface
+  // biome-ignore lint/style/useConsistentTypeDefinitions: valid interface
   interface FilterMeta {
     itemRank: RankingInfo;
   }
@@ -107,18 +107,16 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>

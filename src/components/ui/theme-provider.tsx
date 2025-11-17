@@ -33,18 +33,18 @@ const setStoredThemeMode = createClientOnlyFn((theme: ThemeMode) => {
     const parsedTheme = themeModeSchema.parse(theme);
     localStorage.setItem(themeKey, parsedTheme);
   } catch {
-    // biome-ignore lint/suspicious/noConsole: valid
     console.error("Error setting stored theme mode", theme);
   }
 });
 
 const getSystemTheme = createIsomorphicFn()
   .server((): ResolvedTheme => "light")
-  .client((): ResolvedTheme => {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  });
+  .client(
+    (): ResolvedTheme =>
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+  );
 
 const updateThemeClass = createClientOnlyFn((themeMode: ThemeMode) => {
   const root = document.documentElement;

@@ -15,13 +15,12 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-const getInitials = (name: string) => {
-  return name
+const getInitials = (name: string) =>
+  name
     .split(" ")
     .map((word) => word.charAt(0))
     .join("")
     .toUpperCase();
-};
 
 export function AvatarDropdown({ user }: { user: UserType }) {
   const queryClient = useQueryClient();

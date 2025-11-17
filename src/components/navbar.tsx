@@ -28,11 +28,8 @@ type MainNavbarProps = {
 const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const activeLink = useLocation({
-    select: (location) => {
-      return links.find((link) => {
-        return location.pathname.endsWith(link.href ?? "");
-      });
-    },
+    select: (location) =>
+      links.find((link) => location.pathname.endsWith(link.href ?? "")),
   });
 
   return (

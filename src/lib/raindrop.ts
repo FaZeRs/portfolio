@@ -5,16 +5,14 @@ import { env } from "./env/server";
 const RAINDROP_API_URL = "https://api.raindrop.io/rest/v1";
 export const PAGE_SIZE = 4;
 
-export const getOptions = createServerFn({ method: "GET" }).handler(() => {
-  return {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${env.RAINDROP_ACCESS_TOKEN}`,
-    },
-    next: { revalidate: 0 },
-  };
-});
+export const getOptions = createServerFn({ method: "GET" }).handler(() => ({
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${env.RAINDROP_ACCESS_TOKEN}`,
+  },
+  next: { revalidate: 0 },
+}));
 
 export const getCollections = createServerFn({ method: "GET" }).handler(
   async () => {

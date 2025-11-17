@@ -25,7 +25,6 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
     },
     onError: (error) => {
       toast.error(error.message);
-      // biome-ignore lint/suspicious/noConsole: logging error
       console.error(error);
     },
     onSettled: async () => {

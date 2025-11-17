@@ -10,18 +10,18 @@ import { deleteFile, uploadImage } from "~/lib/s3";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const projectRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.Project.findMany({
+  all: protectedProcedure.query(({ ctx }) =>
+    ctx.db.query.Project.findMany({
       orderBy: desc(Project.id),
-    });
-  }),
+    })
+  ),
 
-  allPublic: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.Project.findMany({
+  allPublic: publicProcedure.query(({ ctx }) =>
+    ctx.db.query.Project.findMany({
       orderBy: desc(Project.isFeatured),
       where: eq(Project.isDraft, false),
-    });
-  }),
+    })
+  ),
 
   bySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
@@ -50,11 +50,11 @@ export const projectRouter = {
 
   byId: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.Project.findFirst({
+    .query(({ ctx, input }) =>
+      ctx.db.query.Project.findFirst({
         where: eq(Project.id, input.id),
-      });
-    }),
+      })
+    ),
 
   create: protectedProcedure
     .input(CreateProjectSchema)
@@ -66,7 +66,6 @@ export const projectRouter = {
           const imageUrl = await uploadImage("projects", thumbnail, input.slug);
           projectData.imageUrl = imageUrl;
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }
@@ -97,7 +96,6 @@ export const projectRouter = {
             await deleteFile(oldImageUrl);
           }
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }

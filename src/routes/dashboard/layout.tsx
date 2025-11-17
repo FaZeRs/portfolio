@@ -18,9 +18,7 @@ export const Route = createFileRoute("/dashboard")({
     // https://tanstack.com/start/latest/docs/framework/react/examples/start-basic-react-query
     // https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading
   },
-  loader: ({ context }) => {
-    return { user: context.user };
-  },
+  loader: ({ context }) => ({ user: context.user }),
 });
 
 function LayoutComponent() {

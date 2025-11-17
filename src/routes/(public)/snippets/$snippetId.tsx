@@ -52,9 +52,7 @@ export const Route = createFileRoute("/(public)/snippets/$snippetId")({
   },
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
-  notFoundComponent: () => {
-    return <NotFound>Snippet not found</NotFound>;
-  },
+  notFoundComponent: () => <NotFound>Snippet not found</NotFound>,
 });
 
 function RouteComponent() {

@@ -19,7 +19,6 @@ export const authMiddleware = createMiddleware().server(async ({ next }) => {
   });
 
   if (!session) {
-    // biome-ignore lint/style/noMagicNumbers: valid constant
     setResponseStatus(401);
     throw new Error("Unauthorized");
   }

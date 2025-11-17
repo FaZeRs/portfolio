@@ -51,9 +51,7 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
   },
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
-  notFoundComponent: () => {
-    return <NotFound>Project not found</NotFound>;
-  },
+  notFoundComponent: () => <NotFound>Project not found</NotFound>,
 });
 
 function RouteComponent() {

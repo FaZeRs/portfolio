@@ -33,14 +33,14 @@ export const commentRouter = {
         parentId: z.string().optional(),
       })
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(comments).values({
+    .mutation(({ ctx, input }) =>
+      ctx.db.insert(comments).values({
         userId: ctx.session.user.id,
         articleId: input.articleId,
         content: input.content,
         parentId: input.parentId,
-      });
-    }),
+      })
+    ),
   all: publicProcedure
     .input(
       z.object({

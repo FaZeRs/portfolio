@@ -91,7 +91,6 @@ export default function CustomMDX({
       const markup = await marked.parse(source);
       return parse(markup, options);
     } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: error logging
       console.error("Markdown parsing error:", error);
       return <p>Error parsing markdown content</p>;
     }

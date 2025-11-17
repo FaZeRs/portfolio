@@ -15,11 +15,11 @@ import { getTOC } from "~/lib/utils";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const blogRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.articles.findMany({
+  all: protectedProcedure.query(({ ctx }) =>
+    ctx.db.query.articles.findMany({
       orderBy: desc(articles.id),
-    });
-  }),
+    })
+  ),
 
   allPublic: publicProcedure.query(async ({ ctx }) => {
     const result = await ctx.db
@@ -86,11 +86,11 @@ export const blogRouter = {
 
   byId: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.articles.findFirst({
+    .query(({ ctx, input }) =>
+      ctx.db.query.articles.findFirst({
         where: eq(articles.id, input.id),
-      });
-    }),
+      })
+    ),
 
   create: protectedProcedure
     .input(CreateArticleSchema)
@@ -102,7 +102,6 @@ export const blogRouter = {
           const imageUrl = await uploadImage("articles", thumbnail, input.slug);
           articleData.imageUrl = imageUrl;
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }
@@ -133,7 +132,6 @@ export const blogRouter = {
             await deleteFile(oldImageUrl);
           }
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }

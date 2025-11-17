@@ -105,9 +105,7 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
   },
   component: RouteComponent,
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
-  notFoundComponent: () => {
-    return <NotFound>Article not found</NotFound>;
-  },
+  notFoundComponent: () => <NotFound>Article not found</NotFound>,
 });
 
 function RouteComponent() {
@@ -124,7 +122,6 @@ function RouteComponent() {
       await queryClient.invalidateQueries(trpc.blog.pathFilter());
     },
     onError: (error) => {
-      // biome-ignore lint/suspicious/noConsole: log error
       console.error(error);
     },
   });

@@ -10,17 +10,17 @@ import { deleteFile, uploadImage } from "~/lib/s3";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const serviceRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.Service.findMany({
+  all: protectedProcedure.query(({ ctx }) =>
+    ctx.db.query.Service.findMany({
       orderBy: desc(Service.id),
-    });
-  }),
+    })
+  ),
 
-  allPublic: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.Service.findMany({
+  allPublic: publicProcedure.query(({ ctx }) =>
+    ctx.db.query.Service.findMany({
       where: eq(Service.isDraft, false),
-    });
-  }),
+    })
+  ),
 
   bySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
@@ -49,11 +49,11 @@ export const serviceRouter = {
 
   byId: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.Service.findFirst({
+    .query(({ ctx, input }) =>
+      ctx.db.query.Service.findFirst({
         where: eq(Service.id, input.id),
-      });
-    }),
+      })
+    ),
 
   create: protectedProcedure
     .input(CreateServiceSchema)
@@ -65,7 +65,6 @@ export const serviceRouter = {
           const imageUrl = await uploadImage("projects", thumbnail, input.slug);
           serviceData.imageUrl = imageUrl;
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }
@@ -96,7 +95,6 @@ export const serviceRouter = {
             await deleteFile(oldImageUrl);
           }
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }

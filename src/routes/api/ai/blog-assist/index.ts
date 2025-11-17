@@ -62,7 +62,6 @@ const SYSTEM_PROMPTS: Record<AssistType, string> = {
 };
 
 function buildUserPrompt(type: AssistType, context: AssistContext): string {
-  // biome-ignore lint/nursery/noUnnecessaryConditions: Type is union so switch is necessary
   switch (type) {
     case "title":
       return `Generate 5 blog post title ideas for: ${context.topic}`;
@@ -139,7 +138,6 @@ export const Route = createFileRoute("/api/ai/blog-assist/")({
 
           return result.toUIMessageStreamResponse();
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: Server-side error logging is acceptable
           console.error("AI blog assist error:", error);
 
           const errorMessage =

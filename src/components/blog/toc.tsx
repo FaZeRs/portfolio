@@ -39,26 +39,24 @@ function Tree({ tree, activeItem }: TreeProps) {
 
   return tree?.length ? (
     <ul className={cn("m-0 list-none")}>
-      {tree.map((item) => {
-        return (
-          <li className={cn("mt-0")} key={item.url}>
-            <a
-              className={cn(
-                "inline-block border-l-2 py-1.5 pl-4 no-underline transition-all hover:text-primary hover:underline",
-                item.url === activeItem
-                  ? "border-primary text-primary"
-                  : "text-muted-foreground text-sm"
-              )}
-              href={`#${item.url}`}
-              style={{
-                paddingLeft: `${(item.depth - minDepth + 1) * PADDING_LEFT}px`,
-              }}
-            >
-              {item.title}
-            </a>
-          </li>
-        );
-      })}
+      {tree.map((item) => (
+        <li className={cn("mt-0")} key={item.url}>
+          <a
+            className={cn(
+              "inline-block border-l-2 py-1.5 pl-4 no-underline transition-all hover:text-primary hover:underline",
+              item.url === activeItem
+                ? "border-primary text-primary"
+                : "text-muted-foreground text-sm"
+            )}
+            href={`#${item.url}`}
+            style={{
+              paddingLeft: `${(item.depth - minDepth + 1) * PADDING_LEFT}px`,
+            }}
+          >
+            {item.title}
+          </a>
+        </li>
+      ))}
     </ul>
   ) : null;
 }

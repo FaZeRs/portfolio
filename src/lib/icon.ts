@@ -60,6 +60,5 @@ for (const icon of icons) {
 
 export const getIconByLanguage = (
   language: string
-): React.FC<React.SVGProps<SVGSVGElement>> => {
-  return languageToIcon.get(language) ?? FileIcon;
-};
+): React.FC<React.SVGProps<SVGSVGElement>> =>
+  languageToIcon.get(language) ?? FileIcon;

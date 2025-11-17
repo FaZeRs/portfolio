@@ -34,9 +34,7 @@ export const Route = createFileRoute(
     meta: [{ title: `Edit Experience: ${loaderData?.title} | Dashboard` }],
   }),
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
-  notFoundComponent: () => {
-    return <NotFound>Project not found</NotFound>;
-  },
+  notFoundComponent: () => <NotFound>Project not found</NotFound>,
 });
 
 function ExperiencesEditPage() {

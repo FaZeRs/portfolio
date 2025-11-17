@@ -7,15 +7,13 @@ const ComponentPreview = ({
 
   className,
   ...props
-}: ComponentPreviewProps) => {
-  return (
-    <div
-      {...props}
-      className={cn("flex justify-center rounded-lg border p-8", className)}
-    >
-      {children}
-    </div>
-  );
-};
+}: ComponentPreviewProps) => (
+  <div
+    {...props}
+    className={cn("flex justify-center rounded-lg border p-8", className)}
+  >
+    {children}
+  </div>
+);
 
 export default ComponentPreview;

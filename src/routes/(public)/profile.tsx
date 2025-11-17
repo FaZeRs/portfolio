@@ -132,7 +132,6 @@ function ProfilePage() {
       await router.invalidate();
       toast.success("Profile updated successfully");
     } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: log error
       console.error(error);
       toast.error("Failed to update profile");
     } finally {
@@ -147,7 +146,6 @@ function ProfilePage() {
       });
       toast.success("Account deleted successfully");
     } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: log error
       console.error(error);
       toast.error("Failed to delete account");
     }

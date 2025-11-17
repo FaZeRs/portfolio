@@ -10,26 +10,26 @@ import { deleteFile, uploadImage } from "~/lib/s3";
 import { protectedProcedure, publicProcedure } from "~/trpc/init";
 
 export const experienceRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.Experience.findMany({
+  all: protectedProcedure.query(({ ctx }) =>
+    ctx.db.query.Experience.findMany({
       orderBy: desc(Experience.id),
-    });
-  }),
+    })
+  ),
 
-  allPublic: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.Experience.findMany({
+  allPublic: publicProcedure.query(({ ctx }) =>
+    ctx.db.query.Experience.findMany({
       orderBy: desc(Experience.id),
       where: eq(Experience.isDraft, false),
-    });
-  }),
+    })
+  ),
 
   byId: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.Experience.findFirst({
+    .query(({ ctx, input }) =>
+      ctx.db.query.Experience.findFirst({
         where: eq(Experience.id, input.id),
-      });
-    }),
+      })
+    ),
 
   create: protectedProcedure
     .input(CreateExperienceSchema)
@@ -51,7 +51,6 @@ export const experienceRouter = {
           );
           dataToInsert.imageUrl = imageUrl;
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }
@@ -84,7 +83,6 @@ export const experienceRouter = {
             await deleteFile(oldImageUrl);
           }
         } catch (error) {
-          // biome-ignore lint/suspicious/noConsole: log error
           console.error(error);
         }
       }

@@ -54,7 +54,6 @@ const TITLE_PATTERN = /^\d+\./;
 const TITLE_REPLACE_PATTERN = /^\d+\.\s*/;
 
 function getPlaceholder(type: AIAssistType): string {
-  // biome-ignore lint/nursery/noUnnecessaryConditions: Type is union so switch is necessary
   switch (type) {
     case "title":
       return "E.g., Building a full-stack app with React and Node.js";

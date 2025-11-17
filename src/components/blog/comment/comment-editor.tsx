@@ -33,24 +33,20 @@ type UseCommentEditor = {
 export const useCommentEditor = (): [
   editor: UseCommentEditor | null,
   setEditor: (editor: UseCommentEditor) => void,
-] => {
-  return useState<UseCommentEditor | null>(null);
-};
+] => useState<UseCommentEditor | null>(null);
 
-const createCommentEditor = (editor: Editor): UseCommentEditor => {
-  return {
-    editor,
-    get isEmpty() {
-      return editor.isEmpty;
-    },
-    getValue() {
-      return editor.getJSON();
-    },
-    clearValue() {
-      editor.commands.clearContent(true);
-    },
-  };
-};
+const createCommentEditor = (editor: Editor): UseCommentEditor => ({
+  editor,
+  get isEmpty() {
+    return editor.isEmpty;
+  },
+  getValue() {
+    return editor.getJSON();
+  },
+  clearValue() {
+    editor.commands.clearContent(true);
+  },
+});
 
 export default function CommentEditor({
   editor,

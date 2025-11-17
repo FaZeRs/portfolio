@@ -29,9 +29,7 @@ export const Route = createFileRoute("/dashboard/services/$serviceId/edit")({
     meta: [{ title: `Edit Service: ${loaderData?.title} | Dashboard` }],
   }),
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
-  notFoundComponent: () => {
-    return <NotFound>Service not found</NotFound>;
-  },
+  notFoundComponent: () => <NotFound>Service not found</NotFound>,
 });
 
 function ServicesEditPage() {

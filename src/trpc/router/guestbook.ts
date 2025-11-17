@@ -13,18 +13,17 @@ export const guestbookRouter = {
           .string()
           .trim()
           .min(1, "Message cannot be empty")
-          // biome-ignore lint/style/noMagicNumbers: valid use case
           .max(500, "Message is too long"),
       })
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(guestbook).values({
+    .mutation(({ ctx, input }) =>
+      ctx.db.insert(guestbook).values({
         userId: ctx.session.user.id,
         message: input.message,
-      });
-    }),
-  all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.guestbook.findMany({
+      })
+    ),
+  all: publicProcedure.query(({ ctx }) =>
+    ctx.db.query.guestbook.findMany({
       orderBy: desc(guestbook.id),
       with: {
         user: {
@@ -35,8 +34,8 @@ export const guestbookRouter = {
           },
         },
       },
-    });
-  }),
+    })
+  ),
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {

@@ -5,8 +5,6 @@ const sentryMiddleware = createMiddleware().server(
   sentryGlobalServerMiddlewareHandler()
 );
 
-export const startInstance = createStart(() => {
-  return {
-    requestMiddleware: [sentryMiddleware],
-  };
-});
+export const startInstance = createStart(() => ({
+  requestMiddleware: [sentryMiddleware],
+}));

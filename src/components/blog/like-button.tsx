@@ -23,7 +23,6 @@ const LikeButton = ({ article }: LikeButtonProps) => {
       await queryClient.invalidateQueries(trpc.blog.pathFilter());
     },
     onError: (error) => {
-      // biome-ignore lint/suspicious/noConsole: logging error
       console.error(error);
     },
   });

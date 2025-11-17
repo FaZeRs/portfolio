@@ -29,9 +29,7 @@ export const Route = createFileRoute("/dashboard/blog/$articleId/edit")({
     meta: [{ title: `Edit Article: ${loaderData?.title} | Dashboard` }],
   }),
   errorComponent: ({ error }) => <ErrorComponent error={error} />,
-  notFoundComponent: () => {
-    return <NotFound>Project not found</NotFound>;
-  },
+  notFoundComponent: () => <NotFound>Project not found</NotFound>,
 });
 
 function ArticlesEditPage() {
