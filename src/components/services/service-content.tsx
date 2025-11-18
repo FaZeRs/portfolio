@@ -1,9 +1,9 @@
 import { ClientOnly } from "@tanstack/react-router";
-import { Loader } from "lucide-react";
 import { lazy, Suspense } from "react";
 
 import type { ServiceType } from "~/types";
 import TechStacks from "../tech-stacks";
+import { Spinner } from "../ui/spinner";
 import ZoomImage from "../zoom-image";
 import ServiceContact from "./service-contact";
 
@@ -48,7 +48,7 @@ export default function ServiceContent({
       {content && (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
           <ClientOnly>
-            <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+            <Suspense fallback={<Spinner className="size-6" />}>
               <article className="prose prose-slate dark:prose-invert !max-w-none">
                 <CustomMDX source={content} />
               </article>

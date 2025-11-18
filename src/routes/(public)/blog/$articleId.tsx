@@ -10,7 +10,6 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { Loader } from "lucide-react";
 import { lazy, Suspense, useEffect, useRef } from "react";
 import SignInModal from "~/components/auth/sign-in-modal";
 import ArticleComment from "~/components/blog/article-comment";
@@ -22,6 +21,7 @@ import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
 import { LazyImage } from "~/components/lazy-image";
 import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
+import { Spinner } from "~/components/ui/spinner";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import {
@@ -186,7 +186,7 @@ function RouteComponent() {
           </div>
 
           <ClientOnly>
-            <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+            <Suspense fallback={<Spinner className="size-6" />}>
               <article className="prose prose-slate dark:prose-invert !max-w-none">
                 <CustomMDX source={article.content ?? ""} />
               </article>

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Loader, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Suspense, useState } from "react";
 
 import {
@@ -12,13 +12,14 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { ThemeToggle } from "~/components/ui/theme";
+import { useIsMobile } from "~/hooks/use-mobile";
 import { navbarLinks } from "~/lib/config/navbar";
 import { cn } from "~/lib/utils";
 import { NavItem, UserType } from "~/types";
-
 import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";
+import { Spinner } from "./ui/spinner";
 
 type MainNavbarProps = {
   links: NavItem[];
@@ -27,6 +28,8 @@ type MainNavbarProps = {
 
 const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
+  const isMobile = useIsMobile();
+
   const activeLink = useLocation({
     select: (location) =>
       links.find((link) => location.pathname.endsWith(link.href ?? "")),
@@ -34,8 +37,8 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
-      <NavigationMenu className="hidden lg:flex">
-        <NavigationMenuList>
+      <NavigationMenu className="hidden lg:flex" viewport={isMobile}>
+        <NavigationMenuList className="flex-wrap">
           {links.map((link) => (
             <NavigationMenuItem key={link.title.trim()}>
               {link.content ? (
@@ -78,11 +81,11 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
       <div className="hidden items-center gap-4 lg:flex">
         {user && <AvatarDropdown user={user as UserType} />}
         <div className="flex-1 sm:grow-0">
-          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+          <Suspense fallback={<Spinner className="size-6" />}>
             <SearchCommand />
           </Suspense>
         </div>
-        <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+        <Suspense fallback={<Spinner className="size-6" />}>
           <ThemeToggle />
         </Suspense>
       </div>

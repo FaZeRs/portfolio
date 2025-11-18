@@ -6,9 +6,9 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { Loader } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { NotFound } from "~/components/not-found";
+import { Spinner } from "~/components/ui/spinner";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { formatDate, getBaseUrl } from "~/lib/utils";
@@ -80,7 +80,7 @@ function RouteComponent() {
         </div>
 
         <ClientOnly>
-          <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+          <Suspense fallback={<Spinner className="size-6" />}>
             <article className="prose prose-slate dark:prose-invert !max-w-none">
               <CustomMDX source={snippet.data?.code ?? ""} />
             </article>

@@ -1,11 +1,12 @@
 import { ClientOnly } from "@tanstack/react-router";
-import { Loader, Share } from "lucide-react";
+import { Share } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { siGithub } from "simple-icons";
 import Icon from "~/components/ui/icon";
 import type { ProjectType } from "~/types";
 import ProjectLink from "../link";
 import TechStacks from "../tech-stacks";
+import { Spinner } from "../ui/spinner";
 import ZoomImage from "../zoom-image";
 
 const CustomMDX = lazy(() => import("../mdx/mdx"));
@@ -75,7 +76,7 @@ export default function ProjectContent({
       {content && (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
           <ClientOnly>
-            <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+            <Suspense fallback={<Spinner className="size-6" />}>
               <article className="prose prose-slate dark:prose-invert !max-w-none">
                 <CustomMDX source={content} />
               </article>

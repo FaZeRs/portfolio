@@ -36,7 +36,7 @@ function DialogOverlay({
   return (
     <Overlay
       className={cn(
-        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/30 backdrop-blur-sm data-[state=closed]:animate-out data-[state=open]:animate-in",
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=open]:animate-in",
         className
       )}
       data-slot="dialog-overlay"
@@ -48,10 +48,13 @@ function DialogOverlay({
 function DialogContent({
   className,
   children,
+  showCloseButton = true,
   ...props
-}: Readonly<ComponentProps<typeof Content>>) {
+}: Readonly<ComponentProps<typeof Content>> & {
+  showCloseButton?: boolean;
+}) {
   return (
-    <Portal data-slot="dialog-portal">
+    <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
       <Content
         className={cn(
@@ -62,12 +65,17 @@ function DialogContent({
         {...props}
       >
         {children}
-        <Close className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0">
-          <XIcon />
-          <span className="sr-only">Close</span>
-        </Close>
+        {showCloseButton && (
+          <Close
+            className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+            data-slot="dialog-close"
+          >
+            <XIcon />
+            <span className="sr-only">Close</span>
+          </Close>
+        )}
       </Content>
-    </Portal>
+    </DialogPortal>
   );
 }
 

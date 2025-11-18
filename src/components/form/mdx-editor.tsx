@@ -1,7 +1,7 @@
 import { ClientOnly } from "@tanstack/react-router";
-import { Loader } from "lucide-react";
 import { Suspense } from "react";
 import CustomMDX from "../mdx/mdx";
+import { Spinner } from "../ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
 
@@ -51,7 +51,7 @@ export function FormMDXEditor({
           <div className="min-h-[300px] overflow-y-auto rounded-md border border-input p-4">
             {field.state.value ? (
               <ClientOnly>
-                <Suspense fallback={<Loader className="size-6 animate-spin" />}>
+                <Suspense fallback={<Spinner className="size-6" />}>
                   <article className="prose prose-slate dark:prose-invert !max-w-none">
                     <CustomMDX source={field.state.value} />
                   </article>

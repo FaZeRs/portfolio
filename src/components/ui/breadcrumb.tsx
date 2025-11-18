@@ -72,7 +72,6 @@ function BreadcrumbSeparator({
   ...props
 }: ComponentProps<"li">) {
   return (
-    // @sonar-ignore
     <li
       aria-hidden="true"
       className={cn("[&>svg]:size-3.5", className)}
@@ -82,13 +81,11 @@ function BreadcrumbSeparator({
     >
       {children ?? <ChevronRight />}
     </li>
-    // @end
   );
 }
 
 function BreadcrumbEllipsis({ className, ...props }: ComponentProps<"span">) {
   return (
-    // @sonar-ignore
     <span
       aria-hidden="true"
       className={cn("flex size-9 items-center justify-center", className)}
@@ -99,7 +96,6 @@ function BreadcrumbEllipsis({ className, ...props }: ComponentProps<"span">) {
       <MoreHorizontal className="size-4" />
       <span className="sr-only">More</span>
     </span>
-    // @end
   );
 }
 

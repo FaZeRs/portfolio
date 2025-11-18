@@ -3,11 +3,11 @@ import useEmblaCarousel, {
 } from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import {
+  ComponentProps,
   createContext,
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { Button } from "~/components/ui/button";
@@ -111,38 +111,24 @@ function Carousel({
 
     return () => {
       api?.off("select", onSelect);
-      api?.off("reInit", onSelect);
     };
   }, [api, onSelect]);
 
-  const contextValue = useMemo(
-    () => ({
-      carouselRef,
-      api,
-      opts,
-      orientation:
-        orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
-      scrollPrev,
-      scrollNext,
-      canScrollPrev,
-      canScrollNext,
-    }),
-    [
-      carouselRef,
-      api,
-      opts,
-      orientation,
-      scrollPrev,
-      scrollNext,
-      canScrollPrev,
-      canScrollNext,
-    ]
-  );
-
   return (
-    <CarouselContext.Provider value={contextValue}>
-      {/** @sonar-ignore */}
-      {/** biome-ignore lint/a11y/useSemanticElements: valid use case */}
+    <CarouselContext.Provider
+      value={{
+        carouselRef,
+        api,
+        opts,
+        orientation:
+          orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+        scrollPrev,
+        scrollNext,
+        canScrollPrev,
+        canScrollNext,
+      }}
+    >
+      {/** biome-ignore lint/a11y/useSemanticElements: valid element */}
       <div
         aria-roledescription="carousel"
         className={cn("relative", className)}
@@ -153,12 +139,11 @@ function Carousel({
       >
         {children}
       </div>
-      {/* @end */}
     </CarouselContext.Provider>
   );
 }
 
-function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselContent({ className, ...props }: ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
 
   return (
@@ -179,26 +164,22 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({ className, ...props }: ComponentProps<"div">) {
   const { orientation } = useCarousel();
 
   return (
-    <>
-      {/** @sonar-ignore */}
-      {/* biome-ignore lint/a11y/useSemanticElements: valid use case */}
-      <div
-        aria-roledescription="slide"
-        className={cn(
-          "min-w-0 shrink-0 grow-0 basis-full",
-          orientation === "horizontal" ? "pl-4" : "pt-4",
-          className
-        )}
-        data-slot="carousel-item"
-        role="group"
-        {...props}
-      />
-      {/* @end */}
-    </>
+    // biome-ignore lint/a11y/useSemanticElements: valid element
+    <div
+      aria-roledescription="slide"
+      className={cn(
+        "min-w-0 shrink-0 grow-0 basis-full",
+        orientation === "horizontal" ? "pl-4" : "pt-4",
+        className
+      )}
+      data-slot="carousel-item"
+      role="group"
+      {...props}
+    />
   );
 }
 
@@ -207,7 +188,7 @@ function CarouselPrevious({
   variant = "outline",
   size = "icon",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
@@ -237,7 +218,7 @@ function CarouselNext({
   variant = "outline",
   size = "icon",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
@@ -269,5 +250,4 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-  useCarousel,
 };

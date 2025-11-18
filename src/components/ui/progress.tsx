@@ -3,8 +3,6 @@ import { ComponentProps } from "react";
 
 import { cn } from "~/lib/utils";
 
-const PERCENTAGE_CALCULATION_FACTOR = 100;
-
 function Progress({
   className,
   value,
@@ -22,9 +20,7 @@ function Progress({
       <Indicator
         className="h-full w-full flex-1 bg-primary transition-all"
         data-slot="progress-indicator"
-        style={{
-          transform: `translateX(-${PERCENTAGE_CALCULATION_FACTOR - (value || 0)}%)`,
-        }}
+        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
     </Root>
   );

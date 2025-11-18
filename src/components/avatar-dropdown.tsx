@@ -1,6 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { Loader } from "lucide-react";
 import { Suspense } from "react";
 import authClient from "~/lib/auth/auth-client";
 import { UserType } from "~/types";
@@ -14,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Spinner } from "./ui/spinner";
 
 const getInitials = (name: string) =>
   name
@@ -32,7 +32,7 @@ export function AvatarDropdown({ user }: { user: UserType }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="relative h-8 w-8 rounded-full" variant="ghost">
-          <Suspense fallback={<Loader className="size-8 animate-spin" />}>
+          <Suspense fallback={<Spinner className="size-6" />}>
             <Avatar className="h-8 w-8">
               <AvatarImage alt={user?.name ?? ""} src={user?.image ?? ""} />
               <AvatarFallback>{initials}</AvatarFallback>
