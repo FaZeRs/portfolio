@@ -1,14 +1,4 @@
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  TooltipContentProps,
-  XAxis,
-} from "recharts";
-import {
-  NameType,
-  ValueType,
-} from "recharts/types/component/DefaultTooltipContent";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
   Card,
@@ -85,12 +75,7 @@ export function StatsChart({
               tickLine={false}
               tickMargin={TICK_MARGIN_DEFAULT}
             />
-            <ChartTooltip
-              content={(props: TooltipContentProps<ValueType, NameType>) => (
-                <ChartTooltipContent {...props} hideIndicator hideLabel />
-              )}
-              cursor={false}
-            />
+            <ChartTooltip content={<ChartTooltipContent />} />
             <Line
               dataKey="count"
               dot={false}
