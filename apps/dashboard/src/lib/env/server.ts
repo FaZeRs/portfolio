@@ -13,13 +13,10 @@ export const env = createEnv({
       .default("development"),
   },
   server: {
-    RESEND_FROM_EMAIL: z.email().optional(),
-    RESEND_API_KEY: z.string().min(1).optional(),
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),
     SENTRY_PROJECT: z.string().optional(),
     BLOB_READ_WRITE_TOKEN: z.string().optional(),
-    RAINDROP_ACCESS_TOKEN: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1).optional(),
   },
   clientPrefix: "VITE_",
