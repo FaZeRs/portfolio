@@ -61,7 +61,7 @@
       "tailwindcss": "^4.1.17",
       "typescript": "^5.9.3",
       "zod": "^4.1.12",
-      "vite": "^7.2.4"
+      "vite": "npm:rolldown-vite@latest"
     },
     "catalogs": {
       "react19": {
