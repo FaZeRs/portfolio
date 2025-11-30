@@ -7,11 +7,13 @@
 @import "@fontsource-variable/roboto-mono";
 @import "@fontsource/cal-sans";
 
+/* @sonar-ignore */
 @source "../../../packages/ui/src/*.{ts,tsx}";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
 @custom-variant auto (&:where(.auto, .auto *));
+/* @end */
 
 @layer base {
   :root {
@@ -43,6 +45,7 @@
   }
 }
 
+/* @sonar-ignore */
 @utility container {
   margin-inline: auto;
   padding-inline: 2rem;
@@ -53,6 +56,7 @@
     max-width: 1400px;
   }
 }
+/* @end */
 
 @layer base {
   *,
