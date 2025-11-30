@@ -1,0 +1,36 @@
+{
+  "name": "@acme/api",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./env": "./env.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@acme/auth": "workspace:*",
+    "@acme/db": "workspace:*",
+    "@acme/utils": "workspace:*",
+    "@acme/validators": "workspace:*",
+    "@sentry/node": "^10.27.0",
+    "@t3-oss/env-core": "^0.13.8",
+    "@trpc/server": "catalog:",
+    "@vercel/blob": "^2.0.0",
+    "drizzle-orm": "^0.44.7",
+    "superjson": "2.2.5",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@acme/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
