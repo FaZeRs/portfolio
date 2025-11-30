@@ -1,7 +1,7 @@
 import { ArticleType, UserType } from "@acme/types";
 import Icon from "@acme/ui/icon";
+import { LazyImage } from "@acme/ui/lazy-image";
 import { siX } from "simple-icons";
-import { LazyImage } from "../lazy-image";
 
 type ArticleAuthorProps = {
   article: ArticleType & { author: UserType };

@@ -1,8 +1,8 @@
 import { ExperienceType } from "@acme/types";
+import { LazyImage } from "@acme/ui/lazy-image";
 import { formatDate } from "@acme/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "~/lib/trpc";
-import { LazyImage } from "../lazy-image";
 import SectionHeading from "../section-heading";
 
 type ExperienceItemProps = {

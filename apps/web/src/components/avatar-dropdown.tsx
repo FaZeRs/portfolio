@@ -14,6 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { Suspense } from "react";
 import authClient from "~/lib/auth/client";
+import { env } from "~/lib/env/client";
 
 const getInitials = (name: string) =>
   name
@@ -53,7 +54,7 @@ export function AvatarDropdown({ user }: { user: UserType }) {
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => router.navigate({ to: "/dashboard" })}
+              onClick={() => router.navigate({ href: env.VITE_DASHBOARD_URL })}
             >
               Dashboard
             </DropdownMenuItem>

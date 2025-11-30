@@ -1,6 +1,6 @@
+import { Streamdown } from "@acme/mdx/streamdown";
 import { cn } from "@acme/ui";
 import { type ComponentProps, memo } from "react";
-import { Streamdown } from "../mdx/streamdown";
 
 type ResponseProps = ComponentProps<typeof Streamdown>;
 

@@ -1,10 +1,10 @@
 import { Button } from "@acme/ui/button";
+import { LazyImage } from "@acme/ui/lazy-image";
 import { motion } from "framer-motion";
 import { Calendar, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { siteConfig } from "~/lib/config/site";
 import ContactModal from "./contact-modal";
-import { LazyImage } from "./lazy-image";
 
 const Intro = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);

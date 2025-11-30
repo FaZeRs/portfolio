@@ -1,12 +1,11 @@
+import { CustomMDX } from "@acme/mdx";
 import type { ServiceType } from "@acme/types";
 import { Spinner } from "@acme/ui/spinner";
+import ZoomImage from "@acme/ui/zoom-image";
 import { ClientOnly } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import TechStacks from "../tech-stacks";
-import ZoomImage from "../zoom-image";
 import ServiceContact from "./service-contact";
-
-const CustomMDX = lazy(() => import("../mdx/mdx"));
 
 type ServiceContentProps = {
   service: ServiceType;

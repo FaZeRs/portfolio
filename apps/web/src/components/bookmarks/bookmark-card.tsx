@@ -1,6 +1,6 @@
 import { Bookmark } from "@acme/types";
+import { LazyImage } from "@acme/ui/lazy-image";
 import { Link2Icon } from "lucide-react";
-import { LazyImage } from "../lazy-image";
 
 type BookmarkCardProps = {
   bookmark: Bookmark;

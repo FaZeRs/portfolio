@@ -1,5 +1,5 @@
+import { LazyImage } from "@acme/ui/lazy-image";
 import { Info, LocateIcon } from "lucide-react";
-import { LazyImage } from "./lazy-image";
 
 type CoverImageProps = {
   src: string;

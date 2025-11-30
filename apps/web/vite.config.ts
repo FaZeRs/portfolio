@@ -22,6 +22,7 @@ export default defineConfig({
   plugins: [
     devtools({
       eventBusConfig: {
+        port: 1234,
         debug: false,
       },
       enhancedLogs: {

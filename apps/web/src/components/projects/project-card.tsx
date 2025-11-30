@@ -1,7 +1,7 @@
 import { ProjectType } from "@acme/types";
+import { LazyImage } from "@acme/ui/lazy-image";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, PinIcon } from "lucide-react";
-import { LazyImage } from "../lazy-image";
 import TechStacks from "../tech-stacks";
 
 type ProjectCardProps = {

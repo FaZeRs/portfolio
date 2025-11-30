@@ -1,3 +1,5 @@
+import { CustomMDX } from "@acme/mdx";
+import { LazyImage } from "@acme/ui/lazy-image";
 import { Spinner } from "@acme/ui/spinner";
 import {
   useMutation,
@@ -11,7 +13,7 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import SignInModal from "~/components/auth/sign-in-modal";
 import ArticleComment from "~/components/blog/article-comment";
 import ArticleMetrics from "~/components/blog/article-metrics";
@@ -19,7 +21,6 @@ import ArticleAuthor from "~/components/blog/author";
 import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
-import { LazyImage } from "~/components/lazy-image";
 import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
 import { siteConfig } from "~/lib/config/site";
@@ -30,8 +31,6 @@ import {
 } from "~/lib/structured-data";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
-
-const CustomMDX = lazy(() => import("~/components/mdx/mdx"));
 
 export const Route = createFileRoute("/(public)/blog/$articleId")({
   loader: async ({ params: { articleId }, context: { trpc, queryClient } }) => {

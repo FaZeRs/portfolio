@@ -1,8 +1,8 @@
 import { ArticleType } from "@acme/types";
+import { LazyImage } from "@acme/ui/lazy-image";
 import { formatDate } from "@acme/utils";
 import { Link } from "@tanstack/react-router";
 import { EyeIcon, ThumbsUpIcon } from "lucide-react";
-import { LazyImage } from "~/components/lazy-image";
 
 type ArticleCardProps = {
   article: ArticleType & { viewCount: number };

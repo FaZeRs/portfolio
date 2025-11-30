@@ -1,3 +1,4 @@
+import { CustomMDX } from "@acme/mdx";
 import { Spinner } from "@acme/ui/spinner";
 import { formatDate } from "@acme/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -8,14 +9,12 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { NotFound } from "~/components/not-found";
 import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
-
-const CustomMDX = lazy(() => import("~/components/mdx/mdx"));
 
 export const Route = createFileRoute("/(public)/snippets/$snippetId")({
   loader: async ({ params: { snippetId }, context: { trpc, queryClient } }) => {
