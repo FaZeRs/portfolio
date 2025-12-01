@@ -3,7 +3,10 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./stack": "./src/stack.ts"
+    "./stack": "./src/stack.ts",
+    "./dev-tools": "./src/dev-tools.tsx",
+    "./create-router": "./src/create-router.tsx",
+    "./create-trpc": "./src/create-trpc.ts"
   },
   "license": "MIT",
   "scripts": {
@@ -13,10 +16,26 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "simple-icons": "catalog:"
+    "@acme/api": "workspace:*",
+    "@acme/auth": "workspace:*",
+    "@acme/ui": "workspace:*",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-router": "^1.139.12",
+    "@tanstack/react-router-ssr-query": "^1.139.12",
+    "@tanstack/react-start": "^1.139.12",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "@trpc/tanstack-react-query": "catalog:",
+    "simple-icons": "catalog:",
+    "superjson": "2.2.5"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
+    "@tanstack/react-devtools": "^0.8.2",
+    "@tanstack/react-query-devtools": "^5.91.1",
+    "@tanstack/react-router-devtools": "^1.139.12",
+    "@types/react": "catalog:react19",
+    "react": "catalog:react19",
     "typescript": "catalog:"
   }
 }

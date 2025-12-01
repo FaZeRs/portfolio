@@ -1,56 +1,21 @@
-import { QueryCache, QueryClient } from "@tanstack/react-query";
-import { createRouter as createTanStackRouter } from "@tanstack/react-router";
-import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import superjson from "superjson";
-import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
-import { NotFound } from "~/components/not-found";
-import { makeTRPCClient, TRPCProvider } from "~/lib/trpc";
+import { createRouter } from "@acme/shared/create-router";
+import { createTRPC } from "@acme/shared/create-trpc";
+import { auth } from "~/lib/auth/server";
+import { env } from "~/lib/env/server";
+import { TRPCProvider } from "~/lib/trpc";
+import { getBaseUrl } from "~/lib/utils";
 import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        staleTime: 1000 * 60,
-      },
-      dehydrate: { serializeData: superjson.serialize },
-      hydrate: { deserializeData: superjson.deserialize },
-    },
-    queryCache: new QueryCache(),
+  const makeTRPCClient = createTRPC({
+    sourceName: "dashboard",
+    auth,
+    env,
+    baseUrl: getBaseUrl(),
   });
-
-  const trpcClient = makeTRPCClient();
-  const trpc = createTRPCOptionsProxy({
-    client: trpcClient,
-    queryClient,
-  });
-
-  const router = createTanStackRouter({
-    context: { queryClient, trpc, user: null },
+  return createRouter<typeof routeTree>({
     routeTree,
-    defaultPreload: "intent",
-    defaultPreloadStaleTime: 0,
-    defaultErrorComponent: DefaultCatchBoundary,
-    defaultNotFoundComponent: () => <NotFound />,
-    scrollRestoration: true,
-    defaultStructuralSharing: true,
-    Wrap: (props) => (
-      <TRPCProvider
-        queryClient={queryClient}
-        trpcClient={trpcClient}
-        {...props}
-      />
-    ),
+    makeTRPCClient,
+    TRPCProvider,
   });
-
-  setupRouterSsrQueryIntegration({
-    router,
-    queryClient,
-    handleRedirects: true,
-    wrapQueryClient: true,
-  });
-
-  return router;
 }

@@ -2,6 +2,7 @@
 
 import { AppRouter } from "@acme/api";
 import { siteConfig } from "@acme/config";
+import { DevtoolsComponent } from "@acme/shared/dev-tools";
 import { Toaster } from "@acme/ui/sonner";
 import { ThemeProvider } from "@acme/ui/theme-provider";
 import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
@@ -13,7 +14,6 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import { DevtoolsComponent } from "~/components/dev-tools";
 import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
 import appCss from "~/styles.css?url";
 

@@ -31,9 +31,7 @@ export function DevtoolsComponent() {
       }
     };
 
-    if (import.meta.env.DEV) {
-      loadDevtools();
-    }
+    loadDevtools();
   }, []);
 
   const isReady = devtools && QueryDevtools && RouterDevtools;

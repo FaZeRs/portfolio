@@ -51,6 +51,12 @@ export type Social = {
   icon: SimpleIcon;
 };
 
+export type AuthProvider = {
+  label: string;
+  icon: SimpleIcon;
+  provider: string;
+};
+
 export type ProjectType = typeof Project.$inferSelect;
 export type ExperienceType = typeof Experience.$inferSelect;
 export type SnippetType = typeof Snippet.$inferSelect;

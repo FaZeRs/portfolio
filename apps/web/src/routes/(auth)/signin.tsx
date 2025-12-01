@@ -1,16 +1,7 @@
-import { cn } from "@acme/ui";
-import { Button } from "@acme/ui/button";
+import { authProviders } from "@acme/config";
 import { Card, CardContent, CardHeader, CardTitle } from "@acme/ui/card";
-import Icon from "@acme/ui/icon";
+import SignInButton from "@acme/ui/sign-in-button";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import type { ComponentProps } from "react";
-import {
-  type SimpleIcon,
-  siFacebook,
-  siGithub,
-  siGoogle,
-  siX,
-} from "simple-icons";
 import Logo from "~/components/logo";
 import authClient from "~/lib/auth/client";
 
@@ -40,26 +31,19 @@ function AuthPage() {
             <CardContent>
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
-                  <SignInButton
-                    icon={siGithub}
-                    label="GitHub"
-                    provider="github"
-                  />
-                  <SignInButton
-                    icon={siX}
-                    label="Twitter (X)"
-                    provider="twitter"
-                  />
-                  <SignInButton
-                    icon={siGoogle}
-                    label="Google"
-                    provider="google"
-                  />
-                  <SignInButton
-                    icon={siFacebook}
-                    label="Facebook"
-                    provider="facebook"
-                  />
+                  {authProviders.map((provider) => (
+                    <SignInButton
+                      icon={provider.icon}
+                      key={provider.provider}
+                      label={provider.label}
+                      onClick={() =>
+                        authClient.signIn.social({
+                          provider: provider.provider,
+                          callbackURL: REDIRECT_URL,
+                        })
+                      }
+                    />
+                  ))}
                 </div>
               </div>
             </CardContent>
@@ -67,41 +51,5 @@ function AuthPage() {
         </div>
       </div>
     </div>
-  );
-}
-
-interface SignInButtonProps extends ComponentProps<typeof Button> {
-  provider: "discord" | "google" | "github" | "twitter" | "facebook";
-  label: string;
-  icon: SimpleIcon;
-}
-
-function SignInButton({
-  provider,
-  label,
-  icon,
-  className,
-  ...props
-}: Readonly<SignInButtonProps>) {
-  return (
-    <Button
-      className={cn(
-        "flex w-full items-center justify-center gap-2 text-white hover:text-white",
-        className
-      )}
-      onClick={() =>
-        authClient.signIn.social({
-          provider,
-          callbackURL: REDIRECT_URL,
-        })
-      }
-      size="lg"
-      type="button"
-      variant="outline"
-      {...props}
-    >
-      <Icon className="h-5 w-5" icon={icon} />
-      <span>Sign in with {label}</span>
-    </Button>
   );
 }

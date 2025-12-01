@@ -1,5 +1,6 @@
 import { ArticleBaseSchema } from "@acme/db/schema";
 import { useAppForm } from "@acme/ui/form";
+import { NotFound } from "@acme/ui/not-found";
 import {
   useMutation,
   useQueryClient,
@@ -13,7 +14,6 @@ import {
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ArticleForm } from "~/components/blog/form";
-import { NotFound } from "~/components/not-found";
 import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/(dashboard)/blog/$articleId/edit")({

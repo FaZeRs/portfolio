@@ -1,6 +1,7 @@
 import { siteConfig } from "@acme/config";
 import { CustomMDX } from "@acme/mdx";
 import { LazyImage } from "@acme/ui/lazy-image";
+import { NotFound } from "@acme/ui/not-found";
 import { Spinner } from "@acme/ui/spinner";
 import {
   useMutation,
@@ -22,7 +23,6 @@ import ArticleAuthor from "~/components/blog/author";
 import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
-import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
 import { seo } from "~/lib/seo";
 import {

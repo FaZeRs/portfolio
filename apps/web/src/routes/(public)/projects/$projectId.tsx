@@ -1,4 +1,5 @@
 import { siteConfig } from "@acme/config";
+import { NotFound } from "@acme/ui/not-found";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -6,7 +7,6 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
-import { NotFound } from "~/components/not-found";
 import PageHeading from "~/components/page-heading";
 import ProjectContent from "~/components/projects/project-content";
 import { seo } from "~/lib/seo";

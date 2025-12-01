@@ -1,5 +1,6 @@
 import { siteConfig } from "@acme/config";
 import { CustomMDX } from "@acme/mdx";
+import { NotFound } from "@acme/ui/not-found";
 import { Spinner } from "@acme/ui/spinner";
 import { formatDate } from "@acme/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -11,7 +12,6 @@ import {
 } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
 import { Suspense } from "react";
-import { NotFound } from "~/components/not-found";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";

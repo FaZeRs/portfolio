@@ -1,5 +1,6 @@
 import { ServiceBaseSchema } from "@acme/db/schema";
 import { useAppForm } from "@acme/ui/form";
+import { NotFound } from "@acme/ui/not-found";
 import {
   useMutation,
   useQueryClient,
@@ -12,7 +13,6 @@ import {
 } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod/v4";
-import { NotFound } from "~/components/not-found";
 import { ServicesForm } from "~/components/services/form";
 import { useTRPC } from "~/lib/trpc";
 

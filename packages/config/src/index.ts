@@ -1,5 +1,5 @@
-import type { SiteConfig, Social } from "@acme/types";
-import { siGithub, siLinkedin, siX } from "simple-icons";
+import type { AuthProvider, SiteConfig, Social } from "@acme/types";
+import { siFacebook, siGithub, siGoogle, siLinkedin, siX } from "simple-icons";
 
 export const siteConfig: SiteConfig = {
   title: "Nauris Linde",
@@ -41,5 +41,28 @@ export const socialConfig: Social[] = [
     url: "https://www.linkedin.com/in/naurislinde/",
     username: "naurislinde",
     icon: siLinkedin,
+  },
+];
+
+export const authProviders: AuthProvider[] = [
+  {
+    label: "GitHub",
+    icon: siGithub,
+    provider: "github",
+  },
+  {
+    label: "Twitter (X)",
+    icon: siX,
+    provider: "twitter",
+  },
+  {
+    label: "Google",
+    icon: siGoogle,
+    provider: "google",
+  },
+  {
+    label: "Facebook",
+    icon: siFacebook,
+    provider: "facebook",
   },
 ];
