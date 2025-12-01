@@ -17,7 +17,7 @@ async function getDb() {
 }
 
 export const sitemap: Sitemap<TRoutes> = {
-  siteUrl: process.env.VITE_BASE_URL ?? "http://localhost:3000",
+  siteUrl: process.env.VITE_APP_URL ?? "http://localhost:3000",
   defaultPriority: 0.5,
   routes: {
     "/": { priority: 1, changeFrequency: "daily" },

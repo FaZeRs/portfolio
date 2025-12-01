@@ -1,8 +1,8 @@
 const DEFAULT_PORT = 3001 as const;
 
 export const getBaseUrl = () => {
-  if (process.env.VITE_BASE_URL) {
-    return process.env.VITE_BASE_URL;
+  if (process.env.VITE_DASHBOARD_URL) {
+    return process.env.VITE_DASHBOARD_URL;
   }
   if (typeof window !== "undefined") {
     return window.location.origin;

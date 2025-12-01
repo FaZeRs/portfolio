@@ -22,6 +22,7 @@ import {
 } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { DashboardSidebar } from "~/components/sidebar";
+import { env } from "~/lib/env/client";
 
 export const Route = createFileRoute("/(dashboard)")({
   component: LayoutComponent,
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/(dashboard)")({
     }
 
     if (context.user.role !== "admin") {
-      throw redirect({ to: "/" });
+      throw redirect({ href: env.VITE_APP_URL });
     }
 
     // `context.queryClient` is also available in our loaders

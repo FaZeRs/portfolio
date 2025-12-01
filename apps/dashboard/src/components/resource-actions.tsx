@@ -86,7 +86,7 @@ export function ResourceActions({
             <DropdownMenuItem
               disabled={deleteMutation.isPending}
               onClick={() =>
-                router.navigate({ href: env.VITE_BASE_URL + viewPath })
+                router.navigate({ href: env.VITE_APP_URL + viewPath })
               }
             >
               View
