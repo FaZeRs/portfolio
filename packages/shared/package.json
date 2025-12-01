@@ -1,0 +1,22 @@
+{
+  "name": "@acme/shared",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./stack": "./src/stack.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "simple-icons": "catalog:"
+  },
+  "devDependencies": {
+    "@acme/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

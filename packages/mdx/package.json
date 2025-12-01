@@ -1,0 +1,36 @@
+{
+  "name": "@acme/mdx",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./streamdown": "./src/streamdown/index.tsx"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@acme/types": "workspace:*",
+    "@acme/ui": "workspace:*",
+    "@acme/utils": "workspace:*",
+    "@shikijs/langs": "^3.17.0",
+    "@shikijs/themes": "^3.17.0",
+    "@unpic/react": "^1.0.1",
+    "html-react-parser": "^5.2.10",
+    "marked": "^17.0.1"
+  },
+  "devDependencies": {
+    "@acme/tsconfig": "workspace:*",
+    "@types/react": "catalog:react19",
+    "react": "catalog:react19",
+    "shiki": "^3.17.0",
+    "typescript": "catalog:"
+  }
+}
