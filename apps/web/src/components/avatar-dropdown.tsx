@@ -50,7 +50,7 @@ export function AvatarDropdown({ user }: { user: UserType }) {
             </p>
           </div>
         </DropdownMenuLabel>
-        {user?.role === "admin" && (
+        {user?.role === "admin" && env.VITE_DASHBOARD_URL && (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem

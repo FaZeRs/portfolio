@@ -82,7 +82,7 @@ export function ResourceActions({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {viewPath && (
+          {viewPath && env.VITE_APP_URL && (
             <DropdownMenuItem
               disabled={deleteMutation.isPending}
               onClick={() =>
