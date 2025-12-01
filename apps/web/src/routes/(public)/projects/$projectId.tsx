@@ -1,3 +1,4 @@
+import { siteConfig } from "@acme/config";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -8,7 +9,6 @@ import { TRPCClientError } from "@trpc/client";
 import { NotFound } from "~/components/not-found";
 import PageHeading from "~/components/page-heading";
 import ProjectContent from "~/components/projects/project-content";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";

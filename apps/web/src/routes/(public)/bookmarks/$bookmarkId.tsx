@@ -1,8 +1,8 @@
+import { siteConfig } from "@acme/config";
 import { Collection } from "@acme/types";
 import { createFileRoute } from "@tanstack/react-router";
 import BookmarkList from "~/components/bookmarks/bookmark-list";
 import PageHeading from "~/components/page-heading";
-import { siteConfig } from "~/lib/config/site";
 import {
   getBookmarksByCollectionId,
   getCollection,

@@ -1,7 +1,7 @@
+import { siteConfig } from "@acme/config";
 import { createFileRoute } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
 import Uses from "~/components/uses";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { getBaseUrl } from "~/lib/utils";
 

@@ -22,8 +22,10 @@
       "dependencies": {
         "@acme/api": "workspace:*",
         "@acme/auth": "workspace:*",
+        "@acme/config": "workspace:*",
         "@acme/db": "workspace:*",
         "@acme/mdx": "workspace:*",
+        "@acme/shared": "workspace:*",
         "@acme/types": "workspace:*",
         "@acme/ui": "workspace:*",
         "@acme/utils": "workspace:*",
@@ -90,8 +92,10 @@
       "dependencies": {
         "@acme/api": "workspace:*",
         "@acme/auth": "workspace:*",
+        "@acme/config": "workspace:*",
         "@acme/db": "workspace:*",
         "@acme/mdx": "workspace:*",
+        "@acme/shared": "workspace:*",
         "@acme/types": "workspace:*",
         "@acme/ui": "workspace:*",
         "@acme/utils": "workspace:*",
@@ -207,6 +211,17 @@
         "typescript": "catalog:",
       },
     },
+    "packages/config": {
+      "name": "@acme/config",
+      "dependencies": {
+        "@acme/types": "workspace:*",
+        "simple-icons": "catalog:",
+      },
+      "devDependencies": {
+        "@acme/tsconfig": "workspace:*",
+        "typescript": "catalog:",
+      },
+    },
     "packages/db": {
       "name": "@acme/db",
       "dependencies": {
@@ -239,6 +254,16 @@
         "@types/react": "catalog:react19",
         "react": "catalog:react19",
         "shiki": "^3.17.0",
+        "typescript": "catalog:",
+      },
+    },
+    "packages/shared": {
+      "name": "@acme/shared",
+      "dependencies": {
+        "simple-icons": "catalog:",
+      },
+      "devDependencies": {
+        "@acme/tsconfig": "workspace:*",
         "typescript": "catalog:",
       },
     },
@@ -382,6 +407,8 @@
 
     "@acme/auth": ["@acme/auth@workspace:packages/auth"],
 
+    "@acme/config": ["@acme/config@workspace:packages/config"],
+
     "@acme/dashboard": ["@acme/dashboard@workspace:apps/dashboard"],
 
     "@acme/db": ["@acme/db@workspace:packages/db"],
@@ -389,6 +416,8 @@
     "@acme/github": ["@acme/github@workspace:tooling/github"],
 
     "@acme/mdx": ["@acme/mdx@workspace:packages/mdx"],
+
+    "@acme/shared": ["@acme/shared@workspace:packages/shared"],
 
     "@acme/tailwind-config": ["@acme/tailwind-config@workspace:tooling/tailwind"],
 
@@ -2734,7 +2763,7 @@
 
     "victory-vendor": ["victory-vendor@37.3.6", "", { "dependencies": { "@types/d3-array": "^3.0.3", "@types/d3-ease": "^3.0.0", "@types/d3-interpolate": "^3.0.1", "@types/d3-scale": "^4.0.2", "@types/d3-shape": "^3.1.0", "@types/d3-time": "^3.0.0", "@types/d3-timer": "^3.0.0", "d3-array": "^3.1.6", "d3-ease": "^3.0.1", "d3-interpolate": "^3.0.1", "d3-scale": "^4.0.2", "d3-shape": "^3.1.0", "d3-time": "^3.0.0", "d3-timer": "^3.0.1" } }, "sha512-SbPDPdDBYp+5MJHhBCAyI7wKM3d5ivekigc2Dk2s7pgbZ9wIgIBYGVw4zGHBml/qTFbexrofXW6Gu4noGxrOwQ=="],
 
-    "vite": ["rolldown-vite@7.2.8", "", { "dependencies": { "@oxc-project/runtime": "0.99.0", "fdir": "^6.5.0", "lightningcss": "^1.30.2", "picomatch": "^4.0.3", "postcss": "^8.5.6", "rolldown": "1.0.0-beta.52", "tinyglobby": "^0.2.15" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^20.19.0 || >=22.12.0", "esbuild": "^0.25.0", "jiti": ">=1.21.0", "less": "^4.0.0", "sass": "^1.70.0", "sass-embedded": "^1.70.0", "stylus": ">=0.54.8", "sugarss": "^5.0.0", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "esbuild", "jiti", "less", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-8wKihlF6EDF8grimwd7GPOhLkQkSIgj6Hlcp0CXhtO3HAXeUUqhgZmJmn07OF8e4PbTusMX6Yxmy1BptVRZsdw=="],
+    "vite": ["rolldown-vite@7.2.9", "", { "dependencies": { "@oxc-project/runtime": "0.99.0", "fdir": "^6.5.0", "lightningcss": "^1.30.2", "picomatch": "^4.0.3", "postcss": "^8.5.6", "rolldown": "1.0.0-beta.52", "tinyglobby": "^0.2.15" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^20.19.0 || >=22.12.0", "esbuild": "^0.25.0", "jiti": ">=1.21.0", "less": "^4.0.0", "sass": "^1.70.0", "sass-embedded": "^1.70.0", "stylus": ">=0.54.8", "sugarss": "^5.0.0", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "esbuild", "jiti", "less", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-Y+Q1FpIgAkK2RiAdeS1SxcvDsJaru1JUANFo1aiFFtuGCckhltIowoC/JMU740tFZDTJA5vg5CAl1RzHExNR/w=="],
 
     "vite-tsconfig-paths": ["vite-tsconfig-paths@5.1.4", "", { "dependencies": { "debug": "^4.1.1", "globrex": "^0.1.2", "tsconfck": "^3.0.3" }, "peerDependencies": { "vite": "*" }, "optionalPeers": ["vite"] }, "sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w=="],
 

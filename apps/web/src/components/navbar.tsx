@@ -15,7 +15,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { Suspense, useState } from "react";
 import { useIsMobile } from "~/hooks/use-mobile";
-import { navbarLinks } from "~/lib/config/navbar";
+import { navbarLinks } from "~/lib/constants/navbar";
 import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";

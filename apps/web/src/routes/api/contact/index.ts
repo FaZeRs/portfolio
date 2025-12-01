@@ -1,6 +1,6 @@
+import { siteConfig } from "@acme/config";
 import { createFileRoute } from "@tanstack/react-router";
 import { Resend } from "resend";
-import { siteConfig } from "~/lib/config/site";
 import { env } from "~/lib/env/server";
 
 const resend = new Resend(env.RESEND_API_KEY);

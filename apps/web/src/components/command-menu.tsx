@@ -1,3 +1,4 @@
+import { siteConfig, socialConfig } from "@acme/config";
 import { Button } from "@acme/ui/button";
 import {
   CommandDialog,
@@ -14,8 +15,7 @@ import type { DialogProps } from "@radix-ui/react-dialog";
 import { useNavigate } from "@tanstack/react-router";
 import { Code, CommandIcon, File, Laptop, Moon, Sun } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { navbarLinks } from "~/lib/config/navbar";
-import { siteConfig, socialConfig } from "~/lib/config/site";
+import { navbarLinks } from "~/lib/constants/navbar";
 
 export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const navigate = useNavigate();

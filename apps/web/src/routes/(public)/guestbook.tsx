@@ -1,3 +1,4 @@
+import { siteConfig } from "@acme/config";
 import { UserType } from "@acme/types";
 import { Skeleton } from "@acme/ui/skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -7,7 +8,6 @@ import SignInModal from "~/components/auth/sign-in-modal";
 import MessageForm from "~/components/guestbook/message-form";
 import Messages from "~/components/guestbook/messages";
 import PageHeading from "~/components/page-heading";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";

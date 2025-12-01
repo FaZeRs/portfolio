@@ -1,3 +1,4 @@
+import { siteConfig } from "@acme/config";
 import { CustomMDX } from "@acme/mdx";
 import { Spinner } from "@acme/ui/spinner";
 import { formatDate } from "@acme/utils";
@@ -11,7 +12,6 @@ import {
 import { TRPCClientError } from "@trpc/client";
 import { Suspense } from "react";
 import { NotFound } from "~/components/not-found";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";

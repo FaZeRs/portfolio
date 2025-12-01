@@ -13,8 +13,10 @@
   "dependencies": {
     "@acme/api": "workspace:*",
     "@acme/auth": "workspace:*",
+    "@acme/config": "workspace:*",
     "@acme/db": "workspace:*",
     "@acme/mdx": "workspace:*",
+    "@acme/shared": "workspace:*",
     "@acme/types": "workspace:*",
     "@acme/ui": "workspace:*",
     "@acme/utils": "workspace:*",

@@ -1,3 +1,4 @@
+import { siteConfig } from "@acme/config";
 import { CustomMDX } from "@acme/mdx";
 import { LazyImage } from "@acme/ui/lazy-image";
 import { Spinner } from "@acme/ui/spinner";
@@ -23,7 +24,6 @@ import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
 import { NotFound } from "~/components/not-found";
 import SocialShare from "~/components/social-share";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import {
   createArticleSchema,

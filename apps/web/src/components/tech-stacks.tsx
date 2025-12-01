@@ -1,3 +1,4 @@
+import { STACKS } from "@acme/shared/stack";
 import Icon from "@acme/ui/icon";
 import {
   Tooltip,
@@ -5,7 +6,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@acme/ui/tooltip";
-import { STACKS } from "~/lib/constants/stack";
 
 type StackProps = {
   techStack: string[] | null;

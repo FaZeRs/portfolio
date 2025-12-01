@@ -1,3 +1,4 @@
+import { STACKS } from "@acme/shared/stack";
 import { ArticleType } from "@acme/types";
 import { withForm } from "@acme/ui/form";
 import Icon from "@acme/ui/icon";
@@ -13,7 +14,6 @@ import {
   FormSubmitButton,
   FormTextarea,
 } from "~/components/form";
-import { STACKS } from "~/lib/constants/stack";
 import { AIAssistDialog } from "./ai-assist-dialog";
 
 export const articleFormOpts = formOptions({

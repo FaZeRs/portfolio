@@ -1,9 +1,9 @@
+import { siteConfig } from "@acme/config";
 import { Skeleton } from "@acme/ui/skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
 import Projects from "~/components/projects/projects";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";

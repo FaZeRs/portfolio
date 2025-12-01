@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 import { AppRouter } from "@acme/api";
+import { siteConfig } from "@acme/config";
 import { Toaster } from "@acme/ui/sonner";
 import { ThemeProvider } from "@acme/ui/theme-provider";
 import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
@@ -15,7 +16,6 @@ import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { DevtoolsComponent } from "~/components/dev-tools";
 import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import {
   createWebSiteSchema,

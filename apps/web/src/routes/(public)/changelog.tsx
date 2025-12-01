@@ -1,3 +1,4 @@
+import { siteConfig } from "@acme/config";
 import { CustomMDX } from "@acme/mdx";
 import { TOC } from "@acme/types";
 import { Skeleton } from "@acme/ui/skeleton";
@@ -5,7 +6,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import TableOfContents from "~/components/blog/toc";
 import PageHeading from "~/components/page-heading";
-import { siteConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { getBaseUrl } from "~/lib/utils";
 

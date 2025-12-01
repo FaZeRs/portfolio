@@ -1,9 +1,9 @@
+import { STACKS } from "@acme/shared/stack";
 import { ProjectType } from "@acme/types";
 import { withForm } from "@acme/ui/form";
 import Icon from "@acme/ui/icon";
 import { generateSlug } from "@acme/utils";
 import { formOptions, ValidationErrorMap } from "@tanstack/react-form";
-import { STACKS } from "~/lib/constants/stack";
 import {
   FormCheckbox,
   FormImageUpload,

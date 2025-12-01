@@ -1,8 +1,8 @@
+import { siteConfig, socialConfig } from "@acme/config";
 import Icon from "@acme/ui/icon";
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail } from "lucide-react";
 import CoverImage from "~/components/cover-image";
-import { siteConfig, socialConfig } from "~/lib/config/site";
 import { seo } from "~/lib/seo";
 import { getBaseUrl } from "~/lib/utils";
 

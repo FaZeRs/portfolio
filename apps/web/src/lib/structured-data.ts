@@ -1,4 +1,4 @@
-import { siteConfig, socialConfig } from "./config/site";
+import { siteConfig, socialConfig } from "@acme/config";
 import { getBaseUrl } from "./utils";
 
 export type Person = {

@@ -1,4 +1,4 @@
-import { siteConfig } from "./config/site";
+import { siteConfig } from "@acme/config";
 import { getBaseUrl } from "./utils";
 
 export function seo({

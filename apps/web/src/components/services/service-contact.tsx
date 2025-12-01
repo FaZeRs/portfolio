@@ -1,8 +1,8 @@
+import { siteConfig } from "@acme/config";
 import { Button } from "@acme/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@acme/ui/card";
 import { Calendar, MessageSquare } from "lucide-react";
 import { useState } from "react";
-import { siteConfig } from "~/lib/config/site";
 import ContactModal from "../contact-modal";
 
 export default function ServiceContact() {

@@ -1,8 +1,8 @@
+import { siteConfig } from "@acme/config";
 import { Collection } from "@acme/types";
 import { ScrollArea } from "@acme/ui/scroll-area";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
-import { siteConfig } from "~/lib/config/site";
 import { getCollections } from "~/lib/raindrop";
 import { seo } from "~/lib/seo";
 import { getBaseUrl } from "~/lib/utils";

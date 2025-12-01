@@ -1,4 +1,4 @@
-import { siteConfig } from "~/lib/config/site";
+import { siteConfig } from "@acme/config";
 
 const Footer = () => (
   <footer className="border-t">

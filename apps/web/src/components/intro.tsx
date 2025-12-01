@@ -1,9 +1,9 @@
+import { siteConfig } from "@acme/config";
 import { Button } from "@acme/ui/button";
 import { LazyImage } from "@acme/ui/lazy-image";
 import { motion } from "framer-motion";
 import { Calendar, MessageSquare } from "lucide-react";
 import { useState } from "react";
-import { siteConfig } from "~/lib/config/site";
 import ContactModal from "./contact-modal";
 
 const Intro = () => {
