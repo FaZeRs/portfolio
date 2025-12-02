@@ -5,7 +5,8 @@
   "exports": {
     "./stack": "./src/stack.ts",
     "./dev-tools": "./src/dev-tools.tsx",
-    "./create-router": "./src/create-router.tsx"
+    "./create-router": "./src/create-router.tsx",
+    "./create-trpc-client": "./src/create-trpc-client.ts"
   },
   "license": "MIT",
   "scripts": {
