@@ -6,7 +6,10 @@
     "./stack": "./src/stack.ts",
     "./dev-tools": "./src/dev-tools.tsx",
     "./create-router": "./src/create-router.tsx",
-    "./create-trpc-client": "./src/create-trpc-client.ts"
+    "./create-trpc-client": "./src/create-trpc-client.ts",
+    "./signin": "./src/signin.tsx",
+    "./logo": "./src/logo.tsx",
+    "./link": "./src/link.tsx"
   },
   "license": "MIT",
   "scripts": {
@@ -18,6 +21,7 @@
   "dependencies": {
     "@acme/api": "workspace:*",
     "@acme/auth": "workspace:*",
+    "@acme/config": "workspace:*",
     "@acme/ui": "workspace:*",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "^1.139.13",

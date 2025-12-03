@@ -1,4 +1,5 @@
 import { CustomMDX } from "@acme/mdx";
+import ProjectLink from "@acme/shared/link";
 import type { ProjectType } from "@acme/types";
 import Icon from "@acme/ui/icon";
 import { Spinner } from "@acme/ui/spinner";
@@ -7,7 +8,6 @@ import { ClientOnly } from "@tanstack/react-router";
 import { Share } from "lucide-react";
 import { Suspense } from "react";
 import { siGithub } from "simple-icons";
-import ProjectLink from "../link";
 import TechStacks from "../tech-stacks";
 
 type ProjectContentProps = {

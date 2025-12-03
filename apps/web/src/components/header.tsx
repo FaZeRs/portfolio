@@ -1,5 +1,5 @@
+import Logo from "@acme/shared/logo";
 import { NavItem, UserType } from "@acme/types";
-import Logo from "./logo";
 import Navbar from "./navbar";
 
 export function Header({
