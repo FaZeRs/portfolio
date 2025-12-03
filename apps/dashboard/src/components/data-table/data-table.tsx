@@ -59,7 +59,7 @@ const DEFAULT_PAGE_SIZE = 10;
 export function DataTable<TData, TValue>({
   columns,
   data,
-  entityName,
+  entityName = "items",
 }: Readonly<DataTableProps<TData, TValue>>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
