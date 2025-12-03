@@ -78,7 +78,9 @@ function SnippetsContent() {
     return <SnippetsLoading />;
   }
 
-  return <DataTable columns={snippetColumns} data={snippets} />;
+  return (
+    <DataTable columns={snippetColumns} data={snippets} entityName="snippets" />
+  );
 }
 
 function Snippets() {

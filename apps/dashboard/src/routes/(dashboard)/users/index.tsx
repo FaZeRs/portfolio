@@ -68,7 +68,7 @@ function UsersError() {
 function UsersContent() {
   const { users } = Route.useLoaderData();
 
-  return <DataTable columns={userColumns} data={users} />;
+  return <DataTable columns={userColumns} data={users} entityName="users" />;
 }
 
 function Users() {

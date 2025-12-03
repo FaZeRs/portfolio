@@ -41,6 +41,7 @@ declare module "@tanstack/react-table" {
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  entityName?: string;
 };
 
 const fuzzyFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
@@ -58,6 +59,7 @@ const DEFAULT_PAGE_SIZE = 10;
 export function DataTable<TData, TValue>({
   columns,
   data,
+  entityName,
 }: Readonly<DataTableProps<TData, TValue>>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -97,6 +99,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="py-4">
         <DataTableToolbar
+          entityName={entityName}
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
         />

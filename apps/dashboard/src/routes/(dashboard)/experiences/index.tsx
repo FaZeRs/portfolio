@@ -78,7 +78,13 @@ function ExperiencesContent() {
     return <ExperiencesLoading />;
   }
 
-  return <DataTable columns={experienceColumns} data={experiences} />;
+  return (
+    <DataTable
+      columns={experienceColumns}
+      data={experiences}
+      entityName="experiences"
+    />
+  );
 }
 
 function Experiences() {

@@ -5,11 +5,13 @@ import { X } from "lucide-react";
 type DataTableToolbarProps = {
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
+  entityName?: string;
 };
 
 export function DataTableToolbar({
   globalFilter,
   setGlobalFilter,
+  entityName = "items",
 }: Readonly<DataTableToolbarProps>) {
   return (
     <div className="flex items-center justify-between">
@@ -19,7 +21,7 @@ export function DataTableToolbar({
           onChange={(event) => {
             setGlobalFilter(String(event.target.value));
           }}
-          placeholder="Filter projects..."
+          placeholder={`Filter ${entityName}...`}
           value={globalFilter ?? ""}
         />
         {globalFilter && (

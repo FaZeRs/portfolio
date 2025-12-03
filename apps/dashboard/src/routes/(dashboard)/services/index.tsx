@@ -78,7 +78,9 @@ function ServicesContent() {
     return <ServicesLoading />;
   }
 
-  return <DataTable columns={serviceColumns} data={services} />;
+  return (
+    <DataTable columns={serviceColumns} data={services} entityName="services" />
+  );
 }
 
 function Services() {

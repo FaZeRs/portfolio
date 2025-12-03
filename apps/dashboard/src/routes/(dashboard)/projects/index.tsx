@@ -78,7 +78,9 @@ function ProjectsContent() {
     return <ProjectsLoading />;
   }
 
-  return <DataTable columns={projectColumns} data={projects} />;
+  return (
+    <DataTable columns={projectColumns} data={projects} entityName="projects" />
+  );
 }
 
 function Projects() {

@@ -67,7 +67,9 @@ function ArticlesContent() {
     return <ArticlesLoading />;
   }
 
-  return <DataTable columns={blogColumns} data={articles} />;
+  return (
+    <DataTable columns={blogColumns} data={articles} entityName="articles" />
+  );
 }
 
 function Articles() {
