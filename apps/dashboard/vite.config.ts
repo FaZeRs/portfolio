@@ -72,9 +72,4 @@ export default defineConfig({
   ssr: {
     noExternal: ["@acme/db"],
   },
-  server: {
-    warmup: {
-      clientFiles: ["./src/server.ts"],
-    },
-  },
 });

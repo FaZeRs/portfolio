@@ -5,7 +5,6 @@ import { siteConfig } from "@acme/config";
 import { DevtoolsComponent } from "@acme/shared/dev-tools";
 import { Toaster } from "@acme/ui/sonner";
 import { ThemeProvider } from "@acme/ui/theme-provider";
-import { wrapCreateRootRouteWithSentry } from "@sentry/tanstackstart-react";
 import type { QueryClient } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
@@ -23,7 +22,7 @@ import {
 } from "~/lib/structured-data";
 import appCss from "~/styles.css?url";
 
-export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<{
+export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
   trpc: TRPCOptionsProxy<AppRouter>;
   user: AuthQueryResult;

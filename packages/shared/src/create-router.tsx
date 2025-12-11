@@ -1,6 +1,8 @@
 import type * as Api from "@acme/api";
 import { DefaultCatchBoundary } from "@acme/ui/default-catch-boundary";
 import { NotFound } from "@acme/ui/not-found";
+// biome-ignore lint/performance/noNamespaceImport: valid import
+import * as Sentry from "@sentry/tanstackstart-react";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import type { AnyRoute } from "@tanstack/react-router";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
@@ -59,6 +61,20 @@ export function createRouter<TRouteTree extends AnyRoute>({
       />
     ),
   });
+
+  if (!router.isServer) {
+    Sentry.init({
+      dsn: process.env.VITE_SENTRY_DSN,
+      integrations: [
+        Sentry.tanstackRouterBrowserTracingIntegration(router),
+        Sentry.browserTracingIntegration(),
+      ],
+      tracesSampleRate: 1.0,
+      profileSessionSampleRate: 1.0,
+      profileLifecycle: "trace",
+      sendDefaultPii: true,
+    });
+  }
 
   setupRouterSsrQueryIntegration({
     router,
