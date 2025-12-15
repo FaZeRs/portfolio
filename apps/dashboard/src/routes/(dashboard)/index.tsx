@@ -5,12 +5,14 @@ import { UsersStats } from "~/components/stats/users";
 export const Route = createFileRoute("/(dashboard)/")({
   component: DashboardIndex,
   loader: async ({ context: { trpc, queryClient } }) => {
-    await queryClient.prefetchQuery(
-      trpc.stats.monthlyBlogViews.queryOptions({ months: 6 })
-    );
-    await queryClient.prefetchQuery(
-      trpc.stats.monthlyUsers.queryOptions({ months: 6 })
-    );
+    await Promise.all([
+      queryClient.prefetchQuery(
+        trpc.stats.monthlyBlogViews.queryOptions({ months: 6 })
+      ),
+      queryClient.prefetchQuery(
+        trpc.stats.monthlyUsers.queryOptions({ months: 6 })
+      ),
+    ]);
   },
 });
 

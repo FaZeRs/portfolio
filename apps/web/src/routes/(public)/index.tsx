@@ -9,9 +9,11 @@ import SkillSection from "~/components/skills";
 export const Route = createFileRoute("/(public)/")({
   component: Home,
   loader: async ({ context: { trpc, queryClient } }) => {
-    await queryClient.prefetchQuery(trpc.experience.allPublic.queryOptions());
-    await queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions());
-    await queryClient.prefetchQuery(trpc.service.allPublic.queryOptions());
+    await Promise.all([
+      queryClient.prefetchQuery(trpc.experience.allPublic.queryOptions()),
+      queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions()),
+      queryClient.prefetchQuery(trpc.service.allPublic.queryOptions()),
+    ]);
   },
 });
 
