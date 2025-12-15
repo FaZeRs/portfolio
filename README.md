@@ -127,7 +127,6 @@ To change providers or enable email/password authentication, update:
 
 Resources:
 - [shadcn/ui login blocks](https://ui.shadcn.com/blocks/login)
-- [@daveyplate/better-auth-ui](https://better-auth-ui.com/)
 
 ## Building for Production
 
