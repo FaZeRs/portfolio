@@ -19,7 +19,8 @@
       "!**/src-tauri",
       "!**/.tanstack",
       "!**/.nitro",
-      "!**/.output"
+      "!**/.output",
+      "!**/.cache"
     ]
   },
   "formatter": {
