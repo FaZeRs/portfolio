@@ -12,15 +12,55 @@ import {
 import Icon from "@acme/ui/icon";
 import { useTheme } from "@acme/ui/theme-provider";
 import type { DialogProps } from "@radix-ui/react-dialog";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { Code, CommandIcon, File, Laptop, Moon, Sun } from "lucide-react";
+import {
+  Code,
+  CommandIcon,
+  File,
+  FileText,
+  FolderKanban,
+  Laptop,
+  Loader2,
+  Moon,
+  Sun,
+} from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { navbarLinks } from "~/lib/constants/navbar";
+import { useTRPC } from "~/lib/trpc";
 
 export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const { setTheme } = useTheme();
+  const trpc = useTRPC();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (!open) {
+      setSearchQuery("");
+      setDebouncedQuery("");
+    }
+  }, [open]);
+
+  const { data: searchResults, isLoading: isSearching } = useQuery({
+    ...trpc.search.query.queryOptions({ query: debouncedQuery }),
+    enabled: debouncedQuery.length >= 2,
+  });
+
+  const hasSearchResults =
+    searchResults &&
+    (searchResults.articles.length > 0 ||
+      searchResults.projects.length > 0 ||
+      searchResults.snippets.length > 0);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -52,16 +92,125 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
       </Button>
 
       <CommandDialog onOpenChange={setOpen} open={open}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput
+          onValueChange={setSearchQuery}
+          placeholder="Type a command or search..."
+          value={searchQuery}
+        />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>
+            {isSearching ? (
+              <div className="flex items-center justify-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Searching...
+              </div>
+            ) : (
+              "No results found."
+            )}
+          </CommandEmpty>
+
+          {hasSearchResults && (
+            <>
+              {searchResults.articles.length > 0 && (
+                <CommandGroup heading="Articles">
+                  {searchResults.articles.map((article) => (
+                    <CommandItem
+                      key={article.id}
+                      onSelect={() => {
+                        runCommand(() =>
+                          navigate({
+                            to: "/blog/$articleId",
+                            params: { articleId: article.slug },
+                          })
+                        );
+                      }}
+                      value={`article-${article.slug}`}
+                    >
+                      <FileText className="mr-2 h-4 w-4" />
+                      <div className="flex flex-col">
+                        <span>{article.title}</span>
+                        {article.description && (
+                          <span className="text-muted-foreground text-xs">
+                            {article.description.slice(0, 60)}
+                            {article.description.length > 60 ? "..." : ""}
+                          </span>
+                        )}
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+
+              {searchResults.projects.length > 0 && (
+                <CommandGroup heading="Projects">
+                  {searchResults.projects.map((project) => (
+                    <CommandItem
+                      key={project.id}
+                      onSelect={() => {
+                        runCommand(() =>
+                          navigate({
+                            to: "/projects/$projectId",
+                            params: { projectId: project.slug },
+                          })
+                        );
+                      }}
+                      value={`project-${project.slug}`}
+                    >
+                      <FolderKanban className="mr-2 h-4 w-4" />
+                      <div className="flex flex-col">
+                        <span>{project.title}</span>
+                        {project.description && (
+                          <span className="text-muted-foreground text-xs">
+                            {project.description.slice(0, 60)}
+                            {project.description.length > 60 ? "..." : ""}
+                          </span>
+                        )}
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+
+              {searchResults.snippets.length > 0 && (
+                <CommandGroup heading="Snippets">
+                  {searchResults.snippets.map((snippet) => (
+                    <CommandItem
+                      key={snippet.id}
+                      onSelect={() => {
+                        runCommand(() =>
+                          navigate({
+                            to: "/snippets/$snippetId",
+                            params: { snippetId: snippet.slug },
+                          })
+                        );
+                      }}
+                      value={`snippet-${snippet.slug}`}
+                    >
+                      <Code className="mr-2 h-4 w-4" />
+                      <div className="flex flex-col">
+                        <span>{snippet.title}</span>
+                        {snippet.description && (
+                          <span className="text-muted-foreground text-xs">
+                            {snippet.description.slice(0, 60)}
+                            {snippet.description.length > 60 ? "..." : ""}
+                          </span>
+                        )}
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+
+              <CommandSeparator />
+            </>
+          )}
 
           <CommandGroup heading="General">
             <CommandItem
               onSelect={() =>
                 window.open(
                   siteConfig.links.githubRepo,
-                  "_ blank",
+                  "_blank",
                   "noopener,noreferrer"
                 )
               }
@@ -112,7 +261,7 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
               <CommandItem
                 key={social.name}
                 onSelect={() => {
-                  window.open(social.url, "_ blank", "noopener,noreferrer");
+                  window.open(social.url, "_blank", "noopener,noreferrer");
                 }}
               >
                 <Icon className="mr-2 h-4 w-4" icon={social.icon} />

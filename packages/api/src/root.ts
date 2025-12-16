@@ -3,6 +3,7 @@ import { commentRouter } from "./router/comment";
 import { experienceRouter } from "./router/experience";
 import { guestbookRouter } from "./router/guestbook";
 import { projectRouter } from "./router/project";
+import { searchRouter } from "./router/search";
 import { serviceRouter } from "./router/service";
 import { snippetRouter } from "./router/snippet";
 import { statsRouter } from "./router/stats";
@@ -19,6 +20,7 @@ export const appRouter = createTRPCRouter({
   stats: statsRouter,
   guestbook: guestbookRouter,
   service: serviceRouter,
+  search: searchRouter,
 });
 
 // export type definition of API
