@@ -62,13 +62,13 @@ export default function ProjectContent({
         </div>
       </div>
 
-      <div className="relative aspect-[16/9] overflow-hidden">
+      <div className="overflow-hidden rounded-lg border">
         <ZoomImage
           alt={title}
-          className="scale-100 rounded-lg border object-cover blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"
+          className="w-full duration-700 ease-in-out hover:scale-105"
           height={700}
           src={thumbnailUrl}
-          width={1200}
+          width={1600}
         />
       </div>
 

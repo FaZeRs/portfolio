@@ -51,7 +51,7 @@ function RouteComponent() {
         title="Changelog"
       />
 
-      <div className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px]">
+      <div className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px] 2xl:max-w-7xl">
         <div className="w-full min-w-0">
           <div className="prose prose-slate dark:prose-invert max-w-none">
             <Suspense

@@ -63,7 +63,7 @@ function RouteComponent() {
   );
 
   return (
-    <article className="relative lg:gap-10 xl:grid xl:max-w-6xl">
+    <article className="relative lg:gap-10 xl:grid xl:max-w-6xl 2xl:max-w-7xl">
       <div className="w-full min-w-0">
         <div className="mb-6">
           <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">

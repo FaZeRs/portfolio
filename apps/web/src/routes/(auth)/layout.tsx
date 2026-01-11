@@ -6,7 +6,7 @@ export const Route = createFileRoute("/(auth)")({
 
 function LayoutComponent() {
   return (
-    <main className="container mx-auto flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
+    <main className="container mx-auto flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
       <Outlet />
     </main>
   );

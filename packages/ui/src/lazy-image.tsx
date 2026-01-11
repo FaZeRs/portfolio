@@ -30,7 +30,7 @@ export function LazyImage({
   width = 100,
   height = 100,
   fallbackSrc = "/images/fallback.webp",
-  quality = 90,
+  quality = 100,
   sizes,
   priority = false,
   rootMargin = "50px",

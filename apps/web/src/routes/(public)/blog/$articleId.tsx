@@ -152,7 +152,7 @@ function RouteComponent() {
 
   return (
     <>
-      <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px]">
+      <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px] 2xl:max-w-7xl">
         <div className="w-full min-w-0">
           <BreadcrumbNavigation pageTitle={article.title} />
 
