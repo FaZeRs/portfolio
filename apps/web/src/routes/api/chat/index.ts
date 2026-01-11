@@ -73,7 +73,7 @@ Always be helpful, professional, and enthusiastic about Nauris's work. Provide s
           const result = streamText({
             model: openai("gpt-5-nano"),
             system: serviceKnowledge,
-            messages: convertToModelMessages(messages),
+            messages: await convertToModelMessages(messages),
             tools,
           });
 
