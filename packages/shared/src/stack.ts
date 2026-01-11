@@ -11,6 +11,7 @@ import {
   siJavascript,
   siLaravel,
   siLinux,
+  siMacos,
   siNestjs,
   siNextdotjs,
   siNodedotjs,
@@ -23,6 +24,7 @@ import {
   siReact,
   siRust,
   siTailwindcss,
+  siTauri,
   siTrpc,
   siTurborepo,
   siTypescript,
@@ -65,4 +67,6 @@ export const STACKS: Stack = {
   Rust: siRust,
   Ubuntu: siUbuntu,
   Linux: siLinux,
+  macOS: siMacos,
+  Tauri: siTauri,
 };

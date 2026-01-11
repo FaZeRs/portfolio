@@ -70,7 +70,7 @@ const Intro = () => {
           asChild
           className="group min-w-[200px]"
           size="lg"
-          variant="secondary"
+          variant="outline"
         >
           <a
             href={siteConfig.calendlyUrl}

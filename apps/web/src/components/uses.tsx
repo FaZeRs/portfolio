@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { Layers } from "lucide-react";
 import type { SimpleIcon } from "simple-icons";
-import AnimatedDiv from "~/components/animated-div";
-import { fadeContainer, popUp } from "~/lib/constants/framer-motion-variants";
 import { software } from "~/lib/constants/uses-data";
 
 const createIconComponent =
@@ -13,36 +12,63 @@ const createIconComponent =
     </svg>
   );
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3 },
+  },
+};
+
 export default function Uses() {
   return (
-    <div className="mt-10">
-      <motion.h2 className="font-bold font-heading text-lg sm:text-2xl">
-        Software and Applications
-      </motion.h2>
+    <div className="space-y-6">
+      <div className="flex items-center gap-2">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+          <Layers className="h-5 w-5 text-primary" />
+        </div>
+        <h2 className="font-semibold text-xl">Software & Applications</h2>
+      </div>
 
-      <AnimatedDiv
-        className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-7"
-        variants={fadeContainer}
+      <motion.div
+        animate="visible"
+        className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8"
+        initial="hidden"
+        variants={containerVariants}
       >
         {software.map((item) => {
           const Icon = createIconComponent(item.icon);
 
           return (
-            <motion.div key={item.name} variants={popUp}>
+            <motion.div key={item.name} variants={itemVariants}>
               <Link
-                className="active:!scale-90 lg:hover:!scale-125 relative flex flex-col items-center justify-center gap-2 rounded-md border border-transparent bg-background p-6 text-gray-700 shadow transition-all hover:z-10 hover:origin-center hover:border-gray-400 hover:text-black hover:shadow-lg dark:bg-secondary dark:text-gray-300/80 dark:shadow-md dark:hover:border-neutral-600 dark:hover:text-white"
+                className="group flex flex-col items-center justify-center gap-3 rounded-2xl border bg-card p-4 transition-all duration-300 hover:border-foreground/20 hover:shadow-lg active:scale-95"
                 rel="noopener noreferrer"
                 target="_blank"
-                title={`${item.name} - ${item.description}`}
                 to={item.link}
               >
-                <Icon className="!pointer-events-none mb-4 h-8 w-8" />
-                <p className="line-clamp-1 select-none text-xs">{item.name}</p>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted transition-colors group-hover:bg-primary/10">
+                  <Icon className="h-6 w-6 transition-colors group-hover:text-primary" />
+                </div>
+                <p className="line-clamp-1 text-center font-medium text-xs">
+                  {item.name}
+                </p>
               </Link>
             </motion.div>
           );
         })}
-      </AnimatedDiv>
+      </motion.div>
     </div>
   );
 }

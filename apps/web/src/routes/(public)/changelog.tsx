@@ -3,6 +3,7 @@ import { CustomMDX } from "@acme/mdx";
 import { TOC } from "@acme/types";
 import { Skeleton } from "@acme/ui/skeleton";
 import { createFileRoute } from "@tanstack/react-router";
+import { motion } from "framer-motion";
 import { Suspense } from "react";
 import TableOfContents from "~/components/blog/toc";
 import PageHeading from "~/components/page-heading";
@@ -12,7 +13,7 @@ import { getBaseUrl } from "~/lib/utils";
 export const Route = createFileRoute("/(public)/changelog")({
   component: RouteComponent,
   loader: async () => {
-    const response = await fetch("/api/changelog");
+    const response = await fetch(`${getBaseUrl()}/api/changelog`);
     if (!response.ok) {
       throw new Error("Failed to load changelog");
     }
@@ -69,11 +70,16 @@ function RouteComponent() {
           </div>
         </div>
         {toc.length > 0 && (
-          <div className="hidden text-sm xl:block">
-            <div className="-mt-10 sticky top-16 max-h-[calc(var(--vh)-4rem)] pt-10">
+          <motion.div
+            animate={{ opacity: 1, x: 0 }}
+            className="hidden text-sm xl:block"
+            initial={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <div className="-mt-10 sticky top-20 pt-10">
               <TableOfContents toc={toc} />
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
     </>

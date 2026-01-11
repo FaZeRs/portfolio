@@ -2,7 +2,9 @@ import { cn } from "@acme/ui";
 import { Slot } from "@radix-ui/react-slot";
 import { motion } from "framer-motion";
 import type { HTMLAttributes } from "react";
-import { slideInWithFadeOut } from "~/lib/constants/framer-motion-variants";
+
+const MotionDiv = motion.create("div");
+const MotionSlot = motion.create(Slot);
 
 interface PageHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   title: string;
@@ -18,29 +20,35 @@ const PageHeading = ({
   className,
   hasMotion = true,
 }: PageHeadingProps) => {
-  const BaseComp = asChild ? Slot : "h1";
-  const Comp = hasMotion ? motion.create(BaseComp) : BaseComp;
+  const Comp = (() => {
+    if (hasMotion) {
+      return asChild ? MotionSlot : MotionDiv;
+    }
+    return asChild ? Slot : "div";
+  })();
 
   return (
     <Comp
-      animate="visible"
-      className={cn(
-        "font-medium text-2xl leading-relaxed dark:text-white",
-        className
-      )}
-      exit="hidden"
-      initial="hidden"
-      variants={slideInWithFadeOut}
+      animate={{ opacity: 1, y: 0 }}
+      className={cn("mb-10", className)}
+      initial={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5 }}
     >
-      <div className="space-y-1">
-        <h1 className="inline-block font-heading text-2xl tracking-tight md:text-3xl lg:text-4xl">
-          {title}
-        </h1>
-        <p className="text-base text-muted-foreground md:text-lg">
-          {description}
-        </p>
+      <div className="relative">
+        {/* Decorative gradient */}
+        <div className="-top-4 -left-4 pointer-events-none absolute h-24 w-24 rounded-full bg-gradient-to-br from-violet-500/20 to-pink-500/20 blur-2xl" />
+
+        <div className="relative space-y-3">
+          <h1 className="font-bold text-3xl tracking-tight md:text-4xl lg:text-5xl">
+            {title}
+          </h1>
+          {description && (
+            <p className="max-w-2xl text-muted-foreground leading-relaxed md:text-lg">
+              {description}
+            </p>
+          )}
+        </div>
       </div>
-      <hr className="my-6 md:my-4" />
     </Comp>
   );
 };

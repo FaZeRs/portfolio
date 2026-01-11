@@ -1,5 +1,8 @@
 import { TOC } from "@acme/types";
 import { cn } from "@acme/ui";
+import { ScrollArea } from "@acme/ui/scroll-area";
+import { List } from "lucide-react";
+import { useMemo } from "react";
 import useActiveItem from "~/hooks/use-active-item";
 import useMounted from "~/hooks/use-mounted";
 
@@ -10,7 +13,7 @@ type TableOfContentProps = {
 export default function TableOfContents({
   toc,
 }: Readonly<TableOfContentProps>) {
-  const itemIds = toc.map((item) => item.url);
+  const itemIds = useMemo(() => toc.map((item) => item.url), [toc]);
 
   const mounted = useMounted();
   const activeHeading = useActiveItem(itemIds);
@@ -20,9 +23,16 @@ export default function TableOfContents({
   }
 
   return (
-    <div className="space-y-2">
-      <p className="font-medium uppercase">On This Page</p>
-      <Tree activeItem={activeHeading} tree={toc} />
+    <div className="flex max-h-[calc(100vh-10rem)] flex-col rounded-2xl border border-border/50 bg-card/50 p-5 backdrop-blur-sm">
+      <div className="flex shrink-0 items-center gap-2 pb-4">
+        <List className="h-4 w-4 text-muted-foreground" />
+        <p className="font-medium text-sm">On This Page</p>
+      </div>
+      <ScrollArea className="w-full">
+        <div className="max-h-[calc(100vh-15rem)]">
+          <Tree activeItem={activeHeading} tree={toc} />
+        </div>
+      </ScrollArea>
     </div>
   );
 }
@@ -32,25 +42,26 @@ type TreeProps = {
   activeItem?: string | null;
 };
 
-const PADDING_LEFT = 16 as const;
+const PADDING_LEFT = 12 as const;
 
 function Tree({ tree, activeItem }: TreeProps) {
   const minDepth = Math.min(...tree.map((item) => item.depth));
 
   return tree?.length ? (
-    <ul className={cn("m-0 list-none")}>
+    <ul className="m-0 list-none space-y-1">
       {tree.map((item) => (
-        <li className={cn("mt-0")} key={item.url}>
+        <li key={item.url}>
           <a
             className={cn(
-              "inline-block border-l-2 py-1.5 pl-4 no-underline transition-all hover:text-primary hover:underline",
+              "block rounded-lg py-1.5 text-sm no-underline transition-all",
               item.url === activeItem
-                ? "border-primary text-primary"
-                : "text-muted-foreground text-sm"
+                ? "bg-primary/10 font-medium text-primary"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
             href={`#${item.url}`}
             style={{
               paddingLeft: `${(item.depth - minDepth + 1) * PADDING_LEFT}px`,
+              paddingRight: "12px",
             }}
           >
             {item.title}

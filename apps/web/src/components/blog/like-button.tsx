@@ -39,12 +39,12 @@ const LikeButton = ({ article }: LikeButtonProps) => {
           aria-label={isLiked ? "Unlike this article" : "Like this article"}
           aria-pressed={isLiked}
           className={cn(
-            "group relative inline-flex h-9 w-9 items-center justify-center rounded-md border transition-all duration-200 ease-out",
-            "hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "group relative inline-flex h-10 w-10 items-center justify-center rounded-xl border backdrop-blur-sm transition-all duration-300 ease-out",
+            "hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             "active:scale-95 disabled:pointer-events-none disabled:opacity-50",
             isLiked
-              ? "border-rose-200 bg-rose-50 text-rose-600 shadow-sm hover:border-rose-300 hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-400 dark:hover:border-rose-700 dark:hover:bg-rose-900/50"
-              : "border-border bg-background text-muted-foreground shadow-sm hover:border-border/80 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+              ? "border-rose-300/50 bg-rose-50/80 text-rose-500 shadow-md hover:border-rose-400 hover:bg-rose-100 hover:shadow-lg dark:border-rose-700/50 dark:bg-rose-950/50 dark:text-rose-400 dark:hover:border-rose-600 dark:hover:bg-rose-900/60"
+              : "border-border/50 bg-card/50 text-muted-foreground shadow-sm hover:border-foreground/20 hover:bg-card hover:text-foreground hover:shadow-md dark:bg-white/5 dark:hover:bg-white/10",
             isLoading && "animate-pulse"
           )}
           disabled={isLoading}
@@ -53,13 +53,13 @@ const LikeButton = ({ article }: LikeButtonProps) => {
         >
           <HeartIcon
             className={cn(
-              "h-4 w-4 transition-all duration-200 ease-out",
-              "group-hover:scale-110 group-active:scale-95",
+              "h-4 w-4 transition-all duration-300 ease-out",
+              "group-hover:scale-125 group-active:scale-95",
               isLiked && "fill-current"
             )}
           />
           {isLiked && (
-            <div className="absolute inset-0 rounded-md bg-rose-500/10 opacity-0 transition-opacity duration-200" />
+            <div className="absolute inset-0 rounded-xl bg-rose-500/10 opacity-0 transition-opacity duration-200" />
           )}
         </button>
       </div>

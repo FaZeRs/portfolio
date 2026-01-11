@@ -18,6 +18,8 @@ type LazyImageProps = HTMLAttributes<HTMLDivElement> & {
   threshold?: number;
   placeholder?: string;
   imageClassName?: string;
+  /** When true, image fills its parent container without applying aspect ratio */
+  fill?: boolean;
   onLoad?: () => void;
   onError?: () => void;
 };
@@ -36,6 +38,7 @@ export function LazyImage({
   rootMargin = "50px",
   threshold = 0.1,
   placeholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3C/svg%3E",
+  fill = false,
   onLoad,
   onError,
   ...rest
@@ -110,9 +113,7 @@ export function LazyImage({
         className
       )}
       ref={imgRef}
-      style={{
-        aspectRatio: `${width} / ${height}`,
-      }}
+      style={fill ? undefined : { aspectRatio: `${width} / ${height}` }}
       {...rest}
     >
       {hasError ? (
@@ -126,6 +127,7 @@ export function LazyImage({
             className={cn(
               "h-full w-full object-cover transition-opacity duration-500",
               isLoading || !isInView ? "opacity-0" : "opacity-100",
+              fill && "!max-h-none !max-w-none",
               imageClassName
             )}
             fetchPriority={priority ? "high" : "auto"}

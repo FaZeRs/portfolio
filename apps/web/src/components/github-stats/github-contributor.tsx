@@ -1,5 +1,7 @@
 import { useTheme } from "@acme/ui/theme-provider";
 import { ClientOnly } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { Calendar, GitBranch } from "lucide-react";
 import { GitHubCalendar } from "react-github-calendar";
 import GithubActivityGraph from "~/components/github-stats/github-activity-graph";
 
@@ -8,35 +10,53 @@ export default function GithubContributor() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="mt-12">
-      <div className="font-bold font-heading text-3xl text-neutral-900 capitalize sm:text-4xl dark:text-neutral-200">
-        GitHub Contributor
-      </div>
-      <div className="text-muted-foreground">
-        The following is my GitHub contribution graph which shows my coding
-        activity and productivity on the platform.
+    <motion.div
+      animate={{ opacity: 1, y: 0 }}
+      className="mt-16 space-y-8"
+      initial={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
+      {/* Header */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+            <GitBranch className="h-5 w-5 text-primary" />
+          </div>
+          <h2 className="font-bold text-2xl tracking-tight sm:text-3xl">
+            GitHub Contributions
+          </h2>
+        </div>
+        <p className="max-w-2xl text-muted-foreground">
+          My coding activity and contributions on GitHub throughout the year.
+        </p>
       </div>
 
-      <div className="mt-8 space-y-8">
-        <div className="font-bold font-heading text-neutral-900 text-xl capitalize sm:text-2xl dark:text-neutral-200">
-          In {currentYear}
+      {/* Calendar section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <Calendar size={16} />
+          <span className="font-medium text-sm">{currentYear}</span>
         </div>
-        <div className="w-full overflow-x-auto">
-          <ClientOnly>
-            <div className="min-w-full">
-              <GitHubCalendar
-                colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
-                style={{
-                  width: "100%",
-                }}
-                username="FaZeRs"
-                year={currentYear}
-              />
-            </div>
-          </ClientOnly>
+        <div className="overflow-hidden rounded-2xl border bg-card p-6">
+          <div className="w-full overflow-x-auto">
+            <ClientOnly>
+              <div className="min-w-full">
+                <GitHubCalendar
+                  colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
+                  style={{
+                    width: "100%",
+                  }}
+                  username="FaZeRs"
+                  year={currentYear}
+                />
+              </div>
+            </ClientOnly>
+          </div>
         </div>
-        <GithubActivityGraph />
       </div>
-    </div>
+
+      {/* Activity graph */}
+      <GithubActivityGraph />
+    </motion.div>
   );
 }

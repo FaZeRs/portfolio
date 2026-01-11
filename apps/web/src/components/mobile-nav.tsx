@@ -1,6 +1,7 @@
 import type { NavItem } from "@acme/types";
 import { cn } from "@acme/ui";
 import { Link } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 
 type MobileNavProps = {
@@ -10,39 +11,42 @@ type MobileNavProps = {
 };
 
 const MobileNav = ({ items, children, onItemClick }: MobileNavProps) => (
-  <div
-    className={cn(
-      "slide-in-from-top-8 fixed inset-0 top-15 z-50 grid h-[calc(100vh-4rem)] animate-in grid-flow-row auto-rows-max overflow-auto p-6 pb-32 shadow-md"
-    )}
-  >
-    <div className="relative z-20 grid gap-6 rounded-md bg-popover p-4 text-popover-foreground shadow-md">
-      <nav className="grid grid-flow-row auto-rows-max text-sm">
+  <div className="slide-in-from-top-8 fixed inset-0 top-20 z-50 animate-in overflow-auto bg-background/95 p-4 backdrop-blur-md">
+    <div className="rounded-2xl border bg-card p-2 shadow-xl">
+      <nav className="flex flex-col gap-1">
         {items.map((item) =>
           item.content ? (
-            item.content.map((subItem) => (
-              <Link
-                className={cn(
-                  "flex w-full items-center rounded-md p-2 font-medium text-sm hover:underline",
-                  subItem.disabled && "cursor-not-allowed opacity-60"
-                )}
-                key={subItem.href}
-                onClick={onItemClick}
-                to={subItem.disabled ? "#" : subItem.href}
-              >
-                {subItem.title}
-              </Link>
-            ))
+            <div key={item.title}>
+              <div className="px-3 py-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">
+                {item.title}
+              </div>
+              {item.content.map((subItem) => (
+                <Link
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-xl px-3 py-3 font-medium transition-colors hover:bg-muted",
+                    subItem.disabled && "cursor-not-allowed opacity-60"
+                  )}
+                  key={subItem.href}
+                  onClick={onItemClick}
+                  to={subItem.disabled ? "#" : subItem.href}
+                >
+                  <span>{subItem.title}</span>
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                </Link>
+              ))}
+            </div>
           ) : (
             <Link
               className={cn(
-                "flex w-full items-center rounded-md p-2 font-medium text-sm hover:underline",
+                "flex w-full items-center justify-between rounded-xl px-3 py-3 font-medium transition-colors hover:bg-muted",
                 item.disabled && "cursor-not-allowed opacity-60"
               )}
               key={item.href}
               onClick={onItemClick}
               to={item.disabled ? "#" : (item.href ?? "#")}
             >
-              {item.title}
+              <span>{item.title}</span>
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
             </Link>
           )
         )}

@@ -35,16 +35,18 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
   });
 
   return (
-    <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
+    <div className="flex flex-1 items-center justify-end gap-4 md:gap-6 lg:justify-between">
       <NavigationMenu className="hidden lg:flex" viewport={isMobile}>
-        <NavigationMenuList className="flex-wrap">
+        <NavigationMenuList className="gap-1">
           {links.map((link) => (
             <NavigationMenuItem key={link.title.trim()}>
               {link.content ? (
                 <>
-                  <NavigationMenuTrigger>{link.title}</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="bg-transparent transition-colors hover:bg-muted/60">
+                    {link.title}
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ul className="grid w-[400px] gap-2 p-3 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                       {link.content.map((subItem) => (
                         <ListItem
                           href={subItem.href}
@@ -62,10 +64,11 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
                   asChild
                   className={cn(
                     navigationMenuTriggerStyle(),
+                    "bg-transparent transition-all hover:bg-muted/60",
                     activeLink &&
                       link.href === activeLink.href &&
-                      "bg-accent font-semibold",
-                    link.disabled && "cursor-not-allowed opacity-80"
+                      "bg-muted/80 font-semibold text-foreground",
+                    link.disabled && "cursor-not-allowed opacity-60"
                   )}
                   target={link.href?.startsWith("http") ? "_blank" : "_self"}
                 >
@@ -77,24 +80,40 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="hidden items-center gap-4 lg:flex">
+      {/* Desktop actions */}
+      <div className="hidden items-center gap-2 lg:flex">
         {user && <AvatarDropdown user={user as UserType} />}
-        <div className="flex-1 sm:grow-0">
-          <Suspense fallback={<Spinner className="size-6" />}>
+        <div className="flex items-center gap-1 rounded-full border border-border/50 bg-muted/30 p-1 backdrop-blur-sm">
+          <Suspense fallback={<Spinner className="size-5" />}>
             <SearchCommand />
           </Suspense>
+          <div className="h-4 w-px bg-border/50" />
+          <Suspense fallback={<Spinner className="size-5" />}>
+            <ThemeToggle />
+          </Suspense>
         </div>
-        <Suspense fallback={<Spinner className="size-6" />}>
-          <ThemeToggle />
-        </Suspense>
       </div>
 
+      {/* Mobile menu button */}
       <button
-        className="flex items-center space-x-2 lg:hidden"
+        aria-label={showMobileMenu ? "Close menu" : "Open menu"}
+        className={cn(
+          "relative flex size-10 items-center justify-center rounded-xl border border-border/50 bg-muted/30 backdrop-blur-sm transition-all lg:hidden",
+          "hover:border-border hover:bg-muted/50",
+          "active:scale-95",
+          showMobileMenu && "border-border bg-muted"
+        )}
         onClick={() => setShowMobileMenu(!showMobileMenu)}
         type="button"
       >
-        {showMobileMenu ? <X /> : <Menu />}
+        <span className="sr-only">
+          {showMobileMenu ? "Close menu" : "Open menu"}
+        </span>
+        {showMobileMenu ? (
+          <X className="size-5 transition-transform" />
+        ) : (
+          <Menu className="size-5 transition-transform" />
+        )}
       </button>
 
       {showMobileMenu && (
@@ -116,9 +135,14 @@ function ListItem({
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
-        <Link to={href}>
-          <div className="font-medium text-sm leading-none">{title}</div>
-          <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
+        <Link
+          className="group block rounded-lg p-3 transition-colors hover:bg-muted/60"
+          to={href}
+        >
+          <div className="mb-1 font-medium text-sm leading-none transition-colors group-hover:text-foreground">
+            {title}
+          </div>
+          <p className="line-clamp-2 text-muted-foreground text-xs leading-relaxed">
             {children}
           </p>
         </Link>

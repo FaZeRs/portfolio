@@ -2,9 +2,8 @@ import { UserType } from "@acme/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@acme/ui/avatar";
 import { Button } from "@acme/ui/button";
 import { Input } from "@acme/ui/input";
-import { Skeleton } from "@acme/ui/skeleton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SendHorizontal } from "lucide-react";
+import { Send } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "~/lib/trpc";
@@ -48,41 +47,37 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="rounded-2xl border bg-card p-4">
       <form action={createMessageHandler} ref={formRef}>
-        <div className="mb-2 flex items-center gap-3">
-          <Avatar>
+        <div className="flex items-center gap-4">
+          <Avatar className="h-10 w-10 border">
             <AvatarImage
               alt={user.name}
-              className="size-10"
+              className="object-cover"
               height={40}
               src={user.image as string}
               width={40}
             />
-            <AvatarFallback className="bg-transparent">
-              <Skeleton className="size-10 rounded-full" />
+            <AvatarFallback className="bg-primary/10 text-primary">
+              {user.name?.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <div className="relative w-full">
+          <div className="relative flex-1">
             <Input
               aria-label="Your message"
-              className="h-12 pr-20"
+              className="h-12 rounded-xl border-none bg-muted pr-24 focus-visible:ring-1"
               name="message"
-              placeholder="Your message ..."
+              placeholder="Leave a message..."
               required
             />
             <Button
-              className="-translate-y-1/2 absolute top-1/2 right-2 gap-1"
+              className="-translate-y-1/2 absolute top-1/2 right-2 gap-2"
               disabled={isPending}
               size="sm"
               type="submit"
             >
+              <Send className="h-4 w-4" />
               Send
-              <SendHorizontal
-                aria-hidden="true"
-                aria-label="Send"
-                className="size-4"
-              />
             </Button>
           </div>
         </div>

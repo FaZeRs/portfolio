@@ -1,6 +1,5 @@
 import { GuestbookType, UserType } from "@acme/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@acme/ui/avatar";
-import { Skeleton } from "@acme/ui/skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { authQueryOptions } from "~/lib/auth/queries";
 import Timestamp from "../timestamp";
@@ -15,29 +14,27 @@ export default function Message({ message }: Readonly<MessageProps>) {
   const { data: currentUser } = useSuspenseQuery(authQueryOptions());
 
   return (
-    <div className="flex gap-3 px-3 text-sm">
-      <Avatar>
+    <div className="group flex gap-4 rounded-xl p-4 transition-colors hover:bg-muted/50">
+      <Avatar className="h-10 w-10 border">
         <AvatarImage
           alt={user.name}
-          className="size-10 rounded-full"
+          className="object-cover"
           height={40}
           src={user.image as string}
           width={40}
         />
-        <AvatarFallback className="bg-transparent">
-          <Skeleton className="size-10 rounded-full" />
+        <AvatarFallback className="bg-primary/10 text-primary">
+          {user.name?.charAt(0).toUpperCase()}
         </AvatarFallback>
       </Avatar>
 
-      <div className="flex-1 space-y-2">
-        <div className="flex items-center gap-1.5">
-          <div>{user.name}</div>
+      <div className="flex-1 space-y-1">
+        <div className="flex items-center gap-2">
+          <span className="font-medium">{user.name}</span>
           <Timestamp datetime={createdAt.toString()} />
         </div>
-        <div className="group flex min-h-8 items-center gap-4">
-          <p className="w-fit break-words rounded-xl rounded-tl-none bg-muted px-3 py-2">
-            {body}
-          </p>
+        <div className="flex items-start gap-3">
+          <p className="text-muted-foreground leading-relaxed">{body}</p>
           {(currentUser?.id === user.id || currentUser?.role === "admin") && (
             <DeleteMessageButton messageId={id} />
           )}

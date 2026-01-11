@@ -1,7 +1,7 @@
 import { ServiceType } from "@acme/types";
 import { LazyImage } from "@acme/ui/lazy-image";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Layers } from "lucide-react";
 import TechStacks from "../tech-stacks";
 
 type ServiceCardProps = {
@@ -16,41 +16,48 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
 
   return (
     <Link
-      className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border bg-background shadow-sm transition-all duration-300 hover:border-foreground/20 hover:shadow-lg md:flex-row"
+      className="group relative grid h-full cursor-pointer grid-cols-1 overflow-hidden rounded-xl border border-border/50 bg-card shadow-sm transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-primary/5 sm:rounded-2xl lg:grid-cols-[280px_1fr]"
       params={{
         serviceId: slug,
       }}
       to="/services/$serviceId"
     >
-      <div className="relative aspect-[2/1] w-full overflow-hidden md:aspect-auto md:w-2/5">
+      {/* Image section */}
+      <div className="relative aspect-video w-full overflow-hidden lg:aspect-auto lg:h-full">
         <LazyImage
           alt={description ?? ""}
-          height={320}
-          imageClassName="object-cover transition-colors"
-          sizes="(max-width: 768px) 100vw, 40vw"
+          className="absolute inset-0 h-full w-full"
+          fill
+          height={180}
+          imageClassName="object-cover h-full w-full transition-transform duration-500 group-hover:scale-[1.02]"
+          sizes="(max-width: 1024px) 100vw, 280px"
           src={thumbnailUrl}
-          width={500}
+          width={320}
         />
-        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center gap-1 bg-black font-medium text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-80">
-          <span>View Service</span>
-          <ArrowRight size={20} />
-        </div>
+        <div className="pointer-events-none absolute inset-0 ring-1 ring-black/5 ring-inset dark:ring-white/5" />
       </div>
 
-      <div className="flex flex-1 flex-col justify-between gap-4 p-6 md:w-3/5">
-        <div className="flex flex-col gap-3">
-          <h2 className="font-bold text-2xl text-neutral-900 transition-colors duration-300 group-hover:text-primary dark:text-neutral-100">
-            {title}
-          </h2>
-          <p className="line-clamp-3 text-muted-foreground leading-relaxed">
+      {/* Content section */}
+      <div className="flex flex-col justify-between gap-3 p-4 sm:gap-4 sm:p-5">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-start justify-between gap-3">
+            <h2 className="font-semibold text-lg tracking-tight">{title}</h2>
+            <ArrowRight
+              className="mt-0.5 shrink-0 text-muted-foreground transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-primary"
+              size={18}
+            />
+          </div>
+          <p className="line-clamp-2 text-muted-foreground text-sm leading-relaxed">
             {description}
           </p>
         </div>
 
+        {/* Tech stack */}
         {stacks && stacks.length > 0 && (
-          <div className="flex flex-col gap-2">
-            <span className="font-medium text-muted-foreground text-xs uppercase tracking-wider">
-              Technologies
+          <div className="flex flex-col gap-2 border-border/50 border-t pt-3 sm:pt-4">
+            <span className="flex items-center gap-1.5 text-[10px] text-muted-foreground/60 uppercase tracking-widest">
+              <Layers size={10} />
+              Stack
             </span>
             <TechStacks techStack={stacks} />
           </div>

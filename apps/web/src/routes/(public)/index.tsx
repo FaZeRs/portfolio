@@ -1,17 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import BlogSection from "~/components/blog/articles";
 import CTASection from "~/components/cta-section";
-import ExperienceSection from "~/components/experiences/experience";
-import Intro from "~/components/intro";
+import FeaturedProjects from "~/components/featured-projects";
+import Hero from "~/components/hero";
 import ServicesSection from "~/components/services/services";
-import SkillSection from "~/components/skills";
+import TrustIndicators from "~/components/trust-indicators";
 
 export const Route = createFileRoute("/(public)/")({
   component: Home,
   loader: async ({ context: { trpc, queryClient } }) => {
     await Promise.all([
-      queryClient.prefetchQuery(trpc.experience.allPublic.queryOptions()),
-      queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions()),
+      queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
       queryClient.prefetchQuery(trpc.service.allPublic.queryOptions()),
     ]);
   },
@@ -20,12 +18,11 @@ export const Route = createFileRoute("/(public)/")({
 function Home() {
   return (
     <>
-      <Intro />
-      <div className="mt-20 mb-20 flex flex-col items-center space-y-40">
-        <BlogSection />
+      <Hero />
+      <div className="flex flex-col items-center space-y-16 pb-16 sm:space-y-24 sm:pb-24">
+        <TrustIndicators />
         <ServicesSection />
-        <SkillSection />
-        <ExperienceSection />
+        <FeaturedProjects />
         <CTASection />
       </div>
     </>

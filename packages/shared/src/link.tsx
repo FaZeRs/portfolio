@@ -14,8 +14,10 @@ export default function Link({
 }: Readonly<ProjectLinksProps>) {
   return (
     <TanstackLink rel="noopener noreferrer" target="_blank" to={url}>
-      <div className="flex cursor-pointer items-center gap-x-2 rounded-md border border-transparent bg-white px-4 py-2 text-zinc-700 duration-200 hover:border-zinc-200 dark:bg-white/10 dark:text-white hover:dark:border-zinc-700">
-        {icon}
+      <div className="group flex cursor-pointer items-center gap-x-2 rounded-xl border border-border/50 bg-card/50 px-4 py-2.5 font-medium text-foreground text-sm backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-foreground/20 hover:bg-card hover:shadow-lg dark:bg-white/5 dark:hover:bg-white/10">
+        <span className="transition-transform duration-300 group-hover:scale-110">
+          {icon}
+        </span>
         {title}
       </div>
     </TanstackLink>

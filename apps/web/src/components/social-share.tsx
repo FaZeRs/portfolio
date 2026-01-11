@@ -3,12 +3,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@acme/ui/dropdown-menu";
 import Icon from "@acme/ui/icon";
-import { Mail } from "lucide-react";
+import { Mail, Share2 } from "lucide-react";
 import { siFacebook, siLinkedin, siX, siYcombinator } from "simple-icons";
 
 type SocialShareProps = {
@@ -20,61 +18,59 @@ const SocialShare = ({ url, text }: SocialShareProps) => {
   const encodedUrl = encodeURIComponent(url);
   const encodedText = text ? encodeURIComponent(text) : "";
 
+  const shareLinks = [
+    {
+      name: "Twitter",
+      icon: siX,
+      href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`,
+    },
+    {
+      name: "Facebook",
+      icon: siFacebook,
+      href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    },
+    {
+      name: "LinkedIn",
+      icon: siLinkedin,
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+    },
+    {
+      name: "Hacker News",
+      icon: siYcombinator,
+      href: `https://news.ycombinator.com/submitlink?u=${encodedUrl}`,
+    },
+  ];
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Share</Button>
+        <Button className="gap-2" size="sm" variant="outline">
+          <Share2 className="h-4 w-4" />
+          Share
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>Share Post</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent align="end" className="w-48">
+        {shareLinks.map((link) => (
+          <DropdownMenuItem asChild key={link.name}>
+            <a
+              className="flex items-center gap-3"
+              href={link.href}
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              <Icon className="h-4 w-4" icon={link.icon} />
+              {link.name}
+            </a>
+          </DropdownMenuItem>
+        ))}
         <DropdownMenuItem asChild>
           <a
-            href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`}
+            className="flex items-center gap-3"
+            href={`mailto:?subject=${encodedText}&body=${encodedUrl}`}
             rel="noreferrer noopener"
             target="_blank"
           >
-            <Icon className="mr-2 h-3 w-3" icon={siX} />
-            Twitter
-          </a>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            <Icon className="mr-2 h-3 w-3" icon={siFacebook} />
-            Facebook
-          </a>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            <Icon className="mr-2 h-3 w-3" icon={siLinkedin} />
-            LinkedIn
-          </a>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a
-            href={`https://news.ycombinator.com/submitlink?u=${encodedUrl}`}
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            <Icon className="mr-2 h-3 w-3" icon={siYcombinator} />
-            Hacker News
-          </a>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a
-            href={`mailto:info@example.com?&subject=&cc=&bcc=&body=${encodedUrl}%20${encodedText}`}
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            <Mail className="mr-2 h-3 w-3" />
+            <Mail className="h-4 w-4" />
             Email
           </a>
         </DropdownMenuItem>

@@ -13,16 +13,20 @@ type StackProps = {
 
 export default function TechStacks({ techStack }: Readonly<StackProps>) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-2">
       {techStack?.map((stack) => (
         <TooltipProvider delayDuration={200} key={stack}>
           <Tooltip>
-            <TooltipTrigger>
-              {STACKS[stack] && (
-                <Icon className="mr-2 h-4 w-4" icon={STACKS[stack]} />
-              )}
+            <TooltipTrigger asChild>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg border bg-background transition-colors hover:border-foreground/20 hover:bg-muted">
+                {STACKS[stack] && (
+                  <Icon className="h-4 w-4" icon={STACKS[stack]} />
+                )}
+              </div>
             </TooltipTrigger>
-            <TooltipContent>{stack}</TooltipContent>
+            <TooltipContent>
+              <span className="font-medium">{stack}</span>
+            </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       ))}

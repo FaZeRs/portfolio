@@ -2,47 +2,70 @@ import { ArticleType } from "@acme/types";
 import { LazyImage } from "@acme/ui/lazy-image";
 import { formatDate } from "@acme/utils";
 import { Link } from "@tanstack/react-router";
-import { EyeIcon, ThumbsUpIcon } from "lucide-react";
+import { ArrowUpRight, Calendar, Eye, ThumbsUp } from "lucide-react";
 
 type ArticleCardProps = {
   article: ArticleType & { viewCount: number };
 };
 
 const ArticleCard = ({ article }: ArticleCardProps) => (
-  <article className="group relative flex flex-col space-y-2 rounded-2xl border bg-background p-3">
+  <article className="group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-all duration-300 hover:border-foreground/20 hover:shadow-xl">
+    {/* Hover gradient overlay */}
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-pink-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
     {article.imageUrl && (
-      <LazyImage
-        alt={article.title}
-        className="rounded-xl border bg-muted transition-colors"
-        height={250}
-        imageClassName="aspect-[2/1] object-cover rounded-xl"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        src={article.imageUrl}
-        width={500}
-      />
+      <div className="relative overflow-hidden">
+        <LazyImage
+          alt={article.title}
+          className="w-full"
+          fill
+          height={250}
+          imageClassName="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          src={article.imageUrl}
+          width={500}
+        />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+        {/* View indicator */}
+        <div className="absolute right-4 bottom-4 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1.5 font-medium text-neutral-900 text-sm opacity-0 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
+          <span>Read</span>
+          <ArrowUpRight
+            className="group-hover:-translate-y-0.5 transition-transform group-hover:translate-x-0.5"
+            size={14}
+          />
+        </div>
+      </div>
     )}
 
-    <div className="mt-2 flex h-full w-full flex-col gap-2">
-      <h2 className="line-clamp-2 font-extrabold text-2xl">{article.title}</h2>
+    <div className="relative flex flex-1 flex-col gap-3 p-5">
+      <h2 className="line-clamp-2 font-semibold text-xl transition-colors group-hover:text-primary">
+        {article.title}
+      </h2>
       {article.description && (
-        <p className="line-clamp-3 text-muted-foreground sm:line-clamp-2 md:line-clamp-4">
+        <p className="line-clamp-2 text-muted-foreground text-sm leading-relaxed">
           {article.description}
         </p>
       )}
 
-      <div className="mt-auto flex items-center justify-between gap-2 pt-4 text-muted-foreground text-sm">
-        {article.createdAt && <span>{formatDate(article.createdAt)}</span>}
+      <div className="mt-auto flex flex-wrap items-center gap-4 border-t pt-4 text-muted-foreground text-xs">
+        {article.createdAt && (
+          <span className="flex items-center gap-1">
+            <Calendar size={12} />
+            {formatDate(article.createdAt)}
+          </span>
+        )}
 
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1">
-            <EyeIcon className="size-4" />
-            <span>{article.viewCount} views</span>
-          </div>
-
-          <div className="flex items-center gap-1">
-            <ThumbsUpIcon className="size-4" />
-            <span>{article.likes} likes</span>
-          </div>
+        <div className="flex items-center gap-3">
+          <span className="flex items-center gap-1">
+            <Eye size={12} />
+            {article.viewCount}
+          </span>
+          <span className="flex items-center gap-1">
+            <ThumbsUp size={12} />
+            {article.likes}
+          </span>
         </div>
       </div>
     </div>
