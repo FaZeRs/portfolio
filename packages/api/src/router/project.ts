@@ -3,6 +3,7 @@ import {
   Project,
   UpdateProjectSchema,
 } from "@acme/db/schema";
+import { getTOC } from "@acme/utils";
 import { TRPCError, TRPCRouterRecord } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod/v4";
@@ -45,7 +46,9 @@ export const projectRouter = {
         });
       }
 
-      return project;
+      const toc = await getTOC(project.content ?? "");
+
+      return { ...project, toc };
     }),
 
   byId: protectedProcedure
