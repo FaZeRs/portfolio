@@ -4,9 +4,10 @@ import { siFacebook, siGithub, siGoogle, siLinkedin, siX } from "simple-icons";
 export const siteConfig: SiteConfig = {
   title: "Nauris Linde",
   name: "naurislinde",
-  description: "This website is my personal portfolio.",
+  description:
+    "Full-Stack Developer specializing in custom websites, web applications, and business software solutions. Helping businesses grow with modern, scalable, and high-performance digital products.",
   keywords:
-    "Nauris Linde, Software Engineer, Full-Stack Developer, React, TypeScript, Web Development",
+    "Nauris Linde, Full-Stack Developer, Custom Website Development, Web Application Development, Business Software Solutions, React Developer, TypeScript Expert, Hire Web Developer, Freelance Developer",
   url: "https://naurislinde.dev",
   links: {
     mail: "naurislinde@gmail.com",
