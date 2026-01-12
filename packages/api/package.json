@@ -21,7 +21,7 @@
     "@acme/db": "workspace:*",
     "@acme/utils": "workspace:*",
     "@acme/validators": "workspace:*",
-    "@sentry/node": "^10.32.1",
+    "@sentry/node": "^10.33.0",
     "@t3-oss/env-core": "^0.13.10",
     "@trpc/server": "catalog:",
     "@vercel/blob": "^2.0.0",

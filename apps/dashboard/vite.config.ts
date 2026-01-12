@@ -7,7 +7,6 @@ import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
-import tsConfigPaths from "vite-tsconfig-paths";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -15,6 +14,12 @@ export default defineConfig({
   build: {
     sourcemap: true,
     target: "es2022",
+  },
+  experimental: {
+    enableNativePlugin: true,
+  },
+  resolve: {
+    tsconfigPaths: true,
   },
   plugins: [
     devtools({
@@ -25,9 +30,6 @@ export default defineConfig({
       enhancedLogs: {
         enabled: true,
       },
-    }),
-    tsConfigPaths({
-      projects: ["./tsconfig.json"],
     }),
     tanstackStart({
       srcDirectory: "./src",

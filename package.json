@@ -61,7 +61,7 @@
       "tailwindcss": "^4.1.17",
       "typescript": "^5.9.3",
       "zod": "^4.1.12",
-      "vite": "npm:rolldown-vite@latest"
+      "vite": "^8.0.0-beta.7"
     },
     "catalogs": {
       "react19": {
@@ -100,11 +100,11 @@
     "@biomejs/biome": "2.3.5",
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
-    "@turbo/gen": "^2.7.3",
+    "@turbo/gen": "^2.7.4",
     "dotenv-cli": "^11.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "turbo": "^2.7.3",
+    "turbo": "^2.7.4",
     "typescript": "catalog:",
     "ultracite": "6.3.3"
   },

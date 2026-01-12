@@ -8,7 +8,6 @@ import dotenv from "dotenv";
 import { nitro } from "nitro/vite";
 import { generateSitemap } from "tanstack-router-sitemap";
 import { defineConfig } from "vite";
-import tsConfigPaths from "vite-tsconfig-paths";
 
 import sitemap from "./src/plugins/sitemap";
 
@@ -19,6 +18,12 @@ export default defineConfig({
     sourcemap: true,
     target: "es2022",
   },
+  experimental: {
+    enableNativePlugin: true,
+  },
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
     devtools({
       eventBusConfig: {
@@ -28,9 +33,6 @@ export default defineConfig({
       enhancedLogs: {
         enabled: true,
       },
-    }),
-    tsConfigPaths({
-      projects: ["./tsconfig.json"],
     }),
     tanstackStart({
       srcDirectory: "./src",
