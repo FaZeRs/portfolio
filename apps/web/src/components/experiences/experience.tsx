@@ -14,9 +14,6 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
 
   return (
     <div className="group relative flex items-start gap-4 rounded-xl border bg-card p-5 transition-all hover:border-foreground/20 hover:shadow-lg lg:gap-5">
-      {/* Timeline dot */}
-      <div className="absolute top-0 left-6 h-full w-px bg-gradient-to-b from-primary/50 via-primary/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-
       {imageUrl ? (
         url ? (
           <a
