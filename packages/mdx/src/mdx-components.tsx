@@ -1,4 +1,5 @@
 import { cn } from "@acme/ui";
+import Callout from "@acme/ui/callout";
 import { File, Files, Folder } from "@acme/ui/files";
 import { Image } from "@unpic/react";
 import {
@@ -166,17 +167,14 @@ export const components: Record<string, React.ComponentType<any> | undefined> =
     code: ({ className, ...props }: ComponentPropsWithoutRef<"code">) => (
       <code {...props} />
     ),
-    Steps: ({ ...props }) => (
-      <div
-        className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]"
-        {...props}
-      />
+    steps: ({ ...props }) => (
+      <div className="steps mb-12 ml-8 border-l pl-8" {...props} />
     ),
-    Step: ({ className, ...props }: ComponentProps<"h3">) => (
+    step: ({ className, ...props }: ComponentProps<"h3">) => (
       // @sonar-ignore
       <h3
         className={cn(
-          "mt-8 scroll-m-20 font-semibold text-lg tracking-tight",
+          "step mt-8 scroll-m-20 font-semibold text-lg tracking-tight",
           className
         )}
         {...props}
@@ -184,7 +182,7 @@ export const components: Record<string, React.ComponentType<any> | undefined> =
       // @end
     ),
     Image: lazy(() => import("@acme/ui/zoom-image")),
-    Callout: lazy(() => import("@acme/ui/callout")),
+    callout: Callout,
     GridContainer: lazy(() => import("@acme/ui/grid-container")),
     LoadingSkeleton: lazy(() => import("@acme/ui/loading-skeleton")),
     ComponentPreview: lazy(() => import("@acme/ui/component-preview")),

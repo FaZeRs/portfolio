@@ -102,3 +102,18 @@
   pointer-events: none;
   @apply text-muted-foreground;
 }
+
+/* Steps component styling for MDX */
+.steps {
+  counter-reset: step;
+}
+
+.step:before {
+  counter-increment: step;
+  content: counter(step);
+  @apply absolute -left-[50px] flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center text-base font-medium;
+}
+
+.step {
+  @apply relative;
+}

@@ -1,16 +1,27 @@
 import { cn } from "@acme/ui";
-import { AlertCircle, AlertTriangle, Skull } from "lucide-react";
+import {
+  AlertCircle,
+  AlertTriangle,
+  CheckCircle2,
+  Info,
+  Skull,
+} from "lucide-react";
 
 const calloutVariants = {
   default: {
-    icon: AlertCircle,
+    icon: Info,
     title: "Note",
     styles: "bg-teal-100 text-teal-950 dark:bg-teal-950 dark:text-teal-50",
   },
-  danger: {
-    icon: Skull,
-    title: "Danger",
-    styles: "bg-red-100 text-red-950 dark:bg-red-950 dark:text-red-50",
+  info: {
+    icon: Info,
+    title: "Info",
+    styles: "bg-blue-100 text-blue-950 dark:bg-blue-950 dark:text-blue-50",
+  },
+  success: {
+    icon: CheckCircle2,
+    title: "Success",
+    styles: "bg-green-100 text-green-950 dark:bg-green-950 dark:text-green-50",
   },
   warning: {
     icon: AlertTriangle,
@@ -18,11 +29,23 @@ const calloutVariants = {
     styles:
       "bg-yellow-100 text-yellow-950 dark:bg-yellow-950 dark:text-yellow-50",
   },
+  danger: {
+    icon: Skull,
+    title: "Danger",
+    styles: "bg-red-100 text-red-950 dark:bg-red-950 dark:text-red-50",
+  },
+  error: {
+    icon: AlertCircle,
+    title: "Error",
+    styles: "bg-red-100 text-red-950 dark:bg-red-950 dark:text-red-50",
+  },
 };
+
+type CalloutVariant = keyof typeof calloutVariants;
 
 type CalloutProps = {
   children?: React.ReactNode;
-  variant?: "default" | "warning" | "danger";
+  variant?: CalloutVariant;
 };
 
 export default function Callout({
@@ -33,10 +56,7 @@ export default function Callout({
   const { icon: Icon, styles, title } = calloutVariants[variant];
   return (
     <div
-      className={cn(
-        "not-prose my-3 mt-4 rounded-md border md:p-3 lg:p-4",
-        styles
-      )}
+      className={cn("not-prose my-3 mt-4 rounded-md border p-3 lg:p-4", styles)}
       {...props}
     >
       <p className="flex items-center gap-2 pb-4">
