@@ -8,46 +8,47 @@ type CoverImageProps = {
 
 export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
   return (
-    <figure className="mb-12">
+    <figure>
       <div className="relative w-full overflow-hidden rounded-2xl">
-        {/* Cover image */}
         <LazyImage
           alt={alt}
-          height={300}
-          imageClassName="aspect-[21/9] object-cover saturate-0"
+          height={400}
+          imageClassName="aspect-[16/9] object-cover saturate-0 sm:aspect-[2/1] lg:aspect-[3/1]"
           src={src}
-          width={1090}
+          width={1200}
         />
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
         {/* Profile info overlay */}
-        <div className="absolute right-0 bottom-0 left-0 p-6 md:p-8">
-          <div className="flex items-end gap-5">
+        <div className="absolute right-0 bottom-0 left-0 p-4 sm:p-6 md:p-8">
+          <div className="flex items-end gap-4 sm:gap-5">
             {/* Avatar */}
-            <div className="relative">
+            <div className="relative shrink-0">
               <div className="-inset-1 absolute rounded-full bg-gradient-to-br from-violet-500 to-pink-500 blur-sm" />
               <LazyImage
                 alt="Avatar"
                 className="relative"
-                height={100}
-                imageClassName="h-20 w-20 md:h-24 md:w-24 rounded-full object-cover border-4 border-background"
+                height={96}
+                imageClassName="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 rounded-full object-cover border-3 sm:border-4 border-background"
                 src="/images/avatar.avif"
-                width={100}
+                width={96}
               />
             </div>
 
             {/* Info */}
-            <div className="flex flex-col gap-1 pb-1 text-white">
-              <h2 className="font-bold text-xl md:text-2xl">Nauris Linde</h2>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-white/80">
+            <div className="flex min-w-0 flex-col gap-0.5 pb-0.5 text-white sm:gap-1 sm:pb-1">
+              <h2 className="truncate font-bold text-lg sm:text-xl md:text-2xl">
+                Nauris Linde
+              </h2>
+              <div className="flex flex-wrap items-center gap-2 text-white/80 text-xs sm:gap-3 sm:text-sm">
                 <span className="flex items-center gap-1">
-                  <MapPin size={14} />
+                  <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   Liepaja, Latvia
                 </span>
                 <span className="flex items-center gap-1">
-                  <Briefcase size={14} />
+                  <Briefcase className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   R&D Engineer
                 </span>
               </div>

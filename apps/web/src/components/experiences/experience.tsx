@@ -3,7 +3,6 @@ import { LazyImage } from "@acme/ui/lazy-image";
 import { formatDate } from "@acme/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "~/lib/trpc";
-import SectionHeading from "../section-heading";
 
 type ExperienceItemProps = {
   experience: ExperienceType;
@@ -14,58 +13,60 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
     experience;
 
   return (
-    <div className="relative flex max-w-2xl items-start gap-x-4 before:absolute before:top-[5rem] before:bottom-0 before:left-9 before:h-[calc(100%-70px)] before:w-[1px] before:bg-zinc-200 lg:gap-x-6 dark:before:bg-zinc-800">
-      {imageUrl && url ? (
-        <a
-          className="relative grid min-h-[80px] min-w-[80px] place-items-center overflow-clip rounded-md border border-zinc-200 bg-secondary-bg p-2 dark:border-zinc-800 dark:bg-primary-bg"
-          href={url}
-          rel="noreferrer noopener"
-          target="_blank"
-        >
-          <LazyImage
-            alt={title}
-            className="h-14 w-14"
-            height={50}
-            imageClassName="object-cover duration-300"
-            sizes="50px"
-            src={imageUrl}
-            width={50}
-          />
-        </a>
-      ) : (
-        imageUrl && (
-          <div className="relative grid min-h-[80px] min-w-[80px] place-items-center overflow-clip rounded-md border border-zinc-200 bg-secondary-bg p-2 dark:border-zinc-800 dark:bg-primary-bg">
+    <div className="group relative flex items-start gap-4 rounded-xl border bg-card p-5 transition-all hover:border-foreground/20 hover:shadow-lg lg:gap-5">
+      {imageUrl ? (
+        url ? (
+          <a
+            className="relative shrink-0 overflow-hidden rounded-lg border bg-muted/50 p-2 transition-all hover:border-primary/30 hover:shadow-md"
+            href={url}
+            rel="noreferrer noopener"
+            target="_blank"
+          >
             <LazyImage
               alt={title}
-              className="h-14 w-14"
-              height={50}
-              imageClassName="object-cover duration-300"
-              sizes="50px"
+              height={56}
+              imageClassName="h-12 w-12 object-contain"
               src={imageUrl}
-              width={50}
+              width={56}
+            />
+          </a>
+        ) : (
+          <div className="relative shrink-0 overflow-hidden rounded-lg border bg-muted/50 p-2">
+            <LazyImage
+              alt={title}
+              height={56}
+              imageClassName="h-12 w-12 object-contain"
+              src={imageUrl}
+              width={56}
             />
           </div>
         )
-      )}
+      ) : null}
 
-      <div className="flex flex-col items-start">
-        <h3 className="font-semibold text-xl">{institution}</h3>
-        <p>{title}</p>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <h3 className="font-semibold text-lg leading-tight">{institution}</h3>
+          <time className="shrink-0 text-muted-foreground text-sm">
+            {startDate && formatDate(startDate)} –{" "}
+            {endDate ? (
+              formatDate(endDate)
+            ) : (
+              <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                Present
+              </span>
+            )}
+          </time>
+        </div>
 
-        <time className="mt-2 text-sm text-zinc-500 uppercase tracking-widest">
-          {startDate && formatDate(startDate)} -{" "}
-          {endDate ? (
-            formatDate(endDate)
-          ) : (
-            <span className="text-tertiary-color dark:text-primary-color">
-              Present
-            </span>
-          )}
-        </time>
-
-        <p className="my-4 text-zinc-600 tracking-tight dark:text-zinc-400">
-          {description}
+        <p className="mt-0.5 font-medium text-muted-foreground text-sm">
+          {title}
         </p>
+
+        {description && (
+          <p className="mt-3 text-muted-foreground text-sm leading-relaxed">
+            {description}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -78,14 +79,10 @@ const ExperienceSection = () => {
   );
 
   return (
-    <div>
-      <SectionHeading>Work experience</SectionHeading>
-
-      <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2">
-        {experiences.map((experience) => (
-          <ExperienceItem experience={experience} key={experience.id} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      {experiences.map((experience) => (
+        <ExperienceItem experience={experience} key={experience.id} />
+      ))}
     </div>
   );
 };
