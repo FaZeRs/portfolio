@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from "./routes/__root";
 import { Route as dashboardLayoutRouteImport } from "./routes/(dashboard)/layout";
 import { Route as authLayoutRouteImport } from "./routes/(auth)/layout";
 import { Route as dashboardIndexRouteImport } from "./routes/(dashboard)/index";
+import { Route as ApiResendRouteImport } from "./routes/api/resend";
 import { Route as authSigninRouteImport } from "./routes/(auth)/signin";
 import { Route as dashboardUsersIndexRouteImport } from "./routes/(dashboard)/users/index";
 import { Route as dashboardSnippetsIndexRouteImport } from "./routes/(dashboard)/snippets/index";
@@ -20,6 +21,7 @@ import { Route as dashboardProjectsIndexRouteImport } from "./routes/(dashboard)
 import { Route as dashboardExperiencesIndexRouteImport } from "./routes/(dashboard)/experiences/index";
 import { Route as dashboardBlogIndexRouteImport } from "./routes/(dashboard)/blog/index";
 import { Route as ApiTrpcSplatRouteImport } from "./routes/api/trpc/$";
+import { Route as ApiCronProcessCampaignsRouteImport } from "./routes/api/cron/process-campaigns";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 import { Route as dashboardSnippetsCreateRouteImport } from "./routes/(dashboard)/snippets/create";
 import { Route as dashboardServicesCreateRouteImport } from "./routes/(dashboard)/services/create";
@@ -27,11 +29,20 @@ import { Route as dashboardProjectsCreateRouteImport } from "./routes/(dashboard
 import { Route as dashboardExperiencesCreateRouteImport } from "./routes/(dashboard)/experiences/create";
 import { Route as dashboardBlogCreateRouteImport } from "./routes/(dashboard)/blog/create";
 import { Route as ApiAiBlogAssistIndexRouteImport } from "./routes/api/ai/blog-assist/index";
+import { Route as dashboardMarketingSocialIndexRouteImport } from "./routes/(dashboard)/marketing/social/index";
+import { Route as dashboardMarketingEmailIndexRouteImport } from "./routes/(dashboard)/marketing/email/index";
 import { Route as dashboardSnippetsSnippetIdEditRouteImport } from "./routes/(dashboard)/snippets/$snippetId.edit";
 import { Route as dashboardServicesServiceIdEditRouteImport } from "./routes/(dashboard)/services/$serviceId.edit";
 import { Route as dashboardProjectsProjectIdEditRouteImport } from "./routes/(dashboard)/projects/$projectId.edit";
 import { Route as dashboardExperiencesExperienceIdEditRouteImport } from "./routes/(dashboard)/experiences/$experienceId.edit";
 import { Route as dashboardBlogArticleIdEditRouteImport } from "./routes/(dashboard)/blog/$articleId.edit";
+import { Route as dashboardMarketingEmailSubscribersIndexRouteImport } from "./routes/(dashboard)/marketing/email/subscribers/index";
+import { Route as dashboardMarketingSocialPostsCreateRouteImport } from "./routes/(dashboard)/marketing/social/posts/create";
+import { Route as dashboardMarketingSocialPostsPostIdRouteImport } from "./routes/(dashboard)/marketing/social/posts/$postId";
+import { Route as dashboardMarketingEmailCampaignsCreateRouteImport } from "./routes/(dashboard)/marketing/email/campaigns/create";
+import { Route as dashboardMarketingEmailCampaignsCampaignIdRouteImport } from "./routes/(dashboard)/marketing/email/campaigns/$campaignId";
+import { Route as dashboardMarketingSocialPostsPostIdEditRouteImport } from "./routes/(dashboard)/marketing/social/posts/$postId/edit";
+import { Route as dashboardMarketingEmailCampaignsCampaignIdEditRouteImport } from "./routes/(dashboard)/marketing/email/campaigns/$campaignId/edit";
 
 const dashboardLayoutRoute = dashboardLayoutRouteImport.update({
   id: "/(dashboard)",
@@ -45,6 +56,11 @@ const dashboardIndexRoute = dashboardIndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => dashboardLayoutRoute,
+} as any);
+const ApiResendRoute = ApiResendRouteImport.update({
+  id: "/api/resend",
+  path: "/api/resend",
+  getParentRoute: () => rootRouteImport,
 } as any);
 const authSigninRoute = authSigninRouteImport.update({
   id: "/signin",
@@ -87,6 +103,11 @@ const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   path: "/api/trpc/$",
   getParentRoute: () => rootRouteImport,
 } as any);
+const ApiCronProcessCampaignsRoute = ApiCronProcessCampaignsRouteImport.update({
+  id: "/api/cron/process-campaigns",
+  path: "/api/cron/process-campaigns",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: "/api/auth/$",
   path: "/api/auth/$",
@@ -123,6 +144,18 @@ const ApiAiBlogAssistIndexRoute = ApiAiBlogAssistIndexRouteImport.update({
   path: "/api/ai/blog-assist/",
   getParentRoute: () => rootRouteImport,
 } as any);
+const dashboardMarketingSocialIndexRoute =
+  dashboardMarketingSocialIndexRouteImport.update({
+    id: "/marketing/social/",
+    path: "/marketing/social/",
+    getParentRoute: () => dashboardLayoutRoute,
+  } as any);
+const dashboardMarketingEmailIndexRoute =
+  dashboardMarketingEmailIndexRouteImport.update({
+    id: "/marketing/email/",
+    path: "/marketing/email/",
+    getParentRoute: () => dashboardLayoutRoute,
+  } as any);
 const dashboardSnippetsSnippetIdEditRoute =
   dashboardSnippetsSnippetIdEditRouteImport.update({
     id: "/snippets/$snippetId/edit",
@@ -153,9 +186,52 @@ const dashboardBlogArticleIdEditRoute =
     path: "/blog/$articleId/edit",
     getParentRoute: () => dashboardLayoutRoute,
   } as any);
+const dashboardMarketingEmailSubscribersIndexRoute =
+  dashboardMarketingEmailSubscribersIndexRouteImport.update({
+    id: "/marketing/email/subscribers/",
+    path: "/marketing/email/subscribers/",
+    getParentRoute: () => dashboardLayoutRoute,
+  } as any);
+const dashboardMarketingSocialPostsCreateRoute =
+  dashboardMarketingSocialPostsCreateRouteImport.update({
+    id: "/marketing/social/posts/create",
+    path: "/marketing/social/posts/create",
+    getParentRoute: () => dashboardLayoutRoute,
+  } as any);
+const dashboardMarketingSocialPostsPostIdRoute =
+  dashboardMarketingSocialPostsPostIdRouteImport.update({
+    id: "/marketing/social/posts/$postId",
+    path: "/marketing/social/posts/$postId",
+    getParentRoute: () => dashboardLayoutRoute,
+  } as any);
+const dashboardMarketingEmailCampaignsCreateRoute =
+  dashboardMarketingEmailCampaignsCreateRouteImport.update({
+    id: "/marketing/email/campaigns/create",
+    path: "/marketing/email/campaigns/create",
+    getParentRoute: () => dashboardLayoutRoute,
+  } as any);
+const dashboardMarketingEmailCampaignsCampaignIdRoute =
+  dashboardMarketingEmailCampaignsCampaignIdRouteImport.update({
+    id: "/marketing/email/campaigns/$campaignId",
+    path: "/marketing/email/campaigns/$campaignId",
+    getParentRoute: () => dashboardLayoutRoute,
+  } as any);
+const dashboardMarketingSocialPostsPostIdEditRoute =
+  dashboardMarketingSocialPostsPostIdEditRouteImport.update({
+    id: "/edit",
+    path: "/edit",
+    getParentRoute: () => dashboardMarketingSocialPostsPostIdRoute,
+  } as any);
+const dashboardMarketingEmailCampaignsCampaignIdEditRoute =
+  dashboardMarketingEmailCampaignsCampaignIdEditRouteImport.update({
+    id: "/edit",
+    path: "/edit",
+    getParentRoute: () => dashboardMarketingEmailCampaignsCampaignIdRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
   "/signin": typeof authSigninRoute;
+  "/api/resend": typeof ApiResendRoute;
   "/": typeof dashboardIndexRoute;
   "/blog/create": typeof dashboardBlogCreateRoute;
   "/experiences/create": typeof dashboardExperiencesCreateRoute;
@@ -163,6 +239,7 @@ export interface FileRoutesByFullPath {
   "/services/create": typeof dashboardServicesCreateRoute;
   "/snippets/create": typeof dashboardSnippetsCreateRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/cron/process-campaigns": typeof ApiCronProcessCampaignsRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/blog": typeof dashboardBlogIndexRoute;
   "/experiences": typeof dashboardExperiencesIndexRoute;
@@ -175,10 +252,20 @@ export interface FileRoutesByFullPath {
   "/projects/$projectId/edit": typeof dashboardProjectsProjectIdEditRoute;
   "/services/$serviceId/edit": typeof dashboardServicesServiceIdEditRoute;
   "/snippets/$snippetId/edit": typeof dashboardSnippetsSnippetIdEditRoute;
+  "/marketing/email": typeof dashboardMarketingEmailIndexRoute;
+  "/marketing/social": typeof dashboardMarketingSocialIndexRoute;
   "/api/ai/blog-assist": typeof ApiAiBlogAssistIndexRoute;
+  "/marketing/email/campaigns/$campaignId": typeof dashboardMarketingEmailCampaignsCampaignIdRouteWithChildren;
+  "/marketing/email/campaigns/create": typeof dashboardMarketingEmailCampaignsCreateRoute;
+  "/marketing/social/posts/$postId": typeof dashboardMarketingSocialPostsPostIdRouteWithChildren;
+  "/marketing/social/posts/create": typeof dashboardMarketingSocialPostsCreateRoute;
+  "/marketing/email/subscribers": typeof dashboardMarketingEmailSubscribersIndexRoute;
+  "/marketing/email/campaigns/$campaignId/edit": typeof dashboardMarketingEmailCampaignsCampaignIdEditRoute;
+  "/marketing/social/posts/$postId/edit": typeof dashboardMarketingSocialPostsPostIdEditRoute;
 }
 export interface FileRoutesByTo {
   "/signin": typeof authSigninRoute;
+  "/api/resend": typeof ApiResendRoute;
   "/": typeof dashboardIndexRoute;
   "/blog/create": typeof dashboardBlogCreateRoute;
   "/experiences/create": typeof dashboardExperiencesCreateRoute;
@@ -186,6 +273,7 @@ export interface FileRoutesByTo {
   "/services/create": typeof dashboardServicesCreateRoute;
   "/snippets/create": typeof dashboardSnippetsCreateRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/cron/process-campaigns": typeof ApiCronProcessCampaignsRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/blog": typeof dashboardBlogIndexRoute;
   "/experiences": typeof dashboardExperiencesIndexRoute;
@@ -198,13 +286,23 @@ export interface FileRoutesByTo {
   "/projects/$projectId/edit": typeof dashboardProjectsProjectIdEditRoute;
   "/services/$serviceId/edit": typeof dashboardServicesServiceIdEditRoute;
   "/snippets/$snippetId/edit": typeof dashboardSnippetsSnippetIdEditRoute;
+  "/marketing/email": typeof dashboardMarketingEmailIndexRoute;
+  "/marketing/social": typeof dashboardMarketingSocialIndexRoute;
   "/api/ai/blog-assist": typeof ApiAiBlogAssistIndexRoute;
+  "/marketing/email/campaigns/$campaignId": typeof dashboardMarketingEmailCampaignsCampaignIdRouteWithChildren;
+  "/marketing/email/campaigns/create": typeof dashboardMarketingEmailCampaignsCreateRoute;
+  "/marketing/social/posts/$postId": typeof dashboardMarketingSocialPostsPostIdRouteWithChildren;
+  "/marketing/social/posts/create": typeof dashboardMarketingSocialPostsCreateRoute;
+  "/marketing/email/subscribers": typeof dashboardMarketingEmailSubscribersIndexRoute;
+  "/marketing/email/campaigns/$campaignId/edit": typeof dashboardMarketingEmailCampaignsCampaignIdEditRoute;
+  "/marketing/social/posts/$postId/edit": typeof dashboardMarketingSocialPostsPostIdEditRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/(auth)": typeof authLayoutRouteWithChildren;
   "/(dashboard)": typeof dashboardLayoutRouteWithChildren;
   "/(auth)/signin": typeof authSigninRoute;
+  "/api/resend": typeof ApiResendRoute;
   "/(dashboard)/": typeof dashboardIndexRoute;
   "/(dashboard)/blog/create": typeof dashboardBlogCreateRoute;
   "/(dashboard)/experiences/create": typeof dashboardExperiencesCreateRoute;
@@ -212,6 +310,7 @@ export interface FileRoutesById {
   "/(dashboard)/services/create": typeof dashboardServicesCreateRoute;
   "/(dashboard)/snippets/create": typeof dashboardSnippetsCreateRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/cron/process-campaigns": typeof ApiCronProcessCampaignsRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/(dashboard)/blog/": typeof dashboardBlogIndexRoute;
   "/(dashboard)/experiences/": typeof dashboardExperiencesIndexRoute;
@@ -224,12 +323,22 @@ export interface FileRoutesById {
   "/(dashboard)/projects/$projectId/edit": typeof dashboardProjectsProjectIdEditRoute;
   "/(dashboard)/services/$serviceId/edit": typeof dashboardServicesServiceIdEditRoute;
   "/(dashboard)/snippets/$snippetId/edit": typeof dashboardSnippetsSnippetIdEditRoute;
+  "/(dashboard)/marketing/email/": typeof dashboardMarketingEmailIndexRoute;
+  "/(dashboard)/marketing/social/": typeof dashboardMarketingSocialIndexRoute;
   "/api/ai/blog-assist/": typeof ApiAiBlogAssistIndexRoute;
+  "/(dashboard)/marketing/email/campaigns/$campaignId": typeof dashboardMarketingEmailCampaignsCampaignIdRouteWithChildren;
+  "/(dashboard)/marketing/email/campaigns/create": typeof dashboardMarketingEmailCampaignsCreateRoute;
+  "/(dashboard)/marketing/social/posts/$postId": typeof dashboardMarketingSocialPostsPostIdRouteWithChildren;
+  "/(dashboard)/marketing/social/posts/create": typeof dashboardMarketingSocialPostsCreateRoute;
+  "/(dashboard)/marketing/email/subscribers/": typeof dashboardMarketingEmailSubscribersIndexRoute;
+  "/(dashboard)/marketing/email/campaigns/$campaignId/edit": typeof dashboardMarketingEmailCampaignsCampaignIdEditRoute;
+  "/(dashboard)/marketing/social/posts/$postId/edit": typeof dashboardMarketingSocialPostsPostIdEditRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | "/signin"
+    | "/api/resend"
     | "/"
     | "/blog/create"
     | "/experiences/create"
@@ -237,6 +346,7 @@ export interface FileRouteTypes {
     | "/services/create"
     | "/snippets/create"
     | "/api/auth/$"
+    | "/api/cron/process-campaigns"
     | "/api/trpc/$"
     | "/blog"
     | "/experiences"
@@ -249,10 +359,20 @@ export interface FileRouteTypes {
     | "/projects/$projectId/edit"
     | "/services/$serviceId/edit"
     | "/snippets/$snippetId/edit"
-    | "/api/ai/blog-assist";
+    | "/marketing/email"
+    | "/marketing/social"
+    | "/api/ai/blog-assist"
+    | "/marketing/email/campaigns/$campaignId"
+    | "/marketing/email/campaigns/create"
+    | "/marketing/social/posts/$postId"
+    | "/marketing/social/posts/create"
+    | "/marketing/email/subscribers"
+    | "/marketing/email/campaigns/$campaignId/edit"
+    | "/marketing/social/posts/$postId/edit";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/signin"
+    | "/api/resend"
     | "/"
     | "/blog/create"
     | "/experiences/create"
@@ -260,6 +380,7 @@ export interface FileRouteTypes {
     | "/services/create"
     | "/snippets/create"
     | "/api/auth/$"
+    | "/api/cron/process-campaigns"
     | "/api/trpc/$"
     | "/blog"
     | "/experiences"
@@ -272,12 +393,22 @@ export interface FileRouteTypes {
     | "/projects/$projectId/edit"
     | "/services/$serviceId/edit"
     | "/snippets/$snippetId/edit"
-    | "/api/ai/blog-assist";
+    | "/marketing/email"
+    | "/marketing/social"
+    | "/api/ai/blog-assist"
+    | "/marketing/email/campaigns/$campaignId"
+    | "/marketing/email/campaigns/create"
+    | "/marketing/social/posts/$postId"
+    | "/marketing/social/posts/create"
+    | "/marketing/email/subscribers"
+    | "/marketing/email/campaigns/$campaignId/edit"
+    | "/marketing/social/posts/$postId/edit";
   id:
     | "__root__"
     | "/(auth)"
     | "/(dashboard)"
     | "/(auth)/signin"
+    | "/api/resend"
     | "/(dashboard)/"
     | "/(dashboard)/blog/create"
     | "/(dashboard)/experiences/create"
@@ -285,6 +416,7 @@ export interface FileRouteTypes {
     | "/(dashboard)/services/create"
     | "/(dashboard)/snippets/create"
     | "/api/auth/$"
+    | "/api/cron/process-campaigns"
     | "/api/trpc/$"
     | "/(dashboard)/blog/"
     | "/(dashboard)/experiences/"
@@ -297,13 +429,24 @@ export interface FileRouteTypes {
     | "/(dashboard)/projects/$projectId/edit"
     | "/(dashboard)/services/$serviceId/edit"
     | "/(dashboard)/snippets/$snippetId/edit"
-    | "/api/ai/blog-assist/";
+    | "/(dashboard)/marketing/email/"
+    | "/(dashboard)/marketing/social/"
+    | "/api/ai/blog-assist/"
+    | "/(dashboard)/marketing/email/campaigns/$campaignId"
+    | "/(dashboard)/marketing/email/campaigns/create"
+    | "/(dashboard)/marketing/social/posts/$postId"
+    | "/(dashboard)/marketing/social/posts/create"
+    | "/(dashboard)/marketing/email/subscribers/"
+    | "/(dashboard)/marketing/email/campaigns/$campaignId/edit"
+    | "/(dashboard)/marketing/social/posts/$postId/edit";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   authLayoutRoute: typeof authLayoutRouteWithChildren;
   dashboardLayoutRoute: typeof dashboardLayoutRouteWithChildren;
+  ApiResendRoute: typeof ApiResendRoute;
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
+  ApiCronProcessCampaignsRoute: typeof ApiCronProcessCampaignsRoute;
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute;
   ApiAiBlogAssistIndexRoute: typeof ApiAiBlogAssistIndexRoute;
 }
@@ -330,6 +473,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/";
       preLoaderRoute: typeof dashboardIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
+    };
+    "/api/resend": {
+      id: "/api/resend";
+      path: "/api/resend";
+      fullPath: "/api/resend";
+      preLoaderRoute: typeof ApiResendRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
     "/(auth)/signin": {
       id: "/(auth)/signin";
@@ -387,6 +537,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ApiTrpcSplatRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/api/cron/process-campaigns": {
+      id: "/api/cron/process-campaigns";
+      path: "/api/cron/process-campaigns";
+      fullPath: "/api/cron/process-campaigns";
+      preLoaderRoute: typeof ApiCronProcessCampaignsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/api/auth/$": {
       id: "/api/auth/$";
       path: "/api/auth/$";
@@ -436,6 +593,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ApiAiBlogAssistIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/(dashboard)/marketing/social/": {
+      id: "/(dashboard)/marketing/social/";
+      path: "/marketing/social";
+      fullPath: "/marketing/social";
+      preLoaderRoute: typeof dashboardMarketingSocialIndexRouteImport;
+      parentRoute: typeof dashboardLayoutRoute;
+    };
+    "/(dashboard)/marketing/email/": {
+      id: "/(dashboard)/marketing/email/";
+      path: "/marketing/email";
+      fullPath: "/marketing/email";
+      preLoaderRoute: typeof dashboardMarketingEmailIndexRouteImport;
+      parentRoute: typeof dashboardLayoutRoute;
+    };
     "/(dashboard)/snippets/$snippetId/edit": {
       id: "/(dashboard)/snippets/$snippetId/edit";
       path: "/snippets/$snippetId/edit";
@@ -471,6 +642,55 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof dashboardBlogArticleIdEditRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
     };
+    "/(dashboard)/marketing/email/subscribers/": {
+      id: "/(dashboard)/marketing/email/subscribers/";
+      path: "/marketing/email/subscribers";
+      fullPath: "/marketing/email/subscribers";
+      preLoaderRoute: typeof dashboardMarketingEmailSubscribersIndexRouteImport;
+      parentRoute: typeof dashboardLayoutRoute;
+    };
+    "/(dashboard)/marketing/social/posts/create": {
+      id: "/(dashboard)/marketing/social/posts/create";
+      path: "/marketing/social/posts/create";
+      fullPath: "/marketing/social/posts/create";
+      preLoaderRoute: typeof dashboardMarketingSocialPostsCreateRouteImport;
+      parentRoute: typeof dashboardLayoutRoute;
+    };
+    "/(dashboard)/marketing/social/posts/$postId": {
+      id: "/(dashboard)/marketing/social/posts/$postId";
+      path: "/marketing/social/posts/$postId";
+      fullPath: "/marketing/social/posts/$postId";
+      preLoaderRoute: typeof dashboardMarketingSocialPostsPostIdRouteImport;
+      parentRoute: typeof dashboardLayoutRoute;
+    };
+    "/(dashboard)/marketing/email/campaigns/create": {
+      id: "/(dashboard)/marketing/email/campaigns/create";
+      path: "/marketing/email/campaigns/create";
+      fullPath: "/marketing/email/campaigns/create";
+      preLoaderRoute: typeof dashboardMarketingEmailCampaignsCreateRouteImport;
+      parentRoute: typeof dashboardLayoutRoute;
+    };
+    "/(dashboard)/marketing/email/campaigns/$campaignId": {
+      id: "/(dashboard)/marketing/email/campaigns/$campaignId";
+      path: "/marketing/email/campaigns/$campaignId";
+      fullPath: "/marketing/email/campaigns/$campaignId";
+      preLoaderRoute: typeof dashboardMarketingEmailCampaignsCampaignIdRouteImport;
+      parentRoute: typeof dashboardLayoutRoute;
+    };
+    "/(dashboard)/marketing/social/posts/$postId/edit": {
+      id: "/(dashboard)/marketing/social/posts/$postId/edit";
+      path: "/edit";
+      fullPath: "/marketing/social/posts/$postId/edit";
+      preLoaderRoute: typeof dashboardMarketingSocialPostsPostIdEditRouteImport;
+      parentRoute: typeof dashboardMarketingSocialPostsPostIdRoute;
+    };
+    "/(dashboard)/marketing/email/campaigns/$campaignId/edit": {
+      id: "/(dashboard)/marketing/email/campaigns/$campaignId/edit";
+      path: "/edit";
+      fullPath: "/marketing/email/campaigns/$campaignId/edit";
+      preLoaderRoute: typeof dashboardMarketingEmailCampaignsCampaignIdEditRouteImport;
+      parentRoute: typeof dashboardMarketingEmailCampaignsCampaignIdRoute;
+    };
   }
 }
 
@@ -485,6 +705,36 @@ const authLayoutRouteChildren: authLayoutRouteChildren = {
 const authLayoutRouteWithChildren = authLayoutRoute._addFileChildren(
   authLayoutRouteChildren,
 );
+
+interface dashboardMarketingEmailCampaignsCampaignIdRouteChildren {
+  dashboardMarketingEmailCampaignsCampaignIdEditRoute: typeof dashboardMarketingEmailCampaignsCampaignIdEditRoute;
+}
+
+const dashboardMarketingEmailCampaignsCampaignIdRouteChildren: dashboardMarketingEmailCampaignsCampaignIdRouteChildren =
+  {
+    dashboardMarketingEmailCampaignsCampaignIdEditRoute:
+      dashboardMarketingEmailCampaignsCampaignIdEditRoute,
+  };
+
+const dashboardMarketingEmailCampaignsCampaignIdRouteWithChildren =
+  dashboardMarketingEmailCampaignsCampaignIdRoute._addFileChildren(
+    dashboardMarketingEmailCampaignsCampaignIdRouteChildren,
+  );
+
+interface dashboardMarketingSocialPostsPostIdRouteChildren {
+  dashboardMarketingSocialPostsPostIdEditRoute: typeof dashboardMarketingSocialPostsPostIdEditRoute;
+}
+
+const dashboardMarketingSocialPostsPostIdRouteChildren: dashboardMarketingSocialPostsPostIdRouteChildren =
+  {
+    dashboardMarketingSocialPostsPostIdEditRoute:
+      dashboardMarketingSocialPostsPostIdEditRoute,
+  };
+
+const dashboardMarketingSocialPostsPostIdRouteWithChildren =
+  dashboardMarketingSocialPostsPostIdRoute._addFileChildren(
+    dashboardMarketingSocialPostsPostIdRouteChildren,
+  );
 
 interface dashboardLayoutRouteChildren {
   dashboardIndexRoute: typeof dashboardIndexRoute;
@@ -504,6 +754,13 @@ interface dashboardLayoutRouteChildren {
   dashboardProjectsProjectIdEditRoute: typeof dashboardProjectsProjectIdEditRoute;
   dashboardServicesServiceIdEditRoute: typeof dashboardServicesServiceIdEditRoute;
   dashboardSnippetsSnippetIdEditRoute: typeof dashboardSnippetsSnippetIdEditRoute;
+  dashboardMarketingEmailIndexRoute: typeof dashboardMarketingEmailIndexRoute;
+  dashboardMarketingSocialIndexRoute: typeof dashboardMarketingSocialIndexRoute;
+  dashboardMarketingEmailCampaignsCampaignIdRoute: typeof dashboardMarketingEmailCampaignsCampaignIdRouteWithChildren;
+  dashboardMarketingEmailCampaignsCreateRoute: typeof dashboardMarketingEmailCampaignsCreateRoute;
+  dashboardMarketingSocialPostsPostIdRoute: typeof dashboardMarketingSocialPostsPostIdRouteWithChildren;
+  dashboardMarketingSocialPostsCreateRoute: typeof dashboardMarketingSocialPostsCreateRoute;
+  dashboardMarketingEmailSubscribersIndexRoute: typeof dashboardMarketingEmailSubscribersIndexRoute;
 }
 
 const dashboardLayoutRouteChildren: dashboardLayoutRouteChildren = {
@@ -525,6 +782,18 @@ const dashboardLayoutRouteChildren: dashboardLayoutRouteChildren = {
   dashboardProjectsProjectIdEditRoute: dashboardProjectsProjectIdEditRoute,
   dashboardServicesServiceIdEditRoute: dashboardServicesServiceIdEditRoute,
   dashboardSnippetsSnippetIdEditRoute: dashboardSnippetsSnippetIdEditRoute,
+  dashboardMarketingEmailIndexRoute: dashboardMarketingEmailIndexRoute,
+  dashboardMarketingSocialIndexRoute: dashboardMarketingSocialIndexRoute,
+  dashboardMarketingEmailCampaignsCampaignIdRoute:
+    dashboardMarketingEmailCampaignsCampaignIdRouteWithChildren,
+  dashboardMarketingEmailCampaignsCreateRoute:
+    dashboardMarketingEmailCampaignsCreateRoute,
+  dashboardMarketingSocialPostsPostIdRoute:
+    dashboardMarketingSocialPostsPostIdRouteWithChildren,
+  dashboardMarketingSocialPostsCreateRoute:
+    dashboardMarketingSocialPostsCreateRoute,
+  dashboardMarketingEmailSubscribersIndexRoute:
+    dashboardMarketingEmailSubscribersIndexRoute,
 };
 
 const dashboardLayoutRouteWithChildren = dashboardLayoutRoute._addFileChildren(
@@ -534,7 +803,9 @@ const dashboardLayoutRouteWithChildren = dashboardLayoutRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   authLayoutRoute: authLayoutRouteWithChildren,
   dashboardLayoutRoute: dashboardLayoutRouteWithChildren,
+  ApiResendRoute: ApiResendRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiCronProcessCampaignsRoute: ApiCronProcessCampaignsRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
   ApiAiBlogAssistIndexRoute: ApiAiBlogAssistIndexRoute,
 };

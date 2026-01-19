@@ -1,0 +1,33 @@
+{
+  "name": "@acme/marketing",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./email-service": "./src/email-service.ts",
+    "./campaign-scheduler": "./src/campaign-scheduler.ts",
+    "./unsubscribe-token": "./src/unsubscribe-token.ts",
+    "./email-templates/new-content": "./src/email-templates/new-content.tsx",
+    "./email-templates/newsletter": "./src/email-templates/newsletter.tsx"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@acme/db": "workspace:*",
+    "@react-email/components": "^1.0.4",
+    "drizzle-orm": "^0.45.1",
+    "resend": "^6.7.0",
+    "twitter-api-v2": "^1.28.0"
+  },
+  "devDependencies": {
+    "@acme/tsconfig": "workspace:*",
+    "@types/react": "catalog:react19",
+    "react": "catalog:react19",
+    "typescript": "catalog:"
+  }
+}
