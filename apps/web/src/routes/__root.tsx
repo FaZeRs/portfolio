@@ -12,7 +12,9 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import { Analytics } from "@vercel/analytics/react";
+import { CookieBanner } from "~/components/analytics/cookie-banner";
+import { PostHogProvider } from "~/components/analytics/posthog-provider";
+import { CookieConsentProvider } from "~/contexts/cookie-consent";
 import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
 import appCss from "~/styles.css?url";
 
@@ -46,9 +48,13 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   return (
     <ThemeProvider>
-      <RootDocument>
-        <Outlet />
-      </RootDocument>
+      <CookieConsentProvider>
+        <PostHogProvider>
+          <RootDocument>
+            <Outlet />
+          </RootDocument>
+        </PostHogProvider>
+      </CookieConsentProvider>
     </ThemeProvider>
   );
 }
@@ -65,7 +71,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <Toaster />
 
         {import.meta.env.DEV && <DevtoolsComponent />}
-        <Analytics />
+        <CookieBanner />
         <Scripts />
       </body>
     </html>
