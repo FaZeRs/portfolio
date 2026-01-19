@@ -56,3 +56,6 @@ dist/
 
 .cursor
 .serena
+
+# sitemap
+sitemap.xml
