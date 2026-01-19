@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { json } from "@tanstack/react-start";
 import { getGithubActivities } from "~/lib/github";
 
 export const Route = createFileRoute("/api/stats/github/activity")({
@@ -8,9 +7,9 @@ export const Route = createFileRoute("/api/stats/github/activity")({
       GET: async () => {
         try {
           const contributions = await getGithubActivities();
-          return json(contributions);
+          return Response.json(contributions);
         } catch (error) {
-          return json({ error }, { status: 500 });
+          return Response.json({ error }, { status: 500 });
         }
       },
     },
