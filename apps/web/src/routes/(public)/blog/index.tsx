@@ -5,6 +5,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import FilteredArticles from "~/components/blog/filtered-articles";
 import PageHeading from "~/components/page-heading";
 import { seo } from "~/lib/seo";
+import {
+  generateStructuredDataGraph,
+  getBlogListSchemas,
+} from "~/lib/structured-data";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
 
@@ -16,14 +20,23 @@ export const Route = createFileRoute("/(public)/blog/")({
     const seoData = seo({
       title: `Blog | ${siteConfig.title}`,
       description:
-        "I write about my experiences and learnings in the software development world.",
-      keywords: siteConfig.keywords,
+        "Expert insights on web development, React, TypeScript, and building scalable business applications. Learn best practices for modern software development.",
+      keywords:
+        "Web Development Blog, React Tutorials, TypeScript Best Practices, Software Development Tips, Business Application Development, Full-Stack Development Guide",
       url: `${getBaseUrl()}/blog`,
       canonical: `${getBaseUrl()}/blog`,
     });
+    const structuredData = generateStructuredDataGraph(getBlogListSchemas());
+
     return {
       meta: seoData.meta,
       links: seoData.links,
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: structuredData,
+        },
+      ],
     };
   },
 });

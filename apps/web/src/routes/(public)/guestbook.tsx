@@ -21,8 +21,10 @@ export const Route = createFileRoute("/(public)/guestbook")({
   head: () => {
     const seoData = seo({
       title: `Guestbook | ${siteConfig.title}`,
-      description: "A place for you to leave your comments and feedback.",
-      keywords: siteConfig.keywords,
+      description:
+        "Client testimonials and feedback from collaborations. See what others say about working with a professional full-stack developer.",
+      keywords:
+        "Developer Reviews, Client Testimonials, Web Developer Feedback, Professional References, Collaboration Reviews",
       url: `${getBaseUrl()}/guestbook`,
       canonical: `${getBaseUrl()}/guestbook`,
     });

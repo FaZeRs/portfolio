@@ -16,6 +16,10 @@ import {
 import ExperienceSection from "~/components/experiences/experience";
 import { skillCategories } from "~/lib/constants/skills-data";
 import { seo } from "~/lib/seo";
+import {
+  generateStructuredDataGraph,
+  getAboutPageSchemas,
+} from "~/lib/structured-data";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/about")({
@@ -23,14 +27,24 @@ export const Route = createFileRoute("/(public)/about")({
   head: () => {
     const seoData = seo({
       title: `About | ${siteConfig.title}`,
-      description: "About me and my journey.",
-      keywords: siteConfig.keywords,
+      description:
+        "Full-Stack Developer with 10+ years of experience building scalable web applications, custom business software, and high-performance digital solutions. Hire a developer who delivers results.",
+      keywords:
+        "Full-Stack Developer, Senior Web Developer, Hire Developer, Custom Software Development, Web Application Expert, React TypeScript Developer, Business Software Engineer",
       url: `${getBaseUrl()}/about`,
       canonical: `${getBaseUrl()}/about`,
     });
+    const structuredData = generateStructuredDataGraph(getAboutPageSchemas());
+
     return {
       meta: seoData.meta,
       links: seoData.links,
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: structuredData,
+        },
+      ],
     };
   },
 });

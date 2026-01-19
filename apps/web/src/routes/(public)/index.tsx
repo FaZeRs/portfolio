@@ -1,9 +1,15 @@
+import { siteConfig } from "@acme/config";
 import { createFileRoute } from "@tanstack/react-router";
 import CTASection from "~/components/cta-section";
 import FeaturedProjects from "~/components/featured-projects";
 import Hero from "~/components/hero";
 import ServicesSection from "~/components/services/services";
 import TrustIndicators from "~/components/trust-indicators";
+import { seo } from "~/lib/seo";
+import {
+  generateStructuredDataGraph,
+  getHomepageSchemas,
+} from "~/lib/structured-data";
 
 export const Route = createFileRoute("/(public)/")({
   component: Home,
@@ -12,6 +18,24 @@ export const Route = createFileRoute("/(public)/")({
       queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
       queryClient.prefetchQuery(trpc.service.allPublic.queryOptions()),
     ]);
+  },
+  head: () => {
+    const seoData = seo({
+      title: siteConfig.title,
+      description: siteConfig.description,
+      keywords: siteConfig.keywords,
+    });
+    const structuredData = generateStructuredDataGraph(getHomepageSchemas());
+    return {
+      meta: seoData.meta,
+      links: seoData.links,
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: structuredData,
+        },
+      ],
+    };
   },
 });
 
