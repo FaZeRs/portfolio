@@ -28,8 +28,8 @@ import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
 import SocialShare from "~/components/social-share";
 import { seo } from "~/lib/seo";
 import {
-  createArticleSchema,
-  generateStructuredData,
+  generateStructuredDataGraph,
+  getBlogPostSchemas,
 } from "~/lib/structured-data";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
@@ -76,17 +76,17 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
       canonical: `${getBaseUrl()}/blog/${loaderData?.slug}`,
     });
 
-    const articleSchema = loaderData?.title
-      ? generateStructuredData(
-          createArticleSchema({
+    const structuredData = loaderData?.title
+      ? generateStructuredDataGraph(
+          getBlogPostSchemas({
             title: loaderData.title,
             description: loaderData.description || "",
             image: loaderData.image || `${getBaseUrl()}/images/cover.avif`,
+            slug: loaderData.slug || "",
             datePublished:
               loaderData.createdAt?.toISOString() || new Date().toISOString(),
             dateModified:
               loaderData.updatedAt?.toISOString() || new Date().toISOString(),
-            url: `/blog/${loaderData.slug}`,
           })
         )
       : null;
@@ -94,11 +94,11 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
     return {
       meta: seoData.meta,
       links: seoData.links,
-      scripts: articleSchema
+      scripts: structuredData
         ? [
             {
               type: "application/ld+json",
-              children: articleSchema,
+              children: structuredData,
             },
           ]
         : [],

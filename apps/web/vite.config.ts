@@ -6,10 +6,7 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import { nitro } from "nitro/vite";
-import { generateSitemap } from "tanstack-router-sitemap";
 import { defineConfig } from "vite";
-
-import sitemap from "./src/plugins/sitemap";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -61,7 +58,6 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    generateSitemap(sitemap),
     sentryVitePlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN,
       org: process.env.SENTRY_ORG,

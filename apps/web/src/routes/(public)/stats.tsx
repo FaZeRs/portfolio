@@ -10,8 +10,10 @@ export const Route = createFileRoute("/(public)/stats")({
   head: () => {
     const seoData = seo({
       title: `Stats | ${siteConfig.title}`,
-      description: "Insights into my digital life",
-      keywords: siteConfig.keywords,
+      description:
+        "Development activity and contributions on GitHub. Track record of consistent coding and open source contributions demonstrating active development expertise.",
+      keywords:
+        "Developer Statistics, GitHub Activity, Open Source Contributions, Active Developer, Coding Activity, Software Development Track Record",
       url: `${getBaseUrl()}/stats`,
       canonical: `${getBaseUrl()}/stats`,
     });
@@ -26,7 +28,7 @@ function RouteComponent() {
   return (
     <>
       <PageHeading
-        description="Insights into my digital life"
+        description="Development activity and open source contributions"
         title="Statistics"
       />
       <Stats />

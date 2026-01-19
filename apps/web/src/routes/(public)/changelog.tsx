@@ -30,7 +30,8 @@ export const Route = createFileRoute("/(public)/changelog")({
 
     const seoData = seo({
       title: `Changelog | ${siteConfig.title}`,
-      description: "All notable changes and updates to this portfolio website.",
+      description:
+        "Latest updates and improvements to the portfolio. Demonstrating continuous development and commitment to delivering high-quality software.",
       keywords,
       url: `${getBaseUrl()}/changelog`,
       canonical: `${getBaseUrl()}/changelog`,

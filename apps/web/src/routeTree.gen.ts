@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root";
+import { Route as SitemapDotxmlRouteImport } from "./routes/sitemap[.]xml";
+import { Route as LlmsDottxtRouteImport } from "./routes/llms[.]txt";
 import { Route as publicLayoutRouteImport } from "./routes/(public)/layout";
 import { Route as authLayoutRouteImport } from "./routes/(auth)/layout";
 import { Route as publicIndexRouteImport } from "./routes/(public)/index";
@@ -36,6 +38,16 @@ import { Route as publicBlogArticleIdRouteImport } from "./routes/(public)/blog/
 import { Route as ApiStatsGithubIndexRouteImport } from "./routes/api/stats/github/index";
 import { Route as ApiStatsGithubActivityRouteImport } from "./routes/api/stats/github/activity";
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: "/sitemap.xml",
+  path: "/sitemap.xml",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: "/llms.txt",
+  path: "/llms.txt",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const publicLayoutRoute = publicLayoutRouteImport.update({
   id: "/(public)",
   getParentRoute: () => rootRouteImport,
@@ -167,6 +179,8 @@ const ApiStatsGithubActivityRoute = ApiStatsGithubActivityRouteImport.update({
 } as any);
 
 export interface FileRoutesByFullPath {
+  "/llms.txt": typeof LlmsDottxtRoute;
+  "/sitemap.xml": typeof SitemapDotxmlRoute;
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
   "/changelog": typeof publicChangelogRoute;
@@ -193,6 +207,8 @@ export interface FileRoutesByFullPath {
   "/api/stats/github": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRoutesByTo {
+  "/llms.txt": typeof LlmsDottxtRoute;
+  "/sitemap.xml": typeof SitemapDotxmlRoute;
   "/signin": typeof authSigninRoute;
   "/about": typeof publicAboutRoute;
   "/changelog": typeof publicChangelogRoute;
@@ -222,6 +238,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/(auth)": typeof authLayoutRouteWithChildren;
   "/(public)": typeof publicLayoutRouteWithChildren;
+  "/llms.txt": typeof LlmsDottxtRoute;
+  "/sitemap.xml": typeof SitemapDotxmlRoute;
   "/(auth)/signin": typeof authSigninRoute;
   "/(public)/about": typeof publicAboutRoute;
   "/(public)/changelog": typeof publicChangelogRoute;
@@ -250,6 +268,8 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
+    | "/llms.txt"
+    | "/sitemap.xml"
     | "/signin"
     | "/about"
     | "/changelog"
@@ -276,6 +296,8 @@ export interface FileRouteTypes {
     | "/api/stats/github";
   fileRoutesByTo: FileRoutesByTo;
   to:
+    | "/llms.txt"
+    | "/sitemap.xml"
     | "/signin"
     | "/about"
     | "/changelog"
@@ -304,6 +326,8 @@ export interface FileRouteTypes {
     | "__root__"
     | "/(auth)"
     | "/(public)"
+    | "/llms.txt"
+    | "/sitemap.xml"
     | "/(auth)/signin"
     | "/(public)/about"
     | "/(public)/changelog"
@@ -333,6 +357,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   authLayoutRoute: typeof authLayoutRouteWithChildren;
   publicLayoutRoute: typeof publicLayoutRouteWithChildren;
+  LlmsDottxtRoute: typeof LlmsDottxtRoute;
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute;
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute;
   ApiChangelogIndexRoute: typeof ApiChangelogIndexRoute;
@@ -344,6 +370,20 @@ export interface RootRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/sitemap.xml": {
+      id: "/sitemap.xml";
+      path: "/sitemap.xml";
+      fullPath: "/sitemap.xml";
+      preLoaderRoute: typeof SitemapDotxmlRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/llms.txt": {
+      id: "/llms.txt";
+      path: "/llms.txt";
+      fullPath: "/llms.txt";
+      preLoaderRoute: typeof LlmsDottxtRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/(public)": {
       id: "/(public)";
       path: "";
@@ -586,6 +626,8 @@ const publicLayoutRouteWithChildren = publicLayoutRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   authLayoutRoute: authLayoutRouteWithChildren,
   publicLayoutRoute: publicLayoutRouteWithChildren,
+  LlmsDottxtRoute: LlmsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
   ApiChangelogIndexRoute: ApiChangelogIndexRoute,

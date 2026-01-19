@@ -27,6 +27,10 @@ import { siGithub } from "simple-icons";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
 import { seo } from "~/lib/seo";
+import {
+  generateStructuredDataGraph,
+  getProjectSchemas,
+} from "~/lib/structured-data";
 import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
 
@@ -41,6 +45,10 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
         description: data?.description,
         image: data?.imageUrl,
         slug: data?.slug,
+        githubUrl: data?.githubUrl,
+        stacks: data?.stacks,
+        createdAt: data?.createdAt,
+        updatedAt: data?.updatedAt,
       };
     } catch (error) {
       if (
@@ -61,9 +69,33 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
       url: `${getBaseUrl()}/projects/${loaderData?.slug}`,
       canonical: `${getBaseUrl()}/projects/${loaderData?.slug}`,
     });
+
+    const structuredData = loaderData?.title
+      ? generateStructuredDataGraph(
+          getProjectSchemas({
+            title: loaderData.title,
+            description: loaderData.description || "",
+            slug: loaderData.slug || "",
+            image: loaderData.image ?? undefined,
+            githubUrl: loaderData.githubUrl ?? undefined,
+            stacks: loaderData.stacks ?? undefined,
+            dateCreated: loaderData.createdAt?.toISOString(),
+            dateModified: loaderData.updatedAt?.toISOString(),
+          })
+        )
+      : null;
+
     return {
       meta: seoData.meta,
       links: seoData.links,
+      scripts: structuredData
+        ? [
+            {
+              type: "application/ld+json",
+              children: structuredData,
+            },
+          ]
+        : [],
     };
   },
   component: RouteComponent,

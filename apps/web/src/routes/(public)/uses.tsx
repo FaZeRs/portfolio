@@ -11,8 +11,9 @@ export const Route = createFileRoute("/(public)/uses")({
     const seoData = seo({
       title: `Uses | ${siteConfig.title}`,
       description:
-        "These are the tools I use to get my work done. Links marked with (*) are affiliate links.",
-      keywords: siteConfig.keywords,
+        "Professional development tools and tech stack used to build high-quality websites and web applications. Industry-standard tools for modern software development.",
+      keywords:
+        "Web Development Tools, Professional Tech Stack, Software Development Setup, React Development Tools, TypeScript Tools, Modern Development Environment",
       url: `${getBaseUrl()}/uses`,
       canonical: `${getBaseUrl()}/uses`,
     });
