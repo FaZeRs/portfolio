@@ -85,7 +85,6 @@
     "babel-plugin-react-compiler": "latest",
     "nitro": "3.0.1-alpha.1",
     "tailwindcss": "catalog:",
-    "tanstack-router-sitemap": "^1.0.13",
     "typescript": "catalog:",
     "vite": "catalog:"
   }
