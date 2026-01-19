@@ -43,6 +43,8 @@ export class DevToService implements ISocialMediaService {
       };
     }
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10_000);
     try {
       const response = await fetch("https://dev.to/api/articles", {
         method: "POST",
@@ -58,6 +60,7 @@ export class DevToService implements ISocialMediaService {
             tags,
           },
         }),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -73,11 +76,19 @@ export class DevToService implements ISocialMediaService {
         postUrl: result.url || "",
       };
     } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return {
+          success: false,
+          error: "Dev.to request timed out",
+        };
+      }
       return {
         success: false,
         error:
           error instanceof Error ? error.message : "Failed to post to Dev.to",
       };
+    } finally {
+      clearTimeout(timeoutId);
     }
   }
 }

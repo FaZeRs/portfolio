@@ -1,6 +1,8 @@
-import { processScheduledSocialPosts } from "@acme/marketing";
+import {
+  processScheduledEmailCampaigns,
+  processScheduledSocialPosts,
+} from "@acme/marketing";
 import { createFileRoute } from "@tanstack/react-router";
-import { processScheduledEmailCampaigns } from "../../../../../../packages/marketing/src";
 
 export const Route = createFileRoute("/api/cron/process-campaigns")({
   server: {
