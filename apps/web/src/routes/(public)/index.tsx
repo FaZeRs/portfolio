@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import CTASection from "~/components/cta-section";
 import FeaturedProjects from "~/components/featured-projects";
 import Hero from "~/components/hero";
+import NewsletterSection from "~/components/newsletter-section";
 import ServicesSection from "~/components/services/services";
 import TrustIndicators from "~/components/trust-indicators";
 
@@ -23,6 +24,7 @@ function Home() {
         <TrustIndicators />
         <ServicesSection />
         <FeaturedProjects />
+        <NewsletterSection />
         <CTASection />
       </div>
     </>
