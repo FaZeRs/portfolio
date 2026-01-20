@@ -1,4 +1,5 @@
 import { siteConfig, socialConfig } from "@acme/config";
+import { useTheme } from "@acme/shared/theme-provider";
 import { Button } from "@acme/ui/button";
 import {
   CommandDialog,
@@ -10,7 +11,6 @@ import {
   CommandSeparator,
 } from "@acme/ui/command";
 import Icon from "@acme/ui/icon";
-import { useTheme } from "@acme/ui/theme-provider";
 import type { DialogProps } from "@radix-ui/react-dialog";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";

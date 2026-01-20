@@ -1,4 +1,4 @@
-import { useTheme } from "@acme/ui/theme-provider";
+import { useTheme } from "@acme/shared/theme-provider";
 import {
   Bar,
   BarChart,

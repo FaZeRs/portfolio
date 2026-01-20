@@ -9,7 +9,8 @@
     "./create-trpc-client": "./src/create-trpc-client.ts",
     "./signin": "./src/signin.tsx",
     "./logo": "./src/logo.tsx",
-    "./link": "./src/link.tsx"
+    "./link": "./src/link.tsx",
+    "./theme-provider": "./src/theme-provider.tsx"
   },
   "license": "MIT",
   "scripts": {
@@ -32,7 +33,8 @@
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
     "simple-icons": "catalog:",
-    "superjson": "2.2.5"
+    "superjson": "2.2.5",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",

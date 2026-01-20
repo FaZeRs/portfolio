@@ -52,7 +52,6 @@
     "./tag-list": "./src/tag-list.tsx",
     "./textarea": "./src/textarea.tsx",
     "./theme": "./src/theme.tsx",
-    "./theme-provider": "./src/theme-provider.tsx",
     "./toast": "./src/toast.tsx",
     "./tooltip": "./src/tooltip.tsx",
     "./youtube": "./src/youtube.tsx",

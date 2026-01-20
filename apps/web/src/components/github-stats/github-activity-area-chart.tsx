@@ -1,5 +1,5 @@
+import { useTheme } from "@acme/shared/theme-provider";
 import { ContributionsDay } from "@acme/types";
-import { useTheme } from "@acme/ui/theme-provider";
 import { format, subDays } from "date-fns";
 import {
   Area,

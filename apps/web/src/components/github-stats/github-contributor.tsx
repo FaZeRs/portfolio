@@ -1,4 +1,4 @@
-import { useTheme } from "@acme/ui/theme-provider";
+import { useTheme } from "@acme/shared/theme-provider";
 import { ClientOnly } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Calendar, GitBranch } from "lucide-react";
