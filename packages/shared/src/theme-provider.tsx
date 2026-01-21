@@ -28,7 +28,6 @@ const getStoredThemeMode = createIsomorphicFn()
   .client((): ThemeMode => {
     try {
       const storedTheme = localStorage.getItem(themeKey);
-      console.log("storedTheme", storedTheme);
       return themeModeSchema.parse(storedTheme);
     } catch {
       return "auto";
