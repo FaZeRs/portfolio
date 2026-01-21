@@ -7,6 +7,7 @@
     "dev": "NODE_OPTIONS='--import ./instrument.server.mjs' bun --bun vite dev --port 3000",
     "start": "bun run --import ./.output/server/instrument.server.mjs .output/server/index.mjs",
     "build": "bun --bun vite build",
+    "build:vercel": "bun --bun vite build && cp instrument.server.mjs .vercel/output",
     "clean": "rm -rf .cache .nitro .output .tanstack .turbo node_modules",
     "typecheck": "tsc --noEmit"
   },
