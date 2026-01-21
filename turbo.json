@@ -9,6 +9,15 @@
       "dependsOn": ["^build"],
       "outputs": [".cache/tsbuildinfo.json", "dist/**"]
     },
+    "build:vercel": {
+      "dependsOn": ["^build"],
+      "outputs": [
+        ".cache/tsbuildinfo.json",
+        "dist/**",
+        ".output/**",
+        ".vercel/**"
+      ]
+    },
     "dev": {
       "dependsOn": ["^dev"],
       "cache": false,

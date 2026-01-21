@@ -6,6 +6,10 @@
       "dependsOn": ["^build"],
       "outputs": [".nitro/**", ".output/**", ".tanstack/**"]
     },
+    "build:vercel": {
+      "dependsOn": ["^build:vercel"],
+      "outputs": [".nitro/**", ".output/**", ".tanstack/**", ".vercel/**"]
+    },
     "dev": {
       "persistent": true
     }

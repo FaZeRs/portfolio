@@ -15,6 +15,7 @@
   "license": "MIT",
   "scripts": {
     "build": "turbo run build",
+    "build:vercel": "turbo run build:vercel",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "auth:generate": "bun run -F @acme/auth generate",
