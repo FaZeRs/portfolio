@@ -7,6 +7,7 @@ import { Toaster } from "@acme/ui/sonner";
 import { PostHogProvider } from "@posthog/react";
 import type { QueryClient } from "@tanstack/react-query";
 import {
+  ClientOnly,
   createRootRouteWithContext,
   HeadContent,
   Outlet,
@@ -77,7 +78,9 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           <Toaster resolvedTheme={resolvedTheme} />
 
           {import.meta.env.DEV && <DevtoolsComponent />}
-          <CookieBanner />
+          <ClientOnly>
+            <CookieBanner />
+          </ClientOnly>
           <Scripts />
         </PostHogProvider>
       </body>
