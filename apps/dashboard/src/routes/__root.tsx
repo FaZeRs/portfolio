@@ -3,8 +3,8 @@
 import { AppRouter } from "@acme/api";
 import { siteConfig } from "@acme/config";
 import { DevtoolsComponent } from "@acme/shared/dev-tools";
+import { ThemeProvider, useTheme } from "@acme/shared/theme-provider";
 import { Toaster } from "@acme/ui/sonner";
-import { ThemeProvider } from "@acme/ui/theme-provider";
 import type { QueryClient } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
@@ -61,6 +61,7 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { readonly children: React.ReactNode }) {
+  const { resolvedTheme } = useTheme();
   return (
     // suppress since we're updating the "dark" class in a custom script below
     <html className="scroll-smooth" lang="en" suppressHydrationWarning>
@@ -69,7 +70,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         {children}
-        <Toaster />
+        <Toaster resolvedTheme={resolvedTheme} />
 
         {import.meta.env.DEV && <DevtoolsComponent />}
         <Scripts />

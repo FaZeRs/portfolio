@@ -7,11 +7,12 @@ import {
 } from "lucide-react";
 import { CSSProperties } from "react";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
-import { useTheme } from "./theme-provider";
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { resolvedTheme = "system" } = useTheme();
-
+const Toaster = ({
+  resolvedTheme,
+  ...props
+}: ToasterProps & { readonly resolvedTheme: "light" | "dark" | "auto" }) => {
+  const sonnerTheme = resolvedTheme === "auto" ? "system" : resolvedTheme;
   return (
     <Sonner
       className="toaster group"
@@ -30,7 +31,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--border-radius": "var(--radius)",
         } as CSSProperties
       }
-      theme={resolvedTheme as ToasterProps["theme"]}
+      theme={sonnerTheme as ToasterProps["theme"]}
       {...props}
     />
   );

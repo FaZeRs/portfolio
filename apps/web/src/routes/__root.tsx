@@ -2,18 +2,22 @@
 
 import { AppRouter } from "@acme/api";
 import { DevtoolsComponent } from "@acme/shared/dev-tools";
+import { ThemeProvider, useTheme } from "@acme/shared/theme-provider";
 import { Toaster } from "@acme/ui/sonner";
-import { ThemeProvider } from "@acme/ui/theme-provider";
+import { PostHogProvider } from "@posthog/react";
 import type { QueryClient } from "@tanstack/react-query";
 import {
+  ClientOnly,
   createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import { Analytics } from "@vercel/analytics/react";
+import posthog from "posthog-js";
+import { CookieBanner } from "~/components/analytics/cookie-banner";
 import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
+import { env } from "~/lib/env/client";
 import appCss from "~/styles.css?url";
 
 export const Route = createRootRouteWithContext<{
@@ -43,6 +47,13 @@ export const Route = createRootRouteWithContext<{
   component: RootComponent,
 });
 
+posthog.init(env.VITE_POSTHOG_KEY, {
+  api_host: env.VITE_POSTHOG_HOST,
+  defaults: "2025-11-30",
+  cookieless_mode: "on_reject",
+  disable_external_dependency_loading: true,
+});
+
 function RootComponent() {
   return (
     <ThemeProvider>
@@ -54,6 +65,7 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { readonly children: React.ReactNode }) {
+  const { resolvedTheme } = useTheme();
   return (
     // suppress since we're updating the "dark" class in a custom script below
     <html className="scroll-smooth" lang="en" suppressHydrationWarning>
@@ -61,12 +73,16 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        {children}
-        <Toaster />
+        <PostHogProvider client={posthog}>
+          {children}
+          <Toaster resolvedTheme={resolvedTheme} />
 
-        {import.meta.env.DEV && <DevtoolsComponent />}
-        <Analytics />
-        <Scripts />
+          {import.meta.env.DEV && <DevtoolsComponent />}
+          <ClientOnly>
+            <CookieBanner />
+          </ClientOnly>
+          <Scripts />
+        </PostHogProvider>
       </body>
     </html>
   );

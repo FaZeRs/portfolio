@@ -1,3 +1,4 @@
+import { useTheme } from "@acme/shared/theme-provider";
 import { NavItem, UserType } from "@acme/types";
 import { cn } from "@acme/ui";
 import { useIsMobile } from "@acme/ui/hooks/use-mobile";
@@ -28,6 +29,7 @@ type MainNavbarProps = {
 const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const isMobile = useIsMobile();
+  const { setTheme } = useTheme();
 
   const activeLink = useLocation({
     select: (location) =>
@@ -89,7 +91,7 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
           </Suspense>
           <div className="h-4 w-px bg-border/50" />
           <Suspense fallback={<Spinner className="size-5" />}>
-            <ThemeToggle />
+            <ThemeToggle setTheme={setTheme} />
           </Suspense>
         </div>
       </div>

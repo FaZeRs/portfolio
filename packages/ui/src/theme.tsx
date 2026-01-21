@@ -7,11 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { useTheme } from "./theme-provider";
 
-function ThemeToggle() {
-  const { setTheme } = useTheme();
-
+function ThemeToggle({
+  setTheme,
+}: {
+  setTheme: (theme: "light" | "dark" | "auto") => void;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
