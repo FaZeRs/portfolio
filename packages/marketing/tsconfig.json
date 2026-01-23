@@ -1,7 +1,9 @@
 {
   "extends": "@acme/tsconfig/compiled-package.json",
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "jsx": "preserve",
+    "rootDir": "."
   },
   "include": ["src"],
   "exclude": ["node_modules"]

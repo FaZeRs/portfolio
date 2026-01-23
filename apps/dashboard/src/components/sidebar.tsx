@@ -1,6 +1,11 @@
 import type { UserType } from "@acme/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@acme/ui/avatar";
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@acme/ui/collapsible";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -19,17 +24,24 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
 } from "@acme/ui/sidebar";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   BriefcaseIcon,
+  ChevronRightIcon,
   CodeIcon,
   FolderKanbanIcon,
   LayoutDashboardIcon,
   LogOutIcon,
+  MailIcon,
+  MegaphoneIcon,
   NewspaperIcon,
   SettingsIcon,
+  Share2Icon,
   UsersIcon,
 } from "lucide-react";
 
@@ -68,6 +80,19 @@ const navigationItems = [
     title: "Users",
     href: "/users",
     icon: UsersIcon,
+  },
+];
+
+const marketingItems = [
+  {
+    title: "Email",
+    href: "/marketing/email",
+    icon: MailIcon,
+  },
+  {
+    title: "Social",
+    href: "/marketing/social",
+    icon: Share2Icon,
   },
 ];
 
@@ -117,6 +142,38 @@ export function DashboardSidebar({ user }: Readonly<{ user: UserType }>) {
                   </SidebarMenuItem>
                 );
               })}
+              <Collapsible
+                className="group/collapsible"
+                defaultOpen={currentPath.startsWith("/marketing")}
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip="Marketing">
+                      <MegaphoneIcon />
+                      <span>Marketing</span>
+                      <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {marketingItems.map((item) => {
+                        const isActive = currentPath === item.href;
+                        const Icon = item.icon;
+                        return (
+                          <SidebarMenuSubItem key={item.href}>
+                            <SidebarMenuSubButton asChild isActive={isActive}>
+                              <Link to={item.href}>
+                                <Icon />
+                                <span>{item.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

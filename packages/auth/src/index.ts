@@ -10,6 +10,7 @@ export function initAuth<
   baseUrl: string;
   productionUrl: string;
   secret: string | undefined;
+  trustedOrigins?: string[];
 
   githubClientId?: string;
   githubClientSecret?: string;
@@ -28,6 +29,7 @@ export function initAuth<
     }),
     baseURL: options.baseUrl,
     secret: options.secret,
+    trustedOrigins: options.trustedOrigins,
     telemetry: {
       enabled: false,
     },

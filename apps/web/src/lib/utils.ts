@@ -1,11 +1,11 @@
 const DEFAULT_PORT = 3000 as const;
 
 export const getBaseUrl = () => {
-  if (process.env.VITE_APP_URL) {
-    return process.env.VITE_APP_URL;
-  }
   if (typeof window !== "undefined") {
     return window.location.origin;
+  }
+  if (process.env.VITE_APP_URL) {
+    return process.env.VITE_APP_URL;
   }
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
