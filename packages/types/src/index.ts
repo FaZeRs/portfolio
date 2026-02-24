@@ -11,18 +11,7 @@ import {
 } from "@acme/db/schema";
 import type { SimpleIcon } from "simple-icons";
 
-export type SiteConfig = {
-  title: string;
-  name: string;
-  description: string;
-  keywords: string;
-  url: string;
-  links: {
-    mail: string;
-    twitter: string;
-    github: string;
-    githubRepo: string;
-  };
+export interface SiteConfig {
   author: {
     name: string;
     email: string;
@@ -30,32 +19,43 @@ export type SiteConfig = {
     handle: string;
   };
   calendlyUrl: string;
-};
-
-export type NavItem = {
+  description: string;
+  keywords: string;
+  links: {
+    mail: string;
+    twitter: string;
+    github: string;
+    githubRepo: string;
+  };
+  name: string;
   title: string;
-  href?: string;
-  disabled?: boolean;
-  description?: string;
+  url: string;
+}
+
+export interface NavItem {
   content?: ContentNavItem[];
-};
+  description?: string;
+  disabled?: boolean;
+  href?: string;
+  title: string;
+}
 
 export interface ContentNavItem extends NavItem {
   href: string;
 }
 
-export type Social = {
+export interface Social {
+  icon: SimpleIcon;
   name: string;
   url: string;
   username?: string;
-  icon: SimpleIcon;
-};
+}
 
-export type AuthProvider = {
-  label: string;
+export interface AuthProvider {
   icon: SimpleIcon;
+  label: string;
   provider: string;
-};
+}
 
 export type ProjectType = typeof Project.$inferSelect;
 export type ExperienceType = typeof Experience.$inferSelect;
@@ -67,64 +67,64 @@ export type CommentReactionType = typeof commentReactions.$inferSelect;
 export type GuestbookType = typeof guestbook.$inferSelect;
 export type ServiceType = typeof Service.$inferSelect;
 
-export type ContributionCalendar = {
+export interface ContributionCalendar {
   weeks: ContributionWeeks[];
-};
+}
 
-export type ContributionWeeks = {
+export interface ContributionWeeks {
   contributionDays: ContributionsDay[];
-};
+}
 
-export type ContributionsDay = {
+export interface ContributionsDay {
   contributionCount: number;
   date: string;
-};
+}
 
-export type ContributionsCollection = {
+export interface ContributionsCollection {
   contributionCalendar: ContributionCalendar;
-};
+}
 
-export type GitHubUser = {
-  login: string;
-  name: string;
-  bio: string;
+export interface GitHubUser {
   avatar_url: string;
-  html_url: string;
-  public_repos: number;
+  bio: string;
+  created_at: string;
   followers: number;
   following: number;
-  created_at: string;
-  updated_at: string;
-};
-
-export type UseData = {
+  html_url: string;
+  login: string;
   name: string;
+  public_repos: number;
+  updated_at: string;
+}
+
+export interface UseData {
   description: string;
   icon: SimpleIcon;
   link: string;
-};
+  name: string;
+}
 
-export type TOC = {
+export interface TOC {
+  depth: number;
   title: string;
   url: string;
-  depth: number;
-};
+}
 
-export type Collection = {
+export interface Collection {
   _id: string;
-  title: string;
+  count: number;
   description: string;
   slug: string;
-  count: number;
-};
-
-export type Bookmark = {
-  _id: string;
   title: string;
-  link: string;
+}
+
+export interface Bookmark {
+  _id: string;
   cover: string;
-  tags: string[];
-  excerpt: string;
-  note: string;
   domain: string;
-};
+  excerpt: string;
+  link: string;
+  note: string;
+  tags: string[];
+  title: string;
+}

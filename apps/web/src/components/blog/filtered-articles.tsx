@@ -6,9 +6,9 @@ import { FileText, Search } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import ArticleCard from "~/components/blog/article-card";
 
-type FilteredArticlesProps = {
+interface FilteredArticlesProps {
   articles: (ArticleType & { viewCount: number })[];
-};
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -56,7 +56,7 @@ export default function FilteredArticles({
           value={searchValue}
         />
         <Label htmlFor="search">
-          <Search className="-translate-y-1/2 absolute top-1/2 left-4 h-5 w-5 text-muted-foreground" />
+          <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
         </Label>
       </div>
 

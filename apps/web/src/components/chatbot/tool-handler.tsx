@@ -6,19 +6,19 @@ import {
   ToolOutput,
 } from "~/components/ai-elements/tool";
 
-type ToolPart = {
-  toolCallId: string;
-  state: string;
-  type: string;
+interface ToolPart {
   input?: ReactNode;
   output?: ReactNode;
-};
+  state: string;
+  toolCallId: string;
+  type: string;
+}
 
-type ToolHandlerProps = {
-  part: ToolPart;
+interface ToolHandlerProps {
   // biome-ignore lint/suspicious/noExplicitAny: Complex union types from AI library
   outputRenderer: (output: any) => ReactNode;
-};
+  part: ToolPart;
+}
 
 export function ToolHandler({
   part,

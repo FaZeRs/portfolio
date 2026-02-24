@@ -1,13 +1,7 @@
 import { CommentReactionType, CommentType, UserType } from "@acme/types";
 import { createContext, useContext } from "react";
 
-export type CommentContext = {
-  isEditing: boolean;
-  isReplying: boolean;
-  isOpenReplies: boolean;
-  setIsEditing: (value: boolean) => void;
-  setIsReplying: (value: boolean) => void;
-  setIsOpenReplies: (value: boolean) => void;
+export interface CommentContext {
   comment: {
     comment: CommentType;
     user: UserType | null;
@@ -16,7 +10,13 @@ export type CommentContext = {
     repliesCount: number;
     userReaction: CommentReactionType | null;
   };
-};
+  isEditing: boolean;
+  isOpenReplies: boolean;
+  isReplying: boolean;
+  setIsEditing: (value: boolean) => void;
+  setIsOpenReplies: (value: boolean) => void;
+  setIsReplying: (value: boolean) => void;
+}
 
 const CommentContext = createContext<CommentContext | undefined>(undefined);
 

@@ -2,11 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "~/lib/trpc";
 import { ResourceActions } from "../resource-actions";
 
-type DataTableRowActionsProps = {
+interface DataTableRowActionsProps {
   id: string;
   slug: string;
   title: string;
-};
+}
 
 export function Actions({
   id,

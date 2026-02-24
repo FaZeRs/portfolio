@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@acme/types": "workspace:*",
-    "marked": "^17.0.1"
+    "marked": "^17.0.3"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",

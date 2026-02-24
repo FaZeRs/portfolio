@@ -2,10 +2,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "~/lib/trpc";
 import CommentItem from "./comment-item";
 
-type CommentListProps = {
+interface CommentListProps {
   articleId: string;
   articleSlug: string;
-};
+}
 
 export default function CommentList({
   articleId,

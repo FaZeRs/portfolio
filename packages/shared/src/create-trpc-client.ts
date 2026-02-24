@@ -15,11 +15,11 @@ import {
 import { createTRPCContext } from "@trpc/tanstack-react-query";
 import SuperJSON from "superjson";
 
-type CreateTRPCClientOptions = {
-  source: "web" | "dashboard";
+interface CreateTRPCClientOptions {
   getAuth: () => Auth | null;
   getBaseUrl: () => string | null;
-};
+  source: "web" | "dashboard";
+}
 
 /**
  * Creates an isomorphic tRPC client that works on both server and client

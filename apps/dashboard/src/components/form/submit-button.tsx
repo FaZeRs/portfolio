@@ -1,12 +1,14 @@
 import { Button } from "@acme/ui/button";
 
-type FormSubmitButtonProps = {
+interface FormSubmitButtonProps {
   canSubmit: boolean;
+  className?: string;
+  defaultText?: string;
   isPending: boolean;
   isSubmitting: boolean;
-  defaultText?: string;
   loadingText?: string;
   processingText?: string;
+  size?: "default" | "sm" | "lg" | "icon";
   variant?:
     | "default"
     | "destructive"
@@ -14,9 +16,7 @@ type FormSubmitButtonProps = {
     | "secondary"
     | "ghost"
     | "link";
-  size?: "default" | "sm" | "lg" | "icon";
-  className?: string;
-};
+}
 
 export function FormSubmitButton({
   canSubmit,

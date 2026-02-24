@@ -9,10 +9,10 @@ import Icon from "@acme/ui/icon";
 import { Mail, Share2 } from "lucide-react";
 import { siFacebook, siLinkedin, siX, siYcombinator } from "simple-icons";
 
-type SocialShareProps = {
-  url: string;
+interface SocialShareProps {
   text?: string;
-};
+  url: string;
+}
 
 const SocialShare = ({ url, text }: SocialShareProps) => {
   const encodedUrl = encodeURIComponent(url);

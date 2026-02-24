@@ -1,11 +1,11 @@
 [data-rmiz-modal-overlay="visible"] {
   background-color: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 [data-rmiz-modal-overlay="hidden"] {
   background-color: rgba(0, 0, 0, 0);
-  backdrop-filter: blur(0);
   -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
 }

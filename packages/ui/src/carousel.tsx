@@ -18,12 +18,12 @@ type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 type CarouselOptions = UseCarouselParameters[0];
 type CarouselPlugin = UseCarouselParameters[1];
 
-type CarouselProps = {
+interface CarouselProps {
   opts?: CarouselOptions;
-  plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
+  plugins?: CarouselPlugin;
   setApi?: (api: CarouselApi) => void;
-};
+}
 
 type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0];
@@ -196,8 +196,8 @@ function CarouselPrevious({
       className={cn(
         "absolute size-8 rounded-full",
         orientation === "horizontal"
-          ? "-left-12 -translate-y-1/2 top-1/2"
-          : "-top-12 -translate-x-1/2 left-1/2 rotate-90",
+          ? "top-1/2 -left-12 -translate-y-1/2"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       data-slot="carousel-previous"
@@ -226,8 +226,8 @@ function CarouselNext({
       className={cn(
         "absolute size-8 rounded-full",
         orientation === "horizontal"
-          ? "-right-12 -translate-y-1/2 top-1/2"
-          : "-bottom-12 -translate-x-1/2 left-1/2 rotate-90",
+          ? "top-1/2 -right-12 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       data-slot="carousel-next"

@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 const Footer = () => (
   <footer className="relative mt-20 border-t bg-muted/30">
     {/* Decorative gradient */}
-    <div className="-top-px pointer-events-none absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
+    <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
 
     <div className="container py-12 lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
       <div className="flex flex-col items-center gap-8">

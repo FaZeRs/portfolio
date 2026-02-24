@@ -9,11 +9,10 @@ import {
   siTypescript,
 } from "simple-icons";
 
-type IconType = {
-  language: string[];
-
+interface IconType {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
-};
+  language: string[];
+}
 
 const Icon = ({
   icon,

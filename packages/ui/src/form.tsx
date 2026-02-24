@@ -28,9 +28,9 @@ const { useAppForm, withForm } = createFormHook({
   formComponents: {},
 });
 
-type FormItemContextValue = {
+interface FormItemContextValue {
   id: string;
-};
+}
 
 const FormItemContext = createContext<FormItemContextValue>(
   {} as FormItemContextValue

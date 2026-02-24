@@ -19,7 +19,7 @@ const Logo = ({ className }: { className?: string }) => (
       <span className="relative flex size-9 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-zinc-900 to-zinc-800 shadow-black/20 shadow-lg ring-1 ring-white/5 ring-inset transition-transform duration-300 group-hover:scale-105 group-focus-visible:scale-105 dark:from-zinc-800 dark:to-zinc-900">
         {/* Animated brackets */}
         <span className="relative flex items-center font-mono text-sm tracking-tighter">
-          <span className="group-hover:-translate-x-0.5 text-violet-400 transition-transform duration-300">
+          <span className="text-violet-400 transition-transform duration-300 group-hover:-translate-x-0.5">
             &lt;
           </span>
           <span className="bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">

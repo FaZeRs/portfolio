@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+dotenv.config({ path: path.resolve(import.meta.dirname, "../../.env") });
 
 export default defineConfig({
   build: {

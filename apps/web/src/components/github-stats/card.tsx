@@ -2,9 +2,9 @@ import { Skeleton } from "@acme/ui/skeleton";
 import { ExternalLink } from "lucide-react";
 import Counter from "~/components/counter";
 
-type StatCardProps = {
+interface StatCardProps {
   card: { title: string; description?: string; link?: string; value?: number };
-};
+}
 
 export default function StatCard({ card }: StatCardProps) {
   const { title, description, value, link } = card;

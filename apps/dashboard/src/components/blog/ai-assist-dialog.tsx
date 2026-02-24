@@ -23,10 +23,10 @@ type AIAssistType =
   | "outline"
   | "expand";
 
-type AIAssistDialogProps = {
-  type: AIAssistType;
-  label: string;
-  description: string;
+interface AIAssistDialogProps {
+  buttonSize?: "default" | "sm" | "lg" | "icon";
+  buttonVariant?: "default" | "outline" | "ghost";
+  className?: string;
   context?: {
     topic?: string;
     title?: string;
@@ -35,11 +35,11 @@ type AIAssistDialogProps = {
     selectedText?: string;
     tags?: string[];
   };
+  description: string;
+  label: string;
   onApply: (content: string) => void;
-  className?: string;
-  buttonVariant?: "default" | "outline" | "ghost";
-  buttonSize?: "default" | "sm" | "lg" | "icon";
-};
+  type: AIAssistType;
+}
 
 const ASSIST_LABELS: Record<AIAssistType, string> = {
   title: "Generate Titles",

@@ -85,7 +85,7 @@ function RouteComponent() {
       >
         <motion.div className="relative shrink-0" variants={itemVariants}>
           {/* Glow effect */}
-          <div className="-inset-4 absolute rounded-3xl bg-linear-to-br from-violet-500/20 via-fuchsia-500/10 to-cyan-500/20 blur-2xl" />
+          <div className="absolute -inset-4 rounded-3xl bg-linear-to-br from-violet-500/20 via-fuchsia-500/10 to-cyan-500/20 blur-2xl" />
 
           {/* Main image container */}
           <div className="relative rounded-3xl border border-black/10 bg-linear-to-br from-white/10 to-white/5 p-2 shadow-2xl backdrop-blur-sm dark:border-white/10 dark:from-white/5 dark:to-white/[0.02]">

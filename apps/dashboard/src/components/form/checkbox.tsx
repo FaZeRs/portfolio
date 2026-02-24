@@ -1,6 +1,8 @@
 import { Checkbox } from "@acme/ui/checkbox";
 
-type FormCheckboxProps = {
+interface FormCheckboxProps {
+  className?: string;
+  description?: string;
   field: {
     name: string;
     state: { value: boolean };
@@ -8,9 +10,7 @@ type FormCheckboxProps = {
     handleChange: (value: boolean) => void;
   };
   label: string;
-  description?: string;
-  className?: string;
-};
+}
 
 export function FormCheckbox({
   field,

@@ -10,9 +10,9 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import type { Table } from "@tanstack/react-table";
 import { Settings2 } from "lucide-react";
 
-type DataTableViewOptionsProps<TData> = {
+interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
-};
+}
 
 export function DataTableViewOptions<TData>({
   table,

@@ -3,9 +3,9 @@ import Icon from "@acme/ui/icon";
 import { LazyImage } from "@acme/ui/lazy-image";
 import { siX } from "simple-icons";
 
-type ArticleAuthorProps = {
+interface ArticleAuthorProps {
   article: ArticleType & { author: UserType };
-};
+}
 
 const ArticleAuthor = ({ article }: ArticleAuthorProps) => {
   if (!article.author) {

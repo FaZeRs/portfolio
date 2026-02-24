@@ -3,9 +3,9 @@ import { getBaseUrl } from "./utils";
 
 type SchemaObject = Record<string, unknown>;
 
-type WithId = {
+interface WithId {
   "@id"?: string;
-};
+}
 
 type Person = WithId & {
   "@type": "Person";
@@ -59,14 +59,14 @@ type WebSite = WithId & {
   potentialAction?: SearchAction;
 };
 
-type SearchAction = {
+interface SearchAction {
   "@type": "SearchAction";
+  "query-input": string;
   target: {
     "@type": "EntryPoint";
     urlTemplate: string;
   };
-  "query-input": string;
-};
+}
 
 type ProfilePage = WithId & {
   "@type": "ProfilePage";
@@ -92,12 +92,12 @@ type BreadcrumbList = WithId & {
   itemListElement: BreadcrumbItem[];
 };
 
-type BreadcrumbItem = {
+interface BreadcrumbItem {
   "@type": "ListItem";
-  position: number;
-  name: string;
   item: string;
-};
+  name: string;
+  position: number;
+}
 
 type SoftwareSourceCode = WithId & {
   "@type": "SoftwareSourceCode";

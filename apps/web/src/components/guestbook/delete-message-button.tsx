@@ -15,9 +15,9 @@ import { Trash2Icon } from "lucide-react";
 import { toast } from "sonner";
 import { useTRPC } from "~/lib/trpc";
 
-type DeleteMessageButtonProps = {
+interface DeleteMessageButtonProps {
   messageId: string;
-};
+}
 
 export default function DeleteMessageButton({
   messageId,

@@ -11,15 +11,15 @@ import { TRPCClient } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import superjson from "superjson";
 
-type CreateRouterOptions<TRouteTree extends AnyRoute> = {
-  routeTree: TRouteTree;
+interface CreateRouterOptions<TRouteTree extends AnyRoute> {
   makeTRPCClient: () => TRPCClient<Api.AppRouter>;
+  routeTree: TRouteTree;
   TRPCProvider: React.ComponentType<{
     queryClient: QueryClient;
     trpcClient: TRPCClient<Api.AppRouter>;
     children: React.ReactNode;
   }>;
-};
+}
 
 export function createRouter<TRouteTree extends AnyRoute>({
   routeTree,

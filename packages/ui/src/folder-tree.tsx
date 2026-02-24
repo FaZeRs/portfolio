@@ -2,16 +2,16 @@ import { cn } from "@acme/ui";
 import { FileCode, Folder } from "lucide-react";
 import { Fragment } from "react";
 
-type Node = {
-  name: string;
-  isHighlighted?: boolean;
+interface Node {
   children?: Node[];
-};
+  isHighlighted?: boolean;
+  name: string;
+}
 
-type FolderTreeProps = {
+interface FolderTreeProps {
   data: Node[];
   title?: string;
-};
+}
 
 export default function FolderTree({ title, data }: Readonly<FolderTreeProps>) {
   return (
@@ -28,10 +28,10 @@ export default function FolderTree({ title, data }: Readonly<FolderTreeProps>) {
   );
 }
 
-type InnerProps = {
+interface InnerProps {
   data: Node[];
   level: number;
-};
+}
 
 const Inner = ({ data, level }: InnerProps) => (
   <>

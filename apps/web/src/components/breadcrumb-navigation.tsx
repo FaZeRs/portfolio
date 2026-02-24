@@ -8,15 +8,15 @@ import {
 } from "@acme/ui/breadcrumb";
 import { Home } from "lucide-react";
 
-export type BreadcrumbSection = {
-  label: string;
+export interface BreadcrumbSection {
   href: string;
-};
+  label: string;
+}
 
-export type BreadcrumbProps = {
+export interface BreadcrumbProps {
   pageTitle: string;
   section?: BreadcrumbSection;
-};
+}
 
 const DEFAULT_SECTION: BreadcrumbSection = {
   label: "Blog",

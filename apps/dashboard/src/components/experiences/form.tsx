@@ -27,11 +27,11 @@ export const experienceFormOpts = formOptions({
   },
 });
 
-type FormField = {
+interface FormField {
+  handleBlur: () => void;
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
-  handleBlur: () => void;
-};
+}
 
 export const ExperiencesForm = withForm({
   ...experienceFormOpts,

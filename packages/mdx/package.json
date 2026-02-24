@@ -20,17 +20,17 @@
     "@acme/types": "workspace:*",
     "@acme/ui": "workspace:*",
     "@acme/utils": "workspace:*",
-    "@shikijs/langs": "^3.21.0",
-    "@shikijs/themes": "^3.21.0",
+    "@shikijs/langs": "^3.22.0",
+    "@shikijs/themes": "^3.22.0",
     "@unpic/react": "^1.0.2",
-    "html-react-parser": "^5.2.11",
-    "marked": "^17.0.1"
+    "html-react-parser": "^5.2.17",
+    "marked": "^17.0.3"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "react": "catalog:react19",
-    "shiki": "^3.21.0",
+    "shiki": "^3.22.0",
     "typescript": "catalog:"
   }
 }

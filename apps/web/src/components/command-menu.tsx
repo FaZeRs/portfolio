@@ -292,10 +292,10 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   );
 }
 
-type MenuCommandProps = {
-  value: string;
+interface MenuCommandProps {
   onSelect?: (value: string) => void;
-};
+  value: string;
+}
 
 const MenuCommandItem = ({ value, onSelect }: MenuCommandProps) => (
   <CommandItem onSelect={onSelect} value={value}>

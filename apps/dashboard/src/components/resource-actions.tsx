@@ -23,17 +23,17 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { env } from "~/lib/env/client";
 
-type ResourceActionsProps = {
-  id: string;
-  title: string;
-  resourceType: "project" | "experience" | "snippet" | "blog" | "service";
-  viewPath?: string;
+interface ResourceActionsProps {
   editPath: string;
+  id: string;
+  resourceType: "project" | "experience" | "snippet" | "blog" | "service";
+  title: string;
   trpcDeleteMutation: {
     mutationFn: (id: string) => Promise<unknown>;
     invalidateQuery: () => Promise<void>;
   };
-};
+  viewPath?: string;
+}
 
 export function ResourceActions({
   id,

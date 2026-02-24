@@ -35,12 +35,20 @@ export function DataTableColumnHeader<TData, TValue>({
     return <ChevronsUpDown />;
   };
 
+  const sortDirection = column.getIsSorted();
+  let sortDirectionLabel = "";
+  if (sortDirection === "desc") {
+    sortDirectionLabel = "ascending";
+  } else if (sortDirection === "asc") {
+    sortDirectionLabel = "descending";
+  }
+
   return (
     <div className={cn("flex items-center space-x-2", className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            aria-label={`Sort ${title} column ${column.getIsSorted() ? (column.getIsSorted() === "desc" ? "ascending" : "descending") : ""}`}
+            aria-label={`Sort ${title} column ${sortDirectionLabel}`}
             className="-ml-3 h-8 data-[state=open]:bg-accent"
             size="sm"
             variant="ghost"

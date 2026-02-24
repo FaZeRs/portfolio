@@ -5,19 +5,19 @@ import { Image } from "@unpic/react";
 import { useState } from "react";
 import { MAX_IMAGE_SIZE, VALID_IMAGE_TYPES } from "~/lib/constants";
 
-type FormField = {
+interface FormField {
+  handleBlur?: () => void;
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
-  handleBlur?: () => void;
-};
+}
 
-type FormImageUploadProps = {
-  field: FormField;
-  name: string;
-  label: string;
-  initialPreview?: string | null;
+interface FormImageUploadProps {
   className?: string;
-};
+  field: FormField;
+  initialPreview?: string | null;
+  label: string;
+  name: string;
+}
 
 export function FormImageUpload({
   field,

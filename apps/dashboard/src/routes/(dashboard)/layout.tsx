@@ -42,10 +42,10 @@ export const Route = createFileRoute("/(dashboard)")({
   loader: ({ context }) => ({ user: context.user }),
 });
 
-type BreadcrumbCrumb = {
-  label: string;
+interface BreadcrumbCrumb {
   href?: string;
-};
+  label: string;
+}
 
 function generateBreadcrumbs(pathname: string): BreadcrumbCrumb[] {
   const breadcrumbs: BreadcrumbCrumb[] = [{ label: "Home", href: "/" }];

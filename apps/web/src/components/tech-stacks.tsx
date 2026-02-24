@@ -7,9 +7,9 @@ import {
   TooltipTrigger,
 } from "@acme/ui/tooltip";
 
-type StackProps = {
+interface StackProps {
   techStack: string[] | null;
-};
+}
 
 export default function TechStacks({ techStack }: Readonly<StackProps>) {
   return (

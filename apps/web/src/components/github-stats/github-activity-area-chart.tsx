@@ -12,23 +12,23 @@ import {
 } from "recharts";
 import ContributionsTooltip from "~/components/github-stats/contributions-tooltip";
 
-type GithubActivityAreaChartProps = {
+interface GithubActivityAreaChartProps {
   contributionsByLast30Days?: ContributionsDay[];
-};
+}
 
-type ChartColors = {
-  gradientStart: string;
+interface ChartColors {
   gradientEnd: string;
+  gradientStart: string;
   stroke: string;
-};
+}
 
-type AreaChartComponentProps = {
-  data: Array<{ shortDate: string; contributionCount: number }>;
-  colors: ChartColors;
-  gridStroke: string;
+interface AreaChartComponentProps {
   className?: string;
+  colors: ChartColors;
+  data: Array<{ shortDate: string; contributionCount: number }>;
+  gridStroke: string;
   showTooltip?: boolean;
-};
+}
 
 const CONTRIBUTION_COUNT_RANDOM = 20;
 

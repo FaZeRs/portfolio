@@ -8,9 +8,9 @@ import { useRef } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "~/lib/trpc";
 
-type MessageFormProps = {
+interface MessageFormProps {
   user: UserType;
-};
+}
 
 export default function MessageForm({ user }: Readonly<MessageFormProps>) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -71,7 +71,7 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
               required
             />
             <Button
-              className="-translate-y-1/2 absolute top-1/2 right-2 gap-2"
+              className="absolute top-1/2 right-2 -translate-y-1/2 gap-2"
               disabled={isPending}
               size="sm"
               type="submit"

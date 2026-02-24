@@ -28,21 +28,19 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 
 declare module "@tanstack/react-table" {
-  // biome-ignore lint/style/useConsistentTypeDefinitions: valid interface
   interface FilterFns {
     fuzzy: FilterFn<unknown>;
   }
-  // biome-ignore lint/style/useConsistentTypeDefinitions: valid interface
   interface FilterMeta {
     itemRank: RankingInfo;
   }
 }
 
-type DataTableProps<TData, TValue> = {
+interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   entityName?: string;
-};
+}
 
 const fuzzyFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);

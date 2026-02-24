@@ -1,9 +1,9 @@
 import { useStore } from "@tanstack/react-store";
 import { Store } from "@tanstack/store";
 
-type SignInModalState = {
+interface SignInModalState {
   open: boolean;
-};
+}
 
 const signInModalStore = new Store<SignInModalState>({
   open: false,

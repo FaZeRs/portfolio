@@ -6,9 +6,9 @@ import { useMemo } from "react";
 import useActiveItem from "~/hooks/use-active-item";
 import useMounted from "~/hooks/use-mounted";
 
-type TableOfContentProps = {
+interface TableOfContentProps {
   toc: TOC[];
-};
+}
 
 export default function TableOfContents({
   toc,
@@ -37,10 +37,10 @@ export default function TableOfContents({
   );
 }
 
-type TreeProps = {
-  tree: TOC[];
+interface TreeProps {
   activeItem?: string | null;
-};
+  tree: TOC[];
+}
 
 const PADDING_LEFT = 12 as const;
 

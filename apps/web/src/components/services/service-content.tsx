@@ -7,9 +7,9 @@ import { Suspense } from "react";
 import TechStacks from "../tech-stacks";
 import ServiceContact from "./service-contact";
 
-type ServiceContentProps = {
+interface ServiceContentProps {
   service: ServiceType;
-};
+}
 
 export default function ServiceContent({
   service,

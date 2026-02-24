@@ -37,7 +37,6 @@ const handleIncompleteLinksAndImages = (text: string): string => {
 };
 
 // Completes incomplete bold formatting (**)
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: valid code
 const handleIncompleteBold = (text: string): string => {
   // Don't process if inside a complete code block
   if (hasCompleteCodeBlock(text)) {
@@ -249,7 +248,6 @@ const isWithinMathBlock = (text: string, position: number): boolean => {
 
 // Counts single underscores that are not part of double underscores, not escaped, and not in math blocks
 const countSingleUnderscores = (text: string): number => {
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: valid code
   return text.split("").reduce((acc, char, index) => {
     if (char === "_") {
       const prevChar = text[index - 1];
@@ -381,7 +379,6 @@ const countSingleBackticks = (text: string): number => {
 
 // Completes incomplete inline code formatting (`)
 // Avoids completing if inside an incomplete code block
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: valid code
 const handleIncompleteInlineCode = (text: string): string => {
   // Check if we have inline triple backticks (starts with ``` and should end with ```)
   // This pattern should ONLY match truly inline code (no newlines)

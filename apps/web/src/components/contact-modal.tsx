@@ -7,10 +7,10 @@ import {
 } from "@acme/ui/dialog";
 import { ContactForm } from "./contact-form";
 
-type ContactModalProps = {
-  open: boolean;
+interface ContactModalProps {
   onOpenChange: (open: boolean) => void;
-};
+  open: boolean;
+}
 
 export default function ContactModal({
   open,

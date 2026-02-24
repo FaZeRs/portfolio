@@ -5,8 +5,8 @@ import { Button } from "./button";
 import Icon from "./icon";
 
 interface SignInButtonProps extends ComponentProps<typeof Button> {
-  label: string;
   icon: SimpleIcon;
+  label: string;
   onClick: () => void;
 }
 

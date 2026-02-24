@@ -1,10 +1,10 @@
 import { LazyImage } from "@acme/ui/lazy-image";
 import { Briefcase, MapPin } from "lucide-react";
 
-type CoverImageProps = {
-  src: string;
+interface CoverImageProps {
   alt: string;
-};
+  src: string;
+}
 
 export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
   return (
@@ -26,7 +26,7 @@ export default function CoverImage({ src, alt }: Readonly<CoverImageProps>) {
           <div className="flex items-end gap-4 sm:gap-5">
             {/* Avatar */}
             <div className="relative shrink-0">
-              <div className="-inset-1 absolute rounded-full bg-gradient-to-br from-violet-500 to-pink-500 blur-sm" />
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 blur-sm" />
               <LazyImage
                 alt="Avatar"
                 className="relative"

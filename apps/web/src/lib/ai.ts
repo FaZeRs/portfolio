@@ -4,38 +4,38 @@ import { tool } from "ai";
 import { and, arrayContains, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
 
-export type ToolProject = {
-  id: string;
-  title: string;
-  slug: string;
-  description?: string | null;
-  stacks?: string[] | null;
-  githubUrl?: string | null;
+export interface ToolProject {
   demoUrl?: string | null;
+  description?: string | null;
+  githubUrl?: string | null;
+  id: string;
   isFeatured: boolean;
-};
-
-export type ToolArticle = {
-  id: string;
-  title: string;
   slug: string;
-  description?: string | null;
-  tags?: string[] | null;
-  likes: number;
-  views: number;
-  createdAt: Date;
-};
-
-export type ToolExperience = {
-  id: string;
+  stacks?: string[] | null;
   title: string;
+}
+
+export interface ToolArticle {
+  createdAt: Date;
   description?: string | null;
-  institution?: string | null;
-  type: string | null;
-  startDate?: string | null;
+  id: string;
+  likes: number;
+  slug: string;
+  tags?: string[] | null;
+  title: string;
+  views: number;
+}
+
+export interface ToolExperience {
+  description?: string | null;
   endDate?: string | null;
+  id: string;
+  institution?: string | null;
   isOnGoing: boolean;
-};
+  startDate?: string | null;
+  title: string;
+  type: string | null;
+}
 
 const getProjects = tool({
   description:

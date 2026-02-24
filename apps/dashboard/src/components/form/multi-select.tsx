@@ -1,16 +1,16 @@
 import { MultiSelect } from "@acme/ui/multi-select";
 
-type FormMultiSelectProps = {
+interface FormMultiSelectProps {
+  className?: string;
   field: {
     name: string;
     state: { value: string[] };
     handleChange: (value: string[]) => void;
   };
   label: string;
-  placeholder: string;
   options: { label: string; value: string; icon?: React.ReactNode }[];
-  className?: string;
-};
+  placeholder: string;
+}
 
 export function FormMultiSelect({
   field,

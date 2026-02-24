@@ -12,14 +12,14 @@ type AssistType =
   | "outline"
   | "expand";
 
-type AssistContext = {
-  topic?: string;
-  title?: string;
-  description?: string;
+interface AssistContext {
   currentContent?: string;
+  description?: string;
   selectedText?: string;
   tags?: string[];
-};
+  title?: string;
+  topic?: string;
+}
 
 const assistContextSchema = z.object({
   topic: z.string().optional(),

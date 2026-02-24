@@ -1,12 +1,12 @@
 import { execSync } from "node:child_process";
 import type { PlopTypes } from "@turbo/gen";
 
-type PackageJson = {
-  name: string;
-  scripts: Record<string, string>;
+interface PackageJson {
   dependencies: Record<string, string>;
   devDependencies: Record<string, string>;
-};
+  name: string;
+  scripts: Record<string, string>;
+}
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("init", {

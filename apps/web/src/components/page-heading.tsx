@@ -7,10 +7,10 @@ const MotionDiv = motion.create("div");
 const MotionSlot = motion.create(Slot);
 
 interface PageHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
-  title: string;
-  description?: string | null;
   asChild?: boolean;
+  description?: string | null;
   hasMotion?: boolean;
+  title: string;
 }
 
 const PageHeading = ({
@@ -36,7 +36,7 @@ const PageHeading = ({
     >
       <div className="relative">
         {/* Decorative gradient */}
-        <div className="-top-4 -left-4 pointer-events-none absolute h-24 w-24 rounded-full bg-gradient-to-br from-violet-500/20 to-pink-500/20 blur-2xl" />
+        <div className="pointer-events-none absolute -top-4 -left-4 h-24 w-24 rounded-full bg-gradient-to-br from-violet-500/20 to-pink-500/20 blur-2xl" />
 
         <div className="relative space-y-3">
           <h1 className="font-bold text-3xl tracking-tight md:text-4xl lg:text-5xl">

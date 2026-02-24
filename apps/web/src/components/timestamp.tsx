@@ -1,9 +1,9 @@
 import { format, formatDistanceToNow, isToday } from "date-fns";
 import { useEffect, useState } from "react";
 
-type TimestampProps = {
+interface TimestampProps {
   datetime: string;
-};
+}
 
 const INTERVAL_MS = 60_000 as const; // 1 minute
 

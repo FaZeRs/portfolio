@@ -32,9 +32,9 @@ export type ChartConfig = Record<
   )
 >;
 
-type ChartContextProps = {
+interface ChartContextProps {
   config: ChartConfig;
-};
+}
 
 const ChartContext = createContext<ChartContextProps | null>(null);
 

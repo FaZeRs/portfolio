@@ -4,11 +4,11 @@ import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 
-type MobileNavProps = {
+interface MobileNavProps {
   children?: ReactNode;
   items: NavItem[];
   onItemClick?: () => void;
-};
+}
 
 const MobileNav = ({ items, children, onItemClick }: MobileNavProps) => (
   <div className="slide-in-from-top-8 fixed inset-0 top-20 z-50 animate-in overflow-auto bg-background/95 p-4 backdrop-blur-md">

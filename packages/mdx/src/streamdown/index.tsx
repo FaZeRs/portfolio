@@ -12,12 +12,12 @@ export type ControlsConfig =
       code?: boolean;
     };
 
-type HardenMarkdownProps = {
-  defaultOrigin?: string;
-  allowedLinkPrefixes?: string[];
+interface HardenMarkdownProps {
   allowedImagePrefixes?: string[];
+  allowedLinkPrefixes?: string[];
   children?: string | null;
-};
+  defaultOrigin?: string;
+}
 
 export type StreamdownProps = HardenMarkdownProps & {
   parseIncompleteMarkdown?: boolean;

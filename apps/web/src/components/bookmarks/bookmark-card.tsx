@@ -2,9 +2,9 @@ import { Bookmark } from "@acme/types";
 import { LazyImage } from "@acme/ui/lazy-image";
 import { ExternalLink, Globe } from "lucide-react";
 
-type BookmarkCardProps = {
+interface BookmarkCardProps {
   bookmark: Bookmark;
-};
+}
 
 export default function BookmarkCard({
   bookmark,

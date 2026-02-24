@@ -17,15 +17,15 @@ import {
   siWebassembly,
 } from "simple-icons";
 
-export type Skill = {
-  name: string;
+export interface Skill {
   icon: typeof siReact;
-};
+  name: string;
+}
 
-export type SkillCategory = {
+export interface SkillCategory {
   name: string;
   skills: Skill[];
-};
+}
 
 export const skillCategories: SkillCategory[] = [
   {

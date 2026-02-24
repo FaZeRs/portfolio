@@ -2,11 +2,11 @@ import { Button } from "@acme/ui/button";
 import { Input } from "@acme/ui/input";
 import { X } from "lucide-react";
 
-type DataTableToolbarProps = {
+interface DataTableToolbarProps {
+  entityName?: string;
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
-  entityName?: string;
-};
+}
 
 export function DataTableToolbar({
   globalFilter,

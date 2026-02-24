@@ -25,11 +25,11 @@ export const Tool = ({ className, ...props }: ToolProps) => (
   />
 );
 
-export type ToolHeaderProps = {
-  type: ToolUIPart["type"];
-  state: ToolUIPart["state"];
+export interface ToolHeaderProps {
   className?: string;
-};
+  state: ToolUIPart["state"];
+  type: ToolUIPart["type"];
+}
 
 const getStatusBadge = (status: ToolUIPart["state"]) => {
   const labels: Record<ToolUIPart["state"], string> = {

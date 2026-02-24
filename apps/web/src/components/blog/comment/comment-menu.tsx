@@ -26,9 +26,9 @@ import { toast } from "sonner";
 import { authQueryOptions } from "~/lib/auth/queries";
 import { useTRPC } from "~/lib/trpc";
 
-type CommentMenuProps = {
+interface CommentMenuProps {
   comment: CommentType;
-};
+}
 
 export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
   const { data: currentUser } = useSuspenseQuery(authQueryOptions());

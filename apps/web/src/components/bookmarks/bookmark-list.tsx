@@ -4,10 +4,10 @@ import BookmarkCard from "~/components/bookmarks/bookmark-card";
 import LoadMore from "~/components/bookmarks/load-more";
 import { PAGE_SIZE } from "~/lib/raindrop";
 
-type BookmarkListProps = {
+interface BookmarkListProps {
   id: number;
   initialBookmarks: Bookmark[];
-};
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },

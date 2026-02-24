@@ -17,12 +17,12 @@ import {
 } from "react";
 import { Response } from "./response";
 
-type ReasoningContextValue = {
-  isStreaming: boolean;
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
+interface ReasoningContextValue {
   duration: number;
-};
+  isOpen: boolean;
+  isStreaming: boolean;
+  setIsOpen: (open: boolean) => void;
+}
 
 const ReasoningContext = createContext<ReasoningContextValue | null>(null);
 

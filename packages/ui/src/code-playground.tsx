@@ -1,8 +1,8 @@
 import { Sandpack } from "@codesandbox/sandpack-react";
 
-type CodePlaygroundProps = {
+interface CodePlaygroundProps {
   files: Record<string, string>;
-};
+}
 
 export default function CodePlayground({
   files,

@@ -12,7 +12,7 @@ const Hero = () => {
   return (
     <section className="relative min-h-[calc(100vh-80px)]">
       {/* Background gradient - using radial gradients that naturally fade to transparent */}
-      <div className="-z-10 pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="absolute inset-0"
           style={{
@@ -126,7 +126,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           {/* Glow effect */}
-          <div className="-inset-4 absolute rounded-3xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-cyan-500/20 blur-2xl" />
+          <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-cyan-500/20 blur-2xl" />
 
           {/* Main image container */}
           <div className="relative rounded-3xl border border-black/10 bg-gradient-to-br from-white/10 to-white/5 p-2.5 shadow-2xl backdrop-blur-sm dark:border-white/10 dark:from-white/5 dark:to-white/[0.02]">
@@ -142,7 +142,7 @@ const Hero = () => {
             </div>
 
             {/* Name tag */}
-            <div className="-bottom-3 -translate-x-1/2 absolute left-1/2 rounded-full border border-white/20 bg-background/80 px-4 py-1.5 shadow-lg backdrop-blur-md">
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/20 bg-background/80 px-4 py-1.5 shadow-lg backdrop-blur-md">
               <span className="font-semibold text-sm">Nauris Linde</span>
             </div>
           </div>

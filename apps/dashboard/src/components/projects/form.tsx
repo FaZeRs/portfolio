@@ -30,11 +30,11 @@ export const projectFormOpts = formOptions({
   },
 });
 
-type FormField = {
+interface FormField {
+  handleBlur: () => void;
   handleChange: (value: string) => void;
   setErrorMap: (errorMap: ValidationErrorMap) => void;
-  handleBlur: () => void;
-};
+}
 
 export const ProjectsForm = withForm({
   ...projectFormOpts,

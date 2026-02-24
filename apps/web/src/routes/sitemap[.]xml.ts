@@ -6,9 +6,7 @@ import { auth } from "~/lib/auth/server";
 
 const SITE_URL = process.env.VITE_APP_URL ?? "http://localhost:3000";
 
-type SitemapItem = {
-  url: string;
-  lastmod?: Date | string;
+interface SitemapItem {
   changefreq?:
     | "always"
     | "hourly"
@@ -17,8 +15,10 @@ type SitemapItem = {
     | "monthly"
     | "yearly"
     | "never";
+  lastmod?: Date | string;
   priority?: number;
-};
+  url: string;
+}
 
 async function generateSitemap(): Promise<string> {
   const ctx = await createTRPCContext({

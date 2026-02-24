@@ -1,12 +1,12 @@
 import { Badge } from "./badge";
 
-type TagListProps = {
+interface TagListProps {
+  className?: string;
   items: string[];
   maxDisplay?: number;
-  variant?: "default" | "secondary" | "destructive" | "outline";
   size?: "sm" | "default";
-  className?: string;
-};
+  variant?: "default" | "secondary" | "destructive" | "outline";
+}
 
 export function TagList({
   items,

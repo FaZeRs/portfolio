@@ -4,9 +4,9 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Layers } from "lucide-react";
 import TechStacks from "../tech-stacks";
 
-type ServiceCardProps = {
+interface ServiceCardProps {
   service: ServiceType;
-};
+}
 
 const ServiceCard = ({ service }: ServiceCardProps) => {
   const { title, description, slug, imageUrl, stacks } = service;

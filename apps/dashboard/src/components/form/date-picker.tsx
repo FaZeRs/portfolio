@@ -5,7 +5,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@acme/ui/popover";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
-type FormDatePickerProps = {
+interface FormDatePickerProps {
+  className?: string;
+  disabled?: boolean;
   field: {
     name: string;
     state: { value: string };
@@ -13,9 +15,7 @@ type FormDatePickerProps = {
   };
   label: string;
   placeholder: string;
-  disabled?: boolean;
-  className?: string;
-};
+}
 
 export function FormDatePicker({
   field,

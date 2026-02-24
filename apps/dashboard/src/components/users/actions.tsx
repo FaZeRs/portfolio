@@ -25,9 +25,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import authClient from "~/lib/auth/client";
 
-type DataTableRowActionsProps = {
+interface DataTableRowActionsProps {
   user: UserType;
-};
+}
 
 export function Actions({ user }: Readonly<DataTableRowActionsProps>) {
   const router = useRouter();

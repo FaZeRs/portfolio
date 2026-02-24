@@ -4,9 +4,9 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import TechStacks from "../tech-stacks";
 
-type ProjectCardProps = {
+interface ProjectCardProps {
   project: ProjectType;
-};
+}
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const { title, description, slug, imageUrl, isFeatured, stacks } = project;
@@ -49,7 +49,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <div className="absolute right-4 bottom-4 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1.5 font-medium text-neutral-900 text-sm opacity-0 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
           <span>View</span>
           <ArrowUpRight
-            className="group-hover:-translate-y-0.5 transition-transform group-hover:translate-x-0.5"
+            className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             size={14}
           />
         </div>

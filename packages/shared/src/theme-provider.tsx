@@ -108,17 +108,17 @@ const themeDetectorScript = (() => {
   return `(${themeFn.toString()})();`;
 })();
 
-type ThemeContextProps = {
-  themeMode: ThemeMode;
+interface ThemeContextProps {
   resolvedTheme: ResolvedTheme;
   setTheme: (theme: ThemeMode) => void;
+  themeMode: ThemeMode;
   toggleMode: () => void;
-};
+}
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
-type ThemeProviderProps = {
+interface ThemeProviderProps {
   children: ReactNode;
-};
+}
 const getResolvedThemeFromDOM = createIsomorphicFn()
   .server((): ResolvedTheme => "light")
   .client(

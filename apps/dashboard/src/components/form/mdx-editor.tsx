@@ -5,7 +5,8 @@ import { Textarea } from "@acme/ui/textarea";
 import { ClientOnly } from "@tanstack/react-router";
 import { Suspense } from "react";
 
-type FormMDXEditorProps = {
+interface FormMDXEditorProps {
+  className?: string;
   field: {
     name: string;
     state: { value: string };
@@ -14,8 +15,7 @@ type FormMDXEditorProps = {
   };
   label: string;
   placeholder: string;
-  className?: string;
-};
+}
 
 export function FormMDXEditor({
   field,

@@ -1,6 +1,7 @@
 import { Input } from "@acme/ui/input";
 
-type FormSlugProps = {
+interface FormSlugProps {
+  className?: string;
   field: {
     name: string;
     state: { value: string };
@@ -10,8 +11,7 @@ type FormSlugProps = {
   label: string;
   placeholder: string;
   urlPath: string;
-  className?: string;
-};
+}
 
 export function FormSlug({
   field,

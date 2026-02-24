@@ -13,9 +13,9 @@ import { authQueryOptions } from "~/lib/auth/queries";
 import { useTRPC } from "~/lib/trpc";
 import CommentEditor, { useCommentEditor } from "./comment-editor";
 
-type CommentFormProps = {
+interface CommentFormProps {
   articleId: string;
-};
+}
 
 export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
   const [editor, setEditor] = useCommentEditor();

@@ -152,7 +152,7 @@ function RouteComponent() {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           {/* Background glow effect */}
-          <div className="-top-20 -z-10 -translate-x-1/2 pointer-events-none absolute left-1/2 h-64 w-full max-w-2xl">
+          <div className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-64 w-full max-w-2xl -translate-x-1/2">
             <div
               className="absolute inset-0"
               style={{
@@ -252,7 +252,7 @@ function RouteComponent() {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           {/* Glow effect behind image */}
-          <div className="-inset-3 absolute rounded-3xl bg-linear-to-br from-violet-500/10 via-fuchsia-500/5 to-cyan-500/10 blur-xl" />
+          <div className="absolute -inset-3 rounded-3xl bg-linear-to-br from-violet-500/10 via-fuchsia-500/5 to-cyan-500/10 blur-xl" />
 
           <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/2 p-1.5 shadow-2xl">
             <ZoomImage
@@ -292,7 +292,7 @@ function RouteComponent() {
           initial={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <div className="-mt-10 sticky top-20 pt-10">
+          <div className="sticky top-20 -mt-10 pt-10">
             <TableOfContents toc={toc} />
           </div>
         </motion.div>

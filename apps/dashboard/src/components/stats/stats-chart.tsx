@@ -18,13 +18,13 @@ type MonthlyData = { month: string; count: number }[];
 const TICK_MARGIN_DEFAULT = 8;
 const JS_MONTH_INDEX_BASE = 1; // convert human month to JS month index
 
-type StatsChartProps = {
-  title: string;
-  description: string;
-  data: MonthlyData;
+interface StatsChartProps {
   chartColor: string;
+  data: MonthlyData;
+  description: string;
   label: string;
-};
+  title: string;
+}
 
 export function StatsChart({
   title,

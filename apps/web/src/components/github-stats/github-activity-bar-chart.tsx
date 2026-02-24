@@ -11,9 +11,9 @@ import {
 import ContributionCountByDayOfWeekToolTip from "~/components/github-stats/contribution-count-by-day-of-week-tooltip";
 import { ContributionCountByDayOfWeek } from "~/lib/github";
 
-type GithubActivityBarChartProps = {
+interface GithubActivityBarChartProps {
   contributionCountByDayOfWeek?: ContributionCountByDayOfWeek[];
-};
+}
 
 export default function GithubActivityBarChart({
   contributionCountByDayOfWeek,

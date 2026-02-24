@@ -41,25 +41,25 @@ async function getGithubStats() {
   }
 }
 
-export type ContributionCountByDay = {
-  Sunday: number;
+export interface ContributionCountByDay {
+  Friday: number;
   Monday: number;
+  Saturday: number;
+  Sunday: number;
+  Thursday: number;
   Tuesday: number;
   Wednesday: number;
-  Thursday: number;
-  Friday: number;
-  Saturday: number;
-};
+}
 
-export type ContributionCountByDayOfWeek = {
-  day: string;
+export interface ContributionCountByDayOfWeek {
   count: number;
-};
+  day: string;
+}
 
-export type Contributions = {
-  contributionsByLast30Days: ContributionsDay[];
+export interface Contributions {
   contributionCountByDayOfWeek: ContributionCountByDayOfWeek[];
-};
+  contributionsByLast30Days: ContributionsDay[];
+}
 
 async function getGithubActivities() {
   if (!env.GITHUB_ACCESS_TOKEN) {

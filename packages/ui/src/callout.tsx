@@ -43,10 +43,10 @@ const calloutVariants = {
 
 type CalloutVariant = keyof typeof calloutVariants;
 
-type CalloutProps = {
+interface CalloutProps {
   children?: React.ReactNode;
   variant?: CalloutVariant;
-};
+}
 
 export default function Callout({
   children,

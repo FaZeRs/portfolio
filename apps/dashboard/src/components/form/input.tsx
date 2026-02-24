@@ -1,6 +1,8 @@
 import { Input } from "@acme/ui/input";
 
-type FormInputProps = {
+interface FormInputProps {
+  className?: string;
+  description?: string;
   field: {
     name: string;
     state: { value: string };
@@ -16,11 +18,9 @@ type FormInputProps = {
   };
   label: string;
   placeholder?: string;
-  type?: "text" | "email" | "url" | "password";
   required?: boolean;
-  description?: string;
-  className?: string;
-};
+  type?: "text" | "email" | "url" | "password";
+}
 
 export function FormInput({
   field,

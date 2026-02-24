@@ -5,9 +5,9 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Calendar, Code2 } from "lucide-react";
 
-type SnippetsProps = {
+interface SnippetsProps {
   snippets: SnippetType[];
-};
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },

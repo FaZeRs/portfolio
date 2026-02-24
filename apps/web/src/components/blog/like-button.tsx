@@ -4,9 +4,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { HeartIcon } from "lucide-react";
 import { useTRPC } from "~/lib/trpc";
 
-type LikeButtonProps = {
+interface LikeButtonProps {
   article: ArticleType;
-};
+}
 
 const LikeButton = ({ article }: LikeButtonProps) => {
   const trpc = useTRPC();

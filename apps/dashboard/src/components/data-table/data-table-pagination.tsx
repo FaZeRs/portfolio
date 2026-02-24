@@ -14,9 +14,9 @@ import {
   ChevronsRight,
 } from "lucide-react";
 
-type DataTablePaginationProps<TData> = {
+interface DataTablePaginationProps<TData> {
   table: Table<TData>;
-};
+}
 
 const PAGE_SIZES = [10, 20, 30, 40, 50] as const;
 

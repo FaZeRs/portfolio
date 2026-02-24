@@ -5,9 +5,9 @@ import { authQueryOptions } from "~/lib/auth/queries";
 import Timestamp from "../timestamp";
 import DeleteMessageButton from "./delete-message-button";
 
-type MessageProps = {
+interface MessageProps {
   message: GuestbookType & { user: Pick<UserType, "id" | "name" | "image"> };
-};
+}
 
 export default function Message({ message }: Readonly<MessageProps>) {
   const { id, message: body, user, createdAt } = message;

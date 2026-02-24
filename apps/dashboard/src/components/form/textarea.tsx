@@ -1,6 +1,7 @@
 import { Textarea } from "@acme/ui/textarea";
 
-type FormTextareaProps = {
+interface FormTextareaProps {
+  className?: string;
   field: {
     name: string;
     state: { value: string };
@@ -15,10 +16,9 @@ type FormTextareaProps = {
     FormMessage: React.ComponentType;
   };
   label: string;
-  placeholder?: string;
-  className?: string;
   minHeight?: string;
-};
+  placeholder?: string;
+}
 
 export function FormTextarea({
   field,

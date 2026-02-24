@@ -2,9 +2,9 @@ import { motion, Variants } from "framer-motion";
 import { HTMLAttributes, ReactNode } from "react";
 
 interface AnimatedDivProps extends HTMLAttributes<HTMLDivElement> {
-  variants: Variants;
   children: ReactNode;
   infinity?: boolean;
+  variants: Variants;
 }
 
 export default function AnimatedDiv({

@@ -4,9 +4,48 @@ import { formatDate } from "@acme/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "~/lib/trpc";
 
-type ExperienceItemProps = {
+interface ExperienceItemProps {
   experience: ExperienceType;
-};
+}
+
+function ExperienceImage({
+  title,
+  imageUrl,
+  url,
+}: {
+  title: string;
+  imageUrl: string;
+  url: string | null;
+}) {
+  const image = (
+    <LazyImage
+      alt={title}
+      height={56}
+      imageClassName="h-12 w-12 object-contain"
+      src={imageUrl}
+      width={56}
+    />
+  );
+
+  if (url) {
+    return (
+      <a
+        className="relative shrink-0 overflow-hidden rounded-lg border bg-muted/50 p-2 transition-all hover:border-primary/30 hover:shadow-md"
+        href={url}
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        {image}
+      </a>
+    );
+  }
+
+  return (
+    <div className="relative shrink-0 overflow-hidden rounded-lg border bg-muted/50 p-2">
+      {image}
+    </div>
+  );
+}
 
 function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
   const { title, institution, startDate, endDate, description, url, imageUrl } =
@@ -14,34 +53,9 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
 
   return (
     <div className="group relative flex items-start gap-4 rounded-xl border bg-card p-5 transition-all hover:border-foreground/20 hover:shadow-lg lg:gap-5">
-      {imageUrl ? (
-        url ? (
-          <a
-            className="relative shrink-0 overflow-hidden rounded-lg border bg-muted/50 p-2 transition-all hover:border-primary/30 hover:shadow-md"
-            href={url}
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            <LazyImage
-              alt={title}
-              height={56}
-              imageClassName="h-12 w-12 object-contain"
-              src={imageUrl}
-              width={56}
-            />
-          </a>
-        ) : (
-          <div className="relative shrink-0 overflow-hidden rounded-lg border bg-muted/50 p-2">
-            <LazyImage
-              alt={title}
-              height={56}
-              imageClassName="h-12 w-12 object-contain"
-              src={imageUrl}
-              width={56}
-            />
-          </div>
-        )
-      ) : null}
+      {imageUrl && (
+        <ExperienceImage imageUrl={imageUrl} title={title} url={url} />
+      )}
 
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">

@@ -1,11 +1,11 @@
 import { Link as TanstackLink } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-type ProjectLinksProps = {
+interface ProjectLinksProps {
+  icon?: ReactNode;
   title: string;
   url: string;
-  icon?: ReactNode;
-};
+}
 
 export default function Link({
   title,

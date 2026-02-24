@@ -5,9 +5,9 @@ import { useCommentContext } from "~/contexts/comment";
 import { useTRPC } from "~/lib/trpc";
 import CommentItem from "./comment-item";
 
-type CommentRepliesProps = {
+interface CommentRepliesProps {
   articleSlug: string;
-};
+}
 
 export default function CommentReplies({
   articleSlug,

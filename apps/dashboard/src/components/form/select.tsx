@@ -7,7 +7,8 @@ import {
   SelectValue,
 } from "@acme/ui/select";
 
-type FormSelectProps<T = string> = {
+interface FormSelectProps<T = string> {
+  className?: string;
   field: {
     name: string;
     state: { value: T };
@@ -22,10 +23,9 @@ type FormSelectProps<T = string> = {
     FormMessage: React.ComponentType;
   };
   label: string;
-  placeholder: string;
   options: { value: string; label: string }[];
-  className?: string;
-};
+  placeholder: string;
+}
 
 export function FormSelect<T = string>({
   field,

@@ -49,8 +49,8 @@
 
 /* @sonar-ignore */
 @utility container {
-  margin-inline: auto;
   padding-inline: 2rem;
+  margin-inline: auto;
   @media (width >= --theme(--breakpoint-sm)) {
     max-width: none;
   }
@@ -96,10 +96,10 @@
 }
 
 .tiptap p.is-editor-empty:first-child::before {
-  content: attr(data-placeholder);
   float: left;
   height: 0;
   pointer-events: none;
+  content: attr(data-placeholder);
   @apply text-muted-foreground;
 }
 
@@ -109,8 +109,8 @@
 }
 
 .step:before {
-  counter-increment: step;
   content: counter(step);
+  counter-increment: step;
   @apply absolute -left-[50px] flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center text-base font-medium;
 }
 

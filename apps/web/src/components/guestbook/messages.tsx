@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import { MessageSquare } from "lucide-react";
 import Message from "./message";
 
-type MessageProps = {
+interface MessageProps {
   messages: (GuestbookType & {
     user: Pick<UserType, "id" | "name" | "image">;
   })[];
-};
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },

@@ -196,15 +196,15 @@ export interface FileRoutesByFullPath {
   "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
-  "/blog": typeof publicBlogIndexRoute;
-  "/bookmarks": typeof publicBookmarksIndexRoute;
-  "/projects": typeof publicProjectsIndexRoute;
-  "/snippets": typeof publicSnippetsIndexRoute;
-  "/api/changelog": typeof ApiChangelogIndexRoute;
-  "/api/chat": typeof ApiChatIndexRoute;
-  "/api/contact": typeof ApiContactIndexRoute;
+  "/blog/": typeof publicBlogIndexRoute;
+  "/bookmarks/": typeof publicBookmarksIndexRoute;
+  "/projects/": typeof publicProjectsIndexRoute;
+  "/snippets/": typeof publicSnippetsIndexRoute;
+  "/api/changelog/": typeof ApiChangelogIndexRoute;
+  "/api/chat/": typeof ApiChatIndexRoute;
+  "/api/contact/": typeof ApiContactIndexRoute;
   "/api/stats/github/activity": typeof ApiStatsGithubActivityRoute;
-  "/api/stats/github": typeof ApiStatsGithubIndexRoute;
+  "/api/stats/github/": typeof ApiStatsGithubIndexRoute;
 }
 export interface FileRoutesByTo {
   "/llms.txt": typeof LlmsDottxtRoute;
@@ -285,15 +285,15 @@ export interface FileRouteTypes {
     | "/snippets/$snippetId"
     | "/api/auth/$"
     | "/api/trpc/$"
-    | "/blog"
-    | "/bookmarks"
-    | "/projects"
-    | "/snippets"
-    | "/api/changelog"
-    | "/api/chat"
-    | "/api/contact"
+    | "/blog/"
+    | "/bookmarks/"
+    | "/projects/"
+    | "/snippets/"
+    | "/api/changelog/"
+    | "/api/chat/"
+    | "/api/contact/"
     | "/api/stats/github/activity"
-    | "/api/stats/github";
+    | "/api/stats/github/";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/llms.txt"
@@ -457,49 +457,49 @@ declare module "@tanstack/react-router" {
     "/api/contact/": {
       id: "/api/contact/";
       path: "/api/contact";
-      fullPath: "/api/contact";
+      fullPath: "/api/contact/";
       preLoaderRoute: typeof ApiContactIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/api/chat/": {
       id: "/api/chat/";
       path: "/api/chat";
-      fullPath: "/api/chat";
+      fullPath: "/api/chat/";
       preLoaderRoute: typeof ApiChatIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/api/changelog/": {
       id: "/api/changelog/";
       path: "/api/changelog";
-      fullPath: "/api/changelog";
+      fullPath: "/api/changelog/";
       preLoaderRoute: typeof ApiChangelogIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/(public)/snippets/": {
       id: "/(public)/snippets/";
       path: "/snippets";
-      fullPath: "/snippets";
+      fullPath: "/snippets/";
       preLoaderRoute: typeof publicSnippetsIndexRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
     "/(public)/projects/": {
       id: "/(public)/projects/";
       path: "/projects";
-      fullPath: "/projects";
+      fullPath: "/projects/";
       preLoaderRoute: typeof publicProjectsIndexRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
     "/(public)/bookmarks/": {
       id: "/(public)/bookmarks/";
       path: "/bookmarks";
-      fullPath: "/bookmarks";
+      fullPath: "/bookmarks/";
       preLoaderRoute: typeof publicBookmarksIndexRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
     "/(public)/blog/": {
       id: "/(public)/blog/";
       path: "/blog";
-      fullPath: "/blog";
+      fullPath: "/blog/";
       preLoaderRoute: typeof publicBlogIndexRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
@@ -555,7 +555,7 @@ declare module "@tanstack/react-router" {
     "/api/stats/github/": {
       id: "/api/stats/github/";
       path: "/api/stats/github";
-      fullPath: "/api/stats/github";
+      fullPath: "/api/stats/github/";
       preLoaderRoute: typeof ApiStatsGithubIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };

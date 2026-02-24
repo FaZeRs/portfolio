@@ -5,9 +5,9 @@ import { useInView } from "react-intersection-observer";
 import BookmarkCard from "~/components/bookmarks/bookmark-card";
 import { getBookmarksByCollectionId, PAGE_SIZE } from "~/lib/raindrop";
 
-type LoadMoreProps = {
+interface LoadMoreProps {
   id: number;
-};
+}
 
 export default function LoadMore({ id }: Readonly<LoadMoreProps>) {
   const { ref, inView } = useInView();

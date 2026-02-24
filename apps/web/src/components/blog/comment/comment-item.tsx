@@ -11,7 +11,8 @@ import CommentMenu from "./comment-menu";
 import CommentReplies from "./comment-replies";
 import CommentReply from "./comment-reply";
 
-type CommentItemProps = {
+interface CommentItemProps {
+  articleSlug: string;
   comment: {
     comment: CommentType;
     user: UserType | null;
@@ -20,8 +21,7 @@ type CommentItemProps = {
     repliesCount: number;
     userReaction: CommentReactionType | null;
   };
-  articleSlug: string;
-};
+}
 
 export default function CommentItem({
   comment,

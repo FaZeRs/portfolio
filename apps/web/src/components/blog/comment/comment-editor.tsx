@@ -10,22 +10,22 @@ import { Editor, EditorContent, type JSONContent } from "@tiptap/react";
 import { useEffect, useState } from "react";
 import EditorToolbar from "./editor-toolbar";
 
-type CommentEditorProps = {
-  editor: UseCommentEditor | null;
-  placeholder?: string;
+interface CommentEditorProps {
   autofocus?: boolean;
-  editable?: boolean;
-  disabled?: boolean;
   content?: JSONContent;
+  disabled?: boolean;
+  editable?: boolean;
+  editor: UseCommentEditor | null;
   onChange?: (editor: UseCommentEditor) => void;
-};
+  placeholder?: string;
+}
 
-type UseCommentEditor = {
-  editor: Editor;
-  isEmpty: boolean;
-  getValue: () => JSONContent;
+interface UseCommentEditor {
   clearValue: () => void;
-};
+  editor: Editor;
+  getValue: () => JSONContent;
+  isEmpty: boolean;
+}
 
 export const useCommentEditor = (): [
   editor: UseCommentEditor | null,

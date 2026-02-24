@@ -164,18 +164,18 @@ export interface FileRoutesByFullPath {
   "/snippets/create": typeof dashboardSnippetsCreateRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/trpc/$": typeof ApiTrpcSplatRoute;
-  "/blog": typeof dashboardBlogIndexRoute;
-  "/experiences": typeof dashboardExperiencesIndexRoute;
-  "/projects": typeof dashboardProjectsIndexRoute;
-  "/services": typeof dashboardServicesIndexRoute;
-  "/snippets": typeof dashboardSnippetsIndexRoute;
-  "/users": typeof dashboardUsersIndexRoute;
+  "/blog/": typeof dashboardBlogIndexRoute;
+  "/experiences/": typeof dashboardExperiencesIndexRoute;
+  "/projects/": typeof dashboardProjectsIndexRoute;
+  "/services/": typeof dashboardServicesIndexRoute;
+  "/snippets/": typeof dashboardSnippetsIndexRoute;
+  "/users/": typeof dashboardUsersIndexRoute;
   "/blog/$articleId/edit": typeof dashboardBlogArticleIdEditRoute;
   "/experiences/$experienceId/edit": typeof dashboardExperiencesExperienceIdEditRoute;
   "/projects/$projectId/edit": typeof dashboardProjectsProjectIdEditRoute;
   "/services/$serviceId/edit": typeof dashboardServicesServiceIdEditRoute;
   "/snippets/$snippetId/edit": typeof dashboardSnippetsSnippetIdEditRoute;
-  "/api/ai/blog-assist": typeof ApiAiBlogAssistIndexRoute;
+  "/api/ai/blog-assist/": typeof ApiAiBlogAssistIndexRoute;
 }
 export interface FileRoutesByTo {
   "/signin": typeof authSigninRoute;
@@ -238,18 +238,18 @@ export interface FileRouteTypes {
     | "/snippets/create"
     | "/api/auth/$"
     | "/api/trpc/$"
-    | "/blog"
-    | "/experiences"
-    | "/projects"
-    | "/services"
-    | "/snippets"
-    | "/users"
+    | "/blog/"
+    | "/experiences/"
+    | "/projects/"
+    | "/services/"
+    | "/snippets/"
+    | "/users/"
     | "/blog/$articleId/edit"
     | "/experiences/$experienceId/edit"
     | "/projects/$projectId/edit"
     | "/services/$serviceId/edit"
     | "/snippets/$snippetId/edit"
-    | "/api/ai/blog-assist";
+    | "/api/ai/blog-assist/";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/signin"
@@ -341,42 +341,42 @@ declare module "@tanstack/react-router" {
     "/(dashboard)/users/": {
       id: "/(dashboard)/users/";
       path: "/users";
-      fullPath: "/users";
+      fullPath: "/users/";
       preLoaderRoute: typeof dashboardUsersIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
     };
     "/(dashboard)/snippets/": {
       id: "/(dashboard)/snippets/";
       path: "/snippets";
-      fullPath: "/snippets";
+      fullPath: "/snippets/";
       preLoaderRoute: typeof dashboardSnippetsIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
     };
     "/(dashboard)/services/": {
       id: "/(dashboard)/services/";
       path: "/services";
-      fullPath: "/services";
+      fullPath: "/services/";
       preLoaderRoute: typeof dashboardServicesIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
     };
     "/(dashboard)/projects/": {
       id: "/(dashboard)/projects/";
       path: "/projects";
-      fullPath: "/projects";
+      fullPath: "/projects/";
       preLoaderRoute: typeof dashboardProjectsIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
     };
     "/(dashboard)/experiences/": {
       id: "/(dashboard)/experiences/";
       path: "/experiences";
-      fullPath: "/experiences";
+      fullPath: "/experiences/";
       preLoaderRoute: typeof dashboardExperiencesIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
     };
     "/(dashboard)/blog/": {
       id: "/(dashboard)/blog/";
       path: "/blog";
-      fullPath: "/blog";
+      fullPath: "/blog/";
       preLoaderRoute: typeof dashboardBlogIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
     };
@@ -432,7 +432,7 @@ declare module "@tanstack/react-router" {
     "/api/ai/blog-assist/": {
       id: "/api/ai/blog-assist/";
       path: "/api/ai/blog-assist";
-      fullPath: "/api/ai/blog-assist";
+      fullPath: "/api/ai/blog-assist/";
       preLoaderRoute: typeof ApiAiBlogAssistIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };

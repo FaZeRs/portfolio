@@ -4,9 +4,9 @@ import { formatDate } from "@acme/utils";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Calendar, Eye, ThumbsUp } from "lucide-react";
 
-type ArticleCardProps = {
+interface ArticleCardProps {
   article: ArticleType & { viewCount: number };
-};
+}
 
 const ArticleCard = ({ article }: ArticleCardProps) => (
   <article className="group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-all duration-300 hover:border-foreground/20 hover:shadow-xl">
@@ -32,7 +32,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => (
         <div className="absolute right-4 bottom-4 flex items-center gap-1 rounded-full bg-white/90 px-3 py-1.5 font-medium text-neutral-900 text-sm opacity-0 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
           <span>Read</span>
           <ArrowUpRight
-            className="group-hover:-translate-y-0.5 transition-transform group-hover:translate-x-0.5"
+            className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             size={14}
           />
         </div>

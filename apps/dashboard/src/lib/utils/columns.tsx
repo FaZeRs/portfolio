@@ -2,12 +2,12 @@ import { Checkbox } from "@acme/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header";
 
-export type BaseItemType = {
-  id: string;
-  title: string;
+export interface BaseItemType {
   description: string | null;
+  id: string;
   isDraft: boolean;
-};
+  title: string;
+}
 
 export function createCommonColumns<T extends BaseItemType>(
   entityName: string

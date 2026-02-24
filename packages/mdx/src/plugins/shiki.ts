@@ -3,7 +3,13 @@ import type { MarkedExtension } from "marked";
 /**
  * Represents the options for the `markedShiki` function.
  */
-export type Options = {
+export interface Options {
+  /**
+   * The container template for the highlighted code.
+   *
+   * @default '%s'
+   */
+  container?: string;
   /**
    * Formats and highlights the code according to a specific coding style or
    * convention.
@@ -18,14 +24,7 @@ export type Options = {
     lang: string,
     props: string[]
   ) => string | Promise<string>;
-
-  /**
-   * The container template for the highlighted code.
-   *
-   * @default '%s'
-   */
-  container?: string;
-};
+}
 
 /**
  * A [marked](https://marked.js.org/) extension for integrating [Shiki](https://shiki.style/) syntax highlighting.

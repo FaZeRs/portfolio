@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "~/lib/trpc";
 import { ResourceActions } from "../resource-actions";
 
-type DataTableRowActionsProps = {
+interface DataTableRowActionsProps {
   id: string;
   title: string;
-};
+}
 
 export function Actions({ id, title }: Readonly<DataTableRowActionsProps>) {
   const trpc = useTRPC();

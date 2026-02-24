@@ -4,9 +4,9 @@ import type { UIMessage } from "ai";
 
 const CHAT_STORAGE_KEY = "chatbot-history";
 
-type ChatHistoryState = {
+interface ChatHistoryState {
   messages: UIMessage[];
-};
+}
 
 function loadInitialState(): ChatHistoryState {
   if (typeof window === "undefined") {

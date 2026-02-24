@@ -3,9 +3,9 @@ import { Button } from "@acme/ui/button";
 import { Editor } from "@tiptap/react";
 import { BoldIcon, ItalicIcon, StrikethroughIcon } from "lucide-react";
 
-type EditorToolbarProps = {
+interface EditorToolbarProps {
   editor: Editor;
-};
+}
 
 export default function EditorToolbar({
   editor,

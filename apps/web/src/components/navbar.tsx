@@ -21,10 +21,10 @@ import { AvatarDropdown } from "./avatar-dropdown";
 import SearchCommand from "./command-menu";
 import MobileNav from "./mobile-nav";
 
-type MainNavbarProps = {
+interface MainNavbarProps {
   links: NavItem[];
   user: UserType;
-};
+}
 
 const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
