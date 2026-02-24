@@ -1,4 +1,6 @@
 import { cn } from "@acme/ui";
+import { createHighlighterCore } from "@shikijs/core";
+import { createJavaScriptRegexEngine } from "@shikijs/engine-javascript";
 import parse, {
   attributesToProps,
   DOMNode,
@@ -8,8 +10,6 @@ import parse, {
 } from "html-react-parser";
 import { Marked } from "marked";
 import { cache, createElement, use, useMemo } from "react";
-import { createHighlighterCore } from "shiki/core";
-import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import { components } from "./mdx-components";
 import { gfmHeadingId } from "./plugins/gfm-heading-id";
 import markedShiki from "./plugins/shiki";

@@ -20,6 +20,8 @@
     "@acme/types": "workspace:*",
     "@acme/ui": "workspace:*",
     "@acme/utils": "workspace:*",
+    "@shikijs/core": "^3.22.0",
+    "@shikijs/engine-javascript": "^3.22.0",
     "@shikijs/langs": "^3.22.0",
     "@shikijs/themes": "^3.22.0",
     "@unpic/react": "^1.0.2",
@@ -30,7 +32,6 @@
     "@acme/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "react": "catalog:react19",
-    "shiki": "^3.22.0",
     "typescript": "catalog:"
   }
 }
