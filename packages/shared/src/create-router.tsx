@@ -62,26 +62,33 @@ export function createRouter<TRouteTree extends AnyRoute>({
     ),
   });
 
-  if (!router.isServer) {
-    Sentry.init({
-      dsn: process.env.VITE_SENTRY_DSN,
-      integrations: [
-        Sentry.tanstackRouterBrowserTracingIntegration(router),
-        Sentry.browserTracingIntegration(),
-      ],
-      tracesSampleRate: 1.0,
-      profileSessionSampleRate: 1.0,
-      profileLifecycle: "trace",
-      sendDefaultPii: true,
-    });
-  }
-
   setupRouterSsrQueryIntegration({
     router,
     queryClient,
     handleRedirects: true,
     wrapQueryClient: true,
   });
+
+  if (!router.isServer) {
+    Sentry.init({
+      dsn: "https://17579a13d5cd498e77df726d6b437274@o173746.ingest.us.sentry.io/4508332499140608",
+      integrations: [
+        Sentry.tanstackRouterBrowserTracingIntegration(router),
+        Sentry.browserTracingIntegration(),
+      ],
+      tracesSampleRate: 1.0,
+      tracePropagationTargets: [
+        "localhost",
+        // biome-ignore lint/performance/useTopLevelRegex: valid use case
+        /^https:\/\/naurislinde\.dev\//,
+        // biome-ignore lint/performance/useTopLevelRegex: valid use case
+        /^https:\/\/cms\.naurislinde\.dev\//,
+      ],
+      profileSessionSampleRate: 1.0,
+      profileLifecycle: "trace",
+      sendDefaultPii: true,
+    });
+  }
 
   return router;
 }
