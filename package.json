@@ -47,7 +47,7 @@
       "tooling/*"
     ],
     "catalog": {
-      "@better-auth/cli": "1.4.4-beta.2",
+      "@better-auth/cli": "1.4.19",
       "@tailwindcss/postcss": "^4.2.1",
       "@tailwindcss/vite": "^4.2.1",
       "@tanstack/react-form": "^1.28.3",
@@ -57,7 +57,7 @@
       "@trpc/tanstack-react-query": "^11.10.0",
       "@types/node": "^25.3.0",
       "@vitejs/plugin-react": "5.1.4",
-      "better-auth": "1.4.4-beta.2",
+      "better-auth": "1.4.19",
       "simple-icons": "^13.21.0",
       "tailwindcss": "^4.2.1",
       "typescript": "^5.9.3",
@@ -74,7 +74,7 @@
     }
   },
   "catalog": {
-    "@better-auth/cli": "1.4.4-beta.2",
+    "@better-auth/cli": "1.4.19",
     "@tailwindcss/postcss": "4.20.18",
     "@tailwindcss/vite": "4.2.1",
     "@tanstack/react-form": "1.28.3",
@@ -83,7 +83,7 @@
     "@trpc/server": "11.10.0",
     "@trpc/tanstack-react-query": "11.10.0",
     "@types/node": "25.3.0",
-    "better-auth": "1.4.4-beta.2",
+    "better-auth": "1.4.19",
     "simple-icons": "^13.21.0",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
