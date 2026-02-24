@@ -52,6 +52,7 @@ export default defineConfig({
     }),
     nitro({
       compatibilityDate: "latest",
+      preset: process.env.VERCEL ? "vercel" : "node",
     }),
     viteReact({
       // https://react.dev/learn/react-compiler
