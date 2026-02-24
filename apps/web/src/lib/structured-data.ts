@@ -1,7 +1,15 @@
 import { siteConfig, socialConfig } from "@acme/config";
 import { getBaseUrl } from "./utils";
 
-type SchemaObject = Record<string, unknown>;
+type SchemaObject =
+  | Person
+  | Organization
+  | WebSite
+  | ProfilePage
+  | CollectionPage
+  | BreadcrumbList
+  | BlogPosting
+  | SoftwareSourceCode;
 
 interface WithId {
   "@id"?: string;
@@ -350,43 +358,43 @@ export function generateStructuredDataGraph(schemas: SchemaObject[]): string {
 
 export function getHomepageSchemas(): SchemaObject[] {
   return [
-    createPersonSchema({ includeId: true }) as SchemaObject,
-    createOrganizationSchema({ includeId: true }) as SchemaObject,
-    createWebSiteSchema({ includeId: true, useRefs: true }) as SchemaObject,
+    createPersonSchema({ includeId: true }),
+    createOrganizationSchema({ includeId: true }),
+    createWebSiteSchema({ includeId: true, useRefs: true }),
   ];
 }
 
 export function getAboutPageSchemas(): SchemaObject[] {
   return [
-    createPersonSchema({ includeId: true }) as SchemaObject,
-    createOrganizationSchema({ includeId: true }) as SchemaObject,
-    createWebSiteSchema({ includeId: true, useRefs: true }) as SchemaObject,
+    createPersonSchema({ includeId: true }),
+    createOrganizationSchema({ includeId: true }),
+    createWebSiteSchema({ includeId: true, useRefs: true }),
     createProfilePageSchema(
       `About | ${siteConfig.title}`,
       "About me and my journey as a software engineer.",
       "/about"
-    ) as SchemaObject,
+    ),
     createBreadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "About", path: "/about" },
-    ]) as SchemaObject,
+    ]),
   ];
 }
 
 export function getBlogListSchemas(): SchemaObject[] {
   return [
-    createPersonSchema({ includeId: true }) as SchemaObject,
-    createOrganizationSchema({ includeId: true }) as SchemaObject,
-    createWebSiteSchema({ includeId: true, useRefs: true }) as SchemaObject,
+    createPersonSchema({ includeId: true }),
+    createOrganizationSchema({ includeId: true }),
+    createWebSiteSchema({ includeId: true, useRefs: true }),
     createCollectionPageSchema(
       `Blog | ${siteConfig.title}`,
       "Thoughts, tutorials, and insights about web development.",
       "/blog"
-    ) as SchemaObject,
+    ),
     createBreadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Blog", path: "/blog" },
-    ]) as SchemaObject,
+    ]),
   ];
 }
 
@@ -402,9 +410,9 @@ export function getBlogPostSchemas(post: {
 }): SchemaObject[] {
   const path = `/blog/${post.slug}`;
   return [
-    createPersonSchema({ includeId: true }) as SchemaObject,
-    createOrganizationSchema({ includeId: true }) as SchemaObject,
-    createWebSiteSchema({ includeId: true, useRefs: true }) as SchemaObject,
+    createPersonSchema({ includeId: true }),
+    createOrganizationSchema({ includeId: true }),
+    createWebSiteSchema({ includeId: true, useRefs: true }),
     createBlogPostingSchema({
       title: post.title,
       description: post.description,
@@ -414,29 +422,29 @@ export function getBlogPostSchemas(post: {
       path,
       keywords: post.keywords,
       wordCount: post.wordCount,
-    }) as SchemaObject,
+    }),
     createBreadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Blog", path: "/blog" },
       { name: post.title, path },
-    ]) as SchemaObject,
+    ]),
   ];
 }
 
 export function getProjectListSchemas(): SchemaObject[] {
   return [
-    createPersonSchema({ includeId: true }) as SchemaObject,
-    createOrganizationSchema({ includeId: true }) as SchemaObject,
-    createWebSiteSchema({ includeId: true, useRefs: true }) as SchemaObject,
+    createPersonSchema({ includeId: true }),
+    createOrganizationSchema({ includeId: true }),
+    createWebSiteSchema({ includeId: true, useRefs: true }),
     createCollectionPageSchema(
       `Projects | ${siteConfig.title}`,
       "Several projects that I have worked on, both private and open source.",
       "/projects"
-    ) as SchemaObject,
+    ),
     createBreadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Projects", path: "/projects" },
-    ]) as SchemaObject,
+    ]),
   ];
 }
 
@@ -452,9 +460,9 @@ export function getProjectSchemas(project: {
 }): SchemaObject[] {
   const path = `/projects/${project.slug}`;
   return [
-    createPersonSchema({ includeId: true }) as SchemaObject,
-    createOrganizationSchema({ includeId: true }) as SchemaObject,
-    createWebSiteSchema({ includeId: true, useRefs: true }) as SchemaObject,
+    createPersonSchema({ includeId: true }),
+    createOrganizationSchema({ includeId: true }),
+    createWebSiteSchema({ includeId: true, useRefs: true }),
     createSoftwareProjectSchema({
       title: project.title,
       description: project.description,
@@ -464,11 +472,11 @@ export function getProjectSchemas(project: {
       stacks: project.stacks,
       dateCreated: project.dateCreated,
       dateModified: project.dateModified,
-    }) as SchemaObject,
+    }),
     createBreadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Projects", path: "/projects" },
       { name: project.title, path },
-    ]) as SchemaObject,
+    ]),
   ];
 }
