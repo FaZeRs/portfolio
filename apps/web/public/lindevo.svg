@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Icon: Abstract code/terminal symbol -->
+  <g transform="translate(30, 40)">
+    <!-- Rounded base shape -->
+    <rect x="0" y="0" width="90" height="90" rx="20" ry="20" fill="url(#grad1)" />
+    <!-- Left angle bracket < -->
+    <polyline points="38,28 18,45 38,62" fill="none" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Right angle bracket > -->
+    <polyline points="52,28 72,45 52,62" fill="none" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" />
+  </g>
+  <!-- Wordmark -->
+  <text x="140" y="108" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="64" font-weight="700" fill="#1e1b4b" letter-spacing="-2">
+    Lind<tspan fill="url(#grad2)">evo</tspan>
+  </text>
+  <!-- Underline below "Lind" -->
+  <rect x="143" y="115" width="120" height="3.5" rx="1.75" fill="url(#grad1)" />
+</svg>
