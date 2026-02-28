@@ -20,10 +20,10 @@
     "@acme/types": "workspace:*",
     "@acme/ui": "workspace:*",
     "@acme/utils": "workspace:*",
-    "@shikijs/core": "^3.22.0",
-    "@shikijs/engine-javascript": "^3.22.0",
-    "@shikijs/langs": "^3.22.0",
-    "@shikijs/themes": "^3.22.0",
+    "@shikijs/core": "^4.0.0",
+    "@shikijs/engine-javascript": "^4.0.0",
+    "@shikijs/langs": "^4.0.0",
+    "@shikijs/themes": "^4.0.0",
     "@unpic/react": "^1.0.2",
     "html-react-parser": "^5.2.17",
     "marked": "^17.0.3"
@@ -32,6 +32,7 @@
     "@acme/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "react": "catalog:react19",
+    "shiki": "^4.0.0",
     "typescript": "catalog:"
   }
 }

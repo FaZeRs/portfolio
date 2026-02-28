@@ -34,13 +34,14 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
     "@t3-oss/env-core": "^0.13.10",
-    "@upstash/redis": "^1.36.2",
+    "@upstash/redis": "^1.36.3",
     "drizzle-orm": "^0.45.1",
     "drizzle-zod": "^0.8.3",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
     "drizzle-kit": "^0.31.9",
     "typescript": "catalog:"
   }
