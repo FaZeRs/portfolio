@@ -86,7 +86,7 @@
     "@types/react-dom": "catalog:react19",
     "@vitejs/plugin-react": "catalog:",
     "babel-plugin-react-compiler": "latest",
-    "nitro": "npm:nitro-nightly@latest",
+    "nitro": "^3.0.1-alpha.2",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"

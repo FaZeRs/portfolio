@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--import ./instrument.server.mjs' bun --bun vite dev --port 3002",
     "start": "bun run --import ./.output/server/instrument.server.mjs .output/server/index.mjs",
-    "build": "bun vite build  && cp instrument.server.mjs .output/server",
+    "build": "bun vite build && cp instrument.server.mjs .output/server",
     "build:vercel": "bun vite build && cp instrument.server.mjs .vercel/output",
     "clean": "rm -rf .cache .nitro .output .tanstack .turbo node_modules",
     "typecheck": "tsc --noEmit"
@@ -66,7 +66,7 @@
     "@types/react-dom": "catalog:react19",
     "@vitejs/plugin-react": "catalog:",
     "babel-plugin-react-compiler": "latest",
-    "nitro": "npm:nitro-nightly@latest",
+    "nitro": "^3.0.1-alpha.2",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
