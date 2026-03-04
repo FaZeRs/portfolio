@@ -1,10 +1,9 @@
 import { siteConfig } from "@acme/config";
 import { createFileRoute } from "@tanstack/react-router";
-import CTASection from "~/components/cta-section";
+import ConnectSection from "~/components/connect-section";
 import FeaturedProjects from "~/components/featured-projects";
-import Hero from "~/components/hero";
-import ServicesSection from "~/components/services/services";
-import TrustIndicators from "~/components/trust-indicators";
+import PersonalHero from "~/components/personal-hero";
+import RecentPosts from "~/components/recent-posts";
 import { seo } from "~/lib/seo";
 import {
   generateStructuredDataGraph,
@@ -16,7 +15,7 @@ export const Route = createFileRoute("/(public)/")({
   loader: async ({ context: { trpc, queryClient } }) => {
     await Promise.all([
       queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
-      queryClient.prefetchQuery(trpc.service.allPublic.queryOptions()),
+      queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions()),
     ]);
   },
   head: () => {
@@ -42,12 +41,11 @@ export const Route = createFileRoute("/(public)/")({
 function Home() {
   return (
     <>
-      <Hero />
+      <PersonalHero />
       <div className="flex flex-col items-center space-y-16 pb-16 sm:space-y-24 sm:pb-24">
-        <TrustIndicators />
-        <ServicesSection />
+        <RecentPosts />
         <FeaturedProjects />
-        <CTASection />
+        <ConnectSection />
       </div>
     </>
   );

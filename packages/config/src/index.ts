@@ -5,9 +5,9 @@ export const siteConfig: SiteConfig = {
   title: "Nauris Linde",
   name: "naurislinde",
   description:
-    "Full-Stack Developer specializing in custom websites, web applications, and business software solutions. Helping businesses grow with modern, scalable, and high-performance digital products.",
+    "Nauris Linde — R&D Engineer and side-project tinkerer. Writing about C++, React, WebAssembly, and things that spark curiosity.",
   keywords:
-    "Nauris Linde, Full-Stack Developer, Custom Website Development, Web Application Development, Business Software Solutions, React Developer, TypeScript Expert, Hire Web Developer, Freelance Developer",
+    "Nauris Linde, R&D Engineer, Software Engineer, Side Projects, Blog, React, TypeScript, C++, WebAssembly, Open Source",
   url: "https://naurislinde.dev",
   links: {
     mail: "naurislinde@gmail.com",

@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTRPC } from "~/lib/trpc";
-import ProjectCard from "./projects/project-card";
+import ArticleCard from "./blog/article-card";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -26,18 +26,15 @@ const itemVariants = {
   },
 };
 
-const FeaturedProjects = () => {
+const RecentPosts = () => {
   const trpc = useTRPC();
-  const { data: projects } = useSuspenseQuery(
-    trpc.project.allPublic.queryOptions()
+  const { data: articles } = useSuspenseQuery(
+    trpc.blog.allPublic.queryOptions()
   );
 
-  // Get only featured projects or first 4 if none are featured
-  const featured = projects.filter((p) => p.isFeatured).slice(0, 4);
-  const featuredProjects =
-    featured.length > 0 ? featured : projects.slice(0, 4);
+  const recentArticles = articles.slice(0, 3);
 
-  if (featuredProjects.length === 0) {
+  if (recentArticles.length === 0) {
     return null;
   }
 
@@ -50,7 +47,7 @@ const FeaturedProjects = () => {
           initial={{ opacity: 0 }}
           transition={{ delay: 0.1 }}
         >
-          Side Projects
+          From the Blog
         </motion.span>
         <motion.h2
           animate={{ opacity: 1, y: 0 }}
@@ -58,7 +55,7 @@ const FeaturedProjects = () => {
           initial={{ opacity: 0, y: 20 }}
           transition={{ delay: 0.2 }}
         >
-          Things I've Built
+          Latest Writing
         </motion.h2>
         <motion.p
           animate={{ opacity: 1, y: 0 }}
@@ -66,22 +63,21 @@ const FeaturedProjects = () => {
           initial={{ opacity: 0, y: 20 }}
           transition={{ delay: 0.3 }}
         >
-          Fun stuff I build on weekends and evenings. Some useful, some just for
-          learning.
+          Thoughts on tech, side projects, and things I find interesting.
         </motion.p>
       </div>
 
       <motion.div
         animate="visible"
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6"
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
         initial="hidden"
         variants={containerVariants}
         viewport={{ once: true }}
         whileInView="visible"
       >
-        {featuredProjects.map((project) => (
-          <motion.div key={project.slug} variants={itemVariants}>
-            <ProjectCard project={project} />
+        {recentArticles.map((article) => (
+          <motion.div key={article.slug} variants={itemVariants}>
+            <ArticleCard article={article} />
           </motion.div>
         ))}
       </motion.div>
@@ -97,9 +93,9 @@ const FeaturedProjects = () => {
             buttonVariants({ variant: "outline", size: "lg" }),
             "group"
           )}
-          to="/projects"
+          to="/blog"
         >
-          View all projects
+          View all posts
           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </motion.div>
@@ -107,4 +103,4 @@ const FeaturedProjects = () => {
   );
 };
 
-export default FeaturedProjects;
+export default RecentPosts;
