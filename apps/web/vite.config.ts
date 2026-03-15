@@ -50,10 +50,7 @@ export default defineConfig({
     }),
     nitro({
       compatibilityDate: "latest",
-      preset: process.env.VERCEL ? "vercel" : "bun",
-      rollupConfig: {
-        external: ["tslib"],
-      },
+      preset: process.env.VERCEL ? "vercel" : "node",
     }),
     viteReact(),
     babel({ presets: [reactCompilerPreset({ target: "19" })] }),
@@ -64,6 +61,5 @@ export default defineConfig({
   },
   ssr: {
     noExternal: ["@acme/db"],
-    external: ["tslib"],
   },
 });
