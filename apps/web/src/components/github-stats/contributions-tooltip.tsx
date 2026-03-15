@@ -17,7 +17,8 @@ export default function ContributionsTooltip(
           {payload[0]?.payload?.date}
         </p>
         <p className="desc">
-          <span className="font-medium">Commit Count :</span> {payload[0].value}
+          <span className="font-medium">Commit Count :</span>{" "}
+          {payload[0]?.value}
         </p>
       </div>
     );

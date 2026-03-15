@@ -60,14 +60,24 @@ export const ChatMessage = memo(function ChatMessageComponent({
           switch (part.type) {
             case "text":
               return (
-                <Response key={`${message.id}-${i}`}>{part.text}</Response>
+                <Response
+                  key={`${message.id}-${
+                    // biome-ignore lint/suspicious/noArrayIndexKey: ignored using `--suppress`
+                    i
+                  }`}
+                >
+                  {part.text}
+                </Response>
               );
             case "reasoning":
               return (
                 <Reasoning
                   className="w-full"
                   isStreaming={status === "streaming"}
-                  key={`${message.id}-${i}`}
+                  key={`${message.id}-${
+                    // biome-ignore lint/suspicious/noArrayIndexKey: ignored using `--suppress`
+                    i
+                  }`}
                 >
                   <ReasoningTrigger />
                   <ReasoningContent>{part.text}</ReasoningContent>

@@ -185,4 +185,4 @@ function calculateMostProductiveDayOfWeek(
   return sortedData;
 }
 
-export { getGithubStats, getGithubActivities };
+export { getGithubActivities, getGithubStats };

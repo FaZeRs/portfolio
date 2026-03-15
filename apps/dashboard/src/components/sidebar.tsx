@@ -21,7 +21,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@acme/ui/sidebar";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Spinner } from "@acme/ui/spinner";
+import { ClientOnly, Link, useRouterState } from "@tanstack/react-router";
 import {
   BriefcaseIcon,
   CodeIcon,
@@ -32,6 +33,7 @@ import {
   SettingsIcon,
   UsersIcon,
 } from "lucide-react";
+import { Suspense } from "react";
 
 const navigationItems = [
   {
@@ -130,19 +132,24 @@ export function DashboardSidebar({ user }: Readonly<{ user: UserType }>) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                   size="lg"
                 >
-                  <Avatar className="size-8 rounded-lg">
-                    <AvatarImage
-                      alt={user.name}
-                      src={user.image ?? undefined}
-                    />
-                    <AvatarFallback className="rounded-lg">
-                      {user.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  {" "}
+                  <ClientOnly>
+                    <Suspense fallback={<Spinner className="size-6" />}>
+                      <Avatar className="size-8 rounded-lg">
+                        <AvatarImage
+                          alt={user.name}
+                          src={user.image ?? undefined}
+                        />
+                        <AvatarFallback className="rounded-lg">
+                          {user.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Suspense>
+                  </ClientOnly>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">{user.name}</span>
                     <span className="truncate text-xs">{user.email}</span>
@@ -157,19 +164,23 @@ export function DashboardSidebar({ user }: Readonly<{ user: UserType }>) {
               >
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <Avatar className="size-8 rounded-lg">
-                      <AvatarImage
-                        alt={user.name}
-                        src={user.image ?? undefined}
-                      />
-                      <AvatarFallback className="rounded-lg">
-                        {user.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")
-                          .toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
+                    <ClientOnly>
+                      <Suspense fallback={<Spinner className="size-6" />}>
+                        <Avatar className="size-8 rounded-lg">
+                          <AvatarImage
+                            alt={user.name}
+                            src={user.image ?? undefined}
+                          />
+                          <AvatarFallback className="rounded-lg">
+                            {user.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")
+                              .toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Suspense>
+                    </ClientOnly>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">
                         {user.name}

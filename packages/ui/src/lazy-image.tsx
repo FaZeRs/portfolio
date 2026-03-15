@@ -76,12 +76,12 @@ export function LazyImage({
   }, [onLoad]);
 
   const handleError = useCallback(() => {
-    if (currentSrc !== fallbackSrc) {
-      setCurrentSrc(fallbackSrc);
-      setHasError(false);
-    } else {
+    if (currentSrc === fallbackSrc) {
       setHasError(true);
       setIsLoading(false);
+    } else {
+      setCurrentSrc(fallbackSrc);
+      setHasError(false);
     }
     onError?.();
   }, [currentSrc, fallbackSrc, onError]);

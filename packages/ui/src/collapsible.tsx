@@ -13,4 +13,4 @@ function CollapsibleContent({ ...props }: ComponentProps<typeof Content>) {
   return <Content data-slot="collapsible-content" {...props} />;
 }
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent };
+export { Collapsible, CollapsibleContent, CollapsibleTrigger };

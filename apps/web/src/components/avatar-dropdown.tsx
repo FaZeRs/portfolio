@@ -11,7 +11,7 @@ import {
 } from "@acme/ui/dropdown-menu";
 import { Spinner } from "@acme/ui/spinner";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
+import { ClientOnly, useRouter } from "@tanstack/react-router";
 import { Suspense } from "react";
 import authClient from "~/lib/auth/client";
 import { env } from "~/lib/env/client";
@@ -33,12 +33,14 @@ export function AvatarDropdown({ user }: { user: UserType }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="relative h-8 w-8 rounded-full" variant="ghost">
-          <Suspense fallback={<Spinner className="size-6" />}>
-            <Avatar className="h-8 w-8">
-              <AvatarImage alt={user?.name ?? ""} src={user?.image ?? ""} />
-              <AvatarFallback>{initials}</AvatarFallback>
-            </Avatar>
-          </Suspense>
+          <ClientOnly>
+            <Suspense fallback={<Spinner className="size-6" />}>
+              <Avatar className="h-8 w-8">
+                <AvatarImage alt={user?.name ?? ""} src={user?.image ?? ""} />
+                <AvatarFallback>{initials}</AvatarFallback>
+              </Avatar>
+            </Suspense>
+          </ClientOnly>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56" forceMount>

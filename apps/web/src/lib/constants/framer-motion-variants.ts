@@ -28,4 +28,4 @@ const fadeContainer: Variants = {
   },
 };
 
-export { slideInWithFadeOut, popUp, fadeContainer };
+export { fadeContainer, popUp, slideInWithFadeOut };

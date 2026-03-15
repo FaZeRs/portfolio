@@ -1,5 +1,3 @@
-/// <reference types="vite/client" />
-
 import { AppRouter } from "@acme/api";
 import { DevtoolsComponent } from "@acme/shared/dev-tools";
 import { ThemeProvider, useTheme } from "@acme/shared/theme-provider";
@@ -13,6 +11,7 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
+import { createIsomorphicFn } from "@tanstack/react-start";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import posthog from "posthog-js";
 import { CookieBanner } from "~/components/analytics/cookie-banner";
@@ -47,12 +46,16 @@ export const Route = createRootRouteWithContext<{
   component: RootComponent,
 });
 
-posthog.init(env.VITE_POSTHOG_KEY, {
-  api_host: env.VITE_POSTHOG_HOST,
-  defaults: "2025-11-30",
-  cookieless_mode: "on_reject",
-  disable_external_dependency_loading: true,
+const initPostHog = createIsomorphicFn().client(() => {
+  posthog.init(env.VITE_POSTHOG_KEY, {
+    api_host: env.VITE_POSTHOG_HOST,
+    defaults: "2025-11-30",
+    cookieless_mode: "on_reject",
+    disable_external_dependency_loading: true,
+  });
 });
+
+initPostHog();
 
 function RootComponent() {
   return (

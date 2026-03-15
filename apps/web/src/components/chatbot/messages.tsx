@@ -54,10 +54,18 @@ export const ChatMessages = memo(function ChatMessagesComponent({
                               .length
                           }
                         />
-                        <SourcesContent key={`${message.id}-${partIndex}`}>
+                        <SourcesContent
+                          key={`${message.id}-${
+                            // biome-ignore lint/suspicious/noArrayIndexKey: ignored using `--suppress`
+                            partIndex
+                          }`}
+                        >
                           <Source
                             href={part.url}
-                            key={`${message.id}-${partIndex}`}
+                            key={`${message.id}-${
+                              // biome-ignore lint/suspicious/noArrayIndexKey: ignored using `--suppress`
+                              partIndex
+                            }`}
                             title={part.url}
                           />
                         </SourcesContent>

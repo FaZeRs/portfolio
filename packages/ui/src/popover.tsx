@@ -44,4 +44,4 @@ function PopoverAnchor({ ...props }: Readonly<ComponentProps<typeof Anchor>>) {
   return <Anchor data-slot="popover-anchor" {...props} />;
 }
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };
+export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger };

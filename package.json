@@ -15,7 +15,6 @@
   "license": "MIT",
   "scripts": {
     "build": "turbo run build",
-    "build:vercel": "turbo run build:vercel",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "auth:generate": "bun run -F @acme/auth generate",
@@ -47,22 +46,22 @@
       "tooling/*"
     ],
     "catalog": {
-      "@better-auth/cli": "1.4.19",
+      "@better-auth/cli": "1.4.21",
       "@tailwindcss/postcss": "^4.2.1",
       "@tailwindcss/vite": "^4.2.1",
-      "@tanstack/react-form": "^1.28.3",
+      "@tanstack/react-form": "^1.28.5",
       "@tanstack/react-query": "^5.90.21",
-      "@trpc/client": "^11.10.0",
-      "@trpc/server": "^11.10.0",
-      "@trpc/tanstack-react-query": "^11.10.0",
-      "@types/node": "^25.3.0",
-      "@vitejs/plugin-react": "5.1.4",
-      "better-auth": "1.4.19",
+      "@trpc/client": "^11.13.3",
+      "@trpc/server": "^11.13.3",
+      "@trpc/tanstack-react-query": "^11.13.3",
+      "@types/node": "^25.5.0",
+      "@vitejs/plugin-react": "6.0.1",
+      "better-auth": "1.5.5",
       "simple-icons": "^13.21.0",
       "tailwindcss": "^4.2.1",
       "typescript": "^5.9.3",
       "zod": "^4.3.6",
-      "vite": "^8.0.0-beta.15"
+      "vite": "^8.0.0"
     },
     "catalogs": {
       "react19": {
@@ -98,17 +97,17 @@
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.4",
-    "@commitlint/cli": "^20.4.2",
-    "@commitlint/config-conventional": "^20.4.2",
-    "@turbo/gen": "^2.8.12",
+    "@biomejs/biome": "2.4.7",
+    "@commitlint/cli": "^20.4.4",
+    "@commitlint/config-conventional": "^20.4.4",
+    "@turbo/gen": "^2.8.17",
     "dotenv-cli": "^11.0.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.3.0",
-    "shadcn": "^3.8.5",
-    "turbo": "^2.8.12",
+    "lint-staged": "^16.4.0",
+    "shadcn": "^4.0.8",
+    "turbo": "^2.8.17",
     "typescript": "catalog:",
-    "ultracite": "7.2.4"
+    "ultracite": "7.3.1"
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [

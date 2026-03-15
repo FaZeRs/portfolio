@@ -1,9 +1,10 @@
 import path from "node:path";
+import babel from "@rolldown/plugin-babel";
 import { sentryTanstackStart } from "@sentry/tanstackstart-react/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import viteReact from "@vitejs/plugin-react";
+import viteReact, { reactCompilerPreset } from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
@@ -14,9 +15,6 @@ export default defineConfig({
   build: {
     sourcemap: true,
     target: "es2022",
-  },
-  experimental: {
-    enableNativePlugin: true,
   },
   resolve: {
     tsconfigPaths: true,
@@ -52,21 +50,13 @@ export default defineConfig({
     }),
     nitro({
       compatibilityDate: "latest",
-      preset: process.env.VERCEL ? "vercel" : "node",
-    }),
-    viteReact({
-      // https://react.dev/learn/react-compiler
-      babel: {
-        plugins: [
-          [
-            "babel-plugin-react-compiler",
-            {
-              target: "19",
-            },
-          ],
-        ],
+      preset: process.env.VERCEL ? "vercel" : "bun",
+      rollupConfig: {
+        external: ["tslib"],
       },
     }),
+    viteReact(),
+    babel({ presets: [reactCompilerPreset({ target: "19" })] }),
     tailwindcss(),
   ],
   optimizeDeps: {
@@ -74,5 +64,6 @@ export default defineConfig({
   },
   ssr: {
     noExternal: ["@acme/db"],
+    external: ["tslib"],
   },
 });

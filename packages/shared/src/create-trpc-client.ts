@@ -28,7 +28,7 @@ export function createTRPCClientFactory(options: CreateTRPCClientOptions) {
   const { source, getAuth, getBaseUrl } = options;
 
   const nodeEnv =
-    typeof process !== "undefined" ? process.env.NODE_ENV : "production";
+    typeof process === "undefined" ? "production" : process.env.NODE_ENV;
 
   const makeTRPCClient = createIsomorphicFn()
     .server(() =>

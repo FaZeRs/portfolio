@@ -1,12 +1,11 @@
 import { db } from "@acme/db/client";
-import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
+import type { BetterAuthOptions } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, oAuthProxy } from "better-auth/plugins";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
 
-export function initAuth<
-  TExtraPlugins extends BetterAuthPlugin[] = [],
->(options: {
+export function initAuth(options: {
   baseUrl: string;
   productionUrl: string;
   secret: string | undefined;
@@ -19,8 +18,6 @@ export function initAuth<
   googleClientSecret?: string;
   facebookClientId?: string;
   facebookClientSecret?: string;
-
-  extraPlugins?: TExtraPlugins;
 }) {
   const config = {
     database: drizzleAdapter(db, {
@@ -36,7 +33,7 @@ export function initAuth<
         productionURL: options.productionUrl,
       }),
       admin(),
-      ...(options.extraPlugins ?? []),
+      tanstackStartCookies(),
     ],
     socialProviders: {
       ...(options.githubClientId &&

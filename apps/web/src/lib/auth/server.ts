@@ -1,5 +1,4 @@
 import { initAuth } from "@acme/auth";
-import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { env } from "~/lib/env/server";
 import { getBaseUrl } from "~/lib/utils";
 
@@ -15,6 +14,4 @@ export const auth = initAuth({
   googleClientSecret: env.GOOGLE_CLIENT_SECRET,
   facebookClientId: env.FACEBOOK_CLIENT_ID,
   facebookClientSecret: env.FACEBOOK_CLIENT_SECRET,
-
-  extraPlugins: [tanstackStartCookies()],
 });
