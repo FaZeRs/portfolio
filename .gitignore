@@ -48,9 +48,6 @@ yarn-error.log*
 dist/
 .cache
 
-# turbo
-.turbo
-
 # tanstack
 .tanstack
 

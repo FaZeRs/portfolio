@@ -10,7 +10,6 @@
     "includes": [
       "!**/.next",
       "!**/dist",
-      "!**/.turbo",
       "!**/dev-dist",
       "!**/.zed",
       "!**/.vscode",

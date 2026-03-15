@@ -24,7 +24,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "clean": "git clean -xdf .cache dist node_modules",
     "dev": "tsc",
     "push": "bun with-env drizzle-kit push",
     "studio": "bun with-env drizzle-kit studio",

@@ -6,21 +6,21 @@ applyTo: "**/*.{ts,tsx,js,jsx}"
 
 This file highlights project-specific workflows, conventions, and entry points to help AI agents be productive immediately.
 
-- Project layout: a Turbo monorepo with workspaces: `apps/*`, `packages/*`, `tooling/*`.
+- Project layout: a Bun workspaces monorepo: `apps/*`, `packages/*`, `tooling/*`.
 - Key directories: `apps/web` and `apps/dashboard` (frontends), `packages/api` (tRPC server), `packages/db` (drizzle schema), `ui/src` (shared UI components), `shared/src` (shared client helpers).
 
 Essential commands (root):
 - Install: `bun install` (project uses Bun as `packageManager`).
-- Dev (local): `bun + turbo watch dev --continue` or `bun run dev` — uses `turbo` to run workspace dev scripts.
-- Build: `bun run build` (runs `turbo run build`).
-- Typecheck: `bun run typecheck` (Turbo task across workspaces).
+- Dev (local): `bun run dev` — uses `bun run --filter` to run workspace dev scripts.
+- Build: `bun run build` (runs build across app workspaces).
+- Typecheck: `bun run typecheck` (runs across all workspaces via `bun run --filter`).
 - Format / lint: `bun run format` / `bun run lint` (uses `biome`).
 
 Quick patterns to follow (discoverable in code):
 - Routing: frontends implement `src/router.tsx` (see [apps/web/src/router.tsx](apps/web/src/router.tsx) and [apps/dashboard/src/router.tsx](apps/dashboard/src/router.tsx)).
 - API: `packages/api/src/index.ts` wires tRPC; follow `create-trpc-client.tsx` in `shared/src` for client usage.
 - UI: shared components live under `ui/src` — prefer these for design system consistency (e.g., `ui/src/button.tsx`, `ui/src/avatar.tsx`).
-- DB: `packages/db` contains `drizzle.config.ts` and schema; migrations/`push` tasks are run via `turbo` (see `db:push` script).
+- DB: `packages/db` contains `drizzle.config.ts` and schema; migrations/`push` tasks are run via `bun run --filter` (see `db:push` script).
 
 Conventions and constraints (from repo rules):
 - Accessibility-first: check `ui` and pages for required a11y attributes (title on SVGs, semantic elements, inputs labeled). See existing a11y rules in this repo.
@@ -30,7 +30,7 @@ Conventions and constraints (from repo rules):
 
 Tooling notes for agents:
 - Formatting/linting: `biome` is the canonical formatter/linter. Use `bun x ultracite format` only when aligning with ultracite tasks in `lint-staged`.
-- Code generation: `turbo run ui-add` integrates with `shadcn`/`ui/components.json` for adding UI parts.
+- Code generation: `bun run ui-add` integrates with `shadcn`/`ui/components.json` for adding UI parts.
 - Pre-commit: `husky` + `lint-staged` run Biome checks; ensure fixes are applied via `biome format --write` before committing.
 
 What to edit or inspect first when making changes:

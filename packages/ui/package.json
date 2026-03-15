@@ -59,7 +59,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "clean": "git clean -xdf .cache dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "ui-add": "bun x shadcn@latest add"
   },

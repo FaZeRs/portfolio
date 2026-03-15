@@ -2,7 +2,7 @@
 
 ![Cover Image](apps/web/public/images/cover.avif)
 
-A modern full-stack portfolio monorepo built with Turborepo, TanStack Start, React 19, and TypeScript.
+A modern full-stack portfolio monorepo built with Bun workspaces, TanStack Start, React 19, and TypeScript.
 
 ## Features
 
@@ -29,7 +29,7 @@ A modern full-stack portfolio monorepo built with Turborepo, TanStack Start, Rea
 
 ## Tech Stack
 
-- [Turborepo](https://turbo.build/repo) - High-performance monorepo build system
+- [Bun Workspaces](https://bun.sh/docs/install/workspaces) - Native monorepo workspace management
 - [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler) - Latest React with performance optimizations
 - TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest) + [Form](https://tanstack.com/form/latest) - Full-stack React framework
 - [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) - Modern styling and component library

@@ -13,7 +13,4 @@ runs:
         node-version-file: ".nvmrc"
 
     - shell: bash
-      run: bun add -g turbo
-
-    - shell: bash
       run: bun install
