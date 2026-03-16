@@ -8,7 +8,6 @@ import type { QueryClient } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
-  Outlet,
   Scripts,
 } from "@tanstack/react-router";
 import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
@@ -44,20 +43,17 @@ export const Route = createRootRouteWithContext<{
     ],
     links: [{ rel: "stylesheet", href: appCss, as: "style", type: "text/css" }],
   }),
-  component: RootComponent,
+  staleTime: Number.POSITIVE_INFINITY,
+  shellComponent: ({ children }) => {
+    return (
+      <ThemeProvider>
+        <ShellComponent>{children}</ShellComponent>
+      </ThemeProvider>
+    );
+  },
 });
 
-function RootComponent() {
-  return (
-    <ThemeProvider>
-      <RootDocument>
-        <Outlet />
-      </RootDocument>
-    </ThemeProvider>
-  );
-}
-
-function RootDocument({ children }: { readonly children: React.ReactNode }) {
+function ShellComponent({ children }: { readonly children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
   return (
     // suppress since we're updating the "dark" class in a custom script below
