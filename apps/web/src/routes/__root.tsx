@@ -7,7 +7,6 @@ import {
   ClientOnly,
   createRootRouteWithContext,
   HeadContent,
-  Outlet,
   Scripts,
 } from "@tanstack/react-router";
 import { createIsomorphicFn } from "@tanstack/react-start";
@@ -40,7 +39,14 @@ export const Route = createRootRouteWithContext<{
     ],
     links: [{ rel: "stylesheet", href: appCss, as: "style", type: "text/css" }],
   }),
-  component: RootComponent,
+  staleTime: Number.POSITIVE_INFINITY,
+  shellComponent: ({ children }) => {
+    return (
+      <ThemeProvider>
+        <ShellComponent>{children}</ShellComponent>
+      </ThemeProvider>
+    );
+  },
 });
 
 const initPostHog = createIsomorphicFn().client(() => {
@@ -54,17 +60,7 @@ const initPostHog = createIsomorphicFn().client(() => {
 
 initPostHog();
 
-function RootComponent() {
-  return (
-    <ThemeProvider>
-      <RootDocument>
-        <Outlet />
-      </RootDocument>
-    </ThemeProvider>
-  );
-}
-
-function RootDocument({ children }: { readonly children: React.ReactNode }) {
+function ShellComponent({ children }: { readonly children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
   return (
     // suppress since we're updating the "dark" class in a custom script below
