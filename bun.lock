@@ -168,7 +168,6 @@
         "@acme/auth": "workspace:*",
         "@acme/db": "workspace:*",
         "@acme/utils": "workspace:*",
-        "@acme/validators": "workspace:*",
         "@t3-oss/env-core": "^0.13.10",
         "@vercel/blob": "^2.3.1",
         "drizzle-orm": "^0.45.1",
@@ -339,16 +338,6 @@
         "typescript": "catalog:",
       },
     },
-    "packages/validators": {
-      "name": "@acme/validators",
-      "dependencies": {
-        "zod": "catalog:",
-      },
-      "devDependencies": {
-        "@acme/tsconfig": "workspace:*",
-        "typescript": "catalog:",
-      },
-    },
     "tooling/github": {
       "name": "@acme/github",
     },
@@ -425,8 +414,6 @@
     "@acme/ui": ["@acme/ui@workspace:packages/ui"],
 
     "@acme/utils": ["@acme/utils@workspace:packages/utils"],
-
-    "@acme/validators": ["@acme/validators@workspace:packages/validators"],
 
     "@acme/web": ["@acme/web@workspace:apps/web"],
 
