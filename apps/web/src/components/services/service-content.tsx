@@ -2,7 +2,6 @@ import { CustomMDX } from "@acme/mdx";
 import type { ServiceType } from "@acme/types";
 import { Spinner } from "@acme/ui/spinner";
 import ZoomImage from "@acme/ui/zoom-image";
-import { ClientOnly } from "@tanstack/react-router";
 import { Suspense } from "react";
 import TechStacks from "../tech-stacks";
 import ServiceContact from "./service-contact";
@@ -45,13 +44,11 @@ export default function ServiceContent({
 
       {content && (
         <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
-          <ClientOnly>
-            <Suspense fallback={<Spinner className="size-6" />}>
-              <article className="prose prose-slate dark:prose-invert !max-w-none">
-                <CustomMDX source={content} />
-              </article>
-            </Suspense>
-          </ClientOnly>
+          <Suspense fallback={<Spinner className="size-6" />}>
+            <article className="prose prose-slate dark:prose-invert !max-w-none">
+              <CustomMDX source={content} />
+            </article>
+          </Suspense>
         </div>
       )}
 

@@ -5,7 +5,6 @@ import { Spinner } from "@acme/ui/spinner";
 import { formatDate } from "@acme/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
-  ClientOnly,
   createFileRoute,
   ErrorComponent,
   notFound,
@@ -81,13 +80,11 @@ function RouteComponent() {
           </div>
         </div>
 
-        <ClientOnly>
-          <Suspense fallback={<Spinner className="size-6" />}>
-            <article className="prose prose-slate dark:prose-invert !max-w-none">
-              <CustomMDX source={snippet.data?.code ?? ""} />
-            </article>
-          </Suspense>
-        </ClientOnly>
+        <Suspense fallback={<Spinner className="size-6" />}>
+          <article className="prose prose-slate dark:prose-invert !max-w-none">
+            <CustomMDX source={snippet.data?.code ?? ""} />
+          </article>
+        </Suspense>
       </div>
     </article>
   );

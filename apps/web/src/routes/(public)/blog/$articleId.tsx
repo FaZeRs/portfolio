@@ -10,7 +10,6 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import {
-  ClientOnly,
   createFileRoute,
   ErrorComponent,
   notFound,
@@ -269,13 +268,11 @@ function RouteComponent() {
             initial={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <ClientOnly>
-              <Suspense fallback={<Spinner className="size-6" />}>
-                <article className="prose prose-slate dark:prose-invert max-w-none! prose-headings:font-heading prose-a:text-violet-600 prose-headings:tracking-tight prose-a:no-underline hover:prose-a:text-violet-500 dark:prose-a:text-violet-400 dark:hover:prose-a:text-violet-300">
-                  <CustomMDX source={article.content ?? ""} />
-                </article>
-              </Suspense>
-            </ClientOnly>
+            <Suspense fallback={<Spinner className="size-6" />}>
+              <article className="prose prose-slate dark:prose-invert max-w-none! prose-headings:font-heading prose-a:text-violet-600 prose-headings:tracking-tight prose-a:no-underline hover:prose-a:text-violet-500 dark:prose-a:text-violet-400 dark:hover:prose-a:text-violet-300">
+                <CustomMDX source={article.content ?? ""} />
+              </article>
+            </Suspense>
           </motion.div>
 
           {/* Tags and share section */}
