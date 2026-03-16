@@ -10,9 +10,10 @@ import {
   DialogTrigger,
 } from "@acme/ui/dialog";
 import { Textarea } from "@acme/ui/textarea";
-import { useCompletion } from "@ai-sdk/react";
+import { createChatClientOptions } from "@tanstack/ai-client";
+import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
 import { SparklesIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 type AIAssistType =
@@ -86,20 +87,38 @@ export function AIAssistDialog({
   const [userPrompt, setUserPrompt] = useState("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
 
-  const { completion, complete, isLoading, stop, setCompletion } =
-    useCompletion({
-      api: "/api/ai/blog-assist",
-      body: {
-        type,
-        context: {
-          ...context,
-          topic: userPrompt || context.topic,
-        },
+  const chatOptions = useMemo(
+    () =>
+      createChatClientOptions({
+        connection: fetchServerSentEvents("/api/ai/blog-assist"),
+      }),
+    []
+  );
+
+  const { messages, sendMessage, isLoading, stop, setMessages } = useChat({
+    ...chatOptions,
+    body: {
+      type,
+      context: {
+        ...context,
+        topic: userPrompt || context.topic,
       },
-      onError: (error) => {
-        toast.error(`Failed to generate content: ${error.message}`);
-      },
-    });
+    },
+    onError: (error) => {
+      toast.error(`Failed to generate content: ${error.message}`);
+    },
+  });
+
+  const completion = useMemo(() => {
+    const lastAssistant = [...messages]
+      .reverse()
+      .find((m) => m.role === "assistant");
+    if (!lastAssistant) {
+      return "";
+    }
+    const textParts = lastAssistant.parts.filter((p) => p.type === "text");
+    return textParts.map((p) => ("content" in p ? p.content : "")).join("");
+  }, [messages]);
 
   // Parse titles when completion changes and type is title
   const titles =
@@ -119,13 +138,13 @@ export function AIAssistDialog({
   }, [titles, selectedTitle]);
 
   const handleGenerate = () => {
-    complete(userPrompt || context.topic || "");
+    sendMessage(userPrompt || context.topic || "");
   };
 
   const handleRegenerate = () => {
-    setCompletion("");
+    setMessages([]);
     setSelectedTitle("");
-    complete(userPrompt || context.topic || "");
+    sendMessage(userPrompt || context.topic || "");
   };
 
   const handleApply = () => {
@@ -134,7 +153,7 @@ export function AIAssistDialog({
       onApply(contentToApply);
       setOpen(false);
       setUserPrompt("");
-      setCompletion("");
+      setMessages([]);
       setSelectedTitle("");
     }
   };
@@ -145,17 +164,17 @@ export function AIAssistDialog({
     }
     setOpen(false);
     setUserPrompt("");
-    setCompletion("");
+    setMessages([]);
     setSelectedTitle("");
   };
 
   // Reset completion when dialog closes
   useEffect(() => {
     if (!open) {
-      setCompletion("");
+      setMessages([]);
       setSelectedTitle("");
     }
-  }, [open, setCompletion]);
+  }, [open, setMessages]);
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>

@@ -25,3 +25,16 @@ export const authMiddleware = createMiddleware().server(async ({ next }) => {
 
   return next({ context: { user: session.user } });
 });
+
+/**
+ * Optional auth middleware — resolves session if available, but does not block unauthenticated requests.
+ */
+export const optionalAuthMiddleware = createMiddleware().server(
+  async ({ next }) => {
+    const session = await auth.api.getSession({
+      headers: getRequest().headers,
+    });
+
+    return next({ context: { user: session?.user ?? null } });
+  }
+);

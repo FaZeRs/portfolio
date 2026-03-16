@@ -14,14 +14,16 @@ import {
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ArticleForm } from "~/components/blog/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getArticleById, $updateArticle } from "~/lib/server/blog";
 
 export const Route = createFileRoute("/(dashboard)/blog/$articleId/edit")({
   component: ArticlesEditPage,
-  loader: async ({ params: { articleId }, context: { trpc, queryClient } }) => {
-    const data = await queryClient.ensureQueryData(
-      trpc.blog.byId.queryOptions({ id: articleId })
-    );
+  loader: async ({ params: { articleId }, context: { queryClient } }) => {
+    const data = await queryClient.ensureQueryData({
+      queryKey: queryKeys.blog.byId(articleId),
+      queryFn: () => $getArticleById({ data: { id: articleId } }),
+    });
 
     return { title: data?.title };
   },
@@ -34,19 +36,20 @@ export const Route = createFileRoute("/(dashboard)/blog/$articleId/edit")({
 
 function ArticlesEditPage() {
   const { articleId } = Route.useParams();
-  const trpc = useTRPC();
 
-  const article = useSuspenseQuery(
-    trpc.blog.byId.queryOptions({ id: articleId })
-  );
+  const article = useSuspenseQuery({
+    queryKey: queryKeys.blog.byId(articleId),
+    queryFn: () => $getArticleById({ data: { id: articleId } }),
+  });
 
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const updateArticleMutation = useMutation({
-    ...trpc.blog.update.mutationOptions(),
+    mutationFn: (data: z.infer<typeof ArticleBaseSchema> & { id: string }) =>
+      $updateArticle({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.blog.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.blog.all });
       toast.success("Article updated successfully");
       form.reset();
       router.navigate({ to: "/blog" });

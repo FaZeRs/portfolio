@@ -14,19 +14,18 @@ import {
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ExperiencesForm } from "~/components/experiences/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getExperienceById, $updateExperience } from "~/lib/server/experience";
 
 export const Route = createFileRoute(
   "/(dashboard)/experiences/$experienceId/edit"
 )({
   component: ExperiencesEditPage,
-  loader: async ({
-    params: { experienceId },
-    context: { trpc, queryClient },
-  }) => {
-    const data = await queryClient.ensureQueryData(
-      trpc.experience.byId.queryOptions({ id: experienceId })
-    );
+  loader: async ({ params: { experienceId }, context: { queryClient } }) => {
+    const data = await queryClient.ensureQueryData({
+      queryKey: queryKeys.experience.byId(experienceId),
+      queryFn: () => $getExperienceById({ data: { id: experienceId } }),
+    });
 
     return { title: data?.title };
   },
@@ -39,19 +38,22 @@ export const Route = createFileRoute(
 
 function ExperiencesEditPage() {
   const { experienceId } = Route.useParams();
-  const trpc = useTRPC();
 
-  const experience = useSuspenseQuery(
-    trpc.experience.byId.queryOptions({ id: experienceId })
-  );
+  const experience = useSuspenseQuery({
+    queryKey: queryKeys.experience.byId(experienceId),
+    queryFn: () => $getExperienceById({ data: { id: experienceId } }),
+  });
 
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const updateExperienceMutation = useMutation({
-    ...trpc.experience.update.mutationOptions(),
+    mutationFn: (data: z.infer<typeof ExperienceBaseSchema> & { id: string }) =>
+      $updateExperience({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.experience.pathFilter());
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.experience.all,
+      });
       toast.success("Experience updated successfully");
       form.reset();
       router.navigate({ to: "/experiences" });

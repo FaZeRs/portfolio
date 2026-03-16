@@ -19,27 +19,28 @@ import {
   ErrorComponent,
   notFound,
 } from "@tanstack/react-router";
-import { TRPCClientError } from "@trpc/client";
 import { motion } from "framer-motion";
 import { Code2, ExternalLink, Sparkles } from "lucide-react";
 import { Suspense } from "react";
 import { siGithub } from "simple-icons";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
+import { $getProjectBySlug } from "~/lib/server";
 import {
   generateStructuredDataGraph,
   getProjectSchemas,
 } from "~/lib/structured-data";
-import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/projects/$projectId")({
-  loader: async ({ params: { projectId }, context: { trpc, queryClient } }) => {
+  loader: async ({ params: { projectId }, context: { queryClient } }) => {
     try {
-      const data = await queryClient.ensureQueryData(
-        trpc.project.bySlug.queryOptions({ slug: projectId })
-      );
+      const data = await queryClient.ensureQueryData({
+        queryKey: queryKeys.project.detail(projectId),
+        queryFn: () => $getProjectBySlug({ data: { slug: projectId } }),
+      });
       return {
         title: data?.title,
         description: data?.description,
@@ -52,8 +53,9 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
       };
     } catch (error) {
       if (
-        error instanceof TRPCClientError &&
-        error.data?.code === "NOT_FOUND"
+        error instanceof Error &&
+        (error.message === "Project not found" ||
+          error.message === "Project is not public")
       ) {
         throw notFound();
       }
@@ -105,10 +107,10 @@ export const Route = createFileRoute("/(public)/projects/$projectId")({
 
 function RouteComponent() {
   const { projectId } = Route.useParams();
-  const trpc = useTRPC();
-  const { data: project } = useSuspenseQuery(
-    trpc.project.bySlug.queryOptions({ slug: projectId })
-  );
+  const { data: project } = useSuspenseQuery({
+    queryKey: queryKeys.project.detail(projectId),
+    queryFn: () => $getProjectBySlug({ data: { slug: projectId } }),
+  });
 
   if (!project) {
     return null;

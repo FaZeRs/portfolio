@@ -1,8 +1,13 @@
 import { Readable } from "node:stream";
-import { appRouter, createTRPCContext } from "@acme/api";
+import {
+  blogService,
+  projectService,
+  serviceService,
+  snippetService,
+} from "@acme/api";
+import { db } from "@acme/db/client";
 import { createFileRoute } from "@tanstack/react-router";
 import { SitemapStream, streamToPromise } from "sitemap";
-import { auth } from "~/lib/auth/server";
 
 const SITE_URL = process.env.VITE_APP_URL ?? "http://localhost:3000";
 
@@ -21,17 +26,11 @@ interface SitemapItem {
 }
 
 async function generateSitemap(): Promise<string> {
-  const ctx = await createTRPCContext({
-    headers: new Headers(),
-    auth,
-  });
-  const caller = appRouter.createCaller(ctx);
-
   const [projects, articles, snippets, services] = await Promise.all([
-    caller.project.allPublic(),
-    caller.blog.allPublic(),
-    caller.snippet.allPublic(),
-    caller.service.allPublic(),
+    projectService.getAllPublic(db),
+    blogService.getAllPublic(db),
+    snippetService.getAllPublic(db),
+    serviceService.getAllPublic(db),
   ]);
 
   const staticPages: SitemapItem[] = [

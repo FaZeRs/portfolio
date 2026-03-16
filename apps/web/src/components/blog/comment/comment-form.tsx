@@ -10,7 +10,8 @@ import { FormEvent } from "react";
 import { toast } from "sonner";
 import { useSignInModal } from "~/hooks/use-sign-in-modal";
 import { authQueryOptions } from "~/lib/auth/queries";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createComment } from "~/lib/server";
 import CommentEditor, { useCommentEditor } from "./comment-editor";
 
 interface CommentFormProps {
@@ -24,11 +25,14 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
   const isAuthenticated = Boolean(currentUser);
 
   const { setOpen } = useSignInModal();
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
-    ...trpc.comment.create.mutationOptions(),
+    mutationFn: (data: {
+      articleId: string;
+      content: unknown;
+      parentId?: string;
+    }) => $createComment({ data }),
     onSuccess: () => {
       if (editor) {
         editor.clearValue();
@@ -40,9 +44,9 @@ export default function CommentForm({ articleId }: Readonly<CommentFormProps>) {
       console.error(error);
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries(
-        trpc.comment.all.queryOptions({ articleId })
-      );
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.comment.byArticle(articleId),
+      });
     },
   });
 

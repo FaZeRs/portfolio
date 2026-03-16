@@ -4,7 +4,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllPublicArticles } from "~/lib/server";
 import ArticleCard from "./blog/article-card";
 
 const containerVariants = {
@@ -27,10 +28,10 @@ const itemVariants = {
 };
 
 const RecentPosts = () => {
-  const trpc = useTRPC();
-  const { data: articles } = useSuspenseQuery(
-    trpc.blog.allPublic.queryOptions()
-  );
+  const { data: articles } = useSuspenseQuery({
+    queryKey: queryKeys.blog.listPublic(),
+    queryFn: () => $getAllPublicArticles(),
+  });
 
   const recentArticles = articles.slice(0, 3);
 

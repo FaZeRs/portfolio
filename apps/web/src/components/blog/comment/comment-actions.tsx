@@ -4,15 +4,15 @@ import { ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useCommentContext } from "~/contexts/comment";
 import { authQueryOptions } from "~/lib/auth/queries";
-import { useTRPC } from "~/lib/trpc";
+import { $reactToComment } from "~/lib/server";
 
 export default function CommentActions() {
   const { data: currentUser } = useSuspenseQuery(authQueryOptions());
   const isAuthenticated = Boolean(currentUser);
   const { comment, setIsReplying } = useCommentContext();
-  const trpc = useTRPC();
   const { mutate: reactMutation } = useMutation({
-    ...trpc.comment.react.mutationOptions(),
+    mutationFn: (data: { id: string; like: boolean }) =>
+      $reactToComment({ data }),
     onError: (_error) => {
       toast.error("Failed to react to comment");
     },

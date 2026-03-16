@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllPublicServices } from "~/lib/server";
 import ServiceCard from "./service-card";
 
 const containerVariants = {
@@ -23,10 +24,10 @@ const itemVariants = {
 };
 
 export default function Services() {
-  const trpc = useTRPC();
-  const { data: services } = useSuspenseQuery(
-    trpc.service.allPublic.queryOptions()
-  );
+  const { data: services } = useSuspenseQuery({
+    queryKey: queryKeys.service.listPublic(),
+    queryFn: () => $getAllPublicServices(),
+  });
 
   if (services.length === 0) {
     return null;

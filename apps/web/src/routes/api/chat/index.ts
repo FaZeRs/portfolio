@@ -1,13 +1,13 @@
-import { openai } from "@ai-sdk/openai";
+import { chat, toServerSentEventsResponse } from "@tanstack/ai";
+import { openaiText } from "@tanstack/ai-openai";
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, streamText, UIMessage } from "ai";
 import getTools from "~/lib/ai";
 
 export const Route = createFileRoute("/api/chat/")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { messages }: { messages: UIMessage[] } = await request.json();
+        const { messages } = await request.json();
 
         const calendlyUrl =
           process.env.CALENDLY_URL ?? "https://calendly.com/naurislinde/30min";
@@ -70,17 +70,14 @@ Always be helpful, professional, and enthusiastic about Nauris's work. Provide s
         try {
           const tools = getTools();
 
-          const result = streamText({
-            model: openai("gpt-5-nano"),
-            system: serviceKnowledge,
-            messages: await convertToModelMessages(messages),
+          const stream = chat({
+            adapter: openaiText("gpt-5-nano"),
+            systemPrompts: [serviceKnowledge],
+            messages,
             tools,
           });
 
-          return result.toUIMessageStreamResponse({
-            sendSources: false,
-            sendReasoning: true,
-          });
+          return toServerSentEventsResponse(stream);
         } catch (error) {
           return new Response(
             `Error: ${error instanceof Error ? error.message : "Internal server error"}`,

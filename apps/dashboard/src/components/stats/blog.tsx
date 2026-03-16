@@ -1,12 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getMonthlyBlogViews } from "~/lib/server/stats";
 import { StatsChart } from "./stats-chart";
 
 export function BlogViewsStats() {
-  const trpc = useTRPC();
-  const { data } = useSuspenseQuery(
-    trpc.stats.monthlyBlogViews.queryOptions({ months: 6 })
-  );
+  const { data } = useSuspenseQuery({
+    queryKey: queryKeys.stats.monthlyBlogViews(6),
+    queryFn: () => $getMonthlyBlogViews({ data: { months: 6 } }),
+  });
   return (
     <StatsChart
       chartColor="var(--chart-2)"

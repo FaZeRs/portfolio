@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-import { AppRouter } from "@acme/api";
 import { siteConfig } from "@acme/config";
 import { DevtoolsComponent } from "@acme/shared/dev-tools";
 import { ThemeProvider, useTheme } from "@acme/shared/theme-provider";
@@ -12,13 +11,11 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
-import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
 import appCss from "~/styles.css?url";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  trpc: TRPCOptionsProxy<AppRouter>;
   user: AuthQueryResult;
 }>()({
   beforeLoad: async ({ context }) => {

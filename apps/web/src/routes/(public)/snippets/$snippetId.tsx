@@ -10,18 +10,19 @@ import {
   ErrorComponent,
   notFound,
 } from "@tanstack/react-router";
-import { TRPCClientError } from "@trpc/client";
 import { Suspense } from "react";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
-import { useTRPC } from "~/lib/trpc";
+import { $getSnippetBySlug } from "~/lib/server";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/snippets/$snippetId")({
-  loader: async ({ params: { snippetId }, context: { trpc, queryClient } }) => {
+  loader: async ({ params: { snippetId }, context: { queryClient } }) => {
     try {
-      const data = await queryClient.ensureQueryData(
-        trpc.snippet.bySlug.queryOptions({ slug: snippetId })
-      );
+      const data = await queryClient.ensureQueryData({
+        queryKey: queryKeys.snippet.detail(snippetId),
+        queryFn: () => $getSnippetBySlug({ data: { slug: snippetId } }),
+      });
       return {
         title: data?.title,
         description: data?.description,
@@ -29,8 +30,9 @@ export const Route = createFileRoute("/(public)/snippets/$snippetId")({
       };
     } catch (error) {
       if (
-        error instanceof TRPCClientError &&
-        error.data?.code === "NOT_FOUND"
+        error instanceof Error &&
+        (error.message === "Snippet not found" ||
+          error.message === "Snippet is not public")
       ) {
         throw notFound();
       }
@@ -57,10 +59,10 @@ export const Route = createFileRoute("/(public)/snippets/$snippetId")({
 
 function RouteComponent() {
   const { snippetId } = Route.useParams();
-  const trpc = useTRPC();
-  const snippet = useSuspenseQuery(
-    trpc.snippet.bySlug.queryOptions({ slug: snippetId })
-  );
+  const snippet = useSuspenseQuery({
+    queryKey: queryKeys.snippet.detail(snippetId),
+    queryFn: () => $getSnippetBySlug({ data: { slug: snippetId } }),
+  });
 
   return (
     <article className="relative lg:gap-10 xl:grid xl:max-w-6xl 2xl:max-w-7xl">

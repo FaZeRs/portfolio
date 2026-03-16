@@ -4,18 +4,22 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import FilteredArticles from "~/components/blog/filtered-articles";
 import PageHeading from "~/components/page-heading";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
+import { $getAllPublicArticles } from "~/lib/server";
 import {
   generateStructuredDataGraph,
   getBlogListSchemas,
 } from "~/lib/structured-data";
-import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/blog/")({
   component: RouteComponent,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.blog.listPublic(),
+      queryFn: () => $getAllPublicArticles(),
+    }),
   head: () => {
     const seoData = seo({
       title: `Blog | ${siteConfig.title}`,
@@ -53,12 +57,14 @@ function BlogSkeleton() {
 }
 
 function RouteComponent() {
-  const trpc = useTRPC();
   const {
     data: articles,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.blog.allPublic.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.blog.listPublic(),
+    queryFn: () => $getAllPublicArticles(),
+  });
 
   return (
     <>

@@ -24,7 +24,8 @@ import {
 import { Loader2Icon, MoreVerticalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { authQueryOptions } from "~/lib/auth/queries";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $deleteComment } from "~/lib/server";
 
 interface CommentMenuProps {
   comment: CommentType;
@@ -35,18 +36,15 @@ export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
   const isAuthenticated = Boolean(currentUser);
   const { id, userId, articleId } = comment;
 
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
-    ...trpc.comment.delete.mutationOptions(),
+    mutationFn: (data: { id: string }) => $deleteComment({ data }),
     onSuccess: () => toast.success("Deleted a comment"),
     onError: (error) => toast.error(error.message),
     onSettled: () =>
-      queryClient.invalidateQueries(
-        trpc.comment.all.queryOptions({
-          articleId,
-        })
-      ),
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.comment.byArticle(articleId),
+      }),
   });
 
   return (
@@ -65,7 +63,7 @@ export default function CommentMenu({ comment }: Readonly<CommentMenuProps>) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {/*
-            Radix Dialog + DropdownMenu bug 🥺
+            Radix Dialog + DropdownMenu bug
             https://github.com/radix-ui/primitives/issues/1836
           */}
           <DialogTrigger asChild>

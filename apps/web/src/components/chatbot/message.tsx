@@ -1,5 +1,6 @@
-import { ChatStatus, UIMessage as MessageType } from "ai";
-import { memo, ReactNode } from "react";
+import type { UIMessage } from "@tanstack/ai-client";
+import type { ReactNode } from "react";
+import { memo } from "react";
 import { Message, MessageContent } from "~/components/ai-elements/message";
 import {
   Reasoning,
@@ -7,7 +8,7 @@ import {
   ReasoningTrigger,
 } from "~/components/ai-elements/reasoning";
 import { Response } from "~/components/ai-elements/response";
-import { ToolArticle, ToolExperience, ToolProject } from "~/lib/ai";
+import type { ToolArticle, ToolExperience, ToolProject } from "~/lib/ai";
 import { ArticleCard } from "./article-card";
 import { ArticleList } from "./article-list";
 import { ExperienceCard } from "./experience-card";
@@ -16,42 +17,34 @@ import { ProjectCard } from "./project-card";
 import { ProjectList } from "./project-list";
 import { ToolHandler } from "./tool-handler";
 
-const toolOutputRenderers = {
-  "tool-getProjects": (output: ToolProject[]) => (
-    <ProjectList projects={output} />
+const toolOutputRenderers: Record<string, (output: unknown) => ReactNode> = {
+  getProjects: (output) => <ProjectList projects={output as ToolProject[]} />,
+  searchProjects: (output) => (
+    <ProjectList projects={output as ToolProject[]} />
   ),
-  "tool-searchProjects": (output: ToolProject[]) => (
-    <ProjectList projects={output} />
+  getArticles: (output) => <ArticleList articles={output as ToolArticle[]} />,
+  searchArticles: (output) => (
+    <ArticleList articles={output as ToolArticle[]} />
   ),
-  "tool-getArticles": (output: ToolArticle[]) => (
-    <ArticleList articles={output} />
+  getExperience: (output) => (
+    <ExperienceList experiences={output as ToolExperience[]} />
   ),
-  "tool-searchArticles": (output: ToolArticle[]) => (
-    <ArticleList articles={output} />
+  searchExperience: (output) => (
+    <ExperienceList experiences={output as ToolExperience[]} />
   ),
-  "tool-getExperience": (output: ToolExperience[]) => (
-    <ExperienceList experiences={output} />
+  recommendProject: (output) => <ProjectCard project={output as ToolProject} />,
+  recommendArticle: (output) => <ArticleCard article={output as ToolArticle} />,
+  recommendExperience: (output) => (
+    <ExperienceCard experience={output as ToolExperience} />
   ),
-  "tool-searchExperience": (output: ToolExperience[]) => (
-    <ExperienceList experiences={output} />
-  ),
-  "tool-recommendProject": (output: ToolProject) => (
-    <ProjectCard project={output} />
-  ),
-  "tool-recommendArticle": (output: ToolArticle) => (
-    <ArticleCard article={output} />
-  ),
-  "tool-recommendExperience": (output: ToolExperience) => (
-    <ExperienceCard experience={output} />
-  ),
-} as const;
+};
 
 export const ChatMessage = memo(function ChatMessageComponent({
   message,
-  status,
+  isLoading,
 }: Readonly<{
-  message: MessageType;
-  status: ChatStatus;
+  message: UIMessage;
+  isLoading: boolean;
 }>) {
   return (
     <Message from={message.role} key={message.id}>
@@ -66,55 +59,44 @@ export const ChatMessage = memo(function ChatMessageComponent({
                     i
                   }`}
                 >
-                  {part.text}
+                  {part.content}
                 </Response>
               );
-            case "reasoning":
+            case "thinking":
               return (
                 <Reasoning
                   className="w-full"
-                  isStreaming={status === "streaming"}
+                  isStreaming={isLoading}
                   key={`${message.id}-${
                     // biome-ignore lint/suspicious/noArrayIndexKey: ignored using `--suppress`
                     i
                   }`}
                 >
                   <ReasoningTrigger />
-                  <ReasoningContent>{part.text}</ReasoningContent>
+                  <ReasoningContent>{part.content}</ReasoningContent>
                 </Reasoning>
               );
-            default: {
-              // Handle all tool cases uniformly
-              if (
-                part.type.startsWith("tool-") &&
-                part.type in toolOutputRenderers &&
-                "toolCallId" in part &&
-                "state" in part
-              ) {
-                const renderer =
-                  toolOutputRenderers[
-                    part.type as keyof typeof toolOutputRenderers
-                  ];
-                return (
-                  <ToolHandler
-                    key={part.toolCallId}
-                    outputRenderer={renderer}
-                    part={{
-                      toolCallId: part.toolCallId,
-                      state: part.state,
-                      type: part.type,
-                      input: ("input" in part
-                        ? part.input
-                        : undefined) as ReactNode,
-                      output: ("output" in part
-                        ? part.output
-                        : undefined) as ReactNode,
-                    }}
-                  />
-                );
+            case "tool-call": {
+              const renderer = toolOutputRenderers[part.name];
+              if (!renderer) {
+                return null;
               }
-              return null;
+              return (
+                <ToolHandler
+                  key={part.id}
+                  name={part.name}
+                  outputRenderer={renderer}
+                  part={{
+                    id: part.id,
+                    state: part.state,
+                    name: part.name,
+                    output: part.output as ReactNode,
+                  }}
+                />
+              );
             }
+            default:
+              return null;
           }
         })}
       </MessageContent>

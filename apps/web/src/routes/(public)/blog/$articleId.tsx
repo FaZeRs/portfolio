@@ -15,7 +15,6 @@ import {
   ErrorComponent,
   notFound,
 } from "@tanstack/react-router";
-import { TRPCClientError } from "@trpc/client";
 import { motion } from "framer-motion";
 import { Calendar, Clock, Eye, Heart, MessageCircle, Tag } from "lucide-react";
 import { Suspense, useEffect, useRef } from "react";
@@ -26,25 +25,26 @@ import LikeButton from "~/components/blog/like-button";
 import TableOfContents from "~/components/blog/toc";
 import BreadcrumbNavigation from "~/components/breadcrumb-navigation";
 import SocialShare from "~/components/social-share";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
+import { $getAllComments, $getArticleBySlug, $viewArticle } from "~/lib/server";
 import {
   generateStructuredDataGraph,
   getBlogPostSchemas,
 } from "~/lib/structured-data";
-import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/blog/$articleId")({
-  loader: async ({ params: { articleId }, context: { trpc, queryClient } }) => {
+  loader: async ({ params: { articleId }, context: { queryClient } }) => {
     try {
-      const data = await queryClient.ensureQueryData(
-        trpc.blog.bySlug.queryOptions({ slug: articleId })
-      );
-      await queryClient.prefetchQuery(
-        trpc.comment.all.queryOptions({
-          articleId: data?.id,
-        })
-      );
+      const data = await queryClient.ensureQueryData({
+        queryKey: queryKeys.blog.detail(articleId),
+        queryFn: () => $getArticleBySlug({ data: { slug: articleId } }),
+      });
+      await queryClient.prefetchQuery({
+        queryKey: queryKeys.comment.byArticle(data?.id),
+        queryFn: () => $getAllComments({ data: { articleId: data?.id } }),
+      });
       return {
         title: data?.title,
         description: data?.description,
@@ -56,8 +56,9 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
       };
     } catch (error) {
       if (
-        error instanceof TRPCClientError &&
-        error.data?.code === "NOT_FOUND"
+        error instanceof Error &&
+        (error.message === "Article not found" ||
+          error.message === "Article is not public")
       ) {
         throw notFound();
       }
@@ -111,16 +112,16 @@ export const Route = createFileRoute("/(public)/blog/$articleId")({
 
 function RouteComponent() {
   const { articleId } = Route.useParams();
-  const trpc = useTRPC();
-  const { data: article } = useSuspenseQuery(
-    trpc.blog.bySlug.queryOptions({ slug: articleId })
-  );
+  const { data: article } = useSuspenseQuery({
+    queryKey: queryKeys.blog.detail(articleId),
+    queryFn: () => $getArticleBySlug({ data: { slug: articleId } }),
+  });
 
   const queryClient = useQueryClient();
   const viewMutation = useMutation({
-    ...trpc.blog.view.mutationOptions(),
+    mutationFn: (data: { slug: string }) => $viewArticle({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.blog.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.blog.all });
     },
     onError: (error) => {
       console.error(error);

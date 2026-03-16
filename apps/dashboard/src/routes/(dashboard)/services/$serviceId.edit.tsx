@@ -14,14 +14,16 @@ import {
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ServicesForm } from "~/components/services/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getServiceById, $updateService } from "~/lib/server/service";
 
 export const Route = createFileRoute("/(dashboard)/services/$serviceId/edit")({
   component: ServicesEditPage,
-  loader: async ({ params: { serviceId }, context: { trpc, queryClient } }) => {
-    const data = await queryClient.ensureQueryData(
-      trpc.service.byId.queryOptions({ id: serviceId })
-    );
+  loader: async ({ params: { serviceId }, context: { queryClient } }) => {
+    const data = await queryClient.ensureQueryData({
+      queryKey: queryKeys.service.byId(serviceId),
+      queryFn: () => $getServiceById({ data: { id: serviceId } }),
+    });
 
     return { title: data?.title };
   },
@@ -34,19 +36,20 @@ export const Route = createFileRoute("/(dashboard)/services/$serviceId/edit")({
 
 function ServicesEditPage() {
   const { serviceId } = Route.useParams();
-  const trpc = useTRPC();
 
-  const service = useSuspenseQuery(
-    trpc.service.byId.queryOptions({ id: serviceId })
-  );
+  const service = useSuspenseQuery({
+    queryKey: queryKeys.service.byId(serviceId),
+    queryFn: () => $getServiceById({ data: { id: serviceId } }),
+  });
 
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const updateServiceMutation = useMutation({
-    ...trpc.service.update.mutationOptions(),
+    mutationFn: (data: z.infer<typeof ServiceBaseSchema> & { id: string }) =>
+      $updateService({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.service.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.service.all });
       toast.success("Service updated successfully");
       form.reset();
       router.navigate({ to: "/services" });

@@ -14,14 +14,16 @@ import {
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ProjectsForm } from "~/components/projects/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getProjectById, $updateProject } from "~/lib/server/project";
 
 export const Route = createFileRoute("/(dashboard)/projects/$projectId/edit")({
   component: ProjectsEditPage,
-  loader: async ({ params: { projectId }, context: { trpc, queryClient } }) => {
-    const data = await queryClient.ensureQueryData(
-      trpc.project.byId.queryOptions({ id: projectId })
-    );
+  loader: async ({ params: { projectId }, context: { queryClient } }) => {
+    const data = await queryClient.ensureQueryData({
+      queryKey: queryKeys.project.byId(projectId),
+      queryFn: () => $getProjectById({ data: { id: projectId } }),
+    });
 
     return { title: data?.title };
   },
@@ -34,19 +36,20 @@ export const Route = createFileRoute("/(dashboard)/projects/$projectId/edit")({
 
 function ProjectsEditPage() {
   const { projectId } = Route.useParams();
-  const trpc = useTRPC();
 
-  const project = useSuspenseQuery(
-    trpc.project.byId.queryOptions({ id: projectId })
-  );
+  const project = useSuspenseQuery({
+    queryKey: queryKeys.project.byId(projectId),
+    queryFn: () => $getProjectById({ data: { id: projectId } }),
+  });
 
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const updateProjectMutation = useMutation({
-    ...trpc.project.update.mutationOptions(),
+    mutationFn: (data: z.infer<typeof ProjectBaseSchema> & { id: string }) =>
+      $updateProject({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.project.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.project.all });
       toast.success("Project updated successfully");
       form.reset();
       router.navigate({ to: "/projects" });

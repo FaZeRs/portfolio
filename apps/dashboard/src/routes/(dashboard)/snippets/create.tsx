@@ -5,7 +5,8 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { SnippetsForm } from "~/components/snippets/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createSnippet } from "~/lib/server/snippet";
 
 export const Route = createFileRoute("/(dashboard)/snippets/create")({
   component: SnippetsCreatePage,
@@ -16,13 +17,13 @@ export const Route = createFileRoute("/(dashboard)/snippets/create")({
 
 function SnippetsCreatePage() {
   const router = useRouter();
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const createSnippetMutation = useMutation({
-    ...trpc.snippet.create.mutationOptions(),
+    mutationFn: (data: z.infer<typeof SnippetBaseSchema>) =>
+      $createSnippet({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.snippet.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.snippet.all });
       toast.success("Snippet created successfully");
       form.reset();
       router.navigate({ to: "/snippets" });

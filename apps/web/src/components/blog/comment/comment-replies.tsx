@@ -2,7 +2,8 @@ import { Button } from "@acme/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { useCommentContext } from "~/contexts/comment";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllComments } from "~/lib/server";
 import CommentItem from "./comment-item";
 
 interface CommentRepliesProps {
@@ -13,19 +14,26 @@ export default function CommentReplies({
   articleSlug,
 }: Readonly<CommentRepliesProps>) {
   const { comment, isOpenReplies, setIsOpenReplies } = useCommentContext();
-  const trpc = useTRPC();
 
-  const { data: comments, isLoading } = useQuery(
-    trpc.comment.all.queryOptions({
-      articleId: comment.comment.articleId,
-      parentId: comment.comment.id,
-    })
-  );
+  const { data: comments, isLoading } = useQuery({
+    queryKey: queryKeys.comment.byArticleAndParent(
+      comment.comment.articleId,
+      comment.comment.id
+    ),
+    queryFn: () =>
+      $getAllComments({
+        data: {
+          articleId: comment.comment.articleId,
+          parentId: comment.comment.id,
+        },
+      }),
+  });
 
   return (
     <div>
       {isOpenReplies && !isLoading ? (
-        comments?.map((reply) => (
+        // biome-ignore lint/suspicious/noExplicitAny: Drizzle relation types from $getAllComments
+        comments?.map((reply: any) => (
           <CommentItem
             articleSlug={articleSlug}
             comment={reply}

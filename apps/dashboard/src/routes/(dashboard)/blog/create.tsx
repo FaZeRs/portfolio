@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ArticleForm } from "~/components/blog/form";
 import authClient from "~/lib/auth/client";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createArticle } from "~/lib/server/blog";
 
 export const Route = createFileRoute("/(dashboard)/blog/create")({
   component: ArticlesCreatePage,
@@ -17,14 +18,15 @@ export const Route = createFileRoute("/(dashboard)/blog/create")({
 
 function ArticlesCreatePage() {
   const router = useRouter();
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
   const { data: session } = authClient.useSession();
 
   const createArticleMutation = useMutation({
-    ...trpc.blog.create.mutationOptions(),
+    mutationFn: (
+      data: z.infer<typeof ArticleBaseSchema> & { authorId: string }
+    ) => $createArticle({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.blog.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.blog.all });
       toast.success("Article created successfully");
       form.reset();
       router.navigate({ to: "/blog" });

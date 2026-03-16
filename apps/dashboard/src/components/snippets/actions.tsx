@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useTRPC } from "~/lib/trpc";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "~/lib/query-keys";
+import { $deleteSnippet } from "~/lib/server/snippet";
 import { ResourceActions } from "../resource-actions";
 
 interface DataTableRowActionsProps {
@@ -13,12 +14,7 @@ export function Actions({
   title,
   slug,
 }: Readonly<DataTableRowActionsProps>) {
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    ...trpc.snippet.delete.mutationOptions(),
-  });
 
   return (
     <ResourceActions
@@ -27,9 +23,12 @@ export function Actions({
       resourceType="snippet"
       title={title}
       trpcDeleteMutation={{
-        mutationFn: (resourceId: string) => mutation.mutateAsync(resourceId),
+        mutationFn: (resourceId: string) =>
+          $deleteSnippet({ data: resourceId }),
         invalidateQuery: async () => {
-          await queryClient.invalidateQueries(trpc.snippet.pathFilter());
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.snippet.all,
+          });
         },
       }}
       viewPath={`/snippets/${slug}`}

@@ -1,6 +1,6 @@
 import { cn } from "@acme/ui";
 import { Avatar, AvatarFallback, AvatarImage } from "@acme/ui/avatar";
-import type { UIMessage } from "ai";
+import type { UIMessage } from "@tanstack/ai-client";
 import type { ComponentProps, HTMLAttributes } from "react";
 
 export type MessageProps = HTMLAttributes<HTMLDivElement> & {

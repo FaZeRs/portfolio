@@ -67,6 +67,15 @@ export type CommentReactionType = typeof commentReactions.$inferSelect;
 export type GuestbookType = typeof guestbook.$inferSelect;
 export type ServiceType = typeof Service.$inferSelect;
 
+export interface CommentWithRelations {
+  comment: CommentType;
+  dislikesCount: number;
+  likesCount: number;
+  repliesCount: number;
+  user: UserType | null;
+  userReaction: CommentReactionType | null;
+}
+
 export interface ContributionCalendar {
   weeks: ContributionWeeks[];
 }

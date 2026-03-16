@@ -8,8 +8,7 @@ import {
   SelectValue,
 } from "@acme/ui/select";
 import { Textarea } from "@acme/ui/textarea";
-import type { ChatStatus } from "ai";
-import { Loader2Icon, SendIcon, SquareIcon, XIcon } from "lucide-react";
+import { SendIcon, SquareIcon, XIcon } from "lucide-react";
 import type {
   ComponentProps,
   HTMLAttributes,
@@ -133,24 +132,24 @@ export const PromptInputButton = ({
 };
 
 export type PromptInputSubmitProps = ComponentProps<typeof Button> & {
-  status?: ChatStatus;
+  isLoading?: boolean;
+  hasError?: boolean;
 };
 
 export const PromptInputSubmit = ({
   className,
   variant = "default",
   size = "icon",
-  status,
+  isLoading,
+  hasError,
   children,
   ...props
 }: PromptInputSubmitProps) => {
   let Icon = <SendIcon className="size-4" />;
 
-  if (status === "submitted") {
-    Icon = <Loader2Icon className="size-4 animate-spin" />;
-  } else if (status === "streaming") {
+  if (isLoading) {
     Icon = <SquareIcon className="size-4" />;
-  } else if (status === "error") {
+  } else if (hasError) {
     Icon = <XIcon className="size-4" />;
   }
 

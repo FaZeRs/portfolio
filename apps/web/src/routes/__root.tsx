@@ -1,4 +1,3 @@
-import { AppRouter } from "@acme/api";
 import { DevtoolsComponent } from "@acme/shared/dev-tools";
 import { ThemeProvider, useTheme } from "@acme/shared/theme-provider";
 import { Toaster } from "@acme/ui/sonner";
@@ -12,7 +11,6 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { createIsomorphicFn } from "@tanstack/react-start";
-import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import posthog from "posthog-js";
 import { CookieBanner } from "~/components/analytics/cookie-banner";
 import { AuthQueryResult, authQueryOptions } from "~/lib/auth/queries";
@@ -21,7 +19,6 @@ import appCss from "~/styles.css?url";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  trpc: TRPCOptionsProxy<AppRouter>;
   user: AuthQueryResult;
 }>()({
   beforeLoad: async ({ context }) => {

@@ -4,7 +4,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllPublicProjects } from "~/lib/server";
 import ProjectCard from "./projects/project-card";
 
 const containerVariants = {
@@ -27,10 +28,10 @@ const itemVariants = {
 };
 
 const FeaturedProjects = () => {
-  const trpc = useTRPC();
-  const { data: projects } = useSuspenseQuery(
-    trpc.project.allPublic.queryOptions()
-  );
+  const { data: projects } = useSuspenseQuery({
+    queryKey: queryKeys.project.listPublic(),
+    queryFn: () => $getAllPublicProjects(),
+  });
 
   // Get only featured projects or first 4 if none are featured
   const featured = projects.filter((p) => p.isFeatured).slice(0, 4);

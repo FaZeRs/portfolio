@@ -9,12 +9,16 @@ import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import { DataTable } from "~/components/data-table/data-table";
 import { snippetColumns } from "~/components/snippets/columns";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllSnippets } from "~/lib/server/snippet";
 
 export const Route = createFileRoute("/(dashboard)/snippets/")({
   component: Snippets,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.snippet.all.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.snippet.listAll(),
+      queryFn: () => $getAllSnippets(),
+    }),
   head: () => ({
     meta: [
       { title: "Snippets | Dashboard" },
@@ -51,13 +55,15 @@ function SnippetsError() {
 }
 
 function SnippetsContent() {
-  const trpc = useTRPC();
   const {
     data: snippets,
     error,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.snippet.all.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.snippet.listAll(),
+    queryFn: () => $getAllSnippets(),
+  });
 
   if (error) {
     return (

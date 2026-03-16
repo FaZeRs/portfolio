@@ -27,7 +27,8 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { navbarLinks } from "~/lib/constants/navbar";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $search } from "~/lib/server";
 
 export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const navigate = useNavigate();
@@ -35,7 +36,6 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const { setTheme } = useTheme();
-  const trpc = useTRPC();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -52,7 +52,8 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
   }, [open]);
 
   const { data: searchResults, isLoading: isSearching } = useQuery({
-    ...trpc.search.query.queryOptions({ query: debouncedQuery }),
+    queryKey: queryKeys.search.query(debouncedQuery),
+    queryFn: () => $search({ data: { query: debouncedQuery } }),
     enabled: debouncedQuery.length >= 2,
   });
 

@@ -9,12 +9,16 @@ import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import { DataTable } from "~/components/data-table/data-table";
 import { experienceColumns } from "~/components/experiences/columns";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllExperiences } from "~/lib/server/experience";
 
 export const Route = createFileRoute("/(dashboard)/experiences/")({
   component: Experiences,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.experience.all.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.experience.listAll(),
+      queryFn: () => $getAllExperiences(),
+    }),
   head: () => ({
     meta: [
       { title: "Experiences | Dashboard" },
@@ -51,13 +55,15 @@ function ExperiencesError() {
 }
 
 function ExperiencesContent() {
-  const trpc = useTRPC();
   const {
     data: experiences,
     error,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.experience.all.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.experience.listAll(),
+    queryFn: () => $getAllExperiences(),
+  });
 
   if (error) {
     return (

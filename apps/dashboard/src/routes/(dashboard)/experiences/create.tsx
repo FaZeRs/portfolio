@@ -5,7 +5,8 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ExperiencesForm } from "~/components/experiences/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createExperience } from "~/lib/server/experience";
 
 export const Route = createFileRoute("/(dashboard)/experiences/create")({
   component: ExperiencesCreatePage,
@@ -16,13 +17,15 @@ export const Route = createFileRoute("/(dashboard)/experiences/create")({
 
 function ExperiencesCreatePage() {
   const router = useRouter();
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const createExperienceMutation = useMutation({
-    ...trpc.experience.create.mutationOptions(),
+    mutationFn: (data: z.infer<typeof ExperienceBaseSchema>) =>
+      $createExperience({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.experience.pathFilter());
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.experience.all,
+      });
       toast.success("Experience created successfully");
       form.reset();
       router.navigate({ to: "/experiences" });

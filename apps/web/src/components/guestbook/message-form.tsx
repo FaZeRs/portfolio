@@ -6,7 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Send } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createGuestbookEntry } from "~/lib/server";
 
 interface MessageFormProps {
   user: UserType;
@@ -14,10 +15,9 @@ interface MessageFormProps {
 
 export default function MessageForm({ user }: Readonly<MessageFormProps>) {
   const formRef = useRef<HTMLFormElement>(null);
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
   const { mutateAsync, isPending } = useMutation({
-    ...trpc.guestbook.create.mutationOptions(),
+    mutationFn: (data: { message: string }) => $createGuestbookEntry({ data }),
     onSuccess: () => {
       formRef.current?.reset();
       toast.success("Message posted");
@@ -27,7 +27,9 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
       console.error(error);
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries(trpc.guestbook.all.queryOptions());
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.guestbook.list(),
+      });
     },
   });
 

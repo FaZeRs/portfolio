@@ -8,7 +8,8 @@ import { FormEvent } from "react";
 import { toast } from "sonner";
 import { useCommentContext } from "~/contexts/comment";
 import { authQueryOptions } from "~/lib/auth/queries";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createComment } from "~/lib/server";
 import CommentEditor, { useCommentEditor } from "./comment-editor";
 
 export default function CommentReply() {
@@ -17,10 +18,13 @@ export default function CommentReply() {
   const { data: currentUser } = useSuspenseQuery(authQueryOptions());
   const isAuthenticated = Boolean(currentUser);
 
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
-    ...trpc.comment.create.mutationOptions(),
+    mutationFn: (data: {
+      articleId: string;
+      content: unknown;
+      parentId?: string;
+    }) => $createComment({ data }),
     onSuccess: () => {
       if (editor) {
         editor.clearValue();
@@ -33,12 +37,17 @@ export default function CommentReply() {
       console.error(error);
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries(
-        trpc.comment.all.queryOptions({
-          articleId: comment.comment.articleId,
-          parentId: comment.comment.id,
-        })
-      );
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.comment.byArticle(comment.comment.articleId),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.comment.byArticleAndParent(
+            comment.comment.articleId,
+            comment.comment.id
+          ),
+        }),
+      ]);
     },
   });
 

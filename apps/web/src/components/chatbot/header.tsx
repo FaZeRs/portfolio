@@ -1,14 +1,13 @@
 import { Button } from "@acme/ui/button";
-import { ChatStatus } from "ai";
 import { Bot, Trash2, X } from "lucide-react";
 import { memo } from "react";
 
 export const ChatHeader = memo(function ChatHeaderComponent({
-  status,
+  isLoading,
   setIsOpen,
   clearHistory,
 }: Readonly<{
-  status: ChatStatus;
+  isLoading: boolean;
   setIsOpen: (isOpen: boolean) => void;
   clearHistory: () => void;
 }>) {
@@ -23,7 +22,7 @@ export const ChatHeader = memo(function ChatHeaderComponent({
             AI Assistant
           </h3>
           <p className="text-muted-foreground text-xs">
-            {status === "streaming" ? "Typing..." : "Online"}
+            {isLoading ? "Typing..." : "Online"}
           </p>
         </div>
       </div>

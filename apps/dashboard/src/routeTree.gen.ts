@@ -19,7 +19,6 @@ import { Route as dashboardServicesIndexRouteImport } from "./routes/(dashboard)
 import { Route as dashboardProjectsIndexRouteImport } from "./routes/(dashboard)/projects/index";
 import { Route as dashboardExperiencesIndexRouteImport } from "./routes/(dashboard)/experiences/index";
 import { Route as dashboardBlogIndexRouteImport } from "./routes/(dashboard)/blog/index";
-import { Route as ApiTrpcSplatRouteImport } from "./routes/api/trpc/$";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 import { Route as dashboardSnippetsCreateRouteImport } from "./routes/(dashboard)/snippets/create";
 import { Route as dashboardServicesCreateRouteImport } from "./routes/(dashboard)/services/create";
@@ -81,11 +80,6 @@ const dashboardBlogIndexRoute = dashboardBlogIndexRouteImport.update({
   id: "/blog/",
   path: "/blog/",
   getParentRoute: () => dashboardLayoutRoute,
-} as any);
-const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
-  id: "/api/trpc/$",
-  path: "/api/trpc/$",
-  getParentRoute: () => rootRouteImport,
 } as any);
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: "/api/auth/$",
@@ -163,7 +157,6 @@ export interface FileRoutesByFullPath {
   "/services/create": typeof dashboardServicesCreateRoute;
   "/snippets/create": typeof dashboardSnippetsCreateRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/blog/": typeof dashboardBlogIndexRoute;
   "/experiences/": typeof dashboardExperiencesIndexRoute;
   "/projects/": typeof dashboardProjectsIndexRoute;
@@ -186,7 +179,6 @@ export interface FileRoutesByTo {
   "/services/create": typeof dashboardServicesCreateRoute;
   "/snippets/create": typeof dashboardSnippetsCreateRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/blog": typeof dashboardBlogIndexRoute;
   "/experiences": typeof dashboardExperiencesIndexRoute;
   "/projects": typeof dashboardProjectsIndexRoute;
@@ -212,7 +204,6 @@ export interface FileRoutesById {
   "/(dashboard)/services/create": typeof dashboardServicesCreateRoute;
   "/(dashboard)/snippets/create": typeof dashboardSnippetsCreateRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/(dashboard)/blog/": typeof dashboardBlogIndexRoute;
   "/(dashboard)/experiences/": typeof dashboardExperiencesIndexRoute;
   "/(dashboard)/projects/": typeof dashboardProjectsIndexRoute;
@@ -237,7 +228,6 @@ export interface FileRouteTypes {
     | "/services/create"
     | "/snippets/create"
     | "/api/auth/$"
-    | "/api/trpc/$"
     | "/blog/"
     | "/experiences/"
     | "/projects/"
@@ -260,7 +250,6 @@ export interface FileRouteTypes {
     | "/services/create"
     | "/snippets/create"
     | "/api/auth/$"
-    | "/api/trpc/$"
     | "/blog"
     | "/experiences"
     | "/projects"
@@ -285,7 +274,6 @@ export interface FileRouteTypes {
     | "/(dashboard)/services/create"
     | "/(dashboard)/snippets/create"
     | "/api/auth/$"
-    | "/api/trpc/$"
     | "/(dashboard)/blog/"
     | "/(dashboard)/experiences/"
     | "/(dashboard)/projects/"
@@ -304,7 +292,6 @@ export interface RootRouteChildren {
   authLayoutRoute: typeof authLayoutRouteWithChildren;
   dashboardLayoutRoute: typeof dashboardLayoutRouteWithChildren;
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
-  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute;
   ApiAiBlogAssistIndexRoute: typeof ApiAiBlogAssistIndexRoute;
 }
 
@@ -379,13 +366,6 @@ declare module "@tanstack/react-router" {
       fullPath: "/blog/";
       preLoaderRoute: typeof dashboardBlogIndexRouteImport;
       parentRoute: typeof dashboardLayoutRoute;
-    };
-    "/api/trpc/$": {
-      id: "/api/trpc/$";
-      path: "/api/trpc/$";
-      fullPath: "/api/trpc/$";
-      preLoaderRoute: typeof ApiTrpcSplatRouteImport;
-      parentRoute: typeof rootRouteImport;
     };
     "/api/auth/$": {
       id: "/api/auth/$";
@@ -535,7 +515,6 @@ const rootRouteChildren: RootRouteChildren = {
   authLayoutRoute: authLayoutRouteWithChildren,
   dashboardLayoutRoute: dashboardLayoutRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
   ApiAiBlogAssistIndexRoute: ApiAiBlogAssistIndexRoute,
 };
 export const routeTree = rootRouteImport

@@ -2,7 +2,8 @@ import { ExperienceType } from "@acme/types";
 import { LazyImage } from "@acme/ui/lazy-image";
 import { formatDate } from "@acme/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllPublicExperiences } from "~/lib/server";
 
 interface ExperienceItemProps {
   experience: ExperienceType;
@@ -87,10 +88,10 @@ function ExperienceItem({ experience }: Readonly<ExperienceItemProps>) {
 }
 
 const ExperienceSection = () => {
-  const trpc = useTRPC();
-  const { data: experiences } = useSuspenseQuery(
-    trpc.experience.allPublic.queryOptions()
-  );
+  const { data: experiences } = useSuspenseQuery({
+    queryKey: queryKeys.experience.listPublic(),
+    queryFn: () => $getAllPublicExperiences(),
+  });
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

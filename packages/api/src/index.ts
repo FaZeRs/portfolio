@@ -1,24 +1,15 @@
-import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+/** biome-ignore-all lint/performance/noBarrelFile: valid case */
 
-import type { AppRouter } from "./root";
-
-/**
- * Inference helpers for input types
- * @example
- * type PostByIdInput = RouterInputs['post']['byId']
- *      ^? { id: number }
- */
-type RouterInputs = inferRouterInputs<AppRouter>;
-
-/**
- * Inference helpers for output types
- * @example
- * type AllPostsOutput = RouterOutputs['post']['all']
- *      ^? Post[]
- */
-type RouterOutputs = inferRouterOutputs<AppRouter>;
-
-// biome-ignore lint/performance/noBarrelFile: valid case
-export { type AppRouter, appRouter } from "./root";
-export { createTRPCContext } from "./trpc";
-export type { RouterInputs, RouterOutputs };
+export { deleteFile, uploadImage } from "./s3";
+export {
+  blogService,
+  commentService,
+  experienceService,
+  guestbookService,
+  projectService,
+  searchService,
+  serviceService,
+  snippetService,
+  statsService,
+  userService,
+} from "./services";

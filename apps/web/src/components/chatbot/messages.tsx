@@ -1,4 +1,4 @@
-import { ChatStatus, UIMessage } from "ai";
+import type { UIMessage } from "@tanstack/ai-client";
 import { Bot } from "lucide-react";
 import { memo } from "react";
 import {
@@ -7,20 +7,14 @@ import {
   ConversationScrollButton,
 } from "~/components/ai-elements/conversation";
 import { Loader } from "~/components/ai-elements/loader";
-import {
-  Source,
-  Sources,
-  SourcesContent,
-  SourcesTrigger,
-} from "~/components/ai-elements/source";
 import { ChatMessage } from "./message";
 
 export const ChatMessages = memo(function ChatMessagesComponent({
   messages,
-  status,
+  isLoading,
 }: Readonly<{
   messages: UIMessage[];
-  status: ChatStatus;
+  isLoading: boolean;
 }>) {
   return (
     <Conversation className="flex-1 px-4 py-2">
@@ -42,44 +36,10 @@ export const ChatMessages = memo(function ChatMessagesComponent({
 
         {messages.map((message) => (
           <div className="space-y-2" key={message.id}>
-            {message.role === "assistant" && (
-              <Sources>
-                {message.parts.map((part, partIndex) => {
-                  if (part.type === "source-url") {
-                    return (
-                      <>
-                        <SourcesTrigger
-                          count={
-                            message.parts.filter((p) => p.type === "source-url")
-                              .length
-                          }
-                        />
-                        <SourcesContent
-                          key={`${message.id}-${
-                            // biome-ignore lint/suspicious/noArrayIndexKey: ignored using `--suppress`
-                            partIndex
-                          }`}
-                        >
-                          <Source
-                            href={part.url}
-                            key={`${message.id}-${
-                              // biome-ignore lint/suspicious/noArrayIndexKey: ignored using `--suppress`
-                              partIndex
-                            }`}
-                            title={part.url}
-                          />
-                        </SourcesContent>
-                      </>
-                    );
-                  }
-                  return null;
-                })}
-              </Sources>
-            )}
-            <ChatMessage message={message} status={status} />
+            <ChatMessage isLoading={isLoading} message={message} />
           </div>
         ))}
-        {status === "submitted" && <Loader />}
+        {isLoading && messages.at(-1)?.role === "user" && <Loader />}
       </ConversationContent>
       <ConversationScrollButton />
     </Conversation>

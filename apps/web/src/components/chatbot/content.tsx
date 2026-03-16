@@ -1,10 +1,15 @@
-import { useChat } from "@ai-sdk/react";
+import { createChatClientOptions } from "@tanstack/ai-client";
+import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useChatHistory } from "~/hooks/use-chat-history";
 import { ChatHeader } from "./header";
 import { ChatInput } from "./input";
 import { ChatMessages } from "./messages";
+
+const chatOptions = createChatClientOptions({
+  connection: fetchServerSentEvents("/api/chat"),
+});
 
 export function ChatbotContent({
   setIsOpen,
@@ -17,9 +22,20 @@ export function ChatbotContent({
     clearHistory: clearStoredHistory,
   } = useChatHistory();
 
-  const { messages, sendMessage, status, setMessages } = useChat({
-    messages: storedMessages,
-  });
+  const { messages, sendMessage, isLoading, setMessages } =
+    useChat(chatOptions);
+
+  // Restore stored messages on mount
+  const hasRestoredRef = useRef(false);
+  useEffect(() => {
+    if (hasRestoredRef.current) {
+      return;
+    }
+    if (storedMessages.length > 0 && messages.length === 0) {
+      hasRestoredRef.current = true;
+      setMessages(storedMessages);
+    }
+  }, [storedMessages, messages, setMessages]);
 
   useEffect(() => {
     setStoredMessages(messages);
@@ -42,7 +58,7 @@ export function ChatbotContent({
 
       <motion.div
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="fixed inset-4 z-50 lg:inset-auto lg:right-6 lg:bottom-24 lg:h-[650px] lg:w-[420px]"
+        className="fixed inset-4 z-50 lg:inset-auto lg:right-6 lg:bottom-24 lg:h-[550px] lg:w-[420px]"
         exit={{ opacity: 0, scale: 0.95, y: 10 }}
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         transition={{
@@ -55,12 +71,12 @@ export function ChatbotContent({
         <div className="flex h-full flex-col rounded-2xl border border-border/50 bg-background/95 shadow-2xl ring-1 ring-black/5 backdrop-blur-xl">
           <ChatHeader
             clearHistory={clearHistory}
+            isLoading={isLoading}
             setIsOpen={setIsOpen}
-            status={status}
           />
           <div className="flex min-h-0 flex-1 flex-col">
-            <ChatMessages messages={messages} status={status} />
-            <ChatInput sendMessage={sendMessage} status={status} />
+            <ChatMessages isLoading={isLoading} messages={messages} />
+            <ChatInput isLoading={isLoading} sendMessage={sendMessage} />
           </div>
         </div>
       </motion.div>

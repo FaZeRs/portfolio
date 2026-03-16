@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useTRPC } from "~/lib/trpc";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "~/lib/query-keys";
+import { $deleteExperience } from "~/lib/server/experience";
 import { ResourceActions } from "../resource-actions";
 
 interface DataTableRowActionsProps {
@@ -8,12 +9,7 @@ interface DataTableRowActionsProps {
 }
 
 export function Actions({ id, title }: Readonly<DataTableRowActionsProps>) {
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    ...trpc.experience.delete.mutationOptions(),
-  });
 
   return (
     <ResourceActions
@@ -22,9 +18,12 @@ export function Actions({ id, title }: Readonly<DataTableRowActionsProps>) {
       resourceType="experience"
       title={title}
       trpcDeleteMutation={{
-        mutationFn: (resourceId: string) => mutation.mutateAsync(resourceId),
+        mutationFn: (resourceId: string) =>
+          $deleteExperience({ data: resourceId }),
         invalidateQuery: async () => {
-          await queryClient.invalidateQueries(trpc.experience.pathFilter());
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.experience.all,
+          });
         },
       }}
     />

@@ -1,4 +1,4 @@
-import { CommentReactionType, CommentType, UserType } from "@acme/types";
+import { CommentWithRelations } from "@acme/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@acme/ui/avatar";
 import { Skeleton } from "@acme/ui/skeleton";
 import { JSONContent } from "@tiptap/react";
@@ -13,14 +13,7 @@ import CommentReply from "./comment-reply";
 
 interface CommentItemProps {
   articleSlug: string;
-  comment: {
-    comment: CommentType;
-    user: UserType | null;
-    likesCount: number;
-    dislikesCount: number;
-    repliesCount: number;
-    userReaction: CommentReactionType | null;
-  };
+  comment: CommentWithRelations;
 }
 
 export default function CommentItem({

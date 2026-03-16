@@ -28,7 +28,6 @@ import { Route as publicSnippetsIndexRouteImport } from "./routes/(public)/snipp
 import { Route as publicProjectsIndexRouteImport } from "./routes/(public)/projects/index";
 import { Route as publicBookmarksIndexRouteImport } from "./routes/(public)/bookmarks/index";
 import { Route as publicBlogIndexRouteImport } from "./routes/(public)/blog/index";
-import { Route as ApiTrpcSplatRouteImport } from "./routes/api/trpc/$";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 import { Route as publicSnippetsSnippetIdRouteImport } from "./routes/(public)/snippets/$snippetId";
 import { Route as publicServicesServiceIdRouteImport } from "./routes/(public)/services/$serviceId";
@@ -131,11 +130,6 @@ const publicBlogIndexRoute = publicBlogIndexRouteImport.update({
   path: "/blog/",
   getParentRoute: () => publicLayoutRoute,
 } as any);
-const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
-  id: "/api/trpc/$",
-  path: "/api/trpc/$",
-  getParentRoute: () => rootRouteImport,
-} as any);
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: "/api/auth/$",
   path: "/api/auth/$",
@@ -195,7 +189,6 @@ export interface FileRoutesByFullPath {
   "/services/$serviceId": typeof publicServicesServiceIdRoute;
   "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/blog/": typeof publicBlogIndexRoute;
   "/bookmarks/": typeof publicBookmarksIndexRoute;
   "/projects/": typeof publicProjectsIndexRoute;
@@ -223,7 +216,6 @@ export interface FileRoutesByTo {
   "/services/$serviceId": typeof publicServicesServiceIdRoute;
   "/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/blog": typeof publicBlogIndexRoute;
   "/bookmarks": typeof publicBookmarksIndexRoute;
   "/projects": typeof publicProjectsIndexRoute;
@@ -254,7 +246,6 @@ export interface FileRoutesById {
   "/(public)/services/$serviceId": typeof publicServicesServiceIdRoute;
   "/(public)/snippets/$snippetId": typeof publicSnippetsSnippetIdRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
-  "/api/trpc/$": typeof ApiTrpcSplatRoute;
   "/(public)/blog/": typeof publicBlogIndexRoute;
   "/(public)/bookmarks/": typeof publicBookmarksIndexRoute;
   "/(public)/projects/": typeof publicProjectsIndexRoute;
@@ -284,7 +275,6 @@ export interface FileRouteTypes {
     | "/services/$serviceId"
     | "/snippets/$snippetId"
     | "/api/auth/$"
-    | "/api/trpc/$"
     | "/blog/"
     | "/bookmarks/"
     | "/projects/"
@@ -312,7 +302,6 @@ export interface FileRouteTypes {
     | "/services/$serviceId"
     | "/snippets/$snippetId"
     | "/api/auth/$"
-    | "/api/trpc/$"
     | "/blog"
     | "/bookmarks"
     | "/projects"
@@ -342,7 +331,6 @@ export interface FileRouteTypes {
     | "/(public)/services/$serviceId"
     | "/(public)/snippets/$snippetId"
     | "/api/auth/$"
-    | "/api/trpc/$"
     | "/(public)/blog/"
     | "/(public)/bookmarks/"
     | "/(public)/projects/"
@@ -360,7 +348,6 @@ export interface RootRouteChildren {
   LlmsDottxtRoute: typeof LlmsDottxtRoute;
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute;
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
-  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute;
   ApiChangelogIndexRoute: typeof ApiChangelogIndexRoute;
   ApiChatIndexRoute: typeof ApiChatIndexRoute;
   ApiContactIndexRoute: typeof ApiContactIndexRoute;
@@ -503,13 +490,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof publicBlogIndexRouteImport;
       parentRoute: typeof publicLayoutRoute;
     };
-    "/api/trpc/$": {
-      id: "/api/trpc/$";
-      path: "/api/trpc/$";
-      fullPath: "/api/trpc/$";
-      preLoaderRoute: typeof ApiTrpcSplatRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
     "/api/auth/$": {
       id: "/api/auth/$";
       path: "/api/auth/$";
@@ -629,7 +609,6 @@ const rootRouteChildren: RootRouteChildren = {
   LlmsDottxtRoute: LlmsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
   ApiChangelogIndexRoute: ApiChangelogIndexRoute,
   ApiChatIndexRoute: ApiChatIndexRoute,
   ApiContactIndexRoute: ApiContactIndexRoute,

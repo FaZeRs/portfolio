@@ -4,14 +4,18 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
 import Snippets from "~/components/snippets";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
-import { useTRPC } from "~/lib/trpc";
+import { $getAllPublicSnippets } from "~/lib/server";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/snippets/")({
   component: RouteComponent,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.snippet.allPublic.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.snippet.listPublic(),
+      queryFn: () => $getAllPublicSnippets(),
+    }),
   head: () => {
     const seoData = seo({
       title: `Snippets | ${siteConfig.title}`,
@@ -39,12 +43,14 @@ function SnippetsSkeleton() {
 }
 
 function RouteComponent() {
-  const trpc = useTRPC();
   const {
     data: snippets,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.snippet.allPublic.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.snippet.listPublic(),
+    queryFn: () => $getAllPublicSnippets(),
+  });
 
   return (
     <>

@@ -9,12 +9,16 @@ import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import { DataTable } from "~/components/data-table/data-table";
 import { projectColumns } from "~/components/projects/columns";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllProjects } from "~/lib/server/project";
 
 export const Route = createFileRoute("/(dashboard)/projects/")({
   component: Projects,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.project.all.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.project.listAll(),
+      queryFn: () => $getAllProjects(),
+    }),
   head: () => ({
     meta: [
       { title: "Projects | Dashboard" },
@@ -51,13 +55,15 @@ function ProjectsError() {
 }
 
 function ProjectsContent() {
-  const trpc = useTRPC();
   const {
     data: projects,
     error,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.project.all.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.project.listAll(),
+    queryFn: () => $getAllProjects(),
+  });
 
   if (error) {
     return (

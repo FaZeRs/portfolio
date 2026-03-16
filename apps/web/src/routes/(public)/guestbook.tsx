@@ -8,14 +8,18 @@ import SignInModal from "~/components/auth/sign-in-modal";
 import MessageForm from "~/components/guestbook/message-form";
 import Messages from "~/components/guestbook/messages";
 import PageHeading from "~/components/page-heading";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
-import { useTRPC } from "~/lib/trpc";
+import { $getAllGuestbookEntries } from "~/lib/server";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/guestbook")({
   component: RouteComponent,
-  loader: async ({ context: { trpc, queryClient, user } }) => {
-    await queryClient.prefetchQuery(trpc.guestbook.all.queryOptions());
+  loader: async ({ context: { queryClient, user } }) => {
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.guestbook.list(),
+      queryFn: () => $getAllGuestbookEntries(),
+    });
     return { user };
   },
   head: () => {
@@ -60,12 +64,14 @@ function GuestbookSkeleton() {
 }
 
 function RouteComponent() {
-  const trpc = useTRPC();
   const {
     data: messages,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.guestbook.all.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.guestbook.list(),
+    queryFn: () => $getAllGuestbookEntries(),
+  });
   const { user } = Route.useLoaderData();
 
   return (

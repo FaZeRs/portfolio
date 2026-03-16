@@ -2,15 +2,16 @@ import { cn } from "@acme/ui";
 import { buttonVariants } from "@acme/ui/button";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllPublicArticles } from "~/lib/server";
 import SectionHeading from "../section-heading";
 import ArticleCard from "./article-card";
 
 const BlogSection = () => {
-  const trpc = useTRPC();
-  const { data: articles } = useSuspenseQuery(
-    trpc.blog.allPublic.queryOptions()
-  );
+  const { data: articles } = useSuspenseQuery({
+    queryKey: queryKeys.blog.listPublic(),
+    queryFn: () => $getAllPublicArticles(),
+  });
 
   return (
     <div>

@@ -4,18 +4,22 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import PageHeading from "~/components/page-heading";
 import Projects from "~/components/projects/projects";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
+import { $getAllPublicProjects } from "~/lib/server";
 import {
   generateStructuredDataGraph,
   getProjectListSchemas,
 } from "~/lib/structured-data";
-import { useTRPC } from "~/lib/trpc";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/projects/")({
   component: RouteComponent,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.project.listPublic(),
+      queryFn: () => $getAllPublicProjects(),
+    }),
   head: () => {
     const seoData = seo({
       title: `Projects | ${siteConfig.title}`,
@@ -53,12 +57,14 @@ function ProjectsSkeleton() {
 }
 
 function RouteComponent() {
-  const trpc = useTRPC();
   const {
     data: projects,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.project.allPublic.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.project.listPublic(),
+    queryFn: () => $getAllPublicProjects(),
+  });
 
   return (
     <>

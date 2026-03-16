@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import type { ToolCallState } from "@tanstack/ai-client";
+import type { ReactNode } from "react";
 import {
   Tool,
   ToolContent,
@@ -7,33 +8,31 @@ import {
 } from "~/components/ai-elements/tool";
 
 interface ToolPart {
-  input?: ReactNode;
+  id: string;
+  name: string;
   output?: ReactNode;
-  state: string;
-  toolCallId: string;
-  type: string;
+  state: ToolCallState;
 }
 
 interface ToolHandlerProps {
+  name: string;
   // biome-ignore lint/suspicious/noExplicitAny: Complex union types from AI library
   outputRenderer: (output: any) => ReactNode;
   part: ToolPart;
 }
 
 export function ToolHandler({
+  name,
   part,
   outputRenderer,
 }: Readonly<ToolHandlerProps>) {
-  const { toolCallId, state, type, output } = part;
+  const { id, state, output } = part;
 
   return (
-    <Tool defaultOpen={true} key={toolCallId}>
-      {/* biome-ignore lint/suspicious/noExplicitAny: AI library types */}
-      <ToolHeader state={state as any} type={type as any} />
+    <Tool defaultOpen={true} key={id}>
+      <ToolHeader hasOutput={!!output} name={name} state={state} />
       <ToolContent>
-        {state === "output-available" && output && (
-          <ToolOutput errorText={undefined} output={outputRenderer(output)} />
-        )}
+        {output && <ToolOutput output={outputRenderer(output)} />}
       </ToolContent>
     </Tool>
   );

@@ -1,17 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BlogViewsStats } from "~/components/stats/blog";
 import { UsersStats } from "~/components/stats/users";
+import { queryKeys } from "~/lib/query-keys";
+import { $getMonthlyBlogViews, $getMonthlyUsers } from "~/lib/server/stats";
 
 export const Route = createFileRoute("/(dashboard)/")({
   component: DashboardIndex,
-  loader: async ({ context: { trpc, queryClient } }) => {
+  loader: async ({ context: { queryClient } }) => {
     await Promise.all([
-      queryClient.prefetchQuery(
-        trpc.stats.monthlyBlogViews.queryOptions({ months: 6 })
-      ),
-      queryClient.prefetchQuery(
-        trpc.stats.monthlyUsers.queryOptions({ months: 6 })
-      ),
+      queryClient.prefetchQuery({
+        queryKey: queryKeys.stats.monthlyBlogViews(6),
+        queryFn: () => $getMonthlyBlogViews({ data: { months: 6 } }),
+      }),
+      queryClient.prefetchQuery({
+        queryKey: queryKeys.stats.monthlyUsers(6),
+        queryFn: () => $getMonthlyUsers({ data: { months: 6 } }),
+      }),
     ]);
   },
 });

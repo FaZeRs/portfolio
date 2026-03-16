@@ -1,6 +1,6 @@
-import { openai } from "@ai-sdk/openai";
+import { chat, toServerSentEventsResponse } from "@tanstack/ai";
+import { openaiText } from "@tanstack/ai-openai";
 import { createFileRoute } from "@tanstack/react-router";
-import { streamText } from "ai";
 import { z } from "zod";
 import { authMiddleware } from "~/lib/auth/middleware";
 
@@ -106,8 +106,11 @@ export const Route = createFileRoute("/api/ai/blog-assist/")({
         try {
           const body = await request.json();
 
+          // TanStack AI sends { messages, data } where data contains our custom fields
+          const payload = body.data ?? body;
+
           // Validate request body
-          const validation = requestSchema.safeParse(body);
+          const validation = requestSchema.safeParse(payload);
           if (!validation.success) {
             return new Response(
               JSON.stringify({
@@ -129,14 +132,14 @@ export const Route = createFileRoute("/api/ai/blog-assist/")({
               ? MAX_TOKENS_LONG
               : MAX_TOKENS_SHORT;
 
-          const result = streamText({
-            model: openai("gpt-4o-mini"),
-            system: SYSTEM_PROMPTS[type],
-            prompt: userPrompt,
-            maxOutputTokens: maxTokens,
+          const stream = chat({
+            adapter: openaiText("gpt-4o-mini"),
+            systemPrompts: [SYSTEM_PROMPTS[type]],
+            messages: [{ role: "user", content: userPrompt }],
+            maxTokens,
           });
 
-          return result.toUIMessageStreamResponse();
+          return toServerSentEventsResponse(stream);
         } catch (error) {
           console.error("AI blog assist error:", error);
 

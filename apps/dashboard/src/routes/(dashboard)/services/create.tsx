@@ -5,7 +5,8 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ServicesForm } from "~/components/services/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createService } from "~/lib/server/service";
 
 export const Route = createFileRoute("/(dashboard)/services/create")({
   component: ServicesCreatePage,
@@ -16,13 +17,13 @@ export const Route = createFileRoute("/(dashboard)/services/create")({
 
 function ServicesCreatePage() {
   const router = useRouter();
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const createServiceMutation = useMutation({
-    ...trpc.service.create.mutationOptions(),
+    mutationFn: (data: z.infer<typeof ServiceBaseSchema>) =>
+      $createService({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.service.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.service.all });
       toast.success("Service created successfully");
       form.reset();
       router.navigate({ to: "/services" });

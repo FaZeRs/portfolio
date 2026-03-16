@@ -9,12 +9,16 @@ import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import { blogColumns } from "~/components/blog/columns";
 import { DataTable } from "~/components/data-table/data-table";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllArticles } from "~/lib/server/blog";
 
 export const Route = createFileRoute("/(dashboard)/blog/")({
   component: Articles,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.blog.all.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.blog.listAll(),
+      queryFn: () => $getAllArticles(),
+    }),
   head: () => ({
     meta: [
       { title: "Blog | Dashboard" },
@@ -51,13 +55,15 @@ function ArticlesError() {
 }
 
 function ArticlesContent() {
-  const trpc = useTRPC();
   const {
     data: articles,
     error,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.blog.all.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.blog.listAll(),
+    queryFn: () => $getAllArticles(),
+  });
 
   if (error) {
     return <ArticlesError />;

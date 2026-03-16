@@ -14,14 +14,16 @@ import {
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { SnippetsForm } from "~/components/snippets/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getSnippetById, $updateSnippet } from "~/lib/server/snippet";
 
 export const Route = createFileRoute("/(dashboard)/snippets/$snippetId/edit")({
   component: SnippetsEditPage,
-  loader: async ({ params: { snippetId }, context: { trpc, queryClient } }) => {
-    const data = await queryClient.ensureQueryData(
-      trpc.snippet.byId.queryOptions({ id: snippetId })
-    );
+  loader: async ({ params: { snippetId }, context: { queryClient } }) => {
+    const data = await queryClient.ensureQueryData({
+      queryKey: queryKeys.snippet.byId(snippetId),
+      queryFn: () => $getSnippetById({ data: { id: snippetId } }),
+    });
 
     return { title: data?.title };
   },
@@ -34,19 +36,20 @@ export const Route = createFileRoute("/(dashboard)/snippets/$snippetId/edit")({
 
 function SnippetsEditPage() {
   const { snippetId } = Route.useParams();
-  const trpc = useTRPC();
 
-  const snippet = useSuspenseQuery(
-    trpc.snippet.byId.queryOptions({ id: snippetId })
-  );
+  const snippet = useSuspenseQuery({
+    queryKey: queryKeys.snippet.byId(snippetId),
+    queryFn: () => $getSnippetById({ data: { id: snippetId } }),
+  });
 
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const updateSnippetMutation = useMutation({
-    ...trpc.snippet.update.mutationOptions(),
+    mutationFn: (data: z.infer<typeof SnippetBaseSchema> & { id: string }) =>
+      $updateSnippet({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.snippet.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.snippet.all });
       toast.success("Snippet updated successfully");
       form.reset();
       router.navigate({ to: "/snippets" });

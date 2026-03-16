@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useTRPC } from "~/lib/trpc";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "~/lib/query-keys";
+import { $deleteProject } from "~/lib/server/project";
 import { ResourceActions } from "../resource-actions";
 
 interface DataTableRowActionsProps {
@@ -13,12 +14,7 @@ export function Actions({
   slug,
   title,
 }: Readonly<DataTableRowActionsProps>) {
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    ...trpc.project.delete.mutationOptions(),
-  });
 
   return (
     <ResourceActions
@@ -27,9 +23,12 @@ export function Actions({
       resourceType="project"
       title={title}
       trpcDeleteMutation={{
-        mutationFn: (resourceId: string) => mutation.mutateAsync(resourceId),
+        mutationFn: (resourceId: string) =>
+          $deleteProject({ data: resourceId }),
         invalidateQuery: async () => {
-          await queryClient.invalidateQueries(trpc.project.pathFilter());
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.project.all,
+          });
         },
       }}
       viewPath={`/projects/${slug}`}

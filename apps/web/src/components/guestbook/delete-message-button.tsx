@@ -13,7 +13,8 @@ import { Button, buttonVariants } from "@acme/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash2Icon } from "lucide-react";
 import { toast } from "sonner";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $deleteGuestbookEntry } from "~/lib/server";
 
 interface DeleteMessageButtonProps {
   messageId: string;
@@ -22,14 +23,15 @@ interface DeleteMessageButtonProps {
 export default function DeleteMessageButton({
   messageId,
 }: Readonly<DeleteMessageButtonProps>) {
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
   const { mutateAsync, isPending } = useMutation({
-    ...trpc.guestbook.delete.mutationOptions(),
+    mutationFn: (data: { id: string }) => $deleteGuestbookEntry({ data }),
     onSuccess: () => toast.success("Deleted a message"),
     onError: (error) => toast.error(error.message),
     onSettled: () =>
-      queryClient.invalidateQueries(trpc.guestbook.all.queryOptions()),
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.guestbook.list(),
+      }),
   });
 
   const handleDeleteMessage = async (id: string) => {

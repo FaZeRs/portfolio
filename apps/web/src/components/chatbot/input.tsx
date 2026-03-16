@@ -1,5 +1,3 @@
-import { UseChatHelpers } from "@ai-sdk/react";
-import { ChatStatus, UIMessage } from "ai";
 import {
   BriefcaseIcon,
   CodeSquareIcon,
@@ -53,10 +51,10 @@ const suggestions = [
 
 export const ChatInput = memo(function ChatInputComponent({
   sendMessage,
-  status,
+  isLoading,
 }: Readonly<{
-  sendMessage: UseChatHelpers<UIMessage>["sendMessage"];
-  status: ChatStatus;
+  sendMessage: (content: string) => void;
+  isLoading: boolean;
 }>) {
   const [input, setInput] = useState("");
 
@@ -67,7 +65,7 @@ export const ChatInput = memo(function ChatInputComponent({
       if (!input.trim()) {
         return;
       }
-      sendMessage({ text: input.trim() });
+      sendMessage(input.trim());
       setInput("");
     },
     [input, sendMessage]
@@ -75,7 +73,7 @@ export const ChatInput = memo(function ChatInputComponent({
 
   const handleSuggestionClick = useCallback(
     (suggestion: string) => {
-      sendMessage({ text: suggestion });
+      sendMessage(suggestion);
       setInput("");
     },
     [sendMessage]
@@ -95,7 +93,7 @@ export const ChatInput = memo(function ChatInputComponent({
             <PromptInputSubmit
               className="h-8 w-8 rounded-md p-0"
               disabled={!input.trim()}
-              status={status}
+              isLoading={isLoading}
             />
           </PromptInputToolbar>
         </div>

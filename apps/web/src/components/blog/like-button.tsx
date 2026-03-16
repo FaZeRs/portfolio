@@ -2,24 +2,25 @@ import { ArticleType } from "@acme/types";
 import { cn } from "@acme/ui";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { HeartIcon } from "lucide-react";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $isArticleLiked, $likeArticle } from "~/lib/server";
 
 interface LikeButtonProps {
   article: ArticleType;
 }
 
 const LikeButton = ({ article }: LikeButtonProps) => {
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const { data: isLiked = false, isLoading: isCheckingLikeStatus } = useQuery({
-    ...trpc.blog.isLiked.queryOptions({ slug: article.slug }),
+    queryKey: queryKeys.blog.isLiked(article.slug),
+    queryFn: () => $isArticleLiked({ data: { slug: article.slug } }),
   });
 
   const likeMutation = useMutation({
-    ...trpc.blog.like.mutationOptions(),
+    mutationFn: (data: { slug: string }) => $likeArticle({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.blog.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.blog.all });
     },
     onError: (error) => {
       console.error(error);

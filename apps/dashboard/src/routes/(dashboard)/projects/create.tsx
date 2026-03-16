@@ -5,7 +5,8 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod/v4";
 import { ProjectsForm } from "~/components/projects/form";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $createProject } from "~/lib/server/project";
 
 export const Route = createFileRoute("/(dashboard)/projects/create")({
   component: ProjectsCreatePage,
@@ -16,13 +17,13 @@ export const Route = createFileRoute("/(dashboard)/projects/create")({
 
 function ProjectsCreatePage() {
   const router = useRouter();
-  const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const createProjectMutation = useMutation({
-    ...trpc.project.create.mutationOptions(),
+    mutationFn: (data: z.infer<typeof ProjectBaseSchema>) =>
+      $createProject({ data }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(trpc.project.pathFilter());
+      await queryClient.invalidateQueries({ queryKey: queryKeys.project.all });
       toast.success("Project created successfully");
       form.reset();
       router.navigate({ to: "/projects" });

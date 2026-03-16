@@ -6,19 +6,20 @@ import {
   ErrorComponent,
   notFound,
 } from "@tanstack/react-router";
-import { TRPCClientError } from "@trpc/client";
 import PageHeading from "~/components/page-heading";
 import ServiceContent from "~/components/services/service-content";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
-import { useTRPC } from "~/lib/trpc";
+import { $getServiceBySlug } from "~/lib/server";
 import { getBaseUrl } from "~/lib/utils";
 
 export const Route = createFileRoute("/(public)/services/$serviceId")({
-  loader: async ({ params: { serviceId }, context: { trpc, queryClient } }) => {
+  loader: async ({ params: { serviceId }, context: { queryClient } }) => {
     try {
-      const data = await queryClient.ensureQueryData(
-        trpc.service.bySlug.queryOptions({ slug: serviceId })
-      );
+      const data = await queryClient.ensureQueryData({
+        queryKey: queryKeys.service.detail(serviceId),
+        queryFn: () => $getServiceBySlug({ data: { slug: serviceId } }),
+      });
       return {
         title: data?.title,
         description: data?.description,
@@ -27,8 +28,9 @@ export const Route = createFileRoute("/(public)/services/$serviceId")({
       };
     } catch (error) {
       if (
-        error instanceof TRPCClientError &&
-        error.data?.code === "NOT_FOUND"
+        error instanceof Error &&
+        (error.message === "Service not found" ||
+          error.message === "Service is not public")
       ) {
         throw notFound();
       }
@@ -56,10 +58,10 @@ export const Route = createFileRoute("/(public)/services/$serviceId")({
 
 function RouteComponent() {
   const { serviceId } = Route.useParams();
-  const trpc = useTRPC();
-  const service = useSuspenseQuery(
-    trpc.service.bySlug.queryOptions({ slug: serviceId })
-  );
+  const service = useSuspenseQuery({
+    queryKey: queryKeys.service.detail(serviceId),
+    queryFn: () => $getServiceBySlug({ data: { slug: serviceId } }),
+  });
 
   return (
     <div>

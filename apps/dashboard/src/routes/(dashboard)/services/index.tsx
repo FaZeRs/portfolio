@@ -9,12 +9,16 @@ import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import { DataTable } from "~/components/data-table/data-table";
 import { serviceColumns } from "~/components/services/columns";
-import { useTRPC } from "~/lib/trpc";
+import { queryKeys } from "~/lib/query-keys";
+import { $getAllServices } from "~/lib/server/service";
 
 export const Route = createFileRoute("/(dashboard)/services/")({
   component: Services,
-  loader: async ({ context: { trpc, queryClient } }) =>
-    await queryClient.prefetchQuery(trpc.service.all.queryOptions()),
+  loader: async ({ context: { queryClient } }) =>
+    await queryClient.prefetchQuery({
+      queryKey: queryKeys.service.listAll(),
+      queryFn: () => $getAllServices(),
+    }),
   head: () => ({
     meta: [
       { title: "Services | Dashboard" },
@@ -51,13 +55,15 @@ function ServicesError() {
 }
 
 function ServicesContent() {
-  const trpc = useTRPC();
   const {
     data: services,
     error,
     isLoading,
     isFetching,
-  } = useSuspenseQuery(trpc.service.all.queryOptions());
+  } = useSuspenseQuery({
+    queryKey: queryKeys.service.listAll(),
+    queryFn: () => $getAllServices(),
+  });
 
   if (error) {
     return (

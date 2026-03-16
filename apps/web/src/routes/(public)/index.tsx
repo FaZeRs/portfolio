@@ -4,7 +4,9 @@ import ConnectSection from "~/components/connect-section";
 import FeaturedProjects from "~/components/featured-projects";
 import PersonalHero from "~/components/personal-hero";
 import RecentPosts from "~/components/recent-posts";
+import { queryKeys } from "~/lib/query-keys";
 import { seo } from "~/lib/seo";
+import { $getAllPublicArticles, $getAllPublicProjects } from "~/lib/server";
 import {
   generateStructuredDataGraph,
   getHomepageSchemas,
@@ -12,10 +14,16 @@ import {
 
 export const Route = createFileRoute("/(public)/")({
   component: Home,
-  loader: async ({ context: { trpc, queryClient } }) => {
+  loader: async ({ context: { queryClient } }) => {
     await Promise.all([
-      queryClient.prefetchQuery(trpc.project.allPublic.queryOptions()),
-      queryClient.prefetchQuery(trpc.blog.allPublic.queryOptions()),
+      queryClient.prefetchQuery({
+        queryKey: queryKeys.project.listPublic(),
+        queryFn: () => $getAllPublicProjects(),
+      }),
+      queryClient.prefetchQuery({
+        queryKey: queryKeys.blog.listPublic(),
+        queryFn: () => $getAllPublicArticles(),
+      }),
     ]);
   },
   head: () => {
