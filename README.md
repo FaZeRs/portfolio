@@ -33,7 +33,7 @@ A modern full-stack portfolio monorepo built with Bun workspaces, TanStack Start
 - [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler) - Latest React with performance optimizations
 - TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest) + [Form](https://tanstack.com/form/latest) - Full-stack React framework
 - [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) - Modern styling and component library
-- [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL + [Upstash](https://upstash.com/) - Type-safe database operations and caching
+- [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL - Type-safe database operations and caching
 - [Better Auth](https://www.better-auth.com/) - Secure authentication system
 - [tRPC](https://trpc.io/) - End-to-end typesafe APIs
 

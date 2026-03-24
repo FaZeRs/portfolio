@@ -9,7 +9,7 @@ This is a modern full-stack portfolio website built with React 19, TanStack Star
 ## Tech Stack
 
 - **Framework**: TanStack Start (full-stack React framework) with React 19 + React Compiler
-- **Database**: PostgreSQL with Drizzle ORM, Upstash caching
+- **Database**: PostgreSQL with Drizzle ORM
 - **Authentication**: Better Auth with GitHub OAuth
 - **Styling**: Tailwind CSS v4 + shadcn/ui components
 - **State Management**: TanStack Query, TanStack Form, TanStack Store
@@ -41,7 +41,7 @@ src/
 ├── lib/
 │   ├── server/          # Server-side code
 │   │   ├── auth.ts      # Better Auth configuration
-│   │   ├── db.ts        # Drizzle database setup with Upstash cache
+│   │   ├── db.ts        # Drizzle database setup
 │   │   └── schema/      # Database schemas (snake_case naming)
 │   ├── config/          # Configuration files (site, navbar)
 │   ├── constants/       # Static data and constants
@@ -76,7 +76,6 @@ src/
 Uses Drizzle ORM with PostgreSQL:
 - Snake_case naming convention
 - Schemas organized by feature in `src/lib/server/schema/`
-- Upstash caching layer for performance
 - Better Auth tables auto-generated
 
 ### Routing
@@ -115,7 +114,6 @@ TanStack Start file-based routing:
 
 ### Database Operations
 - Use Drizzle queries with proper error handling
-- Leverage Upstash cache for frequently accessed data
 - Run `bun db generate` after schema changes
 - Use `bun db push` for development, migrations for production
 
@@ -142,9 +140,8 @@ TanStack Start file-based routing:
 
 1. Copy `.env.example` to `.env` and configure variables
 2. Set up PostgreSQL database (Neon recommended)
-3. Configure Upstash for caching
-4. Set up GitHub OAuth app for authentication
-5. Run `bun db push` to initialize database schema
+3. Set up GitHub OAuth app for authentication
+4. Run `bun db push` to initialize database schema
 
 ## Special Notes
 
@@ -172,7 +169,6 @@ TanStack Start file-based routing:
 
 ### Database Integration
 - Drizzle ORM with PostgreSQL backend
-- Upstash Redis for caching layer
 - Schema files use snake_case naming convention
 - Migrations managed via `bun db generate` and `bun db push`
 
