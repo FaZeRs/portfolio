@@ -42,7 +42,7 @@ export async function getBySlug(
     throw new Error("Project is not public");
   }
 
-  const toc = await getTOC(project.content ?? "");
+  const toc = getTOC(project.content ?? "");
 
   return { ...project, toc };
 }

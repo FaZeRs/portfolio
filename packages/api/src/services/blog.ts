@@ -75,7 +75,7 @@ export async function getBySlug(
     .from(articleViews)
     .where(eq(articleViews.articleId, article.id));
 
-  const toc = await getTOC(article.content ?? "");
+  const toc = getTOC(article.content ?? "");
 
   return { ...article, toc, viewCount: viewCount[0]?.count ?? 0 };
 }
