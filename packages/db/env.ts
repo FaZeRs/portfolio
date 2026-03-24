@@ -5,8 +5,6 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]).default("development"),
     DATABASE_URL: z.url(),
-    KV_REST_API_URL: z.url(),
-    KV_REST_API_TOKEN: z.string().min(1),
   },
   runtimeEnv: process.env,
   skipValidation:
